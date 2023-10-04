@@ -6,167 +6,184 @@ import WebVitals from "@/components/home/web-vitals";
 import ComponentGrid from "@/components/home/component-grid";
 import Image from "next/image";
 import { nFormatter } from "@/lib/utils";
+import Section, { SectionProps } from "@/components/home/HomeSection";
+import CompanyCarousel, { Company } from "@/components/home/CompanyCarousel";
+import SlideShow from "@/components/home/SlideShow";
+import Slide, { SlideProps } from "@/components/home/Slide";
+import ContactForm from "@/components/ContactForm";
+import EmailLetter from "@/components/home/EmailLetter";
 
 export default async function Home() {
-  const { stargazers_count: stars } = await fetch(
-    "https://api.github.com/repos/steven-tey/precedent",
-    {
-      ...(process.env.GITHUB_OAUTH_TOKEN && {
-        headers: {
-          Authorization: `Bearer ${process.env.GITHUB_OAUTH_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }),
-      // data will revalidate every 24 hours
-      next: { revalidate: 86400 },
-    },
-  )
-    .then((res) => res.json())
-    .catch((e) => console.log(e));
+
 
   return (
     <>
-      <div className="z-10 w-full max-w-xl px-5 xl:px-0">
-        <a
-          href="https://twitter.com/steventey/status/1613928948915920896"
-          target="_blank"
-          rel="noreferrer"
-          className="mx-auto mb-5 flex max-w-fit animate-fade-up items-center justify-center space-x-2 overflow-hidden rounded-full bg-blue-100 px-7 py-2 transition-colors hover:bg-blue-200"
-        >
-          <Twitter className="h-5 w-5 text-[#1d9bf0]" />
-          <p className="text-sm font-semibold text-[#1d9bf0]">
-            Introducing Precedent
-          </p>
-        </a>
-        <h1
-          className="animate-fade-up bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm md:text-7xl md:leading-[5rem]"
-          style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
-        >
-          <Balancer>Building blocks for your Next project</Balancer>
-        </h1>
-        <p
-          className="mt-6 animate-fade-up text-center text-gray-500 opacity-0 md:text-xl"
-          style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
-        >
-          <Balancer>
-            An opinionated collection of components, hooks, and utilities for
-            your Next.js project.
-          </Balancer>
-        </p>
-        <div
-          className="mx-auto mt-6 flex animate-fade-up items-center justify-center space-x-5 opacity-0"
-          style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
-        >
-          <a
-            className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
-            href={DEPLOY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg
-              className="h-4 w-4 group-hover:text-black"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 4L20 20H4L12 4Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <p>Deploy to Vercel</p>
-          </a>
-          <a
-            className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
-            href="https://github.com/steven-tey/precedent"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Github />
-            <p>
-              <span className="hidden sm:inline-block">Star on</span> GitHub{" "}
-              <span className="font-semibold">{nFormatter(stars)}</span>
-            </p>
-          </a>
-        </div>
-      </div>
-      <div className="my-10 grid w-full max-w-screen-xl animate-fade-up grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
-        {features.map(({ title, description, demo, large }) => (
-          <Card
-            key={title}
-            title={title}
-            description={description}
-            demo={
-              title === "Beautiful, reusable components" ? (
-                <ComponentGrid />
-              ) : (
-                demo
-              )
-            }
-            large={large}
-          />
-        ))}
-      </div>
+      <div className="z-10 w-full text-black dark:text-white">
+        <section className="container mx-auto flex flex-col">
+          <div className="flex flex-col-reverse justify-center items-center lg:flex-row">
+            <div>
+              <div className="w-fit text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] via-[#5200FF]  to-[#FF2DF7] m-3 font-bold text-2xl" >
+                With Ai
+              </div>
+              <div className="m-3 font-bold text-2xl">
+                Rovolutionize Your Business
+              </div>
+              <div className="m-3">
+                Our ambition is to reshape how you envision the use of your data to automate mundane  tasks.
+              </div>
+              <hr className="mx-5" />
+              <div className="m-3">
+                <button className="rounded-full ring-blue-300 ring-2 p-4">
+                  get Started
+                </button>
+              </div>
+            </div>
+            <Image src={"/hero-1.png"} alt={""} height={500} width={500}></Image>
+          </div>
+
+          <div>
+            <CompanyCarousel cards={companies}></CompanyCarousel>
+          </div>
+
+        </section>
+
+        {homeSections.slice(0,2).map((item) => {
+
+          return <>
+            <Section
+              title={item.title}
+              subTitle={item.subTitle}
+              content={item.content}
+              image={item.image}
+              imageFirst={item.imageFirst}
+            ></Section >
+
+          </>
+        })}
+
+        <section className="container mx-auto">
+          <SlideShow slides={sildes.map((card, index) => {
+
+            return <Slide image={card.image}
+              name={card.name}
+              content={card.content}
+              designation={card.designation}
+            ></Slide>
+          })}>
+
+          </SlideShow>
+        </section>
+        {homeSections.slice(2,5).map((item) => {
+
+          return <>
+            <Section
+              title={item.title}
+              subTitle={item.subTitle}
+              content={item.content}
+              image={item.image}
+              imageFirst={item.imageFirst}
+            ></Section >
+
+          </>
+        })}
+
+        <section className="container mx-auto my-10">
+          <EmailLetter></EmailLetter>
+        </section>
+
+        <section className="conatiner">
+          <ContactForm></ContactForm>
+        </section>
+      </div >
+
     </>
   );
 }
 
-const features = [
+
+const homeSections: SectionProps[] = [
   {
-    title: "Beautiful, reusable components",
-    description:
-      "Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)",
-    large: true,
+    title: "Data Driven Solutions",
+    subTitle: "Transform, Automate, and Personalize: The AI-Driven Journey to Business Success!",
+    content: <div>
+      Imagine a world where every decision is backed by data insights, where automation streamlines operations, and where every customer feels they're getting a uniquely tailored experience. This is not a dream; it's a reality for our partners. Dive into the success stories of businesses that took the leap with Cyberoni's AI solutions and saw their operations evolve in ways they never imagined.
+    </div>,
+    image: '/hero-2.png',
+    imageFirst: false
   },
   {
-    title: "Performance first",
-    description:
-      "Built on [Next.js](https://nextjs.org/) primitives like `@next/font` and `next/image` for stellar performance.",
-    demo: <WebVitals />,
+    title: "Solutions Tailored For You",
+    subTitle: "Harness the Power of YOUR Data with Cyberoni's Expert AI Models!",
+    content: <div>Every business is unique, and so is its data. Using AI models that haven't been trained on your specific business data is like trying to fit a square peg in a round hole. At Cyberoni, our deep expertise in data science allows us to craft AI solutions tailored just for you. By leveraging your own data, we ensure accurate predictions, unparalleled efficiency, and empowered decision-making. </div>,
+    image: '/hero-3.png',
+    imageFirst: true
+  },
+
+  {
+    title: "Elevating Support",
+    subTitle: "Redefine Customer Interactions: AI-Powered Service & Support with Cyberoni!",
+    content: <div>The expectations of modern customers are ever-evolving. They demand swift, accurate, and personalized support round the clock. How can businesses meet such expectations without compromising efficiency? The answer lies in AI. Cyberoni's AI solutions seamlessly integrate into your customer service and tech support systems, ensuring instant responses, predictive problem-solving, and tailored interactions. </div>,
+    image: '/hero-4.png',
+    imageFirst: false
+  },
+
+  {
+    title: "Data Driven Solutions",
+    subTitle: "Transform, Automate, and Personalize: The AI-Driven Journey to Business Success!",
+    content: <div>
+      Imagine a world where every decision is backed by data insights, where automation streamlines operations, and where every customer feels they're getting a uniquely tailored experience. This is not a dream; it's a reality for our partners. Dive into the success stories of businesses that took the leap with Cyberoni's AI solutions and saw their operations evolve in ways they never imagined.
+    </div>,
+    image: '/hero-5.png',
+    imageFirst: true
+  },
+
+]
+
+const companies: Company[] = [
+
+  { name: 'google', image: '/Google cloud.png' },
+  { name: '', image: '/Ebay.png' },
+  { name: '', image: '/Tux.png' },
+  { name: '', image: '/Spotify.png' },
+  { name: '', image: '/Airbnb.png' },
+  { name: '', image: '/Facebook.png' },
+  { name: '', image: '/Coca Cola.png' },
+  { name: '', image: '/Zoom.png' },
+  { name: '', image: '/Creative Cloud.png' },
+  { name: '', image: '/Netflix.png' },
+  { name: '', image: '/Discord.png' },
+  { name: '', image: '/Figma.png' },
+  { name: '', image: '/Paypal.png' },
+  { name: '', image: '/Adobe.png' },
+
+
+
+]
+
+
+const sildes: SlideProps[] = [
+  {
+    name: 'Amaka Micheal',
+    designation: 'Media Executive, Buying & Control',
+    image: '/review.jpg',
+    content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
-    title: "One-click Deploy",
-    description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
-    demo: (
-      <a href={DEPLOY_URL}>
-        <Image
-          src="https://vercel.com/button"
-          alt="Deploy with Vercel"
-          width={120}
-          height={30}
-          unoptimized
-        />
-      </a>
-    ),
+    name: 'Amaka Micheal',
+    designation: 'Media Executive, Buying & Control',
+    image: '',
+    content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
-    title: "Built-in Auth + Database",
-    description:
-      "Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)",
-    demo: (
-      <div className="flex items-center justify-center space-x-20">
-        <Image alt="Auth.js logo" src="/authjs.webp" width={50} height={50} />
-        <Image alt="Prisma logo" src="/prisma.svg" width={50} height={50} />
-      </div>
-    ),
+    name: 'Amaka Micheal',
+    designation: 'Media Executive, Buying & Control',
+    image: '',
+    content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
-    title: "Hooks, utilities, and more",
-    description:
-      "Precedent offers a collection of hooks, utilities, and `@vercel/og`",
-    demo: (
-      <div className="grid grid-flow-col grid-rows-3 gap-10 p-10">
-        <span className="font-mono font-semibold">useIntersectionObserver</span>
-        <span className="font-mono font-semibold">useLocalStorage</span>
-        <span className="font-mono font-semibold">useScroll</span>
-        <span className="font-mono font-semibold">nFormatter</span>
-        <span className="font-mono font-semibold">capitalize</span>
-        <span className="font-mono font-semibold">truncate</span>
-      </div>
-    ),
+    name: 'Amaka Micheal',
+    designation: 'Media Executive, Buying & Control',
+    image: '',
+    content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
-];
+]

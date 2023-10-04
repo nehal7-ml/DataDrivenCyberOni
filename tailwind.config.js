@@ -7,10 +7,12 @@ module.exports = {
     hoverOnlyWhenSupported: true,
   },
   theme: {
+    darkMode: 'class',
     extend: {
       fontFamily: {
         display: ["var(--font-sf)", "system-ui", "sans-serif"],
         default: ["var(--font-inter)", "system-ui", "sans-serif"],
+        abel: ["var(--font-abel)", "system-ui", "sans", "serif"],
       },
       animation: {
         // Fade up and down
@@ -19,6 +21,12 @@ module.exports = {
         // Tooltip
         "slide-up-fade": "slide-up-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         "slide-down-fade": "slide-down-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+      },
+      backgroundImage: {
+        "gradient-purple": "linear-gradient(to right,  #FF2DF7, #5200FF,#00F0FF)", // Add this line
+      },
+      boxShadow: {
+        'left-shift-lg': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
       },
       keyframes: {
         // Fade up and down

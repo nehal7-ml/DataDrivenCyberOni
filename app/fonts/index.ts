@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { Inter } from "next/font/google";
+import { Abel, Inter } from "next/font/google";
 
 export const sfPro = localFont({
   src: "./SF-Pro-Display-Medium.otf",
@@ -10,3 +10,11 @@ export const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
+
+
+export const abel = Abel({
+  variable: '--font-abel',
+  subsets: ['latin'],
+  style: ["normal"],
+  weight: ["400"]
+})
