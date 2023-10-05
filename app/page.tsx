@@ -31,23 +31,23 @@ export default async function Home() {
               <div className="m-3">
                 Our ambition is to reshape how you envision the use of your data to automate mundane  tasks.
               </div>
-              <hr className="mx-5" />
+              <div className="mx-3 bg-gradient-purple h-[1px]" />
               <div className="m-3">
-                <button className="rounded-full ring-blue-300 ring-2 p-4">
-                  get Started
+                <button className="rounded-full bg-gradient-purple p-[1px] m-3">
+                  <div className="rounded-full p-3 bg-white dark:bg-black ">get Started</div>
                 </button>
               </div>
             </div>
             <Image src={"/hero-1.png"} alt={""} height={500} width={500}></Image>
           </div>
 
-          <div>
+          <div className="container my-4">
             <CompanyCarousel cards={companies}></CompanyCarousel>
           </div>
 
         </section>
 
-        {homeSections.slice(0,2).map((item) => {
+        {homeSections.slice(0, 2).map((item) => {
 
           return <>
             <Section
@@ -73,7 +73,7 @@ export default async function Home() {
 
           </SlideShow>
         </section>
-        {homeSections.slice(2,5).map((item) => {
+        {homeSections.slice(2, 5).map((item) => {
 
           return <>
             <Section
