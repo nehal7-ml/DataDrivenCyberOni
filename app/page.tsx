@@ -47,7 +47,7 @@ export default async function Home() {
 
         </section>
 
-        {homeSections.slice(0, 2).map((item) => {
+        {homeSections.slice(0, 2).map((item, index) => {
 
           return <>
             <Section
@@ -56,6 +56,7 @@ export default async function Home() {
               content={item.content}
               image={item.image}
               imageFirst={item.imageFirst}
+              key={index}
             ></Section >
 
           </>
@@ -68,12 +69,14 @@ export default async function Home() {
               name={card.name}
               content={card.content}
               designation={card.designation}
+              key={index}
+
             ></Slide>
           })}>
 
           </SlideShow>
         </section>
-        {homeSections.slice(2, 5).map((item) => {
+        {homeSections.slice(2, 5).map((item, index) => {
 
           return <>
             <Section
@@ -82,6 +85,8 @@ export default async function Home() {
               content={item.content}
               image={item.image}
               imageFirst={item.imageFirst}
+              key={index}
+
             ></Section >
 
           </>

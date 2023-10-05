@@ -7,6 +7,7 @@ import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 export default function NavBar({ session }: { session: Session | null }) {
   const scrolled = useScroll(50);
@@ -60,56 +61,54 @@ export default function NavBar({ session }: { session: Session | null }) {
                   className="md:focus:outline-none hover:text-blue-500"
                 >
                   Products
-                  <i className="ml-2 fas fa-chevron-down"></i>
+                  <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </button>
                 {productsDropdownOpen && (
                   <ul className="absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-1">
                     <li>
-                      <a href="#">Product 1</a>
+                      <Link href="#">shop</Link>
                     </li>
                     <li>
-                      <a href="#">Product 2</a>
+                      <Link href="#">Cart</Link>
                     </li>
-                    <li>
-                      <a href="#">Product 3</a>
-                    </li>
+
                   </ul>
                 )}
               </div>
-              <a href="#" className="hover:text-blue-500">
+              <Link href="#" className="hover:text-blue-500">
                 Team
-              </a>
-              <a href="#" className="hover:text-blue-500">
+              </Link>
+              <Link href="#" className="hover:text-blue-500">
                 Enterprise
-              </a>
+              </Link>
               <div className="relative group">
                 <button
                   onClick={toggleExploreDropdown}
                   className="md:focus:outline-none hover:text-blue-500"
                 >
                   Explore
-                  <i className="ml-2 fas fa-chevron-down"></i>
+                  <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </button>
                 {exploreDropdownOpen && (
                   <ul className="absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-1">
                     <li>
-                      <a href="#">Explore 1</a>
+                      <Link href="/blogs">Blogs</Link>
                     </li>
                     <li>
-                      <a href="#">Explore 2</a>
+                      <Link href="#">Explore 2</Link>
                     </li>
                     <li>
-                      <a href="#">Explore 3</a>
+                      <Link href="#">Explore 3</Link>
                     </li>
                   </ul>
                 )}
               </div>
-              <a href="#" className="hover:text-blue-500">
+              <Link href="#" className="hover:text-blue-500">
                 Marketplace
-              </a>
-              <a href="#" className="hover:text-blue-500">
+              </Link>
+              <Link href="#" className="hover:text-blue-500">
                 Pricing
-              </a>
+              </Link>
             </div>
           </div>
           <div className="flex items-center space-x-4">
