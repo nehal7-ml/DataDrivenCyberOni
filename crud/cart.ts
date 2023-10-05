@@ -3,7 +3,7 @@ import { Product, CartItem, PrismaClient } from "@prisma/client";
 export type createCartItemDTO = {
     quantity: number;
     productId: string;
-    userId: string;
+    sessionId: string;
 }
 
 async function create(cartItem: createCartItemDTO, prismaClient: PrismaClient) {

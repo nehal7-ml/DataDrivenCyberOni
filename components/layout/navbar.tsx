@@ -32,7 +32,7 @@ export default function NavBar({ session }: { session: Session | null }) {
         className={`fixed top-0 w-full flex justify-center ${scrolled
           ? "border-b border-gray-200 bg-white/50 dark:bg-black/50 backdrop-blur-xl"
           : "bg-white/0"
-          } z-30 transition-all`}
+          } z-50 transition-all lg:h-32`}
       >
         <div className="mx-5 flex h-16 max-w-screen-xl items-center justify-between w-full text-black dark:text-white">
 

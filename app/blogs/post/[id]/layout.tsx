@@ -1,8 +1,8 @@
 import React from 'react'
 
-function BlogPostLayout() {
+function BlogPostLayout({children}:{children: React.ReactNode}) {
   return (
-    <div>BlogPostLayout</div>
+    <div className="relative z-30 w-full dark:text-white">{children}</div>
   )
 }
 

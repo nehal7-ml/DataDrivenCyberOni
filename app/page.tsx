@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="z-10 w-full text-black dark:text-white">
+      <div className="z-30 w-full dark:text-white">
         <section className="container mx-auto flex flex-col">
           <div className="flex flex-col-reverse justify-center items-center lg:flex-row">
             <div>

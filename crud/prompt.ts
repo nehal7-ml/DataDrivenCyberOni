@@ -4,7 +4,6 @@ import { connectOrCreateObject as connectImage, createImageDTO } from "./images"
 import { createSupplierDTO } from "./supplier";
 
 export type createGptPromptDTO = {
-    id: string;
     description: string;
     prompt: string;
     temperature: number;
@@ -41,7 +40,7 @@ async function update(promptId: string, prompt: createGptPromptDTO, prismaClient
         data: {
             ...prompt,
             tags: { connectOrCreate: connectTag(prompt.tags) },
-            image: { create: prompt.image },
+            image: { update: prompt.image },
         }
     });
     return UpdatedPrompt
@@ -67,7 +66,6 @@ async function read(promptId: string, prismaClient: PrismaClient) {
     if (existingprompt) return existingprompt;
 
 }
-
 async function getAll(page: number, pageSize: number, prismaClient: PrismaClient) {
     const prompts = prismaClient.gptPrompt;
 
