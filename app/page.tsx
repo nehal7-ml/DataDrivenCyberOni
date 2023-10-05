@@ -91,8 +91,12 @@ export default async function Home() {
           <EmailLetter></EmailLetter>
         </section>
 
-        <section className="conatiner">
-          <ContactForm></ContactForm>
+        <section className="conatiner flex flex-col-reverse lg:flex-row">
+
+          <div className="flex-1">
+            <ContactForm></ContactForm>
+          </div>
+          <Image className="flex-1" src={'/contact-form.png'} alt="contact" height={500} width={500}></Image>
         </section>
       </div >
 

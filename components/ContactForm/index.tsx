@@ -37,37 +37,21 @@ function ContactForm() {
     };
 
     return (
-        <div className="w-full h-fit mx-auto p-6 bg-neutral-300 rounded-lg shadow-lg">
+        <div className="w-full h-full min-h-fit mx-auto p-6 bg-[#5001EAAD] rounded-lg shadow-lg">
 
             {showForm &&<form className="h-full w-full p-6" onSubmit={handleSubmit}>
-                <div className="mb-4 h-2/6">
-                    <p className="mb-2 font-bold h-1/6">I am interested in ...</p>
-                    <div className="flex justify-start flex-wrap gap-5 h-5/6">
-                        {['UI/UX design', 'Web design', 'Graphic Design', 'Design System', 'Other'].map((interest, index) => (
-                            <button
-                                key={index}
-                                onClick={() => handleInterestClick(interest)}
-                                className={`rounded-lg px-4 py-2 border-2 border-opacity-30 border-purple-800 focus:outline-none ${selectedInterest === interest
-                                    ? 'bg-[#A91079] text-white'
-                                    : 'bg-transparent hover:bg-blue-200  text-opacity-30 text-purple-800'
-                                    }`}
-                            >
-                                {interest}
-                            </button>
-                        ))}
-                    </div>
-                </div>
+                <h1 className="text-4xl my-2">Contact us</h1>
                 <div className="mb-4 h-1/6">
                     <label
                         htmlFor="name"
-                        className="transition-all duration-300 ease-in-out text-gray-500 text-sm"
+                        className="transition-all duration-300 ease-in-out text-white text-sm"
                     >
                         Name :
                     </label>
                     <input
                         type="text"
                         id="name"
-                        className="border-0 border-b-2  focus:border-[#A91079] p-2 focus:border-transparent focus:outline-none ring-0  bg-transparent w-full outline-none autofill-neutral"
+                        className="border-0 border-b-2 placeholder-white  focus:border-[#A91079] p-2 focus:border-transparent focus:outline-none ring-0  bg-transparent w-full outline-none autofill-neutral"
                         placeholder="Your Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -79,7 +63,7 @@ function ContactForm() {
                     <input
                         type="email"
                         id="email"
-                        className="border-0 border-b-2  focus:border-[#A91079] p-2 focus:border-transparent focus:outline-none ring-0  bg-transparent w-full autofill-neutral"
+                        className="border-0 border-b-2  placeholder-white focus:border-[#A91079] p-2 focus:border-transparent focus:outline-none ring-0  bg-transparent w-full autofill-neutral"
                         placeholder="Your Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +75,7 @@ function ContactForm() {
                     <textarea
                         id="message"
                         rows={4}
-                        className="border-0 border-b-2  focus:border-[#A91079] focus:border-none focus:border-b-2 foucs:ring-0 p-2 focus:outline-none bg-transparent w-full autofill-neutral"
+                        className="border-0 border-b-2  placeholder-white focus:border-[#A91079] focus:border-none focus:border-b-2 foucs:ring-0 p-2 focus:outline-none bg-transparent w-full autofill-neutral"
                         placeholder="Your Message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
