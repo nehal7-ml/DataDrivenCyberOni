@@ -31,7 +31,6 @@ export default async function RootLayout({
       <body className={`${cx(sfPro.variable, inter.variable, abel.variable)}`}>
         <div className="fixed h-screen w-full dark:bg-black" />
         <Suspense fallback="...">
-          {/* @ts-expect-error Server Component */}
           <Nav />
         </Suspense>
         <main className="flex min-h-screen w-full flex-col items-center justify-center py-32">
