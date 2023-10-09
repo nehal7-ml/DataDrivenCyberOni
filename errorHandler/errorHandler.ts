@@ -9,6 +9,6 @@ export type HttpError = Error & {
 
 export default function errorHandler(error: HttpError) {
 
-    return NextResponse.json({ message: error.message }, { status: error.status })
+    return NextResponse.json({ message: error.message }, { status: error.status || 500 });
 
 }

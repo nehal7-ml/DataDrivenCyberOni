@@ -44,6 +44,8 @@ model User {
   imageId        String?
   CartItem       CartItem[]
   ApiCredentials ApiCredentials[]
+  BlogLike       BlogLike[]
+  BlogView       BlogView[]
 
   @@index([addressId])
   @@index([imageId])
@@ -121,20 +123,45 @@ model Order {
 }
 
 model Blog {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   subTitle    String
-  description String   @db.Text
-  featured    Boolean  @default(false)
+  description String     @db.Text
+  featured    Boolean    @default(false)
   images      Image[]
-  author      User     @relation(fields: [userId], references: [id])
+  author      User       @relation(fields: [userId], references: [id])
   date        DateTime
-  content     String   @db.Text
+  content     String     @db.Text
   tags        Tag[]
   template    String
   userId      String
+  Likes       BlogLike[]
+  Views       BlogView[]
 
   @@index([userId])
+}
+
+model BlogLike {
+  user   User   @relation(fields: [userId], references: [id])
+  blog   Blog   @relation(fields: [blogId], references: [id])
+  userId String
+  blogId String
+
+  @@id([userId, blogId])
+  @@index([userId])
+  @@index([blogId])
+}
+
+model BlogView {
+  date   DateTime
+  user   User     @relation(fields: [userId], references: [id])
+  blog   Blog     @relation(fields: [blogId], references: [id])
+  userId String
+  blogId String
+
+  @@id([userId, blogId])
+  @@index([userId])
+  @@index([blogId])
 }
 
 model Supplier {

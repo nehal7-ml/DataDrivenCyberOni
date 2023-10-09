@@ -121,10 +121,10 @@ export default function NavBar({ session }: { session: Session | null }) {
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
               </button>
             </div>
-            <button className="hover:text-blue-500">Sign In</button>
-            <button className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md">
+            <Link href={'/authsignin'} className="hover:text-blue-500">Sign In</Link>
+            <Link href={'/authsignin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md">
               Sign Up
-            </button>
+            </Link>
           </div>
         </div>
       </div>
