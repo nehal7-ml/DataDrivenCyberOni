@@ -61,3 +61,8 @@ export const truncate = (str: string, length: number) => {
   if (!str || str.length <= length) return str;
   return `${str.slice(0, length)}...`;
 };
+
+export function getRandomFromArray(arr: Array<any>) :any{
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+}

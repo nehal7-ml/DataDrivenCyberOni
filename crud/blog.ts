@@ -121,19 +121,34 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
 }
 
 export function getFeatured(prisma: PrismaClient) {
-    const featured = prisma.blog.findFirst({ where: { featured: true } });
+    const featured = prisma.blog.findFirst({
+        where: { featured: true },
+        include: {
+            tags: true,
+            author: true,
+            images: true
+        }
+    });
     return featured;
 
 }
 
 export function getRecent(prisma: PrismaClient) {
     const recentDate = new Date(Date.now() - 90 * (24 * 60 * 60 * 1000)) // 90 days
-    const recent = prisma.blog.findMany({ where: { date: { gte: recentDate } } });
+    const recent = prisma.blog.findMany({
+        where: { date: { gte: recentDate } },
+        include: {
+            tags: true,
+            author: true,
+            images: true
+        }
+    });
     return recent;
 }
 
-export function getPopular (prisma: PrismaClient) {
-    const popular = prisma.blog.findMany({skip:0, take: 10,
+export function getPopular(prisma: PrismaClient) {
+    const popular = prisma.blog.findMany({
+        skip: 0, take: 10,
         where: {
 
         },
@@ -141,7 +156,7 @@ export function getPopular (prisma: PrismaClient) {
             // reviews: true,
             tags: true,
             author: true,
-            images:true
+            images: true
 
 
         }
@@ -149,20 +164,22 @@ export function getPopular (prisma: PrismaClient) {
     return popular
 }
 
-export function getEssential (prisma: PrismaClient) { 
+export function getEssential(prisma: PrismaClient) {
 
-    const essential = prisma.blog.findMany({skip:0, take: 10,
+    const essential = prisma.blog.findMany({
+        skip: 0, take: 10,
         where: {
         },
         include: {
             // reviews: true,
             tags: true,
             author: true,
-            images:true
+            images: true
 
 
 
-        }})
+        }
+    })
     return essential
 }
 

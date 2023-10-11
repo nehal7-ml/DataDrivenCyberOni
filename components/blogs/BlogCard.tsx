@@ -1,13 +1,18 @@
+import Link from "next/link"
 import React from 'react'
 
-function BlogCard({ category, title }: { category: string, title: string }) {
+function BlogCard({ category, title, id }: { category: string, title: string, id: string }) {
     return (
-        <div className="dark:bg-slate-900 rounded-lg shadow-lg p-4">
-            <div className="text-indigo-500 text-sm font-semibold mb-2">{category}</div>
+        <div className="w-full h-full rounded-lg shadow-lg  dark:bg-slate-900 p-4">
+            <Link href={`/blogs/post/${id}`} className=" ">
+                <div className="text-indigo-500 text-sm font-semibold mb-2">{category}</div>
 
-            <h2 className="text-xl font-semibold mb-4">{title}</h2>
+                <h2 className="text-xl font-semibold mb-4">{title}</h2>
 
+            </Link>
         </div>
+
+
 
     )
 }

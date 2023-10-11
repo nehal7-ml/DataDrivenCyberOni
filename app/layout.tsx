@@ -33,7 +33,7 @@ export default async function RootLayout({
         <Suspense fallback="...">
           <Nav />
         </Suspense>
-        <main className="relative min-h-screen w-full lg:py-32 dark:bg-black">
+        <main className="relative min-h-screen w-full py-32 dark:bg-black">
           {children}
         </main>
         <Footer />

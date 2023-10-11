@@ -3,6 +3,7 @@ import { RecordDTO } from "@/crud/commonDTO"
 import React, { Suspense } from 'react'
 import parse from 'html-react-parser';
 import TextLoaders from "@/components/loaders/TextLoaders";
+import BlogLoader from "./loading";
 export const dynamic = 'force-dynamic'
 
 async function BlogPost({ params }: { params: { id: string } }) {
@@ -16,11 +17,12 @@ async function BlogPost({ params }: { params: { id: string } }) {
                     <div className="m-4">by. {blog.author.firstName} {blog.author.lastName} </div>
                 </div>
                 <div className="mx-10 m-2 flex flex-col justify-center items-center">
-                    <img className="object-cover m-2" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></img>
+                    {blog.images[0] ? <img className="object-cover m-2" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></img> : <></>}
                     <div className="m-2">{parse(blog.content)}</div>
                 </div>
             </div>
         </div>
+
     )
 }
 
