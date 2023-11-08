@@ -4,7 +4,7 @@ import { connectOrCreateObject as connectImages, createImageDTO } from "./images
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 
-export type createBlogDTO = {
+export type CreateBlogDTO = {
     title: string;
     subTitle: string;
     description: string;
@@ -17,7 +17,7 @@ export type createBlogDTO = {
     tags: createTagDTO[]
 }
 
-export type displayBlogDTO = {
+export type DisplayBlogDTO = {
     id: string;
     title: string;
     subTitle: string;
@@ -26,12 +26,15 @@ export type displayBlogDTO = {
     date: Date;
     content: string;
     template: string;
-    author: User;
+    author: User & {
+
+        image: Image
+    };
     tags: Tag[]
     images: Image[]
 }
 
-async function create(blog: createBlogDTO, prismaClient: PrismaClient) {
+async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
     let createdblog = await blogs.create({
         data: {
@@ -46,7 +49,7 @@ async function create(blog: createBlogDTO, prismaClient: PrismaClient) {
 
 }
 
-async function update(blogId: string, blog: createBlogDTO, prismaClient: PrismaClient) {
+async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
     const updatedBlog = await blogs.update({
         where: { id: blogId },
@@ -84,16 +87,15 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             subTitle: true,
             template: true,
             author: {
-                select: {
-                    id: true,
-                    email: true
+                include: {
+                    image: true,
                 }
             },
             tags: true,
             images: true
         }
     })
-    if (existingblog) return existingblog as displayBlogDTO;
+    if (existingblog) return existingblog as DisplayBlogDTO;
 
 }
 
@@ -125,7 +127,11 @@ export function getFeatured(prisma: PrismaClient) {
         where: { featured: true },
         include: {
             tags: true,
-            author: true,
+            author: {
+                include: {
+                    image: true,
+                }
+            },
             images: true
         }
     });
@@ -139,8 +145,12 @@ export function getRecent(prisma: PrismaClient) {
         where: { date: { gte: recentDate } },
         include: {
             tags: true,
-            author: true,
-            images: true
+            author: {
+
+                include: {
+                    image: true,
+                }
+            }, images: true
         }
     });
     return recent;
@@ -155,8 +165,12 @@ export function getPopular(prisma: PrismaClient) {
         include: {
             // reviews: true,
             tags: true,
-            author: true,
-            images: true
+            author: {
+
+                include: {
+                    image: true,
+                }
+            }, images: true
 
 
         }
@@ -173,7 +187,11 @@ export function getEssential(prisma: PrismaClient) {
         include: {
             // reviews: true,
             tags: true,
-            author: true,
+            author: {
+                include: {
+                    image: true
+                }
+            },
             images: true
 
 
@@ -183,6 +201,27 @@ export function getEssential(prisma: PrismaClient) {
     return essential
 }
 
+async function getAuthor(id: string, page: number, prisma: PrismaClient) {
+    const users = prisma.user;
+
+    const author = await users.findUnique({
+        where: { id }, include: {
+
+            image: true,
+            blogs: {
+                take: 10,
+                skip: (page - 1) * 10,
+                include: {
+                    images:true
+                }
+            }
+        }
+    })
+
+    return author
+
+}
 
 
-export { create, update, remove, read, getAll }
+
+export { create, update, remove, read, getAll, getAuthor }

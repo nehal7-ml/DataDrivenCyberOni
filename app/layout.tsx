@@ -5,6 +5,9 @@ import { sfPro, inter, abel } from "./fonts";
 import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
 import { Suspense } from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import NavBar from "@/components/layout/navbar";
 
 export const metadata = {
   title: "Precedent - Building blocks for your Next.js project",
@@ -26,14 +29,16 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body className={`${cx(sfPro.variable, inter.variable, abel.variable)} `}>
-        <div className="fixed h-screen w-full dark:bg-black" />
+        <div className="fixed h-screen w-full dark:bg-black dark:text-white" />
         <Suspense fallback="...">
-          <Nav />
+          <NavBar session={session} />
         </Suspense>
-        <main className="relative min-h-screen w-full py-32 dark:bg-black">
+        <main className="relative min-h-screen w-full dark:bg-black dark:text-white py-32">
           {children}
         </main>
         <Footer />

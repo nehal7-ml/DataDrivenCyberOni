@@ -95,10 +95,10 @@ export default function NavBar({ session }: { session: Session | null }) {
                       <Link href="/blogs">Blogs</Link>
                     </li>
                     <li>
-                      <Link href="#">Explore 2</Link>
+                      <Link href="/services">services</Link>
                     </li>
                     <li>
-                      <Link href="#">Explore 3</Link>
+                      <Link href="#"></Link>
                     </li>
                   </ul>
                 )}
