@@ -115,7 +115,7 @@ const homeSections: SectionProps[] = [
     title: "Data Driven Solutions",
     subTitle: "Transform, Automate, and Personalize: The AI-Driven Journey to Business Success!",
     content: <div>
-      Imagine a world where every decision is backed by data insights, where automation streamlines operations, and where every customer feels they're getting a uniquely tailored experience. This is not a dream; it's a reality for our partners. Dive into the success stories of businesses that took the leap with Cyberoni's AI solutions and saw their operations evolve in ways they never imagined.
+      Imagine a world where every decision is backed by data insights, where automation streamlines operations, and where every customer feels they`re getting a uniquely tailored experience. This is not a dream; it`s a reality for our partners. Dive into the success stories of businesses that took the leap with Cyberoni`s AI solutions and saw their operations evolve in ways they never imagined.
     </div>,
     image: '/hero-2.png',
     imageFirst: false
@@ -123,7 +123,7 @@ const homeSections: SectionProps[] = [
   {
     title: "Solutions Tailored For You",
     subTitle: "Harness the Power of YOUR Data with Cyberoni's Expert AI Models!",
-    content: <div>Every business is unique, and so is its data. Using AI models that haven't been trained on your specific business data is like trying to fit a square peg in a round hole. At Cyberoni, our deep expertise in data science allows us to craft AI solutions tailored just for you. By leveraging your own data, we ensure accurate predictions, unparalleled efficiency, and empowered decision-making. </div>,
+    content: <div>Every business is unique, and so is its data. Using AI models that haven`t been trained on your specific business data is like trying to fit a square peg in a round hole. At Cyberoni, our deep expertise in data science allows us to craft AI solutions tailored just for you. By leveraging your own data, we ensure accurate predictions, unparalleled efficiency, and empowered decision-making. </div>,
     image: '/hero-3.png',
     imageFirst: true
   },
@@ -131,7 +131,7 @@ const homeSections: SectionProps[] = [
   {
     title: "Elevating Support",
     subTitle: "Redefine Customer Interactions: AI-Powered Service & Support with Cyberoni!",
-    content: <div>The expectations of modern customers are ever-evolving. They demand swift, accurate, and personalized support round the clock. How can businesses meet such expectations without compromising efficiency? The answer lies in AI. Cyberoni's AI solutions seamlessly integrate into your customer service and tech support systems, ensuring instant responses, predictive problem-solving, and tailored interactions. </div>,
+    content: <div>The expectations of modern customers are ever-evolving. They demand swift, accurate, and personalized support round the clock. How can businesses meet such expectations without compromising efficiency? The answer lies in AI. Cyberoni`s AI solutions seamlessly integrate into your customer service and tech support systems, ensuring instant responses, predictive problem-solving, and tailored interactions. </div>,
     image: '/hero-4.png',
     imageFirst: false
   },
@@ -140,7 +140,7 @@ const homeSections: SectionProps[] = [
     title: "Data Driven Solutions",
     subTitle: "Transform, Automate, and Personalize: The AI-Driven Journey to Business Success!",
     content: <div>
-      Imagine a world where every decision is backed by data insights, where automation streamlines operations, and where every customer feels they're getting a uniquely tailored experience. This is not a dream; it's a reality for our partners. Dive into the success stories of businesses that took the leap with Cyberoni's AI solutions and saw their operations evolve in ways they never imagined.
+      Imagine a world where every decision is backed by data insights, where automation streamlines operations, and where every customer feels they`re getting a uniquely tailored experience. This is not a dream; it's a reality for our partners. Dive into the success stories of businesses that took the leap with Cyberoni`s AI solutions and saw their operations evolve in ways they never imagined.
     </div>,
     image: '/hero-5.png',
     imageFirst: true
