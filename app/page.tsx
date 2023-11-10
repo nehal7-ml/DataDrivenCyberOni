@@ -178,21 +178,21 @@ const sildes: SlideProps[] = [
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
-    name: 'Amaka Micheal',
+    name: 'Cody Johnston',
     designation: 'Media Executive, Buying & Control',
-    image: '',
+    image: '/prof1.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
-    name: 'Amaka Micheal',
+    name: 'John Smith',
     designation: 'Media Executive, Buying & Control',
-    image: '',
+    image: '/prof2.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
-    name: 'Amaka Micheal',
+    name: 'Micheal Scott',
     designation: 'Media Executive, Buying & Control',
-    image: '',
+    image: '/prof3.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
 ]
