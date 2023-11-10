@@ -1,5 +1,15 @@
 import ms from "ms";
 
+export interface HttpError extends Error {
+  status: number;
+  message: string;
+}
+
+export function HttpError(status: number, message: string) {
+  const error = Error(message) as HttpError;
+  error.status = status;
+  return error
+}
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
   if (!timestamp) return "never";
   return `${ms(Date.now() - new Date(timestamp).getTime())}${

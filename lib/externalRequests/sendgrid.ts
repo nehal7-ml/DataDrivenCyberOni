@@ -47,7 +47,7 @@ export async function sendMailHtml(sender: string, email: string, subject: strin
 
 }
 
-export async function contactForm(sender: string, message: string, subject: string, firstName:string,lastName:string) {
+export async function contactForm(sender: string, message: string, subject: string, firstName:string,lastName:string, referral:string) {
     const msg: sgMail.MailDataRequired = {
         to: process.env.CONTACT_EMAIL as string, // Change to your recipient
         from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
@@ -61,6 +61,7 @@ export async function contactForm(sender: string, message: string, subject: stri
             <div>
                 <p>message: ${message}</p>
                 <p>email: ${sender}</p>
+                <p>Reffral: ${referral}</p>
             </div>          
           <section>
         `
