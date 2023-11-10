@@ -66,3 +66,27 @@ export function getRandomFromArray(arr: Array<any>) :any{
   const randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex];
 }
+
+
+export function createBackgroundTemplate(formData: FormData) {
+  const backgroundData: { [key: string]: string } = {
+      "Active Rental Debt": formData.get('activeDebt') as string,
+      "Eviction ": formData.get('eviction') as string,
+      "Unpaid broken lease": formData.get('brokenLease') as string,
+      "Felony ": formData.get('felony') as string,
+      "Misdemeanor ": formData.get('misdemeanor') as string,
+  }
+  let backgroundString = ``
+
+  for (let key of Object.keys(backgroundData)) {
+      if (backgroundData[key]) {
+          backgroundString=backgroundString.concat(`<p>${backgroundData[key]}</p>`)
+      }
+  }
+
+  console.log(backgroundData, backgroundString);
+  if (backgroundString === '') {
+      backgroundString= backgroundString.concat(`<p>None</p>`)
+  }
+  return backgroundString
+}

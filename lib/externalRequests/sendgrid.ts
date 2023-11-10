@@ -16,7 +16,7 @@ export type Lead = {
 }
 
 
-export async function sendMagicLink({identifier}:SendVerificationRequestParams) {
+export async function sendMagicLink({ identifier }: SendVerificationRequestParams) {
 
 }
 
@@ -29,19 +29,41 @@ export async function sendMail(email: string, message: string) {
     }
 
     let response = await sgMail.send(msg);
-
-    console.log(response[0].body)
     return response[0].statusCode
 
 }
 
+export async function sendMailHtml(sender: string, email: string, subject: string ,message: string) {
+    const msg: sgMail.MailDataRequired = {
+        to: email, // Change to your recipient
+        from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
+        replyTo: sender,
+        subject: subject,
+        html: message,
+    }
 
-export async function contactForm(sender: string, message: string, subject: string) {
+    let response = await sgMail.send(msg);
+    return response[0].statusCode
+
+}
+
+export async function contactForm(sender: string, message: string, subject: string, firstName:string,lastName:string) {
     const msg: sgMail.MailDataRequired = {
         to: process.env.CONTACT_EMAIL as string, // Change to your recipient
         from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
-        subject: `Question/Message from ${sender} about ${subject}`,
-        text: message,
+        replyTo : sender,
+        subject: `Question/Message from ${sender} in ${subject}`,
+        html:`
+          <section>
+            <h1>Contact requested by ${firstName} ${lastName} </h1>
+            
+            <p>City: ${subject}</p>
+            <div>
+                <p>message: ${message}</p>
+                <p>email: ${sender}</p>
+            </div>          
+          <section>
+        `
     }
 
     let response = await sgMail.send(msg);
@@ -74,11 +96,36 @@ export async function addToSendGrid(lead: Lead) {
         body: data
     }
     let response = await client.request(request);
-    console.log(response[0].body)
     return response[0].statusCode
 
 }
 
+
+export async function sendPasswordEmail({ email, password }: { email: string, password: string }) {
+
+    const msg: sgMail.MailDataRequired = {
+        to: email, // Change to your recipient
+        from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
+        subject: 'Welcome to Apartment Guru',
+        html:`
+          <section>
+            <h1>Welcome to Apartment Guru</h1>
+            
+            <p>Login using the following credentials:</p>
+            <div>
+                <p>username: ${email}</p>
+                <p>password: ${password}</p>
+            </div>          
+          <section>
+        `
+    }
+
+    let response = await sgMail.send(msg);
+
+    // console.log(response[0].body)
+    return response[0].statusCode
+
+}
 
 async function getList(listName: string) {
     const queryParams = {
@@ -92,7 +139,7 @@ async function getList(listName: string) {
 
     let response = await client.request(request);
 
-    console.log(response[0].body)
+    // console.log(response[0].body)
     for (const list of (response[0].body as { result: Array<any> }).result) {
         if (list.name === listName) return list;
     }
