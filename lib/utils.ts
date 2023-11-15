@@ -100,3 +100,30 @@ export function createBackgroundTemplate(formData: FormData) {
   }
   return backgroundString
 }
+
+
+export function wrappedSlice(arr: Array<any>, startIndex: number, endIndex: number) {
+  if (arr.length === 0) {
+    return [];
+  }
+
+  // Handle negative indices
+  if (startIndex < 0) {
+    startIndex = arr.length + startIndex;
+  }
+  if (endIndex < 0) {
+    endIndex = arr.length + endIndex;
+  }
+
+  // Wrap indices to stay within the array bounds
+  startIndex = startIndex % arr.length;
+  endIndex = endIndex % arr.length;
+
+  // Handle wrapping where endIndex is smaller than startIndex
+  if (endIndex < startIndex) {
+    return arr.slice(startIndex).concat(arr.slice(0, endIndex + 1));
+  } else {
+    return arr.slice(startIndex, endIndex + 1);
+  }
+}
+

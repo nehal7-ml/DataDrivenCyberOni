@@ -1,3 +1,5 @@
+import ReviewCarousel from "@/components/ReviewCarousel";
+import { testimonials } from "@/data/testimonials";
 import { Activity, Monitor, Redo, ShoppingCart, BlocksIcon, Blocks, LayoutGrid, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -93,14 +95,14 @@ function Enterprise() {
                             <Image src={'/step-3.png'} alt="border" className="object-contain w-full" height={300} width={300} />
                             <div className="flex flex-col gap-3">
                                 <div className="text-[#E4A321] text-3xl">Proof of Concept</div>
-                                <div className="w-2/3 mx-auto"> Implement a pilot project using a subset of the client's data to demonstrate the effectiveness of the solution.</div>
+                                <div className="w-2/3 mx-auto"> Implement a pilot project using a subset of the client&apos;s data to demonstrate the effectiveness of the solution.</div>
                             </div>
                         </div>
                         <div className="flex-1">
                             <Image src={'/step-4.png'} alt="border" className="object-contain w-full" height={300} width={300} />
                             <div className="flex flex-col gap-3">
                                 <div className="text-[#E4A321] text-3xl">System Integration</div>
-                                <div className="w-2/3 mx-auto">Use APIs, middleware, or custom development to connect Cyberoni's software with existing databases, CRM, ERP, or other software systems.</div>
+                                <div className="w-2/3 mx-auto">Use APIs, middleware, or custom development to connect Cyberoni&apos;s software with existing databases, CRM, ERP, or other software systems.</div>
                             </div>
                         </div>
                     </div>
@@ -176,12 +178,12 @@ function Enterprise() {
 
             </section>
 
-            <section className="bg-enterprise-bg-2 bg-no-repeat bg-cover dark:bg-[#061122f1]  backdrop-blur-lg lg:min-h-screen py-10">
+            <section className="bg-enterprise-bg-2 bg-no-repeat bg-cover dark:bg-[#061122]  backdrop-blur-lg lg:min-h-screen py-10">
                 <div className="container mx-auto">
                     <div className="text-center">
                         <div className="font-bold text-[#5380EA]">Why choose us</div>
                         <div className="font-bold text-4xl">Why Select Cyberoni for Your Development Projects?</div>
-                        <div className="">Unlock the full potential of your online presence with Cyberoni. We're committed to excellence, continuously enhancing our methods and tools to ensure your web development experience is second to none.</div>
+                        <div className="">Unlock the full potential of your online presence with Cyberoni. We&apos;re committed to excellence, continuously enhancing our methods and tools to ensure your web development experience is second to none.</div>
                     </div>
 
                     <div className="flex flex-wrap mt-20 gap-5 justify-center   container">
@@ -199,19 +201,24 @@ function Enterprise() {
                         <div className=" flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black w-1/4 shadow-md">
                             <Image src={'/stopwatch.png'} alt="brain" height={50} width={50}   ></Image>
                             <div className="font-bold text-2xl">Efficient Delivery</div>
-                            <div className="text-zinc-800 text-base">At Cyberoni, we value your time. That's why we are committed to delivering high-quality, fully-tested websites promptly. We understand the pace of business and strive to provide you with fast turnaround times without compromising on quality. From initial concept to final launch, we streamline our development process to get your project live, allowing you to start meeting your business objectives faster.</div>
+                            <div className="text-zinc-800 text-base">At Cyberoni, we value your time. That&apos;s why we are committed to delivering high-quality, fully-tested websites promptly. We understand the pace of business and strive to provide you with fast turnaround times without compromising on quality. From initial concept to final launch, we streamline our development process to get your project live, allowing you to start meeting your business objectives faster.</div>
 
                         </div>
                         <div className=" flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black w-1/4 shadow-md">
 
                             <Image src={'/price-tag.png'} alt="brain" height={50} width={50}   ></Image>
                             <div className="font-bold text-2xl">Fair Pricing</div>
-                            <div className="text-zinc-800 text-base">We believe in offering outstanding value without hidden costs. Cyberoni provides competitive pricing structures that cater to businesses of all sizes. While maintaining high-quality standards, we ensure that your investment in your website is transparent and yields tangible results. Partner with us for cost-effective solutions that don't sacrifice quality.</div>
+                            <div className="text-zinc-800 text-base">We believe in offering outstanding value without hidden costs. Cyberoni provides competitive pricing structures that cater to businesses of all sizes. While maintaining high-quality standards, we ensure that your investment in your website is transparent and yields tangible results. Partner with us for cost-effective solutions that don&apos;t sacrifice quality.</div>
 
 
                         </div>
                     </div>
                 </div>
+            </section>
+
+            <section className="py-10 bg-enterprise-bg-3 bg-no-repeat bg-[length:100vw_60vw] dark:bg-[#061122]">
+                <div className="font-bold text-4xl text-center">Testimonial</div>
+                <ReviewCarousel reviews={testimonials} />
             </section>
 
         </div>);
