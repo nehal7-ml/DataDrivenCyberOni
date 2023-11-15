@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { Abel, Inter } from "next/font/google";
+import { Abel, Inter, Nunito } from "next/font/google";
 
 export const sfPro = localFont({
   src: "./SF-Pro-Display-Medium.otf",
@@ -17,4 +17,11 @@ export const abel = Abel({
   subsets: ['latin'],
   style: ["normal"],
   weight: ["400"]
+})
+
+export const nunito = Nunito({
+  variable: '--font-nunito',
+  weight: ["400"],
+  style: ["normal", 'italic'],
+  subsets: ['latin']
 })

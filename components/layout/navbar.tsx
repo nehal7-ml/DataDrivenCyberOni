@@ -45,7 +45,7 @@ export default function NavBar({ session }: { session: Session | null }) {
               height="30"
               className="mr-2 rounded-sm"
             ></Image>
-            <div>CynberOni</div>
+            <div>CyberOni</div>
           </Link>
 
 

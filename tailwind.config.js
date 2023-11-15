@@ -13,6 +13,8 @@ module.exports = {
         display: ["var(--font-sf)", "system-ui", "sans-serif"],
         default: ["var(--font-inter)", "system-ui", "sans-serif"],
         abel: ["var(--font-abel)", "system-ui", "sans", "serif"],
+        nunito: ["var(--font-nunito)", "system-ui", "sans", "serif"],
+
       },
       animation: {
         // Fade up and down
@@ -24,6 +26,7 @@ module.exports = {
       },
       backgroundImage: {
         "gradient-purple": "linear-gradient(to right,  #FF2DF7, #5200FF,#00F0FF)", // Add this line
+        "enterprise-bg": "url('/enterprise-bg.png')"
       },
       boxShadow: {
         'left-shift-lg': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
@@ -66,6 +69,9 @@ module.exports = {
           "100%": { opacity: 1, transform: "translateY(0)" },
         },
       },
+      colors: {
+        "service-greeen": "#33D3D4"
+      }
     },
   },
   plugins: [

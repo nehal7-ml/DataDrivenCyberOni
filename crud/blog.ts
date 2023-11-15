@@ -92,7 +92,10 @@ async function read(blogId: string, prismaClient: PrismaClient) {
                 }
             },
             tags: true,
-            images: true
+            images: true,
+            Likes:  true,
+            Views: true,
+
         }
     })
     if (existingblog) return existingblog as DisplayBlogDTO;
@@ -173,6 +176,11 @@ export function getPopular(prisma: PrismaClient) {
             }, images: true
 
 
+        },
+        orderBy: {
+            Likes: {
+                _count: 'asc'
+            },
         }
     })
     return popular

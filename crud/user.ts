@@ -1,7 +1,7 @@
 import { User, PrismaClient, Role } from "@prisma/client";
 import { connectOrCreateObject, createImageDTO } from "./images";
 import { createAddressDTO } from "./address";
-import { getAllRecordsDTO } from "./commonDTO";
+import { GetAllRecordsDTO } from "./commonDTO";
 
 
 export type createUserDTO = {
@@ -45,7 +45,7 @@ async function update(userId: string, user: createUserDTO, prismaClient: PrismaC
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { id: userId } })
 
-    if (existingUser) throw {status:400 ,message: `User ${user.email} doesn't exists`};
+    if (!existingUser) throw {status:400 ,message: `User ${user.email} doesn't exists`};
     else {
         let updatedUser = await users.update({
             where: { id: userId }, data: {
@@ -98,7 +98,7 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
     const totalCount = await users.count();
     const totalPages = Math.ceil(totalCount / pageSize);
 
-    return { records: allUsers, currentPage: page, totalPages, pageSize } as getAllRecordsDTO
+    return { records: allUsers, currentPage: page, totalPages, pageSize } as GetAllRecordsDTO
 
 }
 

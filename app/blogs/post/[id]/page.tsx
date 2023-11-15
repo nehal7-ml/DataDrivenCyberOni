@@ -10,22 +10,24 @@ export const dynamic = 'force-dynamic'
 async function BlogPost({ params }: { params: { id: string } }) {
     const blog = await getData(params.id);
     return (
-        <div className="realtive w-full dark:text-white">
+        <div className="realtive w-full dark:text-white h-full">
             <ProgressBar />
-            <div className="container mx-auto ">
-                <div className="">
-                    <div className="m-4 text-4xl font-bold">{blog.title}</div>
-                    <div className="m-4 font-bold">{blog.description}</div>
-                    <div className="m-4">by. {blog.author.firstName} {blog.author.lastName} </div>
+            <div className="w-full ">
+                <div className="w-full bg-white dark:bg-black py-5">
+                    <div className="container mx-auto ">
+                        <div className="m-4 text-4xl font-bold">{blog.title}</div>
+                        <div className="m-4 font-bold">{blog.description}</div>
+                        <div className="m-4">by. {blog.author.firstName} {blog.author.lastName} </div>
+                    </div>
                 </div>
-                <div className="mx-10 m-2 flex flex-col justify-center items-center">
+                <div className="container mx-auto flex flex-col justify-center items-center">
                     {blog.images[0] ? <Image className="object-cover m-2" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></Image> : <></>}
                     <div className="m-2">{parse(blog.content)}</div>
                 </div>
 
 
                 <div className="w-full flex flex-col items-center justify-center gap-5">
-                    <Link href={`/blogs/author/${blog.author.id}/1`} >
+                    <Link href={`/blogs/author/${blog.author.id}?page=1`} >
                         <div className="w-20 h-20 rounded-full overflow-hidden">
                             {blog.author.image ? <Image src={blog.author.image.src} alt="image" height={50} width={50} />
                                 :

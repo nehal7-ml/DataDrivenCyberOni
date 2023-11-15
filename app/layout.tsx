@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import cx from "classnames";
-import { sfPro, inter, abel } from "./fonts";
+import { sfPro, inter, abel, nunito } from "./fonts";
 import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
 import { Suspense } from "react";
@@ -33,12 +33,12 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${cx(sfPro.variable, inter.variable, abel.variable)} `}>
+      <body className={`${cx(sfPro.variable, inter.variable, abel.variable, nunito.variable)} `}>
         <div className="fixed h-screen w-full dark:bg-black dark:text-white" />
         <Suspense fallback="...">
           <NavBar session={session} />
         </Suspense>
-        <main className="relative min-h-screen w-full dark:bg-black dark:text-white py-32">
+        <main className="relative min-h-screen w-full dark:bg-black dark:text-white pt-32">
           {children}
         </main>
         <Footer />

@@ -242,6 +242,13 @@ model Service {
   @@index([imageId])
 }
 
+model Faq {
+  id       String @id @default(uuid())
+  question String
+  answer   String
+  
+}
+
 model Payment {
   id        String   @id @default(uuid())
   stripeId  String
