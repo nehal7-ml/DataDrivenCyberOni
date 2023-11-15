@@ -73,7 +73,7 @@ export default function NavBar({ session }: { session: Session | null }) {
             <Link href="#" className="hover:text-blue-500">
               Team
             </Link>
-            <Link href="#" className="hover:text-blue-500">
+            <Link href="/enterprise" className="hover:text-blue-500">
               Enterprise
             </Link>
             <div className="relative group">

@@ -26,7 +26,9 @@ module.exports = {
       },
       backgroundImage: {
         "gradient-purple": "linear-gradient(to right,  #FF2DF7, #5200FF,#00F0FF)", // Add this line
-        "enterprise-bg": "url('/enterprise-bg.png')"
+        "enterprise-bg": "url('/enterprise-bg.png')",
+        "enterprise-bg-2": "url('/enterprise-bg-2.png')"
+
       },
       boxShadow: {
         'left-shift-lg': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
