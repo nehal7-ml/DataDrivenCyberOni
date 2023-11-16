@@ -34,7 +34,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${cx(sfPro.variable, inter.variable, abel.variable, nunito.variable)} `}>
-        <div className="fixed h-screen w-full dark:bg-black dark:text-white" />
+        <div className="fixed h-full w-screen dark:bg-black dark:text-white" />
         <Suspense fallback="...">
           <NavBar session={session} />
         </Suspense>

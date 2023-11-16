@@ -30,10 +30,7 @@ export default function NavBar({ session }: { session: Session | null }) {
   return (
     <>
       <div
-        className={`fixed top-0 w-full flex justify-center ${scrolled
-          ? "border-b border-gray-200 bg-white/50 dark:bg-black/50 backdrop-blur-xl"
-          : "bg-white/0"
-          } z-50 lg:h-24`}
+        className={`fixed top-0 w-screen flex justify-center backdrop-blur-sm border-b-2 border-white/50  z-50 lg:h-24`}
       >
         <div className=" flex h-16 max-w-screen-xl items-center justify-between w-full text-black dark:text-white">
 
@@ -49,7 +46,8 @@ export default function NavBar({ session }: { session: Session | null }) {
           </Link>
 
 
-          <div className={` ${mobileMenuOpen ? 'hidden' : 'animate-slide-left-fade flex py-5 text-center z-50' } fixed right-0  bg-white dark:bg-zinc-950 gap-10  top-full h-screen w-full flex-col items-center justify-start lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
+          <div className={` ${mobileMenuOpen ? 'hidden' : 'flex fixed right-0 h-screen w-screen pt-10 animate-slide-left-fade text-center z-[100]'}  bg-white dark:bg-zinc-950 gap-10  top-full h-screen w-full flex-col items-center justify-start lg:pt-0 lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
+
             <div className="relative group">
               <button
                 onClick={toggleProductsDropdown}
@@ -104,9 +102,14 @@ export default function NavBar({ session }: { session: Session | null }) {
             <Link href="#" className="hover:text-blue-500">
               Pricing
             </Link>
+
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  lg:hidden" >Sign In</Link>
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex lg:hidden">
+              Sign Up
+            </Link>
           </div>
-          <div className="flex items-center space-x-4">
-            <div className="relative">
+          <div className=" items-center space-x-4 flex">
+            <div className="relative block">
               <input
                 type="text"
                 placeholder="Search"
@@ -115,13 +118,13 @@ export default function NavBar({ session }: { session: Session | null }) {
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
               </button>
             </div>
-            <Link href={'/api/auth/signin'} className="hover:text-blue-500">Sign In</Link>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md">
+            <Link href={'/api/auth/signin'} className="hover:text-blue-500 hidden lg:flex" >Sign In</Link>
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md hidden lg:flex">
               Sign Up
             </Link>
           </div>
 
-          <div className=" lg:hidden">
+          <div className="block lg:hidden">
             <button
               onClick={toggleMobileMenu}
               aria-label="Navigation Options"

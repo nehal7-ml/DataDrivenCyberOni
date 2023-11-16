@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, ChevronsLeft } from "lucide-react";
 const Pagination = ({ currentPage, totalPages, pathname }: { currentPage: number, totalPages: number, pathname: string }) => {
     const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
     return (
-        <div className="flex justify-center space-x-2">
+        <div className="flex justify-center space-x-2 container flex-wrap ">
             {currentPage > 1 && (
                 <Link
                     href={{ query: { page: currentPage - 1 }, pathname }}

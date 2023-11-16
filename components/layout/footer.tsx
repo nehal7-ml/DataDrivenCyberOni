@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="relative container mx-auto  z-50 text w-full py-5 text-center  dark:text-white">
+    <div className="relative container mx-auto  z-50 text w-full py-5 text-center  dark:text-white h-fit">
       <div className="h-[1px]  bg-gradient-purple"></div>
       <div className="grid gap-3 grid-rows-2 grid-cols-1 lg:grid-rows-1  lg:grid-cols-2 p-4">
         <div className="flex flex-col">
