@@ -78,14 +78,14 @@ export default function NavBar({ session }: { session: Session | null }) {
             </Link>
             <div className="relative group">
               <button
-                onClick={toggleExploreDropdown}
-                className="md:focus:outline-none hover:text-blue-500"
+
+                className=" peer md:focus:outline-none hover:text-blue-500"
               >
                 Explore
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
-              {exploreDropdownOpen && (
-                <ul className="absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-1">
+              {(
+                <ul className="hidden peer-focus:block hover:block absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-1">
                   <li>
                     <Link href="/blogs">Blogs</Link>
                   </li>
