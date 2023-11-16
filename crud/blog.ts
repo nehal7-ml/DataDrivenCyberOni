@@ -1,4 +1,4 @@
-import { Blog, PrismaClient, Tag, User, Image } from "@prisma/client";
+import { Blog, PrismaClient, Tag, User, Image, BlogComment, BlogLike, BlogView } from "@prisma/client";
 import { connectOrCreateObject as connectTags, CreateTagDTO } from "./tags";
 import { connectOrCreateObject as connectImages, CreateImageDTO } from "./images";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -12,7 +12,7 @@ export type CreateBlogDTO = {
     date: Date;
     content: string;
     template: string;
-    author: { id: string },
+    author: { id?: string, email: string },
     images: CreateImageDTO[],
     tags: CreateTagDTO[]
 }
@@ -31,7 +31,17 @@ export type DisplayBlogDTO = {
         image: Image
     };
     tags: Tag[]
-    images: Image[]
+    images: Image[],
+    Comments?: BlogComment[],
+    Likes?: BlogLike[],
+    Views?: BlogView[]
+}
+
+export type CommentDTO = {
+    name: string,
+    email: string,
+    comment: string,
+    blogId: string,
 }
 
 async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
@@ -39,9 +49,9 @@ async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
     let createdblog = await blogs.create({
         data: {
             ...blog,
-            images: { create: blog.images },
+            images: { connect: blog.images.map(image => { return { id: image.id as string } }) },
             tags: { connectOrCreate: connectTags(blog.tags) },
-            author: { connect: { id: blog.author.id } }
+            author: { connect: { email: blog.author.email } }
         }
     });
     return createdblog
@@ -57,12 +67,13 @@ async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaC
             ...blog,
             images: { connectOrCreate: connectImages(blog.images) },
             tags: { connectOrCreate: connectTags(blog.tags) },
-            author: { connect: { id: blog.author.id } }
+            author: { connect: { email: blog.author.email } }
         }
     })
     return updatedBlog
 
 }
+
 
 
 async function remove(blogId: string, prismaClient: PrismaClient) {
@@ -72,6 +83,8 @@ async function remove(blogId: string, prismaClient: PrismaClient) {
         await blogs.delete({ where: { id: blogId } })
     }
 }
+
+
 async function read(blogId: string, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
     const existingblog = await blogs.findUnique({
@@ -93,8 +106,11 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             },
             tags: true,
             images: true,
-            Likes:  true,
+            Likes: true,
             Views: true,
+            Comments: {
+                take: 10, skip: 0
+            }
 
         }
     })
@@ -220,7 +236,7 @@ async function getAuthor(id: string, page: number, prisma: PrismaClient) {
                 take: 10,
                 skip: (page - 1) * 10,
                 include: {
-                    images:true
+                    images: true
                 }
             }
         }
@@ -231,5 +247,30 @@ async function getAuthor(id: string, page: number, prisma: PrismaClient) {
 }
 
 
+async function addComment(comment: CommentDTO, prisma: PrismaClient) {
+    const comments = prisma.blogComment;
+    const newComment = await comments.create({
+        data: {
+            ...comment,
+            blogId: undefined,
+            Blog: { connect: { id: comment.blogId } }
+        }
+    })
 
-export { create, update, remove, read, getAll, getAuthor }
+    return newComment
+}
+
+async function getComments(id: string, page: number, prisma: PrismaClient) {
+    const comments = prisma.blogComment;
+
+    const readComments = await comments.findMany({
+        skip: (page - 1) * 10, take: 10,
+        where: {
+            blogId: id,
+        }
+    })
+
+    return readComments
+}
+
+export { create, update, remove, read, getAll, getAuthor, addComment, getComments }

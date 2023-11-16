@@ -5,13 +5,22 @@ import React from 'react'
 function BlogLoader() {
     return (
         <div className="w-full h-[60vh]">
-            <div className="container mx-auto ">
-                <div className="mx-10">
-                    <TextLoaders></TextLoaders>
-                    <TextLoaders></TextLoaders>
+            <div className="">
+                <div className="w-full bg-white dark:bg-black py-5">
+                    <div className="container mx-auto ">
+                        <div className="w-60">
+                            <TextLoaders ></TextLoaders>
+                        </div>
+                        <div className="w-24">
+                            <TextLoaders></TextLoaders>
+                        </div>
+                        <div className="w-24">
+                            <TextLoaders></TextLoaders>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="conatiner mx-10 my-10 flex flex-wrap overflow-hidden ">
+                <div className="container mx-auto my-10 flex flex-wrap overflow-hidden  py-10 px-10">
                     {new Array(30).fill(1).map((value, index) => {
 
                         return (

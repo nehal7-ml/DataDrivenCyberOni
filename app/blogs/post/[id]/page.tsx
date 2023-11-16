@@ -26,7 +26,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
                     </div>
                 </div>
                 <div className="relative container mx-auto flex flex-col justify-center items-center py-10 px-10">
-                    <BlogContainer />
+                    <BlogContainer blog={blog} />
                     {blog.images[0] ? <Image className="object-cover m-2" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></Image> : <></>}
                     <div className="m-2">{parse(blog.content)}</div>
                 </div>
@@ -45,7 +45,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
                         {blog.author.firstName}
                     </div>
                 </div>
-                <CommentForm />
+                <CommentForm id={params.id} comments={blog.Comments} />
             </div>
         </div>
 

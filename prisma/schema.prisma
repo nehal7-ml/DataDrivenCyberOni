@@ -163,22 +163,36 @@ model Order {
 }
 
 model Blog {
-  id          String     @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   subTitle    String
-  description String     @db.Text
-  featured    Boolean    @default(false)
+  description String        @db.Text
+  featured    Boolean       @default(false)
   images      Image[]
-  author      User       @relation(fields: [userId], references: [id])
+  author      User          @relation(fields: [userId], references: [id])
   date        DateTime
-  content     String     @db.LongText
+  content     String        @db.LongText
   tags        Tag[]
   template    String
   userId      String
   Likes       BlogLike[]
   Views       BlogView[]
+  Comments    BlogComment[]
 
   @@index([userId])
+}
+
+model BlogComment {
+  id        String   @id @default(uuid())
+  comment   String   @db.Text
+  name      String
+  email     String
+  Blog      Blog     @relation(fields: [blogId], references: [id])
+  blogId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([blogId])
 }
 
 model BlogLike {
