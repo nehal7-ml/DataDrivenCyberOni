@@ -1,8 +1,8 @@
 import { PrismaClient, SubService } from "@prisma/client"
-import { createImageDTO } from "./images";
-import { connectOrCreateObject, createTagDTO } from "./tags";
-export type createSubServiceDTO = {
-    id?:string;
+import { CreateImageDTO } from "./images";
+import { connectOrCreateObject, CreateTagDTO } from "./tags";
+export type CreateSubServiceDTO = {
+    id?: string;
     title: string;
     pricingModel: string;
     discounts: string;
@@ -15,11 +15,11 @@ export type createSubServiceDTO = {
     overheadCost: number,
     complexity: number,
     skillLevel: string,
-    image?: createImageDTO,
-    tags?: createTagDTO[],
+    image?: CreateImageDTO,
+    tags?: CreateTagDTO[],
 }
 
-export async function create(newSubService: createSubServiceDTO, serviceId: string, prismaClient: PrismaClient) {
+export async function create(newSubService: CreateSubServiceDTO, serviceId: string, prismaClient: PrismaClient) {
     const subServices = prismaClient.subService;
     const newRecord = await subServices.create({
         data: {
@@ -41,11 +41,13 @@ export async function create(newSubService: createSubServiceDTO, serviceId: stri
         }
     })
 
+
+
     return newRecord;
 
 }
 
-export async function update(subServiceID: string, subService: createSubServiceDTO, serviceId: string, prismaClient: PrismaClient) {
+export async function update(subServiceID: string, subService: CreateSubServiceDTO, serviceId: string, prismaClient: PrismaClient) {
 
     const subServices = prismaClient.subService;
     const newRecord = await subServices.update({

@@ -38,7 +38,7 @@ export default async function RootLayout({
         <Suspense fallback="...">
           <NavBar session={session} />
         </Suspense>
-        <main className="relative min-h-screen w-full dark:bg-black dark:text-white pt-32">
+        <main className="relative min-h-screen w-full dark:bg-black dark:text-white pt-24 px-10">
           {children}
         </main>
         <Footer />

@@ -5,7 +5,7 @@ function BlogListLayout({ children }: {
 }) {
     return (
         <>
-            <div className="py-32">
+            <div className="pb-20">
                 <Suspense>{children}</Suspense>
             </div>
         </>

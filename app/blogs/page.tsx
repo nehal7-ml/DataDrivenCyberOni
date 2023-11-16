@@ -21,7 +21,7 @@ async function Blogs() {
         <div className="z-10  dark:text-white ">
             <div className="container mx-auto my-10">
                 <div className="flex flex-col lg:flex-row  w-full my-10">
-                    <div className="h-[45vh] w-full  rounded-lg">
+                    <div className="w-full  rounded-lg">
                         {data.featured ? <DetailedCard
                             id={data.featured.id}
 
@@ -34,11 +34,11 @@ async function Blogs() {
                         }
                     </div>
                     <div className="flex flex-col p-5 w-full lg:w-1/4 ">
-                        <div className="flex justify-between p-4 border-b-1 dark:border-gray-300">
+                        <div className="flex justify-between p-4 border-b-1 dark:border-gray-300 h-full">
                             <span className="text-xl font-bold">New blogs</span>
                             <Link href={'/blogs/new'} className="hover:underline text-gray-600 dark:text-gray-300 hover:text-[#FF5480]"> view all new</Link>
                         </div>
-                        {data.recent.slice(0, 6).map((blog, index) => {
+                        {data.recent.slice(0, 4).map((blog, index) => {
                             return (
                                 <Link key={index} href={`/blogs/post/${blog.id}`} className="p-5">
                                     <div key={index} className="flex flex-col">
@@ -77,7 +77,7 @@ async function Blogs() {
             <div className="my-10 container mx-auto">
                 <div className="text-4xl font-bold my-2 flex justify-between">Essential <Link href={'/blogs/essential'} className="text-base text-[#FF5480] underline active:text-gray-400">view all</Link></div>
                 <div className="flex flex-col lg:flex-row my-10">
-                    <div className=" rounded-lg lg:w-1/2 lg:h-96">  
+                    <div className=" rounded-lg lg:w-1/2 lg:h-96">
                         <DetailedCard
                             id={data.essential[0].id}
                             author={data.essential[0].author.firstName || ""}

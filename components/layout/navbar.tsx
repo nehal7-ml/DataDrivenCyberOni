@@ -33,7 +33,7 @@ export default function NavBar({ session }: { session: Session | null }) {
         className={`fixed top-0 w-full flex justify-center ${scrolled
           ? "border-b border-gray-200 bg-white/50 dark:bg-black/50 backdrop-blur-xl"
           : "bg-white/0"
-          } z-50 lg:h-32`}
+          } z-50 lg:h-24`}
       >
         <div className=" flex h-16 max-w-screen-xl items-center justify-between w-full text-black dark:text-white">
 

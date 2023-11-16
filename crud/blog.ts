@@ -1,6 +1,6 @@
 import { Blog, PrismaClient, Tag, User, Image } from "@prisma/client";
-import { connectOrCreateObject as connectTags, createTagDTO } from "./tags";
-import { connectOrCreateObject as connectImages, createImageDTO } from "./images";
+import { connectOrCreateObject as connectTags, CreateTagDTO } from "./tags";
+import { connectOrCreateObject as connectImages, CreateImageDTO } from "./images";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 
@@ -13,8 +13,8 @@ export type CreateBlogDTO = {
     content: string;
     template: string;
     author: { id: string },
-    images: createImageDTO[],
-    tags: createTagDTO[]
+    images: CreateImageDTO[],
+    tags: CreateTagDTO[]
 }
 
 export type DisplayBlogDTO = {

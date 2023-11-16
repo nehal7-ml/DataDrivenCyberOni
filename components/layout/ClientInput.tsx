@@ -8,7 +8,7 @@ function ClientInput(props: DetailedHTMLProps<InputHTMLAttributes<HTMLInputEleme
     useEffect(() => {
         setIsClient(true)
     }, [])
-    return (<>{isClient? <input {...props} /> : <input className={props.className} />}</>);
+    return (<>{isClient? <input {...props} /> : <input defaultValue={""} className={props.className} />}</>);
 }
 
 export default ClientInput
