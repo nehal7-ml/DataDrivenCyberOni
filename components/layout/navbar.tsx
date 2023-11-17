@@ -30,7 +30,7 @@ export default function NavBar({ session }: { session: Session | null }) {
   return (
     <>
       <div
-        className={`fixed top-0 w-screen flex justify-center backdrop-blur-sm border-b-2 border-white/50  z-50 lg:h-24`}
+        className={`fixed top-0 w-screen ${scrolled? "hidden": 'flex' } justify-center backdrop-blur-sm border-b-2 border-white/50  z-50 lg:h-24`}
       >
         <div className=" flex h-16 max-w-screen-xl items-center justify-between w-full text-black dark:text-white">
 
@@ -46,7 +46,7 @@ export default function NavBar({ session }: { session: Session | null }) {
           </Link>
 
 
-          <div className={` ${mobileMenuOpen ? 'hidden' : 'flex fixed right-0 h-screen w-screen pt-10 animate-slide-left-fade text-center z-[100]'}  bg-white dark:bg-zinc-950 gap-10  top-full h-screen w-full flex-col items-center justify-start lg:pt-0 lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
+          <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex fixed right-0 h-screen w-screen pt-10 animate-slide-left-fade text-center z-[100]'}  bg-white dark:bg-zinc-950 gap-10  top-full h-screen w-full flex-col items-center justify-start lg:pt-0 lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
 
             <div className="relative group">
               <button

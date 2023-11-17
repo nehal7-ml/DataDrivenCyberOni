@@ -31,10 +31,10 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
 
     return (
         <>
-            <div className="container mx-auto">
+            <div className="container mx-auto my-10">
                 <div className="flex justify-between mb-5">
-                    <div className="text-4xl">Comments</div>
-                    <Link href={'#commentForm'} className="border-rose-600 border-2 bg-transparent rounded-full p-5">Leave a comment</Link>
+                    <div className="text-xl lg:text-4xl">Comments</div>
+                    <Link href={'#commentForm'} className="border-rose-600 border-2 bg-transparent rounded-full lg:p-5 text-center p-2">Leave a comment</Link>
                 </div>
                 <div>
                     <span className="font-bold">Comment policy</span>: We love comments and appreciate the time that readers spend to share ideas and give feedback. However, all comments are manually moderated and those deemed to be spam or solely promotional will be deleted.
@@ -64,7 +64,7 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
                 </div>
             </div>
 
-            <form id="commentForm" onSubmit={handleSubmit} className=" container rounded-lg p-24 mx-auto my-10 bg-gray-50 dark:bg-zinc-700 shadow-xl">
+            <form id="commentForm" onSubmit={handleSubmit} className=" container rounded-lg lg:p-24 p-5 mx-auto my-10 bg-gray-50 dark:bg-zinc-700 shadow-xl">
                 <div className="relative mb-4">
 
                     <textarea
@@ -83,7 +83,7 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
                 </div>
                 <div className="relative my-10">
 
-                    <ClientInput
+                    <input
                         className=" peer shadow-lg appearance-none border rounded w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                         id="name"
                         type="text"
@@ -98,7 +98,7 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
                 </div>
                 <div className="relative my-10">
 
-                    <input
+                    <ClientInput
                         className="peer shadow-lg appearance-none border rounded w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                         id="email"
                         type="email"
