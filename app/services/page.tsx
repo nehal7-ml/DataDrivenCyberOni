@@ -1,8 +1,25 @@
-import { read } from "@/crud/service";
+import { DisplayServiceDTO, read } from "@/crud/service";
 import prisma from "@/lib/prisma";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export let metadata: Metadata = {
+    title: "",
+    description: "",
+    openGraph: {},
+    category: 'blog'
+};
 async function Services() {
-    const service = await read("432e1392-4823-4cc5-8886-d116d11a3e91", prisma)
+    const service = await read("432e1392-4823-4cc5-8886-d116d11a3e91", prisma) as DisplayServiceDTO
+    metadata.title = service.title as string
+    metadata.description = service.previewContent
+    metadata.openGraph = {
+        type: 'article',
+        title: service.title,
+        description: service.previewContent,
+        images: [service.image?.src as string],
+        tags: service.tags?.map(tag => tag.name)
+    }
     return (
 
         <div className="">
