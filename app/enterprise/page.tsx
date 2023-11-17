@@ -8,10 +8,10 @@ function Enterprise() {
     return (
 
         <div className="w-full">
-            <section className="w-full dark:bg-[#071235]">
-                <div className="relative lg:h-[50vh] bg-enterprise-bg bg-no-repeat bg-cover bg-opacity-25  backdrop-blur-md">
+            <section className="w-full ">
+                <div className="relative lg:h-[50vh] bg-enterprise-bg bg-no-repeat bg-[length:100vw_50vw] dark:bg-[#061122]">
                     <div className="flex flex-col justify-center items-center container mx-auto h-full ">
-                        <div className=" relative text-6xl text-center leading-relaxed overflow-visible line-clamp-3 font-nunito font-bold  w-[800px]">
+                        <div className=" relative text-6xl text-center leading-relaxed overflow-visible line-clamp-3 font-nunito font-bold w-screen lg:w-[800px]">
                             <Image className="absolute -z-10 w-full " src={'/enterprise-hero.png'} alt="enterprise-hero" height={300} width={900} />
 
                             <div className="z-20">
@@ -59,7 +59,7 @@ function Enterprise() {
 
                     </div>
 
-                    <div className="flex items-center justify-center my-5">
+                    <div className="flex  items-center justify-center my-5">
                         <div className="text-center text-[#5380EA] text-3xl w-80">Thank you for your interest in us!</div>
                     </div>
                     <div className="flex flex-col font-bold font-nunito items-center justify-center my-5 text-5xl">
@@ -76,7 +76,7 @@ function Enterprise() {
                         <div className="mx-5 w-1/3 text-center">A four-part sequence, each representing a pivotal stage or element in the business strategy.</div>
                     </div>
 
-                    <div className="w-full grid grid-cols-4 grid-rows-1 gap-3 text-center">
+                    <div className="w-full grid grid-cols-1 grid-rows-4 lg:grid-cols-4 lg:grid-rows-1 gap-3 text-center">
                         <div className="flex-1">
                             <Image src={'/step-1.png'} alt="border" className="object-contain w-full" height={300} width={300} />
                             <div className="flex flex-col gap-3">
@@ -111,67 +111,61 @@ function Enterprise() {
 
 
             <section className="bg-[#EBF0FF] dark:bg-[#121212] py-10">
-                <div className="container mx-auto flex lg:flex-row gap-5 p-5">
-                    <div className="w-1/2">
+                <div className="container mx-auto flex flex-col lg:flex-row gap-5 p-5">
+                    <div className="lg:w-1/2">
                         <div className="font-bold text-[#2478FE] text-2xl">Service we Offer</div>
                         <div className="text-4xl font-extrabold font-nunito">Cyberoni is committed to forging genuine partnerships, delivering exceptional value in every investment. Our expertise spans multiple domains, including but not limited to:</div>
                     </div>
-                    <div className="grid grid-cols-2 grid-rows-2 w-1/2 gap-5">
-                        <div className="relative p-5 overflow-hidden h-52 rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
-                            <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
-                            <div className="w-full flex justify-start">
-                                <Monitor />
+                    <div className="lg:w-1/2 container overflow-x-auto ">
+                        <div className="grid grid-cols-4 lg:grid-cols-2 lg:grid-rows-2  gap-5 w-fit">
+                            <div className="relative p-5 overflow-hidden h-fit lg:h-52  rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
+                                <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
+                                <div className="w-full flex justify-start">
+                                    <Monitor />
+                                </div>
+                                <div className="font-bold text-2xl">Web Design & Web Development</div>
+                                <div className="flex justify-end w-full">
+                                    <Link className=" bg-blue-400 rounded-sm shadow-md p-3" href={'/services/web-development'}>
+                                        <Redo />
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="font-bold text-2xl">Web Design & Web Development</div>
-
-                            <div className="flex justify-end w-full">
-                                <Link className=" bg-blue-400 rounded-sm shadow-md p-3" href={'/services/web-development'}>
-                                    <Redo />
-                                </Link>
+                            <div className="relative p-5 overflow-hidden h-fit lg:h-52  rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
+                                <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
+                                <div className="w-full flex justify-start">
+                                    <ShoppingCart />
+                                </div>
+                                <div className="font-bold text-2xl">E-commerce Solutions</div>
+                                <div className="flex justify-end w-full">
+                                    <Link className=" bg-blue-400 rounded-sm shadow-md p-3" href={'/services/web-development'}>
+                                        <Redo />
+                                    </Link>
+                                </div>
                             </div>
-
-                        </div>
-                        <div className="relative p-5 overflow-hidden h-52 rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
-                            <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
-                            <div className="w-full flex justify-start">
-                                <ShoppingCart />
+                            <div className="relative p-5 overflow-hidden h-fit lg:h-52  rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
+                                <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
+                                <div className="w-full flex justify-start">
+                                    <LayoutGrid />
+                                </div>
+                                <div className="font-bold text-2xl">Customized application development</div>
+                                <div className="flex justify-end w-full">
+                                    <Link className=" bg-blue-400 rounded-sm shadow-md p-3" href={'/services/web-development'}>
+                                        <Redo />
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="font-bold text-2xl">E-commerce Solutions</div>
-
-                            <div className="flex justify-end w-full">
-                                <Link className=" bg-blue-400 rounded-sm shadow-md p-3" href={'/services/web-development'}>
-                                    <Redo />
-                                </Link>
+                            <div className="relative p-5 overflow-hidden h-fit lg:h-52  rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
+                                <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
+                                <div className=" relative w-full flex justify-start">
+                                    <Activity className="" />
+                                </div>
+                                <div className="font-bold text-2xl">Search Engine Optimization & Digital Marketing</div>
+                                <div className="flex justify-end w-full">
+                                    <Link className=" bg-blue-400 rounded-sm shadow-md p-3" href={'/services/web-development'}>
+                                        <Redo />
+                                    </Link>
+                                </div>
                             </div>
-
-                        </div>
-                        <div className="relative p-5 overflow-hidden h-52 rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
-                            <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
-                            <div className="w-full flex justify-start">
-                                <LayoutGrid />
-                            </div>
-                            <div className="font-bold text-2xl">Customized application development</div>
-
-                            <div className="flex justify-end w-full">
-                                <Link className=" bg-blue-400 rounded-sm shadow-md p-3" href={'/services/web-development'}>
-                                    <Redo />
-                                </Link>
-                            </div>
-
-                        </div>
-                        <div className="relative p-5 overflow-hidden h-52 rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
-                            <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
-                            <div className=" relative w-full flex justify-start">
-                                <Activity className="" />
-                            </div>
-                            <div className="font-bold text-2xl">Search Engine Optimization & Digital Marketing</div>
-
-                            <div className="flex justify-end w-full">
-                                <Link className=" bg-blue-400 rounded-sm shadow-md p-3" href={'/services/web-development'}>
-                                    <Redo />
-                                </Link>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -186,25 +180,25 @@ function Enterprise() {
                         <div className="">Unlock the full potential of your online presence with Cyberoni. We&apos;re committed to excellence, continuously enhancing our methods and tools to ensure your web development experience is second to none.</div>
                     </div>
 
-                    <div className="flex flex-wrap mt-20 gap-5 justify-center   container">
+                    <div className="flex flex-wrap mt-20 gap-5 justify-center container">
 
-                        <div className="flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black w-1/4 shadow-md">
+                        <div className="flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black lg:w-1/4 shadow-md">
                             <Image src={'/team.png'} alt="brain" height={50} width={50}   ></Image>
                             <div className="font-bold text-2xl">Experience</div>
                             <div className="text-zinc-800 text-base">With Cyberoni, you gain access to a wealth of professional web development experience. We stay at the forefront of technology and trends to ensure that your project not only meets but exceeds industry standards. Our goal is to transform your vision into a digital reality, delivering a project that is not just complete but ahead of its time. Our team’s dedication to growth ensures your website will always be on the cutting edge.</div>
                         </div>
-                        <div className=" flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black w-1/4 shadow-md">
+                        <div className=" flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black lg:w-1/4 shadow-md">
                             <Image src={'/brain.png'} alt="brain" height={50} width={50}   ></Image>
                             <div className="font-bold text-2xl">Committed Team</div>
                             <div className="text-zinc-800 text-base">Our team is the heart of Cyberoni. We are a group of driven, tech-savvy professionals, dedicated to delivering only the best. We understand that our success is measured by the success of your website. That’s why we immerse ourselves in every project, applying meticulous attention to detail to create websites that are not just functional but also thrive in today’s digital landscape.</div>
                         </div>
-                        <div className=" flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black w-1/4 shadow-md">
+                        <div className=" flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black lg:w-1/4 shadow-md">
                             <Image src={'/stopwatch.png'} alt="brain" height={50} width={50}   ></Image>
                             <div className="font-bold text-2xl">Efficient Delivery</div>
                             <div className="text-zinc-800 text-base">At Cyberoni, we value your time. That&apos;s why we are committed to delivering high-quality, fully-tested websites promptly. We understand the pace of business and strive to provide you with fast turnaround times without compromising on quality. From initial concept to final launch, we streamline our development process to get your project live, allowing you to start meeting your business objectives faster.</div>
 
                         </div>
-                        <div className=" flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black w-1/4 shadow-md">
+                        <div className=" flex justify-center items-center p-3 flex-col gap-2 bg-gray-200 rounded-lg text-black lg:w-1/4 shadow-md">
 
                             <Image src={'/price-tag.png'} alt="brain" height={50} width={50}   ></Image>
                             <div className="font-bold text-2xl">Fair Pricing</div>
@@ -216,7 +210,18 @@ function Enterprise() {
                 </div>
             </section>
 
-            <section className="py-10 bg-enterprise-bg-3 bg-no-repeat bg-[length:100vw_60vw] dark:bg-[#061122]">
+            <section className="py-10">
+                <div className="text-center flex justify-center items-center flex-col flex-1 w-fit mx-auto">
+                    <div className="text-4xl font-nunito font-bold">Our Portfolio</div>
+                    <Image className="object-cover flex-1 w-full" src={'/portfolio-underline.png'} alt="underline" height={50} width={200}></Image>
+                </div>
+
+                <div>
+                    
+                </div>
+            </section>
+
+            <section className="py-10 bg-enterprise-bg-3 bg-no-repeat bg-cover lg:bg-[length:100vw_60vw] dark:bg-[#061122]">
                 <div className="font-bold text-4xl text-center">Testimonial</div>
                 <ReviewCarousel reviews={testimonials} />
             </section>
