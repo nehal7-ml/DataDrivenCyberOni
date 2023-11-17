@@ -8,13 +8,25 @@ import Link from "next/link";
 import CommentForm from "@/components/blogs/CommentForm";
 import BlogContainer from "@/components/blogs/BlogContainer";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 export const dynamic = 'force-dynamic'
-export const metadata ={
-    title: "Blog Post "
-  }
+export let metadata: Metadata = {
+    title: "",
+    description: "",
+    openGraph: {},
+    category: 'blog'
+};
 async function BlogPost({ params }: { params: { id: string } }) {
     const blog = await getData(params.id);
-    
+    metadata.title = blog.title as string
+    metadata.description = blog.description
+    metadata.openGraph = {
+        type: 'article',
+        title: blog.title,
+        description: blog.description,
+        images: [blog.images[0].src]
+    }
+    metadata.category = blog.tags.join(" ")
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
             <div className="w-full ">
@@ -55,7 +67,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
 async function getData(id: string) {
     const blog = await read(id, prisma)
-    if(blog) return  blog as DisplayBlogDTO
+    if (blog) return blog as DisplayBlogDTO
     else redirect('/404')
 
 }

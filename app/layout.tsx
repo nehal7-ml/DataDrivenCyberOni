@@ -9,19 +9,28 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import NavBar from "@/components/layout/navbar";
 import Notification from "@/components/Notification";
+import { Owner } from "@/data/ownerData";
+import { Metadata } from "next";
 
-export const metadata = {
-  title: "Precedent - Building blocks for your Next.js project",
-  description:
-    "Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.",
+export const metadata: Metadata = {
+  title: "The Apartment Guru",
+  description: Owner.about,
+  metadataBase: new URL(process.env.NEXTAUTH_URL as string),
   twitter: {
     card: "summary_large_image",
-    title: "Precedent - Building blocks for your Next.js project",
-    description:
-      "Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.",
-    creator: "@steventey",
+    title: "Cybertech Shop",
+    description: Owner.about,
+    creator: "@Cyberoni", // Make sure to include the correct Twitter handle here
+    images: ['/logo.png']
   },
-  metadataBase: new URL("https://precedent.dev"),
+  openGraph: {
+    title: "Cybertech Shop",
+    description: Owner.about,
+    url: Owner.company,
+    siteName: "Cybertech Shop",
+    locale: "en_US",
+    type: "website",
+  },
   themeColor: "#FFF",
 };
 
