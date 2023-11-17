@@ -8,16 +8,16 @@ const template = `<div>
 <p>Contact filled by {{firstName}} {{lastName}} </p>
 
 <p>Details below: </p>
-<p>move in date: {{date}}</p>
-<p>bedroom count: {{bedCount}}</p>
-<p>bath count: {{bathCount}}</p>
-<p>credit Score: {{credit}}</p>
+<p>time Line date: {{timeline}}</p>
+<p>Company size: {{companySize}}</p>
+<p>comapany Name: {{companyName}}</p>
+<p>challenges: {{challenges}}</p>
 <p>budget: {{budget}}</p>
 
 <div style="padding: 4px;">
-    background :
+    requirement :
     <div style="margin-left: 20px;">
-    {{background}}
+    {{requirement}}
     </div>
 </div>
 <p>Lead Source: {{source}}</p>
@@ -40,16 +40,16 @@ export async function submitContact(formData: FormData, token: string) {
         redirect(`?notify=true&message=${'Captcha Error'}&notifyType=${'fail'}`);
     } else {
 
-        const backgroundString = createBackgroundTemplate(formData);
+        const requirementString = createBackgroundTemplate(formData);
 
-        console.log(formData.get('date'));
+        // console.log(formData.get('date'));
         const data: { [key: string]: string } = {
             'date': formData.get('date') as string,
-            'bedCount': formData.get('bedCount') as string,
-            'bathCount': formData.get('bathCount') as string,
+            'companyName': formData.get('companyName') as string,
+            'companySize': formData.get('companySize') as string,
             'bgNone': 'None',
 
-            'credit': formData.get('credit') as string,
+            'challenges': formData.get('challenges') as string,
             'budget': formData.get('budget') as string,
             'firstName': formData.get('firstName') as string,
             'lastName': formData.get('lastName') as string,
@@ -58,8 +58,11 @@ export async function submitContact(formData: FormData, token: string) {
             'source': formData.get('source') as string,
             'message': formData.get('message') as string,
             'terms': 'on',
-            'background': backgroundString
+            'requirement': requirementString,
+            "timeline": formData.get('timeline') as string
         }
+
+        console.log(data);
         await addToSendGrid({ email: data.email, firstName: data.firstName, lastName: data.lastName })
         const response = await sendMailHtml(formData.get('email') as string,
             process.env.CONTACT_EMAIL as string,

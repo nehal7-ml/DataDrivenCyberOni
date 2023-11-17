@@ -27,37 +27,7 @@ async function BlogAuthor({ params: { id }, searchParams }: { params: { id: stri
         }} />
 
       </div>
-      <div className="row-span-6 flex flex-col gap-10 p-5">
-        <div className="dark:bg-zinc-900 rounded-md shadow-md">
-          <div className="p-2 text-center">Recent</div>
-          {recent.slice(0, 4).map((blog, index) => {
-            return <div key={index} className="p-4">
-              <Link href={`/blogs/post/${blog.id}`} className="p-2 my-1 hover:underline" >
-                <p className="p-4">{blog.title}</p>
-              </Link>
-              <div className="dark:text-gray-500 line-clamp-2 px-4">{blog.description}</div>
 
-            </div>
-          })}
-        </div>
-        <div className="dark:bg-zinc-900 rounded-md shadow-md">
-          <div className="p-2 text-center">Popular</div>
-
-          {popular.slice(0, 4).map((blog, index) => {
-            return <div key={index} className="p-4 flex justify-center items-center gap-2">
-              <Image className="p-1 rounded-md aspect-square w-1/3 h-full object-contain" alt="blog-image" src={blog.images[0]? blog.images[0].src: 'https://picsum.photos/200'} width={50} height={50}></Image>
-              <div className="w-2/3">
-                <Link href={`/blogs/post/${blog.id}`} className="p-2 my-1 hover:underline" >
-                  <p>{blog.title}</p>
-                </Link>
-                <div className=" dark:text-gray-500  line-clamp-2 ">{blog.description}</div>
-              </div>
-
-            </div>
-          })}
-        </div>
-
-      </div>
       <div className=" w-full lg:col-span-3">
         {
           author?.blogs.map((blog, index) => {
@@ -83,6 +53,39 @@ async function BlogAuthor({ params: { id }, searchParams }: { params: { id: stri
           })
         }
         <Pagination currentPage={1} totalPages={10} pathname={`/blogs/author/${id}`} />
+
+      </div>
+
+
+      <div className="row-span-6 flex flex-col gap-10 p-5">
+        <div className="dark:bg-zinc-900 rounded-md shadow-md">
+          <div className="p-2 text-center">Recent</div>
+          {recent.slice(0, 4).map((blog, index) => {
+            return <div key={index} className="p-4">
+              <Link href={`/blogs/post/${blog.id}`} className="p-2 my-1 hover:underline" >
+                <p className="p-4">{blog.title}</p>
+              </Link>
+              <div className="dark:text-gray-500 line-clamp-2 px-4">{blog.description}</div>
+
+            </div>
+          })}
+        </div>
+        <div className="dark:bg-zinc-900 rounded-md shadow-md">
+          <div className="p-2 text-center">Popular</div>
+
+          {popular.slice(0, 4).map((blog, index) => {
+            return <div key={index} className="p-4 flex justify-center items-center gap-2">
+              <Image className="p-1 rounded-md aspect-square w-1/3 h-full object-contain" alt="blog-image" src={blog.images[0] ? blog.images[0].src : 'https://picsum.photos/200'} width={50} height={50}></Image>
+              <div className="w-2/3">
+                <Link href={`/blogs/post/${blog.id}`} className="p-2 my-1 hover:underline" >
+                  <p>{blog.title}</p>
+                </Link>
+                <div className=" dark:text-gray-500  line-clamp-2 ">{blog.description}</div>
+              </div>
+
+            </div>
+          })}
+        </div>
 
       </div>
     </div>

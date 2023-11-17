@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import NavBar from "@/components/layout/navbar";
+import Notification from "@/components/Notification";
 
 export const metadata = {
   title: "Precedent - Building blocks for your Next.js project",
@@ -41,6 +42,11 @@ export default async function RootLayout({
         <main className="relative min-h-screen w-full dark:bg-black dark:text-white pt-24 px-10">
           {children}
         </main>
+        {
+          <Suspense>
+            <Notification />
+          </Suspense>
+        }
         <Footer />
         <Analytics />
       </body>

@@ -80,11 +80,11 @@ export function getRandomFromArray(arr: Array<any>) :any{
 
 export function createBackgroundTemplate(formData: FormData) {
   const backgroundData: { [key: string]: string } = {
-      "Active Rental Debt": formData.get('activeDebt') as string,
-      "Eviction ": formData.get('eviction') as string,
-      "Unpaid broken lease": formData.get('brokenLease') as string,
-      "Felony ": formData.get('felony') as string,
-      "Misdemeanor ": formData.get('misdemeanor') as string,
+      "Cutting-edge Machine Learning Models": formData.get('mlModels') as string,
+      "Innovative Data Analysis": formData.get('dataAnalysis') as string,
+      "Real-time Data Processi": formData.get('relatimeData') as string,
+      "Web development": formData.get('webDev') as string,
+      "App developement": formData.get('appDev') as string,
   }
   let backgroundString = ``
 
@@ -94,7 +94,7 @@ export function createBackgroundTemplate(formData: FormData) {
       }
   }
 
-  console.log(backgroundData, backgroundString);
+  // console.log(backgroundData, backgroundString);
   if (backgroundString === '') {
       backgroundString= backgroundString.concat(`<p>None</p>`)
   }

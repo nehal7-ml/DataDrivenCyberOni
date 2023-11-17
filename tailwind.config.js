@@ -29,10 +29,13 @@ module.exports = {
         "enterprise-bg": "url('/enterprise-bg.png')",
         "enterprise-bg-2": "url('/enterprise-bg-2.png')",
         "enterprise-bg-3": "url('/enterprise-bg-3.png')",
+        "contact-bg": "url('/contact-bg.png')",
 
       },
       boxShadow: {
         'left-shift-lg': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+        'top': '0 -10px 10px 2px rgba(0, 0, 0, 0.3)'
       },
       keyframes: {
         // Fade up and down
@@ -74,7 +77,10 @@ module.exports = {
       },
       colors: {
         "service-greeen": "#33D3D4"
-      }
+      },
+      borderRadius: {
+        "br-full-tr-lg": "0 15px 100px 0"
+      },
     },
   },
   plugins: [
