@@ -43,7 +43,7 @@ export default async function Home() {
 
         {homeSections.slice(0, 2).map((item, index) => {
 
-          return <>
+          return <div key={index}>
             <Section
               title={item.title}
               subTitle={item.subTitle}
@@ -53,26 +53,28 @@ export default async function Home() {
               key={index}
             ></Section >
 
-          </>
+          </div>
         })}
 
         <section className="container mx-auto">
           <SlideShow slides={sildes.map((card, index) => {
 
-            return <Slide image={card.image}
-              name={card.name}
-              content={card.content}
-              designation={card.designation}
-              key={index}
+            return <div key={index}>
+              <Slide image={card.image}
+                name={card.name}
+                content={card.content}
+                designation={card.designation}
+                key={index}
 
-            ></Slide>
+              ></Slide>
+            </div>
           })}>
 
           </SlideShow>
         </section>
         {homeSections.slice(2, 5).map((item, index) => {
 
-          return <>
+          return <div key={index}>
             <Section
               title={item.title}
               subTitle={item.subTitle}
@@ -83,7 +85,7 @@ export default async function Home() {
 
             ></Section >
 
-          </>
+          </div>
         })}
 
         <section className="container mx-auto my-10">

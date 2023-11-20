@@ -9,9 +9,9 @@ function CompanyCarousel({ cards }: { cards: Company[] }) {
     return (
         <>
             <div className="flex flex-wrap gap-1">
-                {cards.map(card=> {
+                {cards.map((card, index)=> {
                     return (
-                        <Image className=" h-20 w-[14%] object-scale-down p-1" src={card.image} alt={card.name} width={70} height={50}></Image>
+                        <Image key={index} className=" h-20 w-[14%] object-scale-down p-1" src={card.image} alt={card.name} width={70} height={50}></Image>
                     )
                 })}
             </div>

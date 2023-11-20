@@ -6,8 +6,8 @@ module.exports = {
   future: {
     hoverOnlyWhenSupported: true,
   },
+  darkMode: 'class',
   theme: {
-    darkMode: 'class',
     extend: {
       fontFamily: {
         display: ["var(--font-sf)", "system-ui", "sans-serif"],

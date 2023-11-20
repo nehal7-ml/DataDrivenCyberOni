@@ -6,10 +6,11 @@ import useScroll from "@/lib/hooks/use-scroll";
 import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
-import { useState } from "react";
-import { ChevronDown, Menu } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronDown, Menu, Moon, Sun } from "lucide-react";
+import { setCookie } from 'cookies-next';
 
-export default function NavBar({ session }: { session: Session | null }) {
+export default function NavBar({ session, darkMode }: { session: Session | null, darkMode: boolean }) {
   const scrolled = useScroll(50);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
@@ -30,9 +31,9 @@ export default function NavBar({ session }: { session: Session | null }) {
   return (
     <>
       <div
-        className={`fixed top-0 w-screen ${scrolled? "hidden": 'flex' } justify-center backdrop-blur-sm border-b-2 border-white/50  z-50 lg:h-24`}
+        className={`fixed top-0 w-screen ${scrolled ? "hidden" : 'flex justify-center items-center'} justify-center backdrop-blur-sm border-b-2 border-white/50  z-50 lg:h-24`}
       >
-        <div className=" flex h-16 max-w-screen-xl items-center justify-between w-full text-black dark:text-white">
+        <div className="container flex h-16 items-center justify-between w-full text-black dark:text-white">
 
           <Link href="/" className="flex items-center font-display text-2xl w-fit">
             <Image
@@ -108,7 +109,7 @@ export default function NavBar({ session }: { session: Session | null }) {
               Sign Up
             </Link>
           </div>
-          <div className=" items-center space-x-4 flex">
+          <div className=" items-center flex gap-3 w-fit p-3">
             <div className="relative block">
               <input
                 type="text"
@@ -118,10 +119,12 @@ export default function NavBar({ session }: { session: Session | null }) {
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
               </button>
             </div>
-            <Link href={'/api/auth/signin'} className="hover:text-blue-500 hidden lg:flex" >Sign In</Link>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md hidden lg:flex">
-              Sign Up
+            <Link href={'/api/auth/signin'} className="hover:text-blue-500 hidden lg:flex w-fit" ><p>Sign In</p></Link>
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md hidden lg:flex w-fit">
+              <p>Sign Up</p>
             </Link>
+            <ToggleDarkMode enabled={darkMode} />
+
           </div>
 
           <div className="block lg:hidden">
@@ -136,5 +139,57 @@ export default function NavBar({ session }: { session: Session | null }) {
         </div>
       </div>
     </>
+  );
+}
+
+
+function ToggleDarkMode({ enabled }: { enabled: boolean }) {
+  const [isToggled, setIsToggled] = useState(enabled);
+
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+  };
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+
+      const root = document.getElementsByTagName('body')[0];
+      if (isToggled) {
+
+        setCookie('theme', 'dark')
+        root.classList.add('dark')
+      }
+      else {
+        // cookies().set('theme', 'light');
+        setCookie('theme', 'light')
+
+        root.classList.remove('dark')
+      }
+
+    }
+
+
+  }, [isToggled]);
+
+  return (
+    <div className="container ">
+      <label className="flex items-center cursor-pointer w-6 h-6">
+        <div className="relative">
+          <input
+            type="checkbox"
+            className="hidden"
+            checked={isToggled}
+            onChange={handleToggle}
+          />
+          <div className=" w-12 h-6 bg-gray-400 rounded-full shadow-inner"></div>
+          <div
+            className={`absolute w-6 h-6  flex justify-center items-center rounded-full shadow inset-y-0 left-0  bg-gray-300 ${isToggled ? 'transform translate-x-full bg-blue-500' : ''}`}
+          >
+            {isToggled ? <Moon className='p-1' /> : <Sun className='p-1' />}
+
+          </div>
+        </div>
+      </label>
+    </div>
   );
 }

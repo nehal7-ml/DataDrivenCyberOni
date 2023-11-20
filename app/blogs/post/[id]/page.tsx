@@ -24,7 +24,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
         type: 'article',
         title: blog.title,
         description: blog.description,
-        images: [blog.images.length>0? blog.images[0].src: ""]
+        images: [blog.images.length > 0 ? blog.images[0].src : ""]
     }
     metadata.category = blog.tags.join(" ")
     return (

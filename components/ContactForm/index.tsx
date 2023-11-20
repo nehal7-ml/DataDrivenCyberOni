@@ -36,7 +36,7 @@ function ContactForm() {
     console.log('Form submitted:', { selectedInterest, name, email, message });
 
     if (name && email && message) {
-      let res = await fetch(`/api/marketing/contact`, { method: "POST", body: JSON.stringify({ name, email, subject: selectedInterest, message , referral}) })
+      let res = await fetch(`/api/marketing/contact`, { method: "POST", body: JSON.stringify({ name, email, subject: selectedInterest, message, referral }) })
       setShowForm(false)
       if (res.status === 200) {
         setShowThanks(true)
