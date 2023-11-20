@@ -14,7 +14,7 @@ import { Metadata } from "next";
 import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
-  title: "The Apartment Guru",
+  title: "Cyberoni",
   description: Owner.about,
   metadataBase: new URL(process.env.NEXTAUTH_URL as string),
   twitter: {

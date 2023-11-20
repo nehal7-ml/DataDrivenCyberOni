@@ -183,9 +183,9 @@ function ToggleDarkMode({ enabled }: { enabled: boolean }) {
           />
           <div className=" w-12 h-6 bg-gray-400 rounded-full shadow-inner"></div>
           <div
-            className={`absolute w-6 h-6  flex justify-center items-center rounded-full shadow inset-y-0 left-0  bg-gray-300 ${isToggled ? 'transform translate-x-full bg-blue-500' : ''}`}
+            className={`absolute w-6 h-6  flex justify-center items-center rounded-full shadow inset-y-0 left-0  ${isToggled ? 'transform translate-x-full bg-blue-500' : 'bg-white   '}`}
           >
-            {isToggled ? <Moon className='p-1' /> : <Sun className='p-1' />}
+            {isToggled ? <Moon className='p-1' /> : <Sun className='p-1 text-yellow-400' />}
 
           </div>
         </div>
