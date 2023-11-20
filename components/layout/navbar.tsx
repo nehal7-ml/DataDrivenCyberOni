@@ -31,7 +31,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
   return (
     <>
       <div
-        className={`fixed top-0 w-screen ${scrolled ? "hidden" : 'flex justify-center items-center'} justify-center backdrop-blur-sm border-b-2 border-white/50  z-50 lg:h-24`}
+        className={`fixed top-0 w-screen flex justify-center items-center ${scrolled ? "backdrop-blur-sm border-b-2 border-white/50 " : ''} justify-center transition-all  z-50 lg:h-24`}
       >
         <div className="container flex h-16 items-center justify-between w-full text-black dark:text-white">
 
