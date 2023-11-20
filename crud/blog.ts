@@ -1,4 +1,4 @@
-import { Blog, PrismaClient, Tag, User, Image, BlogComment, BlogLike, BlogView } from "@prisma/client";
+import { Blog, PrismaClient, Tag, User, Image, BlogComment, BlogLike } from "@prisma/client";
 import { connectOrCreateObject as connectTags, CreateTagDTO } from "./tags";
 import { connectOrCreateObject as connectImages, CreateImageDTO } from "./images";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -11,7 +11,6 @@ export type CreateBlogDTO = {
     featured: boolean;
     date: Date;
     content: string;
-    template: string;
     author: { id?: string, email: string },
     images: CreateImageDTO[],
     tags: CreateTagDTO[]
@@ -25,7 +24,6 @@ export type DisplayBlogDTO = {
     featured: boolean;
     date: Date;
     content: string;
-    template: string;
     author: User & {
 
         image: Image
@@ -34,7 +32,7 @@ export type DisplayBlogDTO = {
     images: Image[],
     Comments?: BlogComment[],
     Likes?: BlogLike[],
-    Views?: BlogView[]
+    Views?: number
 }
 
 export type CommentDTO = {
@@ -98,7 +96,6 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             id: true,
             title: true,
             subTitle: true,
-            template: true,
             author: {
                 include: {
                     image: true,

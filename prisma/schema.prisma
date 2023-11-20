@@ -176,7 +176,7 @@ model Blog {
   userId         String
   Likes          BlogLike[]
   Views          Int           @default(0)
-  BlogComment    BlogComment[]
+  Comments       BlogComment[]
   blogTemplateId String?
 
   @@index([userId])
@@ -202,7 +202,6 @@ model BlogComment {
 
   @@index([blogId])
 }
-
 
 model BlogLike {
   user   User   @relation(fields: [userId], references: [id])

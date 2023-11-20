@@ -1,6 +1,7 @@
 import ReviewCarousel from "@/components/ReviewCarousel";
+import EmailLetter from "@/components/home/EmailLetter";
 import { testimonials } from "@/data/testimonials";
-import { Activity, Monitor, Redo, ShoppingCart, BlocksIcon, Blocks, LayoutGrid, Search } from "lucide-react";
+import { Activity, Monitor, Redo, ShoppingCart, BlocksIcon, Blocks, LayoutGrid, Search, ArrowRight, MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -117,7 +118,7 @@ function Enterprise() {
                         <div className="text-4xl font-extrabold font-nunito">Cyberoni is committed to forging genuine partnerships, delivering exceptional value in every investment. Our expertise spans multiple domains, including but not limited to:</div>
                     </div>
                     <div className="lg:w-1/2 container overflow-x-auto ">
-                        <div className="grid grid-cols-4 lg:grid-cols-2 lg:grid-rows-2  gap-5 w-fit">
+                        <div className="grid  lg:grid-cols-2 lg:grid-rows-2  gap-5 w-fit">
                             <div className="relative p-5 overflow-hidden h-fit lg:h-52  rounded-xl hover:bg-[#0F172A] bg-gray-100 text-black hover:text-white">
                                 <div className="absolute top-0 right-0 w-full h-3 bg-blue-400"></div>
                                 <div className="w-full flex justify-start">
@@ -216,8 +217,23 @@ function Enterprise() {
                     <Image className="object-cover flex-1 w-full" src={'/portfolio-underline.png'} alt="underline" height={50} width={200}></Image>
                 </div>
 
-                <div>
-                    
+                <div className="flex flex-col lg:flex-row lg:justify-start  justify-center lg:my-20 my-10">
+                    <div className="flex justify-center lg:gap-10 lg:justify-start lg:flex-col lg:w-1/3 text-right lg:text-4xl lg:px-10">
+                        <div className="foc:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Ecommere Website</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA]" /></div>
+                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Landing Pages</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA] " /></div>
+                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Software Architecture</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA] " /></div>
+                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Graphic design</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block  peer-focus:text-[#5380EA]" /></div>
+                    </div>
+                    <div className="flex flex-wrap w-full ">
+                        {(new Array(16).fill(1)).map((value, index) => {
+                            return <div key={index} className={`rounded-2xl aspect-square  w-1/2 p-3 overflow-hidden lg:w-1/4`}>
+                                <Link className="w-full h-full " href={'/casestudy/100'}>
+                                    <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`} alt="" height={400} width={400} />
+                                </Link>
+                            </div>
+                        })}
+                    </div>
+
                 </div>
             </section>
 
@@ -225,6 +241,11 @@ function Enterprise() {
                 <div className="font-bold text-4xl text-center">Testimonial</div>
                 <ReviewCarousel reviews={testimonials} />
             </section>
+
+            <section className="container mx-auto my-10">
+                <EmailLetter></EmailLetter>
+            </section>
+
 
         </div>);
 }

@@ -108,6 +108,8 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
             <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex lg:hidden">
               Sign Up
             </Link>
+            <ToggleDarkMode enabled={darkMode} className={'flex lg:hidden justify-center items-center'} />
+
           </div>
           <div className=" items-center flex gap-3 w-fit p-3">
             <div className="relative block">
@@ -123,7 +125,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
             <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md hidden lg:flex w-fit">
               <p>Sign Up</p>
             </Link>
-            <ToggleDarkMode enabled={darkMode} />
+            <ToggleDarkMode enabled={darkMode} className={'hidden lg:block'} />
 
           </div>
 
@@ -143,7 +145,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 }
 
 
-function ToggleDarkMode({ enabled }: { enabled: boolean }) {
+function ToggleDarkMode({ enabled, className }: { enabled: boolean, className?: string }) {
   const [isToggled, setIsToggled] = useState(enabled);
 
   const handleToggle = () => {
@@ -172,7 +174,7 @@ function ToggleDarkMode({ enabled }: { enabled: boolean }) {
   }, [isToggled]);
 
   return (
-    <div className="container ">
+    <div className={"container "+ className}>
       <label className="flex items-center cursor-pointer w-6 h-6">
         <div className="relative">
           <input
@@ -183,7 +185,7 @@ function ToggleDarkMode({ enabled }: { enabled: boolean }) {
           />
           <div className=" w-12 h-6 bg-gray-400 rounded-full shadow-inner"></div>
           <div
-            className={`absolute w-6 h-6  flex justify-center items-center rounded-full shadow inset-y-0 left-0  ${isToggled ? 'transform translate-x-full bg-blue-500' : 'bg-white   '}`}
+            className={`absolute w-6 h-6  flex justify-center items-center rounded-full shadow inset-y-0 left-0 transition-transform duration-100 ease-in  ${isToggled ? 'transform translate-x-full bg-blue-500 ' : 'bg-white   '}`}
           >
             {isToggled ? <Moon className='p-1' /> : <Sun className='p-1 text-yellow-400' />}
 
