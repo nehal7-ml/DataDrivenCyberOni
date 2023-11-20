@@ -48,7 +48,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${cx(sfPro.variable, inter.variable, abel.variable, nunito.variable)} 
-                        ${theme?.value}`}>
+                        ${theme?.value} antialiased `}>
         <div className="fixed h-full w-screen dark:bg-black dark:text-white" />
         <Suspense fallback="...">
           <NavBar session={session} darkMode={theme?.value === 'dark' ? true : false} />

@@ -31,9 +31,13 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
   return (
     <>
       <div
-        className={`fixed top-0 w-screen flex justify-center items-center ${scrolled ? "backdrop-blur-sm border-b-2 border-white/50 " : ''} justify-center transition-all  z-50 lg:h-24`}
+        className={`fixed top-0 w-full flex justify-center ${
+          scrolled
+            ? "border-b border-gray-200 bg-white/10 backdrop-blur-xl"
+            : "bg-white/0"
+        } z-50 transition-all lg:h-24 h-16`}
       >
-        <div className="container flex h-16 items-center justify-between w-full text-black dark:text-white">
+        <div className=" flex items-center justify-between w-full text-black dark:text-white mx-5">
 
           <Link href="/" className="flex items-center font-display text-2xl w-fit">
             <Image
@@ -41,13 +45,13 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               alt="Precedent logo"
               width="30"
               height="30"
-              className="mr-2 rounded-sm"
+              className="rounded-sm"
             ></Image>
             <div>CyberOni</div>
           </Link>
 
 
-          <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex fixed right-0 h-screen w-screen pt-10 animate-slide-left-fade text-center z-[100]'}  bg-white dark:bg-zinc-950 gap-10  top-full h-screen w-full flex-col items-center justify-start lg:pt-0 lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
+          <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex fixed right-0 h-screen w-screen pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black'}   gap-10  top-full h-screen w-full flex-col items-center justify-start lg:pt-0 lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
 
             <div className="relative group">
               <button
@@ -104,14 +108,12 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               Pricing
             </Link>
 
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  lg:hidden" >Sign In</Link>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex lg:hidden">
-              Sign Up
-            </Link>
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  lg:hidden">Sign In</Link>
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex lg:hidden">Sign Up</Link>
             <ToggleDarkMode enabled={darkMode} className={'flex lg:hidden justify-center items-center'} />
 
           </div>
-          <div className=" items-center flex gap-3 w-fit p-3">
+          <div className=" items-center justify-center flex gap-3 p-3">
             <div className="relative block">
               <input
                 type="text"
@@ -121,12 +123,9 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
               </button>
             </div>
-            <Link href={'/api/auth/signin'} className="hover:text-blue-500 hidden lg:flex w-fit" ><p>Sign In</p></Link>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md hidden lg:flex w-fit">
-              <p>Sign Up</p>
-            </Link>
-            <ToggleDarkMode enabled={darkMode} className={'hidden lg:block'} />
-
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-2 rounded-lg hover:shadow-md hidden lg:flex  min-w-fit">Sign In</Link>
+            <Link href={'/api/auth/signout'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-2 rounded-lg hover:shadow-md hidden lg:flex min-w-fit">Sign Up</Link>
+            <ToggleDarkMode enabled={darkMode} className={'hidden lg:flex'} />
           </div>
 
           <div className="block lg:hidden">
@@ -174,7 +173,7 @@ function ToggleDarkMode({ enabled, className }: { enabled: boolean, className?: 
   }, [isToggled]);
 
   return (
-    <div className={"container "+ className}>
+    <div className={"container flex justify-center items-center "+ className}>
       <label className="flex items-center cursor-pointer w-6 h-6">
         <div className="relative">
           <input
