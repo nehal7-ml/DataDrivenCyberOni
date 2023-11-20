@@ -11,17 +11,17 @@
     @apply font-bold;
   }
   h3 {
-    @apply text-3xl;
-    @apply font-bold;
-    @apply my-3;
-  }
-  h4 {
     @apply text-2xl;
     @apply font-bold;
     @apply my-3;
   }
-  h5 {
+  h4 {
     @apply text-xl;
+    @apply font-bold;
+    @apply my-3;
+  }
+  h5 {
+    @apply text-lg;
     @apply font-bold;
     @apply my-3;
   }
