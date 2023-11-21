@@ -4,7 +4,7 @@ import React from 'react'
 
 function BlogCard({ category, title, id }: { category: string, title: string, id: string }) {
     return (
-        <div className="w-full h-full rounded-lg shadow-lg  dark:bg-zinc-900 p-4">
+        <div className="w-full h-full rounded-lg shadow-lg  dark:bg-zinc-800 p-4 hover:drop-shadow-lg">
             <Link href={`/blogs/post/${id}`} className=" ">
                 <div className="text-indigo-500 text-sm font-semibold mb-2">{category}</div>
 

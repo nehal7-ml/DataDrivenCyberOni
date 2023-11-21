@@ -31,7 +31,7 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
 
     return (
         <>
-            <div className="container mx-auto my-10">
+            <div className="container mx-auto my-10 ">
                 <div className="flex justify-between mb-5">
                     <div className="text-xl lg:text-4xl">Comments</div>
                     <Link href={'#commentForm'} className="border-rose-600 border-2 bg-transparent rounded-full lg:p-5 text-center p-2">Leave a comment</Link>

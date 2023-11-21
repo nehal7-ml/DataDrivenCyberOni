@@ -30,7 +30,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
             <div className="w-full ">
-                <div className="w-full bg-white dark:bg-black py-5">
+                <div className="w-full bg-white dark:bg-gray-900 py-5">
                     <div className="container mx-auto ">
                         <div className="m-4 text-4xl font-bold">{blog.title}</div>
                         <div className="m-4 font-bold">{blog.description}</div>
