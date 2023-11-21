@@ -81,7 +81,7 @@ function CaseStudy() {
                 <Image className="absolute right-0 top-0" src={'/case-study-icon-2.svg'} alt="icon-2" height={130} width={75} />
 
                 {/* Section 1: Title */}
-                <div className=" relative dark:bg-zinc-900 rounded-2xl shadow-lg p-5 mb-8 z-10">
+                <div className=" relative dark:bg-zinc-800 rounded-2xl shadow-lg p-5 mb-8 z-10">
                     <section className=" mb-8 ">
                         <h1 className="text-4xl font-bold text-[#7850CD]">{caseStudy.title}</h1>
                         <div>{caseStudy.preview}</div>
@@ -101,7 +101,7 @@ function CaseStudy() {
                 </div>
 
                 {/* Section 3: Project Goals */}
-                <section className="relative dark:bg-zinc-900 rounded-2xl shadow-lg p-5 mb-8 z-50">
+                <section className="relative dark:bg-zinc-800 rounded-2xl shadow-lg p-5 mb-8 z-50">
                     <h2 className="text-2xl font-bold text-center text-[#7850CD]">Project Goals</h2>
                     <ul className="flex gap-5 justify-center items-center mt-4">
                         {caseStudy.goals.map((goal, index) => <li key={index}>{goal}</li>)}
@@ -110,7 +110,7 @@ function CaseStudy() {
 
                 {/* Section 4: User Problems */}
                 <div className="relative">
-                    <section className="relative dark:bg-zinc-900 rounded-2xl shadow-lg p-5 mb-8 z-50">
+                    <section className="relative dark:bg-zinc-800 rounded-2xl shadow-lg p-5 mb-8 z-50">
                         <h2 className="text-2xl font-bold text-[#7850CD]">Section 4: User Problems</h2>
                         <ul className="list-disc mt-4 p-5">
                             <li>Problem 1</li>
@@ -128,7 +128,7 @@ function CaseStudy() {
                     <p>Based on the all the information collected through research and findings, I figured that an application will require following functionality to promote a healthy lifestyle </p>
                     <ul className="mt-4 flex gap-4 flex-col p-5">
                         {caseStudy.possibleSolutions.map((solution, index) => {
-                            return <li key={index} className="shadow-inner dark:bg-zinc-800 p-4 rounded-lg odd:self-start even:self-end w-2/3">{solution}</li>
+                            return <li key={index} className="shadow-inner dark:bg-gray-800 p-4 rounded-lg odd:self-start even:self-end max-w-[66%]">{solution}</li>
 
                         })}
 
@@ -137,7 +137,7 @@ function CaseStudy() {
 
 
                 <section className="relative mb-8">
-                    <div className="relative dark:bg-zinc-900 rounded-2xl shadow-lg p-5 mb-8 z-50">
+                    <div className="relative dark:bg-zinc-800 rounded-2xl shadow-lg p-5 mb-8 z-50">
                         <h2 className="text-2xl font-bold text-[#7850CD] mb-10">Understanding the Problem</h2>
                         <p>{caseStudy.userResearch}</p>
                     </div>
@@ -146,7 +146,7 @@ function CaseStudy() {
                 </section>
 
 
-                <div className=" relative dark:bg-zinc-900 rounded-2xl shadow-lg p-5 mb-8 z-10">
+                <div className=" relative dark:bg-zinc-800 rounded-2xl shadow-lg p-5 mb-8 z-10">
                     <section className=" mb-8 ">
                         <h1 className="text-4xl font-bold text-[#7850CD]">Primary Research</h1>
                         <div>{caseStudy.preview}</div>

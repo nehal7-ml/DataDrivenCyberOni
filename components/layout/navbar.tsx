@@ -35,7 +35,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
           scrolled
             ? "border-b border-gray-200 bg-white/10 backdrop-blur-xl"
             : "bg-white/0"
-        } z-50 transition-all lg:h-24 h-16`}
+        } z-[100] transition-all lg:h-24 h-16`}
       >
         <div className=" flex items-center justify-between w-full text-black dark:text-white mx-5">
 
