@@ -67,7 +67,8 @@ const caseStudy = {
 
 
 
-    ]
+    ],
+    competetiveAnalysis: [{}]
 
 
 
@@ -195,7 +196,7 @@ function CaseStudy() {
                     {caseStudy.wireFrame && <>
                         <h2 className="text-[#7850CD]">Wireframes</h2>
                         <div className="flex gap-2 flex-wrap max-w-full">
-                            {caseStudy.wireFrame.map((wireframe) => <Image src={wireframe.src} alt={"architecture"} height={500} width={500} />)}</div>
+                            {caseStudy.wireFrame.map((wireframe, index) => <Image key={index} src={wireframe.src} alt={"architecture"} height={500} width={500} />)}</div>
 
                     </>}
                 </section>
@@ -223,10 +224,10 @@ function CaseStudy() {
                     </>}
                 </section>
 
-                <section className="relative mb-8 bg-[radial-gradient(#744ACC,#744ACCE5)] flex flex-col justify-center items-center overflow-hidden">
+                <section className="relative mb-8 bg-[radial-gradient(closest-side_at_0_0,#744ACC_90%,#744ACCE5_100%)] flex flex-col justify-center items-center overflow-hidden">
                     <Image className="object-contain" src={'/casestudy-3.png'} alt="casestudy-3" height={300} width={300} />
-                    <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-2/3 aspect-square h-full rounded-full  bg-gradient-to-b from-[#7850CD00] to-[#9D6FFF] z-0"></div>
-                    <div className="absolute bottom-0 right-0 translate-x-1/3 translate-y-2/3 aspect-square h-full rounded-full  bg-gradient-to-t from-[#7850CD00] to-[#9D6FFF] z-0"></div>
+                    <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-2/3 aspect-square h-full rounded-full  bg-gradient-to-b from-[#7850cd00] to-[#9D6FFF] z-0"></div>
+                    <div className="absolute bottom-0 right-0 translate-x-1/3 translate-y-2/3 aspect-square h-full rounded-full  bg-gradient-to-t from-[#7850cd0b] to-[#9D6FFF] z-0"></div>
                     <div className="text-white p-10 z-10">
                         <h2 className="text-3xl">Key Learnings</h2>
                         <p className="text-lg">{caseStudy.keyLearning}</p>

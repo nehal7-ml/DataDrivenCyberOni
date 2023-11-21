@@ -207,7 +207,14 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
         where: {
         },
         include: {
-            // reviews: true,
+            SubServices: true,
+            ServiceDescription:{
+                include: {
+                    image: true
+                }
+            },
+            image: true,
+            tags: true,
 
         }
     })
