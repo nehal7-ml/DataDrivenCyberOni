@@ -1,35 +1,33 @@
-import axios from "axios";
+import { Client } from '@notionhq/client';
+import { CreatePageParameters } from "@notionhq/client/build/src/api-endpoints";
 
-const notionApiKey = process.env.notion_pub_key!;
-const marketing_crm_contacts_database_id =
-    process.env.marketing_crm_contacts_database_id!;
+const notionApiKey = process.env.NOTION_KEY;
+const notion = new Client({ auth: notionApiKey });
+
+const marketing_crm_contacts_database_id = process.env.NOTION_DATABASE_ID!;
 
 
-export interface NewRecordType {
-    "Email Address": { email: string };
-    Company?: {
-        has_more: boolean;
-        id: string;
-        type: string;
-        relation: [{ id: string }];
-    };
-    "Converted to Opportunity": { checkbox: boolean };
-    Owner?: { id: string; type: string; people: [] };
-    Title?: {
-        rich_text: { text: { content: string } }[];
-    };
-    Name?: {
-        title: { text: { content: string } }[];
-    };
-    Message: {
-        rich_text: { text: { content: string } }[];
-    };
-}
+export type NewRecordType = Record<string,
+    { type: 'rich_text', rich_text: { text: { content: string }, type: 'text' }[] } |
+    { type: 'email', email: string }
+>
 
 export interface CreatePageParams {
-    newRecord: NewRecordType;
+    email: string,
+    name: string,
+    company?: string,
+    employess?: string,
+    requirements?: string[],
+    timeline?: string,
+    budget?: string,
+    phone?: string,
+    referral?: string,
+    challenges?: string,
+    message?: string,
+
+
 }
-export async function addToMarketingCrm({ newRecord }: CreatePageParams) {
+export async function addToMarketingCrm(record: CreatePageParams) {
     const headers = {
         "Notion-Version": "2021-08-16",
         Authorization: `Bearer ${notionApiKey}`,
@@ -38,22 +36,28 @@ export async function addToMarketingCrm({ newRecord }: CreatePageParams) {
     const config = {
         headers,
     };
-    const response = await fetch(
-        `https://api.notion.com/v1/pages`,
-        {
-            method: "POST",
-            body: JSON.stringify({
-                parent: {
-                    database_id: marketing_crm_contacts_database_id,
-                },
-                properties: newRecord,
-            }),
-            headers: headers,
+    const response = await notion.pages.create({
+        parent: {
+            database_id: marketing_crm_contacts_database_id as string,
+        },
+        properties: {
+            "Email Address": { email: record.email },
+            "Name": {title:[{text:{content:record.name}}]},
+            "Phone": { phone_number: record.phone },
+            "Message": { rich_text: [{ text: { content: record.message } }] },
+            "Company": { rich_text: [{ text: { content: record.company } }] },
+            "Referral": { rich_text: [{ text: { content: record.referral } }] },
+            "Time Line": { rich_text: [{ text: { content: record.timeline } }] },
+            "Current Challenges": { rich_text: [{ text: { content: record.challenges } }] },
+            "Number of Employees": { number: Number(record.employess) },
+            "Requirements": { multi_select: record.requirements?.map(requirement => ({ name: requirement })) }
         }
-    );
-    const respJson = await response.json()
+
+
+        ,
+    } as CreatePageParameters)
     // console.log("repsonse", respJson);
-    return respJson;
+    return response.object;
 }
 
 

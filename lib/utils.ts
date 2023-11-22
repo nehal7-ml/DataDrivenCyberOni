@@ -98,7 +98,7 @@ export function createBackgroundTemplate(formData: FormData) {
   if (backgroundString === '') {
       backgroundString= backgroundString.concat(`<p>None</p>`)
   }
-  return backgroundString
+  return  {requirementString:backgroundString, requirement: backgroundData}
 }
 
 

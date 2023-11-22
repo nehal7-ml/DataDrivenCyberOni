@@ -41,8 +41,7 @@ export async function submitContact(formData: FormData, token: string) {
         redirect(`?notify=true&message=${'Captcha Error'}&notifyType=${'fail'}`);
     } else {
 
-        const requirementString = createBackgroundTemplate(formData);
-
+        const { requirementString, requirement } = createBackgroundTemplate(formData);
         // console.log(formData.get('date'));
         const data: { [key: string]: string } = {
             'date': formData.get('date') as string,
@@ -62,16 +61,22 @@ export async function submitContact(formData: FormData, token: string) {
             'requirement': requirementString,
             "timeline": formData.get('timeline') as string
         }
-
-        console.log(data);
+        
         await addToSendGrid({ email: data.email, firstName: data.firstName, lastName: data.lastName })
         await addToMarketingCrm({
-            newRecord: {
-                "Email Address": { email: data.email },
-                Name: { title: [{ text: { content: `${data.firstName} ${data.lastName}` } }] },
-                Message: { rich_text: [{ text: { content: data.message } }] },
-                "Converted to Opportunity": { checkbox: false }
-            }
+            email: data.email,
+            name: `${data.firstName} ${data.lastName}`,
+            message: data.message,
+            budget: data.budget,
+            challenges: data.challenges,
+            company: data.companyName,
+            employess: data.companySize,
+            phone: data.phone,
+            referral: data.source,
+            requirements: Object.keys(requirement).map((key) => requirement[key]).filter((value) => value),
+            timeline: data.timeline
+
+
         })
         const response = await sendMailHtml(formData.get('email') as string,
             process.env.CONTACT_EMAIL as string,

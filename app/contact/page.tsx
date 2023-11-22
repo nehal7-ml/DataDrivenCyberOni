@@ -313,7 +313,7 @@ function ContactUs() {
                     onChange={handleInputChange}
                     defaultValue={""}
                   >
-                    <option value="" className="text-gray-700" selected disabled={true}>Select Time line</option>
+                    <option value="" className="text-gray-700"  disabled={true}>Select Time line</option>
                     <option className="text-gray-700" value="1-month">1 Month</option>
 
                     <option className="text-gray-700" value="3-months">3 Months</option>
@@ -440,7 +440,7 @@ function ContactUs() {
                     onChange={handleInputChange}
                   />
                   <p>
-                    By submitting this, I authorize The Apartment Guru to
+                    By submitting this, I authorize Cyber Tech shop to
                     contact me at my contact number and information provided
                     message and data rates may apply to opt out at any time
                     email : {Owner.email}

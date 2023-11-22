@@ -15,12 +15,10 @@ export async function POST(req: NextRequest) {
     }
     await addToSendGrid({ email, firstName, lastName , city:subject})
     await addToMarketingCrm({
-        newRecord: {
-            "Email Address": { email:email },
-            Name: { title: [{ text: { content: `${firstName} ${lastName}` } }] },
-            Message: { rich_text: [{ text: { content: message } }] },
-            "Converted to Opportunity": { checkbox: false }
-        }
+        email: email,
+        name,
+        message,
+        referral,
     })
     const res = await contactForm(email, message, subject, firstName, lastName, referral )
     if (res === 202) return NextResponse.json({ message: "success" }, { status: 200 })
