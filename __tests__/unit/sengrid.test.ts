@@ -12,8 +12,6 @@ describe('Testing sendgrid endpoint', () => {
   it('should successfully add contact to sendgrid', async () => {
     process.nextTick(() => { }); // to enure axios exits
     expect(await addToSendGrid({ email:'email' })).toBe(202);
-
-
   });
 
 });
