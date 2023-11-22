@@ -52,7 +52,7 @@ export async function addToMarketingCrm({ newRecord }: CreatePageParams) {
         }
     );
     const respJson = await response.json()
-    console.log("repsonse", respJson);
+    // console.log("repsonse", respJson);
     return respJson;
 }
 

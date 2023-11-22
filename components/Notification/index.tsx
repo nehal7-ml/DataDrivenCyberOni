@@ -77,7 +77,7 @@ const Notification = () => {
     router.replace('?')
   }
 
-  return <div className={`fixed flex bottom-10 right-10 p-4 rounded ${type === 'success' ? 'bg-green-500 text-white' : type === 'fail' ? 'bg-red-500 text-white' : 'bg-red-700 text-zinc-900'} ${notify ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300  font-semibold z-[10000]`}>
+  return <div className={`fixed flex bottom-10 right-10 p-4 rounded ${type === 'success' ? 'bg-green-500 text-white' : type === 'fail' ? 'bg-red-500 text-white' : 'bg-red-700 text-zinc-900'} ${notify ? 'opacity-100 z-[10000]' : 'opacity-0'} transition-opacity duration-300  font-semibold `}>
     {type === 'success' ? (
       <Check className="mr-2" />
     ) :

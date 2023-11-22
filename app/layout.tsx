@@ -12,6 +12,7 @@ import Notification from "@/components/Notification";
 import { Owner } from "@/data/ownerData";
 import { Metadata } from "next";
 import { cookies } from 'next/headers'
+import ContactButton from "@/components/ConactButton";
 
 export const metadata: Metadata = {
   title: "Cyberoni",
@@ -61,6 +62,7 @@ export default async function RootLayout({
             <Notification />
           </Suspense>
         }
+        <ContactButton />
         <Footer />
         <Analytics />
       </body>
