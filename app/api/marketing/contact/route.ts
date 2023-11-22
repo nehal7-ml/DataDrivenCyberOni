@@ -1,3 +1,4 @@
+import { addToMarketingCrm } from "@/lib/externalRequests/notion";
 import { addToSendGrid, contactForm, sendMail } from "@/lib/externalRequests/sendgrid"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -13,6 +14,14 @@ export async function POST(req: NextRequest) {
         firstName = name.split(' ')[0]
     }
     await addToSendGrid({ email, firstName, lastName , city:subject})
+    await addToMarketingCrm({
+        newRecord: {
+            "Email Address": { email:email },
+            Name: { title: [{ text: { content: `${firstName} ${lastName}` } }] },
+            Message: { rich_text: [{ text: { content: message } }] },
+            "Converted to Opportunity": { checkbox: false }
+        }
+    })
     const res = await contactForm(email, message, subject, firstName, lastName, referral )
     if (res === 202) return NextResponse.json({ message: "success" }, { status: 200 })
     else return NextResponse.json({ message: "error occuer while adding:" }, { status: 500 })

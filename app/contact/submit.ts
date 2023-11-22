@@ -4,6 +4,7 @@ import { verifyCaptcha } from "@/lib/externalRequests/google";
 import { addToSendGrid, sendMailHtml } from "@/lib/externalRequests/sendgrid";
 import { createBackgroundTemplate } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { addToMarketingCrm } from "../../lib/externalRequests/notion";
 const template = `<div>
 <p>Contact filled by {{firstName}} {{lastName}} </p>
 
@@ -64,6 +65,14 @@ export async function submitContact(formData: FormData, token: string) {
 
         console.log(data);
         await addToSendGrid({ email: data.email, firstName: data.firstName, lastName: data.lastName })
+        await addToMarketingCrm({
+            newRecord: {
+                "Email Address": { email: data.email },
+                Name: { title: [{ text: { content: `${data.firstName} ${data.lastName}` } }] },
+                Message: { rich_text: [{ text: { content: data.message } }] },
+                "Converted to Opportunity": { checkbox: false }
+            }
+        })
         const response = await sendMailHtml(formData.get('email') as string,
             process.env.CONTACT_EMAIL as string,
             formData.get('firstName') as string,
