@@ -443,7 +443,7 @@ function ContactUs() {
                     By submitting this, I authorize The Apartment Guru to
                     contact me at my contact number and information provided
                     message and data rates may apply to opt out at any time
-                    email : theapartmentguru@yahoo.com
+                    email : {Owner.email}
                   </p>
                 </div>
 
