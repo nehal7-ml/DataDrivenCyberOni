@@ -15,6 +15,7 @@ import Datepicker, { DateType, DateValueType } from "react-tailwindcss-datepicke
 import GoogleCaptchaWrapper from "@/components/GoogleCaptchaWrapper";
 import { useReCaptcha } from "next-recaptcha-v3";
 import { useNotify } from "@/components/Notification";
+import PayLater from "@/components/shared/Paylater";
 //import CalendlyPopup from "@/components/Calendly";
 // import CalendlyModal from "@/components/Calendly/CalendlyModal";
 
@@ -212,7 +213,7 @@ function ContactUs() {
   return (
     <>
       <div className="relative min-h-screen bg-contact-bg bg-contain bg-no-repeat pt-40 lg:pb-20 text-gray-700">
-        <div className="container relative mx-auto flex justify-center gap-5 rounded-lg bg-white dark:bg-zinc-900 px-10 py-10 shadow-top lg:w-5/6 lg:flex-row ">
+        <div className="container relative mx-auto flex flex-col justify-center gap-5 rounded-lg bg-white dark:bg-zinc-900 px-1 lg:px-10 py-10 shadow-top lg:w-5/6 lg:flex-row ">
           <div className="z-10 min-h-screen bg-[#ffffff2a] lg:w-1/2 p-3 rounded-2xl">
             <div>
               <h1 className="text-5xl text-[#7E86F6]">Get in Touch</h1>
@@ -516,7 +517,7 @@ function ContactUs() {
               </>
             )}
           </div>
-          <div className="absolute -z-0 h-1/3 w-full translate-y-1/2 blur-sm lg:static lg:z-0  lg:w-1/2 lg:translate-y-16 lg:blur-none">
+          <div className="absolute top-10 -z-0 h-1/3 w-full translate-y-1/2 blur-sm lg:static lg:z-0  lg:w-1/2 lg:translate-y-16 lg:blur-none">
             <Image
               src={"/contact-graphic.svg"}
               alt="vector"
@@ -524,6 +525,12 @@ function ContactUs() {
               height={250}
               className="w-full object-contain"
             />
+            <div className="hidden lg:block">
+              <PayLater />
+            </div>
+          </div>
+          <div className="block lg:hidden">
+            <PayLater />
           </div>
 
           <div className="absolute -top-0 flex -translate-y-full flex-row gap-5 rounded-t-lg bg-[#6F65FA]  p-5 py-7 drop-shadow-lg lg:-right-0 lg:top-1/2 lg:translate-x-full lg:flex-col  lg:rounded-br-full-tr-lg">
