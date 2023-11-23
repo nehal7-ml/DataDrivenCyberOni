@@ -33,3 +33,23 @@
 }
 @tailwind components;
 @tailwind utilities;
+
+
+@keyframes float {
+  0%, 100% { 
+    transform: translate(0, 0); 
+  }
+  20% { 
+    transform: translate(-10px, -20px); 
+  }
+  40% { 
+    transform: translate(20px, 15px); 
+  }
+  60% { 
+    transform: translate(-15px, 10px); 
+  }
+  80% { 
+    transform: translate(10px, -10px); 
+  }
+}
+
