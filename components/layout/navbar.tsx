@@ -50,7 +50,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
   return (
     <>
       <div
-        className={`fixed top-0 w-full flex justify-center ${scrolled
+        className={`fixed top-0 w-screen flex justify-center ${scrolled
           ? "border-b border-gray-200 bg-white/10 backdrop-blur-xl"
           : "bg-white/0"
           } z-[100] transition-all lg:h-24 h-16`}
@@ -144,7 +144,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               <input
                 type="text"
                 placeholder="Search"
-                className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 lg:w-auto"
               />
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
               </button>
