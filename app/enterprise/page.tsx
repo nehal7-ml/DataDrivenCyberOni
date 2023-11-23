@@ -1,11 +1,16 @@
 import ReviewCarousel from "@/components/ReviewCarousel";
 import EmailLetter from "@/components/home/EmailLetter";
+import { getGroup } from "@/crud/casestudy";
 import { testimonials } from "@/data/testimonials";
 import { Activity, Monitor, Redo, ShoppingCart, BlocksIcon, Blocks, LayoutGrid, Search, ArrowRight, MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-function Enterprise() {
+import prisma from "@/lib/prisma";
+async function Enterprise() {
+    const ecommCases = await getGroup('ECOMMERCE', prisma) ;
+    const landing= await getGroup('LANDING', prisma) ;
+    const software = await getGroup('SOFTWARE', prisma) ;
+    const graphics = await getGroup('GRAPHICS', prisma) ;
     return (
 
         <div className="w-full">

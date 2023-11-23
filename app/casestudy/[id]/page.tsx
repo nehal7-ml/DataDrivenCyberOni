@@ -1,79 +1,12 @@
 import UserPersonaCard from "@/components/casestudies/UserPersonaCard";
+import { read } from "@/crud/casestudy";
 import Image from "next/image";
+import prisma from "@/lib/prisma";
+import { CreateImageDTO } from "@/crud/images";
+import { Image  as UserImage} from "@prisma/client";
 
-
-const caseStudy = {
-
-    title: "Case study Title",
-    preview: "Lorem ipsum dolor sit amet, co egestas tellus rutrum tellus pellentesque eu tincidunt. Tempus quam pellentesque nec nam aliquam. Ac turpis egestas integer eget aliquet nibh. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Scelerisque fermentum dui faucibus in ornare quam. Proin sed libero enim sed. Fringilla ut morbi tincidunt augue interdum velit. Et ligula ullamcorper malesuada proin libero. Sagittis eu volutpat odio facilisis. Aliquam id diam maecenas ultricies mi. Elit eget gravida cum sociis. Interdum varius sit amet mattis vulputate enim nulla aliquet. Integer vitae justo eget magna fermentum iaculis eu non. Urna neque viverra justo nec ultrices. Odio eu feugiat pretium nibh ipsum. Volutpat odio facilisis mauris sit amet. Arcu ac tortor dignissim convallis. Integer enim neque volutpat ac tincidunt vitae semper quis.",
-    problemStatement: "Lorem ipsum e et dolore magna aliqua. Ac orci pellentesque eu tincidunt. Tempus quam pellentesque ns.",
-    userProblems: ["problem 1", "problem 2"],
-    possibleSolutions: ["solution 1", "solution 2", "solution 3"],
-    userPersonas: [
-        {
-            bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt. Tempus quam pellentesque nec nam aliquam. Ac turpis egestas integer eget aliquet nibh. Nunc pulvinar sapien et ligula ullamcorper malesuada proin libero. Scelerisque fermentum dui faucibus in ornare quam. Proin sed libero enim sed. Fringilla ut morbi tincidunt augue interdum velit. Et ligula ullamcorper malesuada proin libero. Sagittis eu volutpat odio facilisis. Aliquam id diam maecenas ultricies mi. Elit eget gravida cum sociis. Interdum varius sit amet mattis vulputate enim nulla aliquet. Integer vitae justo eget magna fermentum iaculis eu non. Urna neque viverra justo nec ultrices. Odio eu feugiat pretium nibh ipsum. Volutpat odio facilisis mauris sit amet. Arcu ac tortor dignissim convallis. Integer enim neque volutpat ac tincidunt vitae semper quis.",
-            name: "user anme",
-            gender: "male",
-            age: 30,
-            goals: ["goal1", "goal2", "goal3", "goal4"],
-            painPoints: ["ponit1", "ponit2", "ponit3", "ponit4"],
-            image: {
-                id: "91827302381-2",
-                src: 'https://picsum.photos/900?random=1',
-                name: "pic name"
-            }
-
-        }
-    ],
-    image1: {
-        src: '/casestudy-1.png',
-        name: "pic name"
-
-    },
-    image2: {
-        src: '/casestudy-2.png',
-        name: "pic name"
-
-    },
-
-    goals: ["goal1", "goal2", "goal3", "goal4"],
-    keyLearning: "Amet tellus cras adipiscing enim eu turpis. Lobortis scelerisque fermentum dui faucibus. Facilisi nullam vehicula ipsum a arcu cursus vitae congue. Ultricies tristique nulla aliquet enim tortor. Semper auctor neque vitae tempus quam pellentesque nec. Vivamus arcu felis bibendum ut tristique et egestas. Nisl nisi scelerisque eu ultrices vitae auctor eu augue. Nisl condimentum id venenatis a condimentum vitae sapien pellentesque habitant. Egestas dui id ornare arcu odio ut sem nulla. Risus in hendrerit gravida rutrum quisque. Volutpat consequat mauris nunc congue. Justo laoreet sit amet cursus sit amet. Amet justo donec enim diam vulputate. Arcu bibendum at varius vel pharetra vel turpis nunc eget. At augue eget arcu dictum varius duis. Pharetra magna ac placerat vestibulum lectus mauris ultrices eros. A arcu cursus vitae congue mauris rhoncus aenean vel elit.",
-    userResearch: "Amet tellus cras adipiscing enim eu turpis. Lobortis scelerisque fermentum dui faucibus. Facilisi nullam vehicula ipsum a arcu cursus vitae congue. Ultricies tristique nulla aliquet enim tortor. Semper auctor neque vitae tempus quam pellentesque nec. Vivamus arcu felis bibendum ut tristique et egestas. Nisl nisi scelerisque eu ultrices vitae auctor eu augue. Nisl condimentum id venenatis a condimentum vitae sapien pellentesque habitant. Egestas dui id ornare arcu odio ut sem nulla. Risus in hendrerit gravida rutrum quisque. Volutpat consequat mauris nunc congue. Justo laoreet sit amet cursus sit amet. Amet justo donec enim diam vulputate. Arcu bibendum at varius vel pharetra vel turpis nunc eget. At augue eget arcu dictum varius duis. Pharetra magna ac placerat vestibulum lectus mauris ultrices eros. A arcu cursus vitae congue mauris rhoncus aenean vel elit.",
-    uniqueFeatures: "Amet tellus cras adipiscing enim eu turpis. Lobortis scelerisque fermentum dui faucibus. Facilisi nullam vehicula ipsum a arcu cursus vitae congue. Ultricies tristique nulla aliquet enim tortor. Semper auctor neque vitae tempus quam pellentesque nec. Vivamus arcu felis bibendum ut tristique et egestas. Nisl nisi scelerisque eu ultrices vitae auctor eu augue. Nisl condimentum id venenatis a condimentum vitae sapien pellentesque habitant. Egestas dui id ornare arcu odio ut sem nulla. Risus in hendrerit gravida rutrum quisque. Volutpat consequat mauris nunc congue. Justo laoreet sit amet cursus sit amet. Amet justo donec enim diam vulputate. Arcu bibendum at varius vel pharetra vel turpis nunc eget. At augue eget arcu dictum varius duis. Pharetra magna ac placerat vestibulum lectus mauris ultrices eros. A arcu cursus vitae congue mauris rhoncus aenean vel elit.",
-    wireFrame: [{
-        src: 'https://picsum.photos/300?random=1',
-        name: "pic name"
-    }],
-    architecture: {
-        src: 'https://picsum.photos/300?random=3',
-        name: "pic name"
-    },
-    userFlow: {
-        src: 'https://picsum.photos/300?random=10',
-        name: "pic name"
-    },
-    hifi: [{
-        src: 'https://picsum.photos/300?random=5',
-        name: "pic name"
-    },
-    {
-        src: 'https://picsum.photos/300?random=5',
-        name: "pic name"
-    },
-    {
-        src: 'https://picsum.photos/300?random=5',
-        name: "pic name"
-    }
-
-
-
-    ],
-    competetiveAnalysis: [{}]
-
-
-
-}
-function CaseStudy() {
+async function CaseStudy({params}: {params:{id:string}}) {
+    const caseStudy = await read(params.id, prisma )
     return (
 
         <>
@@ -95,7 +28,7 @@ function CaseStudy() {
 
                 </div>
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
-                    {caseStudy.image1 ? <Image className=" rounded-lg object-contain" src={caseStudy.image1.src} alt={'casestudy-1'} height={500} width={500} /> :
+                    {caseStudy.images[0] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-1'} height={500} width={500} /> :
                         <Image className="l rounded-lg object-contain" src={'/casestudy-1.png'} alt={'casestudy-1'} height={500} width={500} />
                     }
                 </div>
@@ -163,7 +96,7 @@ function CaseStudy() {
                 </div>
 
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
-                    {caseStudy.image2 ? <Image className=" rounded-lg object-contain" src={caseStudy.image2.src} alt={'casestudy-1'} height={500} width={500} /> :
+                    {caseStudy.images[1] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-1'} height={500} width={500} /> :
                         <Image className="l rounded-lg object-contain" src={'/casestudy-2.png'} alt={'casestudy-1'} height={500} width={500} />
                     }
                 </div>
@@ -175,6 +108,7 @@ function CaseStudy() {
                         return <div key={index}>
                             <UserPersonaCard
                                 {...persona}
+                                image={persona.image as UserImage }
 
                             />
                         </div>
@@ -193,10 +127,10 @@ function CaseStudy() {
                 </section>
 
                 <section className="mb-8 ">
-                    {caseStudy.wireFrame && <>
+                    {caseStudy.wireFrames && <>
                         <h2 className="text-[#7850CD]">Wireframes</h2>
                         <div className="flex gap-2 flex-wrap max-w-full">
-                            {caseStudy.wireFrame.map((wireframe, index) => <Image key={index} src={wireframe.src} alt={"architecture"} height={500} width={500} />)}</div>
+                            {caseStudy.wireFrames.map((wireframe, index) => <Image key={index} src={wireframe.src} alt={"architecture"} height={500} width={500} />)}</div>
 
                     </>}
                 </section>
@@ -207,17 +141,17 @@ function CaseStudy() {
                             <h2 className="text-[#7850CD]">Information Architecture </h2>
                             <p className="text-left font-semibold">To get innovative solutions into the hands of your users, I needed to concentrate on idea generation.  Based on my understanding of the problem, I brainstormed the Information architecture and user flow to ensure smooth experience for the users. </p>
                         </div>
-                            <Image src={caseStudy.architecture.src} alt={"architecture"} height={500} width={500} />
+                            <Image src={caseStudy.architecture[0].src} alt={"architecture"} height={500} width={500} />
 
                         </>}
                 </section>
                 <section className="mb-8 ">
-                    {caseStudy.hifi && <>
+                    {caseStudy.hifiDesign && <>
                         <h2 className="text-[#7850CD]">Hi-Fi Designs</h2>
 
                         <div className="flex gap-2 flex-wrap max-w-full">
-                            {caseStudy.hifi.map((image, index) => <div key={index} className="flex flex-col justify-center items-center" >
-                                <Image src={image.src} alt={image.name} height={500} width={500} />
+                            {caseStudy.hifiDesign.map((image, index) => <div key={index} className="flex flex-col justify-center items-center" >
+                                <Image src={image.src} alt={image.name as string} height={500} width={500} />
                                 <div className="font-bold"># {image.name}</div>
                             </div>)}
                         </div>
