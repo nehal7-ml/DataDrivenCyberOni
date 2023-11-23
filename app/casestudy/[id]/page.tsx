@@ -4,9 +4,25 @@ import Image from "next/image";
 import prisma from "@/lib/prisma";
 import { CreateImageDTO } from "@/crud/images";
 import { Image as UserImage } from "@prisma/client";
-
+import { Metadata } from "next";
+export let metadata: Metadata = {
+    title: "",
+    description: "",
+    openGraph: {},
+    category: 'Case Study'
+};
 async function CaseStudy({ params }: { params: { id: string } }) {
     const caseStudy = await read(params.id, prisma)
+
+    metadata.title = caseStudy.title as string
+    metadata.description = caseStudy.preview
+    metadata.openGraph = {
+        type: 'article',
+        title: caseStudy.title,
+        description: caseStudy.preview,
+        images: [caseStudy.images.length > 0 ? caseStudy.images[0].src : ""]
+    }
+    
     return (
 
         <>

@@ -9,7 +9,6 @@ import CommentForm from "@/components/blogs/CommentForm";
 import BlogContainer from "@/components/blogs/BlogContainer";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
-export const dynamic = 'force-dynamic'
 export let metadata: Metadata = {
     title: "",
     description: "",
