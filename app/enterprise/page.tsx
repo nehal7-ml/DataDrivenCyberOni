@@ -7,10 +7,10 @@ import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 async function Enterprise() {
-    const ecommCases = await getGroup('ECOMMERCE', prisma) ;
-    const landing= await getGroup('LANDING', prisma) ;
-    const software = await getGroup('SOFTWARE', prisma) ;
-    const graphics = await getGroup('GRAPHICS', prisma) ;
+    const ecommCases = await getGroup('ECOMMERCE', prisma);
+    const landing = await getGroup('LANDING', prisma);
+    const software = await getGroup('SOFTWARE', prisma);
+    const graphics = await getGroup('GRAPHICS', prisma);
     return (
 
         <div className="w-full">
@@ -225,18 +225,22 @@ async function Enterprise() {
                 <div className="flex flex-col lg:flex-row lg:justify-start  justify-center lg:my-20 my-10">
                     <div className="flex justify-center lg:gap-10 lg:justify-start lg:flex-col lg:w-1/3 text-right lg:text-4xl lg:px-10">
                         <div className="foc:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Ecommere Website</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA]" /></div>
-                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Landing Pages</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA] " /></div>
-                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Software Architecture</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA] " /></div>
-                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Graphic design</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block  peer-focus:text-[#5380EA]" /></div>
+                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline underline-[#5380EA] flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Landing Pages</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA] " /></div>
+                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline underline-[#5380EA] flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Software Architecture</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA] " /></div>
+                        <div className="focus:text-[#5380EA] cursor-pointer hover:underline underline-[#5380EA] flex justify-center items-center gap-2"><button className="peer focus:text-[#5380EA]">Graphic design</button> <MoveRight className="h-full w-10 hidden lg:peer-focus:block  peer-focus:text-[#5380EA]" /></div>
                     </div>
-                    <div className="flex flex-wrap w-full ">
-                        {(new Array(16).fill(1)).map((value, index) => {
-                            return <div key={index} className={`rounded-2xl aspect-square  w-1/2 p-3 overflow-hidden lg:w-1/4`}>
-                                <Link className="w-full h-full " href={'/casestudy/100'}>
-                                    <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`} alt="" height={400} width={400} />
-                                </Link>
-                            </div>
-                        })}
+
+                    <div className="flex flex-wrap peer-ac">
+                        {ecommCases.map((caseStudy, index) => {
+                            return (
+                                <div key={index} className={`rounded-2xl aspect-square  w-1/2 p-3 overflow-hidden lg:w-1/4`}>
+                                    <Link className="w-full h-full " href={`/casestudy/${caseStudy.id}`}>
+                                        <Image className="rounded-lg" src={`${caseStudy.images?.length > 0 ? caseStudy.images[0].src : `https://picsum.photos/200?random=1`}`} alt="" height={400} width={400} />
+                                    </Link>
+                                </div>
+                            )
+                        }
+                        )}
                     </div>
 
                 </div>

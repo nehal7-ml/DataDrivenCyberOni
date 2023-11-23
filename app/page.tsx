@@ -16,11 +16,11 @@ export default async function Home() {
         <section className="container mx-auto flex flex-col">
           <div className="flex flex-col-reverse justify-center items-center lg:flex-row">
             <div>
-              <div className="w-fit text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] via-[#5200FF]  to-[#FF2DF7] m-3 font-bold text-2xl" >
+              <div className="w-fit text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] via-[#5200FF]  to-[#FF2DF7] m-3 font-bold text-5xl" >
                 With Ai
               </div>
-              <div className="m-3 font-bold text-2xl">
-                Rovolutionize Your Business
+              <div className="m-3 font-bold text-5xl">
+                Revolutionize Your Business
               </div>
               <div className="m-3">
                 Our ambition is to reshape how you envision the use of your data to automate mundane  tasks.

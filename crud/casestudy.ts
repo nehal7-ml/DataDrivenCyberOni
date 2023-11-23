@@ -1,4 +1,4 @@
-import { Image, PrismaClient } from "@prisma/client";
+import { CaseStudy, Image, PrismaClient } from "@prisma/client";
 import { CreateImageDTO } from "./images";
 export type CaseStudyType = 'ECOMMERCE' |'LANDING' | 'SOFTWARE'| 'GRAPHICS' ;
 export type CreateCaseStudy = {
@@ -111,5 +111,5 @@ export async function getGroup(group: CaseStudyType, prismaClient: PrismaClient)
 
 
 
-    return allrecords
+    return allrecords as CreateCaseStudy[]
 }

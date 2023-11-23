@@ -4,7 +4,7 @@ export default function useScroll(threshold: number) {
   const [scrolled, setScrolled] = useState(false);
 
   const onScroll = useCallback(() => {
-    console.log(window.scrollY);
+    //console.log(window.scrollY);
     setScrolled(window.scrollY > threshold);
   }, [threshold]);
 
