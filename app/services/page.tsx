@@ -9,7 +9,7 @@ export let metadata: Metadata = {
     title: "",
     description: "",
     openGraph: {},
-    category: 'blog'
+    category: 'service'
 };
 async function Services() {
     const service = await read("432e1392-4823-4cc5-8886-d116d11a3e91", prisma) as DisplayServiceDTO
