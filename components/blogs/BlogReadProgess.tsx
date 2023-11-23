@@ -4,7 +4,7 @@ import { motion, useScroll } from "framer-motion";
 import { RefObject } from "react";
 
 function ProgressBar({ container }: { container?: RefObject<HTMLElement> }) {
-  const { scrollYProgress } = useScroll({ target: container, offset: ["start start", "end"] });
+  const { scrollYProgress } = useScroll({ target: container, offset: ["start start", "end"], layoutEffect:false });
   const scrollY = scrolled(50);
 
   return (<motion.div

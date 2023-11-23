@@ -31,7 +31,7 @@ function ServiceLayout({ children }: { children: ReactNode }) {
             </section>
             {children}
             <section>
-                <ContactForm />
+                
             </section>
             <section className="flex justify-center items-center">
                 <PayLater />
