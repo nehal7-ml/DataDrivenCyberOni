@@ -24,7 +24,7 @@ const Section = ({ title, subTitle, content, image, imageFirst = false }: Sectio
                     </div>
                     {/* Text */}
                     <div className="lg:w-1/2 p-8">
-                        <div className="w-fit text-transparent bg-clip-text bg-gradient-purple m-3 font-bold text-5xl">{title}</div>
+                        <div className="w-fit text-transparent bg-clip-text bg-gradient-purple m-3 font-bold text-5xl leading-snug">{title}</div>
                         <div className="m-3 font-bold text-xl">{subTitle}</div>
                         <div className="m-3">{content}</div>
                         <div className="h-[1px] m-3 bg-gradient-purple" ></div>
