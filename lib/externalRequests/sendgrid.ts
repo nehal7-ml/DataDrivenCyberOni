@@ -1,4 +1,4 @@
-import sgMail from '@sendgrid/mail'
+import sgMail, { ResponseError } from '@sendgrid/mail'
 import client, { Client } from '@sendgrid/client'
 import { ClientRequest } from "@sendgrid/client/src/request";
 import { SendVerificationRequestParams } from "next-auth/providers/email";
@@ -33,7 +33,7 @@ export async function sendMail(email: string, message: string) {
 
 }
 
-export async function sendMailHtml(sender: string, email: string, subject: string ,message: string) {
+export async function sendMailHtml(sender: string, email: string, subject: string, message: string) {
     const msg: sgMail.MailDataRequired = {
         to: email, // Change to your recipient
         from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
@@ -47,13 +47,13 @@ export async function sendMailHtml(sender: string, email: string, subject: strin
 
 }
 
-export async function contactForm(sender: string, message: string, subject: string, firstName:string,lastName:string, referral:string) {
+export async function contactForm(sender: string, message: string, subject: string, firstName: string, lastName: string, referral: string) {
     const msg: sgMail.MailDataRequired = {
         to: process.env.CONTACT_EMAIL as string, // Change to your recipient
         from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
-        replyTo : sender,
+        replyTo: sender,
         subject: `Question/Message from ${sender} in ${subject}`,
-        html:`
+        html: `
           <section>
             <h1>Contact requested by ${firstName} ${lastName} </h1>
             
@@ -76,6 +76,7 @@ export async function contactForm(sender: string, message: string, subject: stri
 export async function addToSendGrid(lead: Lead) {
 
     const list = await getList(process.env.SENDGRID_LIST as string);
+    console.log(list,);
     const data = {
         list_ids: [
             list.id,
@@ -96,8 +97,16 @@ export async function addToSendGrid(lead: Lead) {
         method: 'PUT',
         body: data
     }
-    let response = await client.request(request);
-    return response[0].statusCode
+    try {
+        let response = await client.request(request);
+        // console.log(response[0].body);
+        return response[0].statusCode
+    } catch (error) {
+        const err = error as ResponseError
+        console.log(err.response.body, err.cause);
+        return err.code
+    }
+
 
 }
 
@@ -108,7 +117,7 @@ export async function sendPasswordEmail({ email, password }: { email: string, pa
         to: email, // Change to your recipient
         from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
         subject: 'Welcome to Apartment Guru',
-        html:`
+        html: `
           <section>
             <h1>Welcome to Apartment Guru</h1>
             
@@ -140,7 +149,7 @@ async function getList(listName: string) {
 
     let response = await client.request(request);
 
-    // console.log(response[0].body)
+    //console.log(response[0].body)
     for (const list of (response[0].body as { result: Array<any> }).result) {
         if (list.name === listName) return list;
     }

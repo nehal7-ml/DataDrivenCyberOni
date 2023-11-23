@@ -7,8 +7,9 @@ import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
-import { ChevronDown, Menu, Moon, Sun } from "lucide-react";
+import { ChevronDown, HeartHandshake, Info, MailQuestion, Menu, Moon, Sun, ThumbsUp } from "lucide-react";
 import { setCookie } from 'cookies-next';
+import MegaMenu, { MegamenuProps } from "../MegaMenu";
 
 export default function NavBar({ session, darkMode }: { session: Session | null, darkMode: boolean }) {
   const scrolled = useScroll(50);
@@ -28,14 +29,31 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
     setExploreDropdownOpen(!exploreDropdownOpen);
   };
 
+  const aboutMenu=
+    [
+      {
+        type: "Links" as "Links",
+        title: 'About us',
+
+        links: [
+          { href: '/casestudies', icon: <ThumbsUp className="text-gray-300 fill-blue-300" />, name: 'Customer Stories',subTitle:"Our customers have to say" },
+          { href: '/about', icon: <HeartHandshake className="text-gray-300 fill-blue-300"/>, name: 'Partners',subTitle:"Become a our partners"        },
+
+
+        ]
+
+
+      }
+    ]
+
+
   return (
     <>
       <div
-        className={`fixed top-0 w-full flex justify-center ${
-          scrolled
-            ? "border-b border-gray-200 bg-white/10 backdrop-blur-xl"
-            : "bg-white/0"
-        } z-[100] transition-all lg:h-24 h-16`}
+        className={`fixed top-0 w-full flex justify-center ${scrolled
+          ? "border-b border-gray-200 bg-white/10 backdrop-blur-xl"
+          : "bg-white/0"
+          } z-[100] transition-all lg:h-24 h-16`}
       >
         <div className=" flex items-center justify-between w-full text-black dark:text-white mx-5">
 
@@ -107,6 +125,14 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
             <Link href="#" className="hover:text-blue-500">
               Pricing
             </Link>
+            <div className="relative">
+              <Link href="#" className="hover:text-blue-500 peer/about">
+                About
+              </Link>
+              <div className="absolute  hidden peer-hover/about:block hover:block">
+                <MegaMenu groups={aboutMenu} />
+              </div>
+            </div>
 
             <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  lg:hidden">Sign In</Link>
             <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex lg:hidden">Sign Up</Link>
@@ -137,6 +163,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               <Menu></Menu>
             </button>
           </div>
+
         </div>
       </div>
     </>
@@ -173,7 +200,7 @@ function ToggleDarkMode({ enabled, className }: { enabled: boolean, className?: 
   }, [isToggled]);
 
   return (
-    <div className={"container flex justify-center items-center "+ className}>
+    <div className={"container flex justify-center items-center " + className}>
       <label className="flex items-center cursor-pointer w-6 h-6">
         <div className="relative">
           <input
