@@ -28,7 +28,7 @@ export default async function Home() {
               <div className="mx-3 bg-gradient-purple h-[1px]" />
               <div className="m-3">
                 <button className="rounded-full bg-gradient-purple p-[1px] m-3">
-                  <div className="rounded-full p-3 bg-white dark:bg-black ">get Started</div>
+                  <div className="rounded-full p-3 bg-white dark:bg-black ">Get Started</div>
                 </button>
               </div>
             </div>
