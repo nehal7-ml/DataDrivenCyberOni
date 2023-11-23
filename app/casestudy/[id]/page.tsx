@@ -3,10 +3,10 @@ import { read } from "@/crud/casestudy";
 import Image from "next/image";
 import prisma from "@/lib/prisma";
 import { CreateImageDTO } from "@/crud/images";
-import { Image  as UserImage} from "@prisma/client";
+import { Image as UserImage } from "@prisma/client";
 
-async function CaseStudy({params}: {params:{id:string}}) {
-    const caseStudy = await read(params.id, prisma )
+async function CaseStudy({ params }: { params: { id: string } }) {
+    const caseStudy = await read(params.id, prisma)
     return (
 
         <>
@@ -108,7 +108,7 @@ async function CaseStudy({params}: {params:{id:string}}) {
                         return <div key={index}>
                             <UserPersonaCard
                                 {...persona}
-                                image={persona.image as UserImage }
+                                image={persona.image as UserImage}
 
                             />
                         </div>
@@ -135,7 +135,7 @@ async function CaseStudy({params}: {params:{id:string}}) {
                     </>}
                 </section>
                 <section className="mb-8 ">
-                    {caseStudy.architecture &&
+                    {caseStudy.architecture && caseStudy.architecture?.length > 0 &&
 
                         <><div className="rounded-lg shadow-lg p-10 text-center ">
                             <h2 className="text-[#7850CD]">Information Architecture </h2>
