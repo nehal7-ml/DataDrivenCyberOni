@@ -1,39 +1,39 @@
-import "./globals.css";
+import ContactButton from "@/components/ConactButton";
+import Notification from "@/components/Notification";
+import Footer from "@/components/layout/footer";
+import NavBar from "@/components/layout/navbar";
+import { Owner } from "@/data/ownerData";
 import { Analytics } from "@vercel/analytics/react";
 import cx from "classnames";
-import { sfPro, inter, abel, nunito } from "./fonts";
-import Nav from "@/components/layout/nav";
-import Footer from "@/components/layout/footer";
-import { Suspense } from "react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import NavBar from "@/components/layout/navbar";
-import Notification from "@/components/Notification";
-import { Owner } from "@/data/ownerData";
 import { Metadata } from "next";
-import { cookies } from 'next/headers'
-import ContactButton from "@/components/ConactButton";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
+import { Suspense } from "react";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { abel, inter, nunito, sfPro } from "./fonts";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Cyberoni",
   description: Owner.about,
+  keywords: Owner.seo.keywords,
   metadataBase: new URL(process.env.NEXTAUTH_URL as string),
   twitter: {
     card: "summary_large_image",
-    title: "Cybertech Shop",
-    description: Owner.about,
-    creator: "@Cyberoni", // Make sure to include the correct Twitter handle here
-    images: ['/logo.png']
+    title: Owner.seo.metaTitle,
+    description: Owner.seo.metaDescription,
+    creator: "@softwear4u", // Make sure to include the correct Twitter handle here
+    images: ["/logo.png"],
   },
   openGraph: {
-    title: "Cybertech Shop",
-    description: Owner.about,
-    url: Owner.company,
-    siteName: "Cybertech Shop",
+    title: Owner.seo.metaTitle,
+    description: Owner.seo.metaDescription,
+    url: Owner.url,
+    siteName: "CyberShopTech | CyberOni",
     locale: "en_US",
     type: "website",
   },
-  themeColor: "#FFF",
+  themeColor: "#0074e4",
 };
 
 export default async function RootLayout({
@@ -42,19 +42,28 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
-  const cookieStore = cookies()
-  const theme = cookieStore.get('theme')
-
+  const cookieStore = cookies();
+  const theme = cookieStore.get("theme");
 
   return (
     <html lang="en">
-      <body className={`${cx(sfPro.variable, inter.variable, abel.variable, nunito.variable)} 
-                        ${theme?.value} antialiased `}>
+      <body
+        className={`${cx(
+          sfPro.variable,
+          inter.variable,
+          abel.variable,
+          nunito.variable,
+        )} 
+                        ${theme?.value} antialiased `}
+      >
         <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white" />
         <Suspense fallback="...">
-          <NavBar session={session} darkMode={theme?.value === 'dark' ? true : false} />
+          <NavBar
+            session={session}
+            darkMode={theme?.value === "dark" ? true : false}
+          />
         </Suspense>
-        <main className="relative min-h-screen w-full dark:bg-gray-900 dark:text-white pt-24 px-5 lg:px-20">
+        <main className="relative min-h-screen w-full px-5 pt-24 dark:bg-gray-900 dark:text-white lg:px-20">
           {children}
         </main>
         {
