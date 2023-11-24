@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { Metadata } from "next";
 import Image from "next/image";
 import FloatingImageSection from "@/components/shared/floating-long";
+import Faqs from "@/components/Faqs";
 export let metadata: Metadata = {
     title: "",
     description: "",
@@ -76,8 +77,23 @@ async function Services() {
             ]}
           />
         </section>
+        <section className="my-5 font-nunito">
+                <Faqs faqs={faqs}/>
+        </section>
       </div>
     );
 }
+
+const faqs = [
+    {
+      question: 'What is React?',
+      answer: 'React is a JavaScript library for building user interfaces.',
+    },
+    {
+      question: 'How to install React?',
+      answer: 'You can install React using npm or yarn.',
+    },
+    // Add more FAQs as needed
+  ];
 
 export default Services;

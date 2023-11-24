@@ -3,7 +3,6 @@ import React, { Suspense, useRef } from 'react'
 import parse from 'html-react-parser';
 import Image from "next/image";
 import prisma from "@/lib/prisma";
-import ProgressBar from "@/components/blogs/BlogReadProgess";
 import Link from "next/link";
 import CommentForm from "@/components/blogs/CommentForm";
 import BlogContainer from "@/components/blogs/BlogContainer";
