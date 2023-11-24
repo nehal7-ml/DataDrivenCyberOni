@@ -34,22 +34,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @keyframes float {
-  0%, 100% { 
-    transform: translate(0, 0); 
+  0% {
+    transform: translate(-10px, 10px);
   }
-  20% { 
-    transform: translate(-10px, -20px); 
-  }
-  40% { 
-    transform: translate(20px, 15px); 
-  }
-  60% { 
-    transform: translate(-15px, 10px); 
-  }
-  80% { 
-    transform: translate(10px, -10px); 
+
+  100% {
+    transform: translate(10px, -10px);
   }
 }
 
+@layer components {
+  .Blog-Post a {
+    @apply cursor-pointer text-blue-500 underline;
+  }
+}

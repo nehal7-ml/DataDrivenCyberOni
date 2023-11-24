@@ -6,8 +6,8 @@ import useScroll from "@/lib/hooks/use-scroll";
 import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
-import { useEffect, useState } from "react";
-import { ChevronDown, HeartHandshake, Info, MailQuestion, Menu, Moon, Sun, ThumbsUp } from "lucide-react";
+import { ReactNode, useEffect, useState } from "react";
+import { ActivitySquare, AppWindow, BarChart, Book, BookCheck, Briefcase, CheckCircle, ChevronDown, Cog, Cpu, FileStack, Fullscreen, Group, HeartHandshake, HelpCircle, Info, Layers3, LifeBuoy, Lightbulb, LineChart, Lock, MailQuestion, MapPin, Megaphone, Menu, Moon, MoveRight, Newspaper, Phone, PieChart, PlusCircle, Repeat2, Sun, Terminal, TerminalSquare, ThumbsUp, Users } from "lucide-react";
 import { setCookie } from 'cookies-next';
 import MegaMenu, { MegamenuProps } from "../MegaMenu";
 
@@ -29,22 +29,6 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
     setExploreDropdownOpen(!exploreDropdownOpen);
   };
 
-  const aboutMenu=
-    [
-      {
-        type: "Links" as "Links",
-        title: 'About us',
-
-        links: [
-          { href: '/casestudies', icon: <ThumbsUp className="text-gray-300 fill-blue-300" />, name: 'Customer Stories',subTitle:"Our customers have to say" },
-          { href: '/about', icon: <HeartHandshake className="text-gray-300 fill-blue-300"/>, name: 'Partners',subTitle:"Become a our partners"        },
-
-
-        ]
-
-
-      }
-    ]
 
 
   return (
@@ -57,79 +41,74 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
       >
         <div className=" flex items-center justify-between w-full text-black dark:text-white mx-5">
 
-          <Link href="/" className="flex items-center font-display text-2xl w-fit">
-            <Image
-              src="/logo.png"
-              alt="Precedent logo"
-              width="30"
-              height="30"
-              className="rounded-sm"
-            ></Image>
-            <div>CyberOni</div>
-          </Link>
+          <div className="relative">
+            <Link href="/" className="flex items-center font-display text-2xl w-fit peer/logo">
+              <Image
+                src="/logo.png"
+                alt="Precedent logo"
+                width="30"
+                height="30"
+                className="rounded-sm"
+              ></Image>
+              <div>CyberOni</div>
+            </Link>
+            <div className="absolute -translate-x-8 lg:translate-x-16 z-50 transition-all duration-300 w-screen lg:top-8 lg:w-[700px] hidden peer-focus/logo:block peer-hover/logo:block hover:block">
+                <MegaMenu groups={mainMenu} />
+              </div>
+          </div>
 
 
-          <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex absolute right-0 top-full h-screen w-screen pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black'}   gap-10   h-screen w-full flex-col items-center justify-start lg:pt-0 lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
+          <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex absolute right-0 top-full h-screen w-screen max-h-screen overflow-y-auto pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black py-10'}   gap-10   h-screen w-full flex-col items-center justify-start lg:pt-0 lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
 
             <div className="relative group">
               <button
                 onClick={toggleProductsDropdown}
-                className="md:focus:outline-none hover:text-blue-500"
+                className="md:focus:outline-none hover:text-blue-500 peer/product"
               >
                 Products
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
-              {productsDropdownOpen && (
-                <ul className="absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-1">
-                  <li>
-                    <Link href="#">shop</Link>
-                  </li>
-                  <li>
-                    <Link href="#">Cart</Link>
-                  </li>
-
-                </ul>
-              )}
+              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/product:block peer-hover/product:block hover:block">
+                <MegaMenu groups={productMenu} />
+              </div>
             </div>
             <Link href="#" className="hover:text-blue-500">
               Team
             </Link>
-            <Link href="/enterprise" className="hover:text-blue-500">
-              Enterprise
-            </Link>
+            <div className="relative">
+              <button className="hover:text-blue-500 peer/enterprise">
+                Enterprise
+              </button>
+              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/enterprise:block peer-hover/enterprise:block hover:block">
+                <MegaMenu groups={enterpriseMenu} />
+              </div>
+            </div>
             <div className="relative group">
               <button
-
-                className=" peer md:focus:outline-none hover:text-blue-500"
+                className=" peer/explore md:focus:outline-none hover:text-blue-500"
               >
                 Explore
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
-              {(
-                <ul className="hidden peer-focus:block hover:block absolute left-0 mt-2 bg-gray-700 text-white p-2 space-y-1">
-                  <li>
-                    <Link href="/blogs">Blogs</Link>
-                  </li>
-                  <li>
-                    <Link href="/services">services</Link>
-                  </li>
-                  <li>
-                    <Link href="#"></Link>
-                  </li>
-                </ul>
-              )}
+
             </div>
-            <Link href="#" className="hover:text-blue-500">
-              Marketplace
-            </Link>
-            <Link href="#" className="hover:text-blue-500">
-              Pricing
-            </Link>
             <div className="relative">
-              <Link href="#" className="hover:text-blue-500 peer/about">
+              <button className="hover:text-blue-500 peer/market">
+                Marketplace
+              </button>
+
+            </div>
+            <div className="relative">
+              <button className="hover:text-blue-500 peer/pricing">
+                Pricing
+              </button>
+
+            </div>
+            <div className="relative">
+              <button className="hover:text-blue-500 peer/about">
                 About
-              </Link>
-              <div className="absolute  hidden peer-hover/about:block hover:block">
+              </button>
+              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/about:block peer-hover/about:block hover:block">
                 <MegaMenu groups={aboutMenu} />
               </div>
             </div>
@@ -221,3 +200,155 @@ function ToggleDarkMode({ enabled, className }: { enabled: boolean, className?: 
     </div>
   );
 }
+
+
+const aboutMenu: MegamenuProps =
+  [
+
+    {
+      type: "Links" as "Links",
+      title: 'About us',
+
+      links: [
+        { href: '/casestudies', icon: <ThumbsUp className="text-gray-100 fill-blue-500" />, name: 'Customer Stories', subTitle: "Our customers have to say" },
+        { href: '/partner', icon: <HeartHandshake className="text-gray-100 fill-blue-500" />, name: 'Partners', subTitle: "Become a our partners" },
+        { href: '/careers', icon: <Briefcase className="text-gray-100 fill-blue-500" />, name: 'Careers', subTitle: "We’re always hiring!" },
+        { href: '/media', icon: <Newspaper className="text-gray-100 fill-blue-500" />, name: 'Press and media', subTitle: "News and updates" },
+
+        { href: '/contact', icon: <Phone className="text-gray-100 fill-blue-500" />, name: 'Contact Us', subTitle: "Get in touch with our sales" },
+
+
+
+      ]
+
+
+    },
+    {
+      type: 'Node',
+      node: <div>
+        <div className="text-gray-500 dark:gray-200">Oure offices</div>
+        <div className="flex gap-5 py-2">
+          <div>
+            <Image src={'/about-1.png'} alt="location" height={300} width={400} className="rounded-3xl" />
+          </div>
+          <div className="flex justify-center flex-col">
+            <div className="font-bold">Serving customers from across the globe</div>
+            <div className="flex gap-2"><MapPin className="fill-blue-700 text-white dark:text-slate-900" />San Francisco, California</div>
+            <div className="flex gap-2"><MapPin className="fill-blue-700 text-white dark:text-slate-900" />Seattle, Washington</div>
+          </div>
+        </div>
+      </div> as ReactNode
+    }
+  ]
+
+const enterpriseMenu:MegamenuProps = [
+  {
+    type: 'Links',
+    title: "Resources",
+    links: [
+      {href:'/docs', name:'Developer Docs', subTitle: 'Learn how to integrate', icon: <TerminalSquare className=" text-blue-700"/>},
+      {href:'/docs', name:'Help Center ', subTitle: 'All about how to use ', icon: <LifeBuoy className="fill-blue-700 text-gray-50"/>},
+      {href:'/docs', name:'Product Updates', subTitle: 'Newest feature releases', icon: <Megaphone className="fill-blue-700 text-gray-50"/>},
+
+
+    ]
+  },
+  {
+    type: 'Links',
+    title: "Best Practices",
+    links: [
+      {href:'/docs', name:'FAQs', subTitle: 'Learn how to integrate', icon: <HelpCircle className="fill-blue-700 text-gray-50"/>},
+      {href:'/casestudy', name:'Case Studies', subTitle: 'All about how to use ', icon: <BookCheck className="fill-blue-700 text-gray-50"/>},
+      {href:'/blogs', name:'Engineering Blog ', subTitle: 'All about how to use ', icon: <Cog className="fill-blue-700 text-gray-50"/>},
+
+      {href:'/books', name:'Books & Webinars', subTitle: 'All about how to use ', icon: <Book className="fill-blue-700 text-gray-50"/>},
+
+    ]
+  }
+]
+
+const productMenu:MegamenuProps = [
+  {
+    type: 'Links',
+    title: "Buisness Solutions",
+    links: [
+      {href:'/docs', name:'Convert', subTitle: 'Analyze conversation', icon: <Repeat2 className=" text-blue-700"/>},
+      {href:'/docs', name:'Enage', subTitle: 'Measure active usage', icon: <PlusCircle className="text-blue-700"/>},
+      {href:'/docs', name:'Retain', subTitle: 'Find retentation drivers', icon: <Fullscreen className="text-blue-700"/>},
+      {href:'/docs', name:'Product Adoption', subTitle: 'Maximize all customers', icon: <Users className="text-blue-700"/>},
+
+
+    ]
+  },
+  {
+    type: 'Links',
+    title: "Industry Solutions",
+    links: [
+      {href:'/docs', name:'eCommerce', subTitle: '', icon: <></>},
+      {href:'/casestudy', name:'SaaS', subTitle: '', icon: <></>},
+      {href:'/blogs', name:'Financial Services', subTitle: '', icon: <></>},
+
+
+    ]
+  },
+
+  {
+    type: 'Node',
+    node: <>
+      <div>
+        <div className="text-gray-500 dark:gray-200">Insight</div>
+        <div className="flex flex-col gap-5 py-2">
+          <div className="flex gap-3"><Lightbulb className="text-blue-700"/>Debugging with product analytics</div>
+          <div className="flex gap-3"><Lightbulb className="text-blue-700"/>Why it’s never too early to add product ana...</div>
+          <div className="flex gap-3"><Lightbulb className="text-blue-700"/>Data implementation, starting with the ‘why’</div>
+        </div>
+        <Link className="flex  gap-4"  href={'#'}>See all <MoveRight /></Link>
+      </div>
+    </>
+  }
+]
+
+const mainMenu:MegamenuProps = [
+
+  {
+    type: 'Links',
+    title: "Powerfull and Simple Analytics",
+    links: [
+      {href:'/docs', name:'Interactive Reports', subTitle: 'Learn about your users', icon: <BarChart className=" text-blue-700"/>},
+      {href:'/docs', name:'Team Dashboard & Alerts', subTitle: 'Monitor your metricse', icon: <AppWindow className="text-blue-700"/>},
+      {href:'/docs', name:'Behavioral Analytics', subTitle: 'Real-time analytics user trends', icon: <ActivitySquare className="text-blue-700"/>},
+      {href:'/docs', name:'Audience Segmentation', subTitle: 'Segments with perfect target', icon: <PieChart className="text-blue-700"/>},
+
+      {href:'/docs', name:'Group Analytics', subTitle: 'Measure B2B account health', icon: <Group className="text-blue-700"/>},
+      {href:'/docs', name:'Limitless Segmentation', subTitle: 'Surface hidden trends', icon: <Layers3 className="text-blue-700"/>},
+
+
+    ]
+  },{
+    type: 'Links',
+    title: "Tools for Trusted Data",
+    links: [
+      {href:'/docs', name:'Data Integrations', subTitle: 'Connect to your warehouse', icon: <Cpu className=" text-blue-700"/>},
+      {href:'/docs', name:'Data Management', subTitle: 'Keep data clean & usable', icon: <FileStack className="text-blue-700"/>},
+      {href:'/docs', name:'Security & Privacy', subTitle: 'Protect customer data', icon: <Lock className="text-blue-700"/>},
+    
+
+    ]
+
+  },{
+    type: 'Node',
+    node: <>
+      <div>
+      <div>
+        <div className="text-gray-500 dark:gray-200">Always Improving</div>
+        <Image src={'/dash.png'} alt="dash" width={200} height={200} />
+        <div className="flex flex-col gap-5 py-2">
+          <div className="flex gap-3"><CheckCircle className="text-blue-700"/>Debugging with product analytics</div>
+          <div className="flex gap-3"><CheckCircle className="text-blue-700"/>Why it’s never too early to add product ana...</div>
+        </div>
+        <Link className="flex  gap-4"  href={'#'}>See all <MoveRight /></Link>
+      </div>
+      </div>
+    </>
+  }
+] 
