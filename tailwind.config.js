@@ -17,7 +17,7 @@ module.exports = {
       },
       animation: {
         // Fade up and down
-        float: "float 5s ease-in-out infinite", // increased from 3s to 5s
+        float: "float 5s ease-in-out 0s infinite alternate", // increased from 3s to 5s
 
         "fade-up": "fade-up 0.5s",
         "fade-down": "fade-down 0.5s",

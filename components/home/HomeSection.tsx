@@ -75,7 +75,7 @@ const Section = ({
           <div className="m-3 text-xl font-bold">{subTitle}</div>
           <div className="m-3">{content}</div>
           <div className="m-3 h-[1px] bg-gradient-purple"></div>
-          <button className="m-3 rounded-full bg-gradient-purple p-[1px] ${buttonAlignmentClass}">
+          <button className={`m-3 rounded-full bg-gradient-purple py-[13px] px-[1px] ${buttonAlignmentClass}`}>
             <Link href={linkTo} className="rounded-full bg-white p-3 dark:bg-black ">
               Learn More
             </Link>
