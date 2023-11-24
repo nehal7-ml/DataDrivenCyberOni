@@ -40,9 +40,10 @@ async function BlogPost({ params }: { params: { id: string } }) {
                     </div>
                 </div>
                 <div className="relative container mx-auto flex flex-col justify-center items-center lg:py-10  lg:px-10 px-1 py-5 min-h-screen">
-                    <BlogContainer blog={blog} />
                     {blog.images[0] ? <Image className="object-cover m-2 w-auto h-auto" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></Image> : <></>}
-                    {(typeof window !=='undefined') && <div className="m-2 max-w-full Blog-Post">{parse(blog.content)}</div>}
+                    {<div className="m-2 max-w-full z-30 Blog-Post">{parse(blog.content)}</div>}
+                    <BlogContainer blog={blog} />
+
                 </div>
 
 

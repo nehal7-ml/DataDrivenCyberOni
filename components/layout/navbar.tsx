@@ -226,7 +226,7 @@ const aboutMenu: MegamenuProps =
     {
       type: 'Node',
       node: <div>
-        <div className="text-gray-500 dark:gray-200">Oure offices</div>
+        <div className="text-gray-500 dark:gray-200">Our offices</div>
         <div className="flex gap-5 py-2">
           <div>
             <Image src={'/about-1.png'} alt="location" height={300} width={400} className="rounded-3xl" />
