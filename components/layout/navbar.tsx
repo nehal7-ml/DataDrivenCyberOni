@@ -66,7 +66,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                 Products
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
-              <div className="absolute -translate-x-8 lg:translate-x-16 z-50 transition-all duration-300 w-screen lg:top-8 lg:w-[700px] hidden peer-focus/product:block peer-hover/product:block hover:block">
+              <div className="absolute -translate-x-8 lg:-translate-x-48 z-50 transition-all duration-700   w-screen lg:top-5 lg:w-[700px] hidden lg:peer-focus/product:hidden peer-focus/product:block peer-hover/product:block hover:block">
                 <MegaMenu groups={mainMenu} />
               </div>
 
@@ -74,16 +74,19 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
             <div className="relative">
               <Link href="#" className="hover:text-blue-500 peer/solution">
                 Solutions
+                <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </Link>
-              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/solution:block peer-hover/solution:block hover:block">
+              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden lg:peer-focus/solution:hidden peer-focus/solution:block peer-hover/solution:block hover:block">
                 <MegaMenu groups={productMenu} />
               </div>
             </div>
             <div className="relative">
               <button className="hover:text-blue-500 peer/enterprise">
                 Enterprise
+                <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
+
               </button>
-              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/enterprise:block peer-hover/enterprise:block hover:block">
+              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden lg:peer-focus/enterprise:hidden peer-focus/enterprise:block peer-hover/enterprise:block hover:block">
                 <MegaMenu groups={enterpriseMenu} />
               </div>
             </div>
@@ -112,7 +115,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               <button className="hover:text-blue-500 peer/about">
                 About
               </button>
-              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/about:block peer-hover/about:block hover:block">
+              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden lg:peer-focus/about:hidden peer-focus/about:block peer-hover/about:block hover:block">
                 <MegaMenu groups={aboutMenu} />
               </div>
             </div>
