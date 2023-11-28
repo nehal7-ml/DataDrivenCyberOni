@@ -52,9 +52,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               ></Image>
               <div>CyberOni</div>
             </Link>
-            <div className="absolute -translate-x-8 lg:translate-x-16 z-50 transition-all duration-300 w-screen lg:top-8 lg:w-[700px] hidden peer-focus/logo:block peer-hover/logo:block hover:block">
-                <MegaMenu groups={mainMenu} />
-              </div>
+
           </div>
 
 
@@ -68,13 +66,19 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                 Products
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
-              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/product:block peer-hover/product:block hover:block">
+              <div className="absolute -translate-x-8 lg:translate-x-16 z-50 transition-all duration-300 w-screen lg:top-8 lg:w-[700px] hidden peer-focus/product:block peer-hover/product:block hover:block">
+                <MegaMenu groups={mainMenu} />
+              </div>
+
+            </div>
+            <div className="relative">
+              <Link href="#" className="hover:text-blue-500 peer/solution">
+                Solutions
+              </Link>
+              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/solution:block peer-hover/solution:block hover:block">
                 <MegaMenu groups={productMenu} />
               </div>
             </div>
-            <Link href="#" className="hover:text-blue-500">
-              Team
-            </Link>
             <div className="relative">
               <button className="hover:text-blue-500 peer/enterprise">
                 Enterprise
@@ -241,14 +245,14 @@ const aboutMenu: MegamenuProps =
     }
   ]
 
-const enterpriseMenu:MegamenuProps = [
+const enterpriseMenu: MegamenuProps = [
   {
     type: 'Links',
     title: "Resources",
     links: [
-      {href:'/docs', name:'Developer Docs', subTitle: 'Learn how to integrate', icon: <TerminalSquare className=" text-blue-700"/>},
-      {href:'/docs', name:'Help Center ', subTitle: 'All about how to use ', icon: <LifeBuoy className="fill-blue-700 text-gray-50"/>},
-      {href:'/docs', name:'Product Updates', subTitle: 'Newest feature releases', icon: <Megaphone className="fill-blue-700 text-gray-50"/>},
+      { href: '/docs', name: 'Developer Docs', subTitle: 'Learn how to integrate', icon: <TerminalSquare className=" text-blue-700" /> },
+      { href: '/docs', name: 'Help Center ', subTitle: 'All about how to use ', icon: <LifeBuoy className="fill-blue-700 text-gray-50" /> },
+      { href: '/docs', name: 'Product Updates', subTitle: 'Newest feature releases', icon: <Megaphone className="fill-blue-700 text-gray-50" /> },
 
 
     ]
@@ -257,25 +261,25 @@ const enterpriseMenu:MegamenuProps = [
     type: 'Links',
     title: "Best Practices",
     links: [
-      {href:'/docs', name:'FAQs', subTitle: 'Learn how to integrate', icon: <HelpCircle className="fill-blue-700 text-gray-50"/>},
-      {href:'/casestudy', name:'Case Studies', subTitle: 'All about how to use ', icon: <BookCheck className="fill-blue-700 text-gray-50"/>},
-      {href:'/blogs', name:'Engineering Blog ', subTitle: 'All about how to use ', icon: <Cog className="fill-blue-700 text-gray-50"/>},
+      { href: '/docs', name: 'FAQs', subTitle: 'Learn how to integrate', icon: <HelpCircle className="fill-blue-700 text-gray-50" /> },
+      { href: '/casestudy', name: 'Case Studies', subTitle: 'All about how to use ', icon: <BookCheck className="fill-blue-700 text-gray-50" /> },
+      { href: '/blogs', name: 'Engineering Blog ', subTitle: 'All about how to use ', icon: <Cog className="fill-blue-700 text-gray-50" /> },
 
-      {href:'/books', name:'Books & Webinars', subTitle: 'All about how to use ', icon: <Book className="fill-blue-700 text-gray-50"/>},
+      { href: '/books', name: 'Books & Webinars', subTitle: 'All about how to use ', icon: <Book className="fill-blue-700 text-gray-50" /> },
 
     ]
   }
 ]
 
-const productMenu:MegamenuProps = [
+const productMenu: MegamenuProps = [
   {
     type: 'Links',
     title: "Buisness Solutions",
     links: [
-      {href:'/docs', name:'Convert', subTitle: 'Analyze conversation', icon: <Repeat2 className=" text-blue-700"/>},
-      {href:'/docs', name:'Enage', subTitle: 'Measure active usage', icon: <PlusCircle className="text-blue-700"/>},
-      {href:'/docs', name:'Retain', subTitle: 'Find retentation drivers', icon: <Fullscreen className="text-blue-700"/>},
-      {href:'/docs', name:'Product Adoption', subTitle: 'Maximize all customers', icon: <Users className="text-blue-700"/>},
+      { href: '/docs', name: 'Convert', subTitle: 'Analyze conversation', icon: <Repeat2 className=" text-blue-700" /> },
+      { href: '/docs', name: 'Enage', subTitle: 'Measure active usage', icon: <PlusCircle className="text-blue-700" /> },
+      { href: '/docs', name: 'Retain', subTitle: 'Find retentation drivers', icon: <Fullscreen className="text-blue-700" /> },
+      { href: '/docs', name: 'Product Adoption', subTitle: 'Maximize all customers', icon: <Users className="text-blue-700" /> },
 
 
     ]
@@ -284,9 +288,9 @@ const productMenu:MegamenuProps = [
     type: 'Links',
     title: "Industry Solutions",
     links: [
-      {href:'/docs', name:'eCommerce', subTitle: '', icon: <></>},
-      {href:'/casestudy', name:'SaaS', subTitle: '', icon: <></>},
-      {href:'/blogs', name:'Financial Services', subTitle: '', icon: <></>},
+      { href: '/docs', name: 'eCommerce', subTitle: '', icon: <></> },
+      { href: '/casestudy', name: 'SaaS', subTitle: '', icon: <></> },
+      { href: '/blogs', name: 'Financial Services', subTitle: '', icon: <></> },
 
 
     ]
@@ -298,56 +302,56 @@ const productMenu:MegamenuProps = [
       <div>
         <div className="text-gray-500 dark:gray-200">Insight</div>
         <div className="flex flex-col gap-5 py-2">
-          <div className="flex gap-3"><Lightbulb className="text-blue-700"/>Debugging with product analytics</div>
-          <div className="flex gap-3"><Lightbulb className="text-blue-700"/>Why it’s never too early to add product ana...</div>
-          <div className="flex gap-3"><Lightbulb className="text-blue-700"/>Data implementation, starting with the ‘why’</div>
+          <div className="flex gap-3"><Lightbulb className="text-blue-700" />Debugging with product analytics</div>
+          <div className="flex gap-3"><Lightbulb className="text-blue-700" />Why it’s never too early to add product ana...</div>
+          <div className="flex gap-3"><Lightbulb className="text-blue-700" />Data implementation, starting with the ‘why’</div>
         </div>
-        <Link className="flex  gap-4"  href={'#'}>See all <MoveRight /></Link>
+        <Link className="flex  gap-4" href={'#'}>See all <MoveRight /></Link>
       </div>
     </>
   }
 ]
 
-const mainMenu:MegamenuProps = [
+const mainMenu: MegamenuProps = [
 
   {
     type: 'Links',
     title: "Powerfull and Simple Analytics",
     links: [
-      {href:'/docs', name:'Interactive Reports', subTitle: 'Learn about your users', icon: <BarChart className=" text-blue-700"/>},
-      {href:'/docs', name:'Team Dashboard & Alerts', subTitle: 'Monitor your metricse', icon: <AppWindow className="text-blue-700"/>},
-      {href:'/docs', name:'Behavioral Analytics', subTitle: 'Real-time analytics user trends', icon: <ActivitySquare className="text-blue-700"/>},
-      {href:'/docs', name:'Audience Segmentation', subTitle: 'Segments with perfect target', icon: <PieChart className="text-blue-700"/>},
+      { href: '/docs', name: 'Interactive Reports', subTitle: 'Learn about your users', icon: <BarChart className=" text-blue-700" /> },
+      { href: '/docs', name: 'Team Dashboard & Alerts', subTitle: 'Monitor your metricse', icon: <AppWindow className="text-blue-700" /> },
+      { href: '/docs', name: 'Behavioral Analytics', subTitle: 'Real-time analytics user trends', icon: <ActivitySquare className="text-blue-700" /> },
+      { href: '/docs', name: 'Audience Segmentation', subTitle: 'Segments with perfect target', icon: <PieChart className="text-blue-700" /> },
 
-      {href:'/docs', name:'Group Analytics', subTitle: 'Measure B2B account health', icon: <Group className="text-blue-700"/>},
-      {href:'/docs', name:'Limitless Segmentation', subTitle: 'Surface hidden trends', icon: <Layers3 className="text-blue-700"/>},
+      { href: '/docs', name: 'Group Analytics', subTitle: 'Measure B2B account health', icon: <Group className="text-blue-700" /> },
+      { href: '/docs', name: 'Limitless Segmentation', subTitle: 'Surface hidden trends', icon: <Layers3 className="text-blue-700" /> },
 
 
     ]
-  },{
+  }, {
     type: 'Links',
     title: "Tools for Trusted Data",
     links: [
-      {href:'/docs', name:'Data Integrations', subTitle: 'Connect to your warehouse', icon: <Cpu className=" text-blue-700"/>},
-      {href:'/docs', name:'Data Management', subTitle: 'Keep data clean & usable', icon: <FileStack className="text-blue-700"/>},
-      {href:'/docs', name:'Security & Privacy', subTitle: 'Protect customer data', icon: <Lock className="text-blue-700"/>},
-    
+      { href: '/docs', name: 'Data Integrations', subTitle: 'Connect to your warehouse', icon: <Cpu className=" text-blue-700" /> },
+      { href: '/docs', name: 'Data Management', subTitle: 'Keep data clean & usable', icon: <FileStack className="text-blue-700" /> },
+      { href: '/docs', name: 'Security & Privacy', subTitle: 'Protect customer data', icon: <Lock className="text-blue-700" /> },
+
 
     ]
 
-  },{
+  }, {
     type: 'Node',
     node: <>
       <div>
-      <div>
-        <div className="text-gray-500 dark:gray-200">Always Improving</div>
-        <Image src={'/dash.png'} alt="dash" width={200} height={200} />
-        <div className="flex flex-col gap-5 py-2">
-          <div className="flex gap-3"><CheckCircle className="text-blue-700"/>Debugging with product analytics</div>
-          <div className="flex gap-3"><CheckCircle className="text-blue-700"/>Why it’s never too early to add product ana...</div>
+        <div>
+          <div className="text-gray-500 dark:gray-200">Always Improving</div>
+          <Image src={'/dash.png'} alt="dash" width={200} height={200} />
+          <div className="flex flex-col gap-5 py-2">
+            <div className="flex gap-3"><CheckCircle className="text-blue-700" />Debugging with product analytics</div>
+            <div className="flex gap-3"><CheckCircle className="text-blue-700" />Why it’s never too early to add product ana...</div>
+          </div>
+          <Link className="flex  gap-4" href={'#'}>See all <MoveRight /></Link>
         </div>
-        <Link className="flex  gap-4"  href={'#'}>See all <MoveRight /></Link>
-      </div>
       </div>
     </>
   }
