@@ -29,6 +29,9 @@ function ServiceLayout({ children }: { children: ReactNode }) {
                     <CompanyCarousel cards={companies}></CompanyCarousel>
                 </div>
             </section>
+            <section>
+                
+            </section>
             {children}
             <section>
                 
