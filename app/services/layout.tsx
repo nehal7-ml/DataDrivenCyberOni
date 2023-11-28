@@ -33,9 +33,7 @@ function ServiceLayout({ children }: { children: ReactNode }) {
             <section>
                 
             </section>
-            <section className="flex justify-center items-center">
-                <PayLater />
-            </section>
+            
         </div>
 
 

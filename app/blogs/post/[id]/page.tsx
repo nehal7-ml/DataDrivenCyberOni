@@ -1,5 +1,5 @@
 import { DisplayBlogDTO, read } from "@/crud/blog";
-import React, { Suspense, useRef } from 'react'
+import React, { ReactEventHandler, Suspense, useRef } from 'react'
 import parse from 'html-react-parser';
 import Image from "next/image";
 import prisma from "@/lib/prisma";
@@ -8,6 +8,8 @@ import CommentForm from "@/components/blogs/CommentForm";
 import BlogContainer from "@/components/blogs/BlogContainer";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
+import BlogContent from "@/components/blogs/BlogContent";
+export const dynamic = 'force-dynamic';
 export let metadata: Metadata = {
     title: "",
     description: "",
@@ -25,6 +27,8 @@ async function BlogPost({ params }: { params: { id: string } }) {
         images: [blog.images.length > 0 ? blog.images[0].src : ""]
     }
     metadata.category = blog.tags.join(" ")
+
+
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
             <div className="w-full ">
@@ -32,15 +36,15 @@ async function BlogPost({ params }: { params: { id: string } }) {
                     <div className="container mx-auto whitespace-pre-line break-words">
                         <div className="m-4  text-4xl lg:text-4xl font-bold">{blog.title}</div>
                         <div className="flex flex-wrap container gap-1 m-4">
-                            {blog.tags.map((tag, index) =>(<span key={index} className="p-1 px-2">#{tag.name}</span>))}
+                            {blog.tags.map((tag, index) => (<span key={index} className="p-1 px-2">#{tag.name}</span>))}
                         </div>
                         <div className="m-4 font-bold">{blog.description}</div>
                         <div className="m-4">by. {blog.author.firstName} {blog.author.lastName} </div>
                     </div>
                 </div>
                 <div className="relative container mx-auto flex flex-col justify-center items-center lg:py-10  lg:px-10 px-1 py-5 min-h-screen">
-                    {blog.images[0] ? <Image className="object-cover m-2 w-auto h-auto" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></Image> : <></>}
-                    {<div className="m-2 max-w-full z-30 Blog-Post">{parse(blog.content)}</div>}
+                    {blog.images[0] ? <Image priority={true} className="object-cover m-2 w-auto h-auto" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></Image> : <></>}
+                    {<BlogContent content={blog.content} />}
                     <BlogContainer blog={blog} />
 
                 </div>

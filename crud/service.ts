@@ -10,7 +10,7 @@ export type CreateServiceDTO = {
     previewContent: string;
     ServiceDescription: CreateServiceDescription[];
     hourlyRate: number;
-    valueBrought: string;
+    valueBrought: string[];
     skillsUsed: string;
     htmlEmbed?: string;
     image?: CreateImageDTO;

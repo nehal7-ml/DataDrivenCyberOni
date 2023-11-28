@@ -20,6 +20,7 @@ describe("test notion functions", () => {
         referral: "facebook",
         requirements: ["App Development"],
         timeline: '3 mohtnos',
+        refToken:"jhsdalkshdlkajsdklasjd"
     }
 
     it('should add contact to marketing', async () => {

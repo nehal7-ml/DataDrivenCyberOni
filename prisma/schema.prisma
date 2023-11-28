@@ -57,6 +57,7 @@ model User {
   lastName       String?
   email          String           @unique
   emailVerified  DateTime?
+  password       String           @default("")
   image          Image?           @relation(fields: [imageId], references: [id])
   addressId      String?
   role           Role             @default(USER)
@@ -123,15 +124,15 @@ model ApiCredentials {
 }
 
 model Product {
-  id                   String     @id @default(uuid())
+  id                   String        @id @default(uuid())
   sku                  String
   name                 String
-  status               String
+  status               ProductStatus @default(SOLDOUT)
   ratings              Int?
   inventory            Int
   productBreakdown     String?
-  shippingReturnPolicy String     @db.Text
-  description          String     @db.Text
+  shippingReturnPolicy String        @db.Text
+  description          String        @db.Text
   tags                 Tag[]
   price                Int
   profitMargin         Int
@@ -240,14 +241,15 @@ model Service {
   title              String
   previewContent     String               @db.Text
   hourlyRate         Int
-  valueBrought       String
-  skillsUsed         String
+  valueBrought       Json
+  skillsUsed         Json
   htmlEmbed          String?
   reviews            Review[]
   tags               Tag[]
   imageId            String?
   SubServices        SubService[]
   ServiceDescription ServiceDescription[]
+  CaseStudy          CaseStudy[]
 
   @@index([imageId])
 }
@@ -322,22 +324,22 @@ model Image {
 }
 
 model SubService {
-  id                                        String  @id @default(uuid())
-  image                                     Image?  @relation(fields: [imageId], references: [id])
+  id                                        String       @id @default(uuid())
+  image                                     Image?       @relation(fields: [imageId], references: [id])
   title                                     String
-  pricingModel                              String
-  discounts                                 String
-  serviceDeliverables                       String
+  pricingModel                              PricingModel @default(DEFAULT)
+  discounts                                 Json?
+  serviceDeliverables                       Json?
   tags                                      Tag[]
   serviceUsageScore                         Int
-  description                               String  @db.Text
+  description                               String       @db.Text
   department                                String
   estimated_hours_times_fifty_percent       Int
   estimated_hours_times_one_hundred_percent Int
   skillLevel                                String
   complexity                                Int
   overheadCost                              Int
-  service                                   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  service                                   Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   imageId                                   String
   serviceId                                 String
 
@@ -346,24 +348,27 @@ model SubService {
 }
 
 model CaseStudy {
-  id                  String @id @default(uuid())
+  id                  String   @id @default(uuid())
   title               String
-  type                String 
-  preview             String @db.Text
-  problemStatement    String @db.Text
-  userResearch        String @db.Text
+  type                Service? @relation(fields: [serviceId], references: [id])
+  preview             String   @db.Text
+  problemStatement    String   @db.Text
+  userResearch        String   @db.Text
   userProblems        Json
   possibleSolutions   Json
   goals               Json
   images              Json //image 
-  uniqueFeatures      String @db.Text
-  keyLearning         String @db.Text
+  uniqueFeatures      String   @db.Text
+  keyLearning         String   @db.Text
   userPersonas        Json
   competetiveAnalysis Json
   wireFrames          Json?
   hifiDesign          Json?
   userFlow            Json?
   architecture        Json?
+  serviceId           String?
+
+  @@index([serviceId])
 }
 
 model GptPrompt {
@@ -376,7 +381,7 @@ model GptPrompt {
   best_of           Int      @default(0)
   frequency_penalty Int      @default(0)
   presence_penalty  Int      @default(0)
-  stop              String   @db.Text // comma separaetd sequences
+  stop              Json?
   timesUsed         Int      @default(0)
   timesIntegrated   Int      @default(0)
   costPerToken      Int      @default(0)
@@ -400,6 +405,7 @@ model Event {
   eventLink   String      @db.Text // URL for Eventbrite or Facebook event page
   status      EventStatus
   isVirtual   Boolean
+  tags        Tag[]
 
   @@index([imageId])
 }
@@ -413,6 +419,10 @@ model Tag {
   services    Service[]
   subServices SubService[]
   prompts     GptPrompt[]
+  Event       Event?       @relation(fields: [eventId], references: [id])
+  eventId     String?
+
+  @@index([eventId])
 }
 
 model Property {
@@ -515,4 +525,14 @@ enum EventStatus {
   UPCOMING
   CANCELLED
   COMPLETED
+}
+
+enum ProductStatus {
+  AVAILABLE
+  SOLDOUT
+}
+
+enum PricingModel {
+  DEFAULT
+  AGGRESSIVE
 }

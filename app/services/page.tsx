@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import FloatingImageSection from "@/components/shared/floating-long";
 import Faqs from "@/components/Faqs";
+import PayLater from "@/components/shared/Paylater";
 export let metadata: Metadata = {
     title: "",
     description: "",
@@ -13,7 +14,7 @@ export let metadata: Metadata = {
     category: 'service'
 };
 async function Services() {
-    const service = await read("432e1392-4823-4cc5-8886-d116d11a3e91", prisma) as DisplayServiceDTO
+    const service = await read("06cafb96-2fb8-41fb-b34c-137a154f5126", prisma) as DisplayServiceDTO
     const services = await getAll(1, 10, prisma);
     metadata.title = service.title as string
     metadata.description = service.previewContent
@@ -80,6 +81,9 @@ async function Services() {
         <section className="my-5 font-nunito">
                 <Faqs faqs={faqs}/>
         </section>
+        <section className="flex justify-center items-center">
+                <PayLater value={service.valueBrought as string[]} />
+            </section>
       </div>
     );
 }

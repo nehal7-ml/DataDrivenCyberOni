@@ -24,6 +24,7 @@ export interface CreatePageParams {
     referral?: string,
     challenges?: string,
     message?: string,
+    refToken?: string
 
 
 }
@@ -50,7 +51,8 @@ export async function addToMarketingCrm(record: CreatePageParams) {
             "Time Line": { rich_text: [{ text: { content: record.timeline } }] },
             "Current Challenges": { rich_text: [{ text: { content: record.challenges } }] },
             "Number of Employees": { number: Number(record.employess) },
-            "Requirements": { multi_select: record.requirements?.map(requirement => ({ name: requirement })) }
+            "Requirements": { multi_select: record.requirements?.map(requirement => ({ name: requirement })) },
+            "ReferralToken": { rich_text: [{ text: { content: record.refToken } }] }
         }
 
 
