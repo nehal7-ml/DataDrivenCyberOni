@@ -1,103 +1,49 @@
-import ReviewCarousel from "@/components/ReviewCarousel";
-import ServiceCard from "@/components/services/ServiceCard";
-import { DisplayServiceDTO, getAll, read } from "@/crud/service";
+import React from 'react'
 import prisma from "@/lib/prisma";
-import { Metadata } from "next";
-import Image from "next/image";
-import FloatingImageSection from "@/components/shared/floating-long";
-import Faqs from "@/components/Faqs";
-import PayLater from "@/components/shared/Paylater";
-export let metadata: Metadata = {
-    title: "",
-    description: "",
-    openGraph: {},
-    category: 'service'
-};
-async function Services() {
-    const service = await read("06cafb96-2fb8-41fb-b34c-137a154f5126", prisma) as DisplayServiceDTO
-    const services = await getAll(1, 10, prisma);
-    metadata.title = service.title as string
-    metadata.description = service.previewContent
-    metadata.openGraph = {
-        type: 'website',
-        title: service.title,
-        description: service.previewContent,
-        images: [service.image?.src as string],
-    }
+import { getAll } from "@/crud/service";
+import ServiceCard from "@/components/services/ServiceCard";
+import { Image } from "@prisma/client";
+
+async function ServiceList() {
+    const data = await getData();
+
     return (
-      <div className="">
-        <div className="flex flex-wrap">
-          {services.records.map((service, index) => (
-            <div key={index} className="p-5 lg:w-1/4">
-              <ServiceCard
-                id={service.id}
-                image={
-                  service.image || {
-                    src: "https://picsum.photos/200/300?random=1",
-                    id: "random",
-                    name: "random",
-                  }
-                }
-                previewContent={service.previewContent}
-                title={service.title}
-              />
+        <div className="">
+            <div className="container mx-auto">
+                <div className="mx-10 text-5xl my-5 capitalize">
+                   Services
+                </div>
             </div>
-          ))}
+            <div className="w-full bg-gray-50 dark:bg-zinc-900">
+                <div className="container mx-auto ">
+                    <div className="conatiner mx-10 my-10 flex flex-wrap">
+                        {data.records.map((service, index) => {
+                            return (
+                                <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-96`}>
+                                    <ServiceCard id={service.id}
+                                        image={service.image as Image}
+                                        previewContent={service.previewContent}
+                                        title={service.title}
+                                    />
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                </div>
+            </div>
         </div>
-
-        <section className="py-5">
-          {service?.ServiceDescription?.map((section, index) => (
-            <FloatingImageSection key={index} section={section} />
-          ))}
-        </section>
-
-        <section className="my-5 font-nunito">
-          <div className="text-center font-nunito text-4xl font-semibold">
-            Feedback from our clients
-          </div>
-          <div className="text-center text-lg font-light">
-            Our WORK speaks louder than our WORD. Find out how we helped clients
-            overcome challenges and succeed.
-          </div>
-          <ReviewCarousel
-            reviews={[
-              {
-                content:
-                  "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-                image: "/prof1.png",
-                name: "Charlie rose",
-                position: "Ceo",
-              },
-              {
-                content:
-                  "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-                image: "/prof2.png",
-                name: "Charlie rose",
-                position: "Ceo",
-              },
-            ]}
-          />
-        </section>
-        <section className="my-5 font-nunito">
-                <Faqs faqs={faqs}/>
-        </section>
-        <section className="flex justify-center items-center">
-                <PayLater value={service.valueBrought as string[]} />
-            </section>
-      </div>
-    );
+    )
 }
 
-const faqs = [
-    {
-      question: 'What is React?',
-      answer: 'React is a JavaScript library for building user interfaces.',
-    },
-    {
-      question: 'How to install React?',
-      answer: 'You can install React using npm or yarn.',
-    },
-    // Add more FAQs as needed
-  ];
+async function getData() {
 
-export default Services;
+    const services = await getAll(0, 0, prisma)
+
+    return services
+
+}
+
+
+
+export default ServiceList

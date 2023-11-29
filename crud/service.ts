@@ -1,4 +1,4 @@
-import { Service, PrismaClient, Prisma, Image, Tag, SubService, ServiceDescription } from "@prisma/client";
+import { Service, PrismaClient, Prisma, Image, Tag, SubService, ServiceDescription, FAQ, CaseStudy } from "@prisma/client";
 import { CreateTagDTO, create as createTag, connectOrCreateObject as connectTags } from "./tags";
 import { CreateImageDTO, create as createImage, connectOrCreateObject } from "./images";
 import { CreateSubServiceDTO, create as createSubService, update as updateSubService } from "./subService";
@@ -31,7 +31,9 @@ export type DisplayServiceDTO = Service & {
     image?: Image,
     tags?: Tag[],
     SubServices?: SubService[],
-    ServiceDescription?: (ServiceDescription & { image: Image })[]
+    ServiceDescription?: (ServiceDescription & { image: Image })[],
+    faqs: FAQ[],
+    CaseStudies: CaseStudy[]
 
 }
 
@@ -181,6 +183,8 @@ async function read(serviceId: string, prismaClient: PrismaClient) {
                     image: true
                 }
             },
+            faqs: true,
+            CaseStudies: true,
             image: true,
             tags: true,
         }

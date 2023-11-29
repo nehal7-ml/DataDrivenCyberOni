@@ -7,7 +7,8 @@ import Image from "next/image";
 import FloatingImageSection from "@/components/shared/floating-long";
 import Faqs from "@/components/Faqs";
 import PayLater from "@/components/shared/Paylater";
-import { Image as ServiceImage } from "@prisma/client";
+import { Image as CaseImage, Image as ServiceImage } from "@prisma/client";
+import Link from "next/link";
 export let metadata: Metadata = {
     title: "",
     description: "",
@@ -17,6 +18,7 @@ export let metadata: Metadata = {
 async function Services({ params }: { params: { id: string } }) {
     const service = await read(params.id, prisma) as DisplayServiceDTO
     const services = await getAll(1, 10, prisma);
+    console.log(service);
     metadata.title = service.title as string
     metadata.description = service.previewContent
     metadata.openGraph = {
@@ -75,7 +77,21 @@ async function Services({ params }: { params: { id: string } }) {
                     ]}
                 />
             </section>
+            {service.CaseStudies.length > 0 ? <section className="my-5 font-nunito">
+                <div className="text-4xl font-bold text-center">Case Studies</div>
+
+                {service.CaseStudies.map((caseStudy, index) => (
+                    <div key={index} className="flex flex-wrap container mx-auto gap-2 lg:gap-5 my-5">
+                        <Link href={`/casestudies/${caseStudy.id}`} className="relative overflow-hidden rounded-lg hover:shadow-2xl transition-shadow duration-300 shadow-lg lg:w-[170px] w-1/2 flex-col justify-center items-center">
+                            <Image className="object-fill aspect-square" height={170} width={170} alt="case image" src={caseStudy.images ? (caseStudy.images as CaseImage[])[0].src : 'https://picsum.photos/200'} />
+                            <div className="absolute text-center line-clamp-1 bottom-0 w-full py-5 bg-gradient-to-t from-black  to-black/0 text-white">{caseStudy.title}</div>
+                        </Link>
+
+                    </div>))}
+            </section> : <></>}
             <section className="my-5 font-nunito">
+                <div className="text-4xl font-bold text-center">Frequently Asked Questions</div>
+
                 <Faqs faqs={faqs} />
             </section>
             <section className="flex justify-center items-center">
