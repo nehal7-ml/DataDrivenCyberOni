@@ -1,14 +1,43 @@
 'use client'
 
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
+
 
 function BlogContent({ content }: { content: string }) {
+    const getBlobURL = (code: string, type: string) => {
+        return "data:text/html;charset=utf-8," + encodeURI(code)
+    }
 
- 
+    const [resizeScript, setResizeScript] = useState('')
+    const iframe = useRef<HTMLIFrameElement>(null)
+    function resizeIframe() {
+        
+    }
 
+    useEffect(() => {
+        setResizeScript(`<script id="resizeScript" >
+        window.document.children[0].addEventListener('resize',()=> {
+            console.log("html resizeiong");
+            window.parent.postMessage({size: window.document.getElementsByTagName('html')[0].scrollHeight}, "${window.origin}");
+        })
+        console.log("loading");
+        window.parent.postMessage({size: window.document.getElementsByTagName('html')[0].scrollHeight}, "${window.origin}");
+        </script>`)
+
+        window.addEventListener("message", (event) => {
+
+            console.log("loaded window", event.data);
+            if (iframe.current) iframe.current.style.height =event.data.size.toString()+"px";
+        });
+        
+    }, []);
+
+
+
+    // console.log(content);
     return (<>
 
-        {<iframe sandbox="allow-scripts"  className="w-full h-fit overflow-y-scroll" src={content}></iframe>}
+        {<iframe ref={iframe} onLoad={resizeIframe} className="w-full h-fit overflow-y-auto" src={getBlobURL(content + resizeScript, "text/html;")}></iframe>}
     </>);
 }
 

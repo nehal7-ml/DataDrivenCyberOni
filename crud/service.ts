@@ -217,6 +217,7 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
                     image: true
                 }
             },
+            CaseStudies: true,
             image: true,
             tags: true,
 
