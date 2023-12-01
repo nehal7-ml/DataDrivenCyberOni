@@ -18,7 +18,8 @@ export let metadata: Metadata = {
     title: "",
     description: "",
     openGraph: {},
-    category: 'service'
+    category: 'service',
+    keywords: ['']
 };
 async function Services({ params }: { params: { id: string } }) {
     const service = await read(params.id, prisma) as DisplayServiceDTO
@@ -26,6 +27,7 @@ async function Services({ params }: { params: { id: string } }) {
     console.log(service);
     metadata.title = service.title as string
     metadata.description = service.previewContent
+    metadata.keywords = service.tags?.map(tag => tag.name)
     metadata.openGraph = {
         type: 'website',
         title: service.title,

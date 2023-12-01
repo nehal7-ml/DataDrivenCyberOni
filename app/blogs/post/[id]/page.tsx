@@ -11,10 +11,11 @@ import { Metadata } from "next";
 import BlogContent from "@/components/blogs/BlogContent";
 export const dynamic = 'force-dynamic';
 export let metadata: Metadata = {
-    title: "",
+    title: "Blog Post",
     description: "",
     openGraph: {},
-    category: 'blog'
+    category: 'blog',
+    keywords: ['blog']
 };
 async function BlogPost({ params }: { params: { id: string } }) {
     const blog = await getData(params.id);
@@ -27,6 +28,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
         images: [blog.images.length > 0 ? blog.images[0].src : ""]
     }
     metadata.category = blog.tags.join(" ")
+    metadata.keywords = blog.tags?.map(tag => tag.name)
 
 
     return (
