@@ -11,6 +11,8 @@ export type SubServiceProps = {
     content: string;
     image: string;
 }
+
+const imageArray =['/subservice-1.svg', '/subservice-2.svg','/subservice-3.svg']
 function SubServiceCarousel({ subservices }: { subservices: SubServiceProps[] }) {
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,9 +43,9 @@ function SubServiceCarousel({ subservices }: { subservices: SubServiceProps[] })
                                 {subservice.content}
                             </div>
                             <Image
-                                src={subservice.image || "https://picsum.photos/200?random=10"} // Replace with the actual profile image URL
+                                src={imageArray[Math.floor(Math.random()*3)]} // Replace with the actual profile image URL
                                 alt={`${subservice.name}'s Profile`}
-                                className="w-12 h-12  object-cover lg:col-span-1 col-span-2"
+                                className=" object-cover lg:col-span-1 col-span-2"
                                 height={300}
                                 width={300}
                             />
