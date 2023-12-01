@@ -19,7 +19,7 @@ function ServiceLayout({ children }: { children: ReactNode }) {
                     <Link href={'#'} className="rounded-full p-3 bg-service-green text-white flex items-center w-fit gap-3 my-5 shadow-[0_10px_40px_0px_#33D3D454]">Get Started <MoveRight /></Link>
 
                 </div>
-                <div className="w-2/3">
+                <div className="w-1/2">
                     <Image className="object-fill" src={'/service-hero.png'} alt="service-hero" height={500} width={500} />
                 </div>
 

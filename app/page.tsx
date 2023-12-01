@@ -97,7 +97,7 @@ export default async function Home() {
           <EmailLetter></EmailLetter>
         </section>
 
-        <section className="conatiner flex flex-col-reverse lg:flex-row">
+        <section className="conatiner flex flex-col-reverse lg:flex-row lg:px-10">
           <div className="flex-1">
             <ContactForm></ContactForm>
           </div>

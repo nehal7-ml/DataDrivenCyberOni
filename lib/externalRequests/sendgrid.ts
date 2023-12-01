@@ -1,3 +1,4 @@
+'use server'
 import sgMail, { ResponseError } from '@sendgrid/mail'
 import client, { Client } from '@sendgrid/client'
 import { ClientRequest } from "@sendgrid/client/src/request";

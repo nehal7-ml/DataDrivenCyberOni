@@ -18,7 +18,7 @@ const AccordionItem = ({ faq, isOpen, toggleAccordion }: { faq: { question: stri
                 </div>
             </div>
             {isOpen && (
-                    <div className="bg-white p-4 ">
+                    <div className="bg-white dark:bg-transparent p-4 ">
                         <p>{faq.answer}</p>
                     </div>
                                 )}

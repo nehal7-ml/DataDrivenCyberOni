@@ -44,8 +44,8 @@ async function BlogPost({ params }: { params: { id: string } }) {
                         <div className="m-4">by. {blog.author.firstName} {blog.author.lastName} </div>
                     </div>
                 </div>
-                <div className="relative mx-auto flex flex-col  items-center lg:py-10  lg:px-10 px-1 py-5 min-h-screen">
-                    {blog.images[0] ? <Image priority={true} className="object-cover m-2 w-auto h-auto" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></Image> : <></>}
+                <div className="relative mx-auto flex flex-col  items-center lg:py-10  lg:px-10 px-1 py-5 min-h-screen container">
+                    {blog.images[0] ? <Image priority={true} className="object-contain m-2 w-full h-[40vh] rounded-lg" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></Image> : <></>}
                     {<BlogContent content={blog.content} />}
                     <BlogContainer blog={blog} />
 

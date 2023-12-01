@@ -1,11 +1,21 @@
-import { ArrowRight } from "lucide-react"
+'use client'
+import { ArrowRight, CheckCircle } from "lucide-react"
 import Image from "next/image"
-import React from 'react'
+import React, { useState } from 'react'
 import ClientInput from "../layout/ClientInput"
+import { addToSendGrid } from "@/lib/externalRequests/sendgrid"
+import { LoadingCircle } from "../shared/icons"
 
 function EmailLetter() {
-    async function addToMarketing() {
-    'use server'
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    async function submit(formData: FormData) {
+        setLoading(true);
+        const email = formData.get('email');
+        const res = await addToSendGrid({ email: email as string });
+        if (res == 202) setSuccess(true);
+        setLoading(false)
+
     }
     return (
         <div className="rounded-lg lg:flex lg:flex-row gap-5 bg-gradient-purple h-full min-h-fit my-32 lg:my-10">
@@ -13,18 +23,29 @@ function EmailLetter() {
                 <Image className=" w-full h-full object-contain" src={'/cta.png'} alt="image" height={500} width={500}></Image>
             </div>
             <div className="relative lg:flex lg:flex-col lg:justify-center mx-10 -top-20 lg:top-auto">
-                <div className="font-abel text-5xl">Get exponential reach via AI Marketing</div>
-                <form action={addToMarketing}>
+                <div className="font-abel text-5xl p-2">Get exponential reach via AI Marketing</div>
+                <form action={submit} className="p-1">
                     <div className="flex flex-col gap-5 lg:flex-row justify-center items-center">
                         <ClientInput
                             type="email"
+                            name="email"
                             placeholder="email address"
                             className="flex-1 rounded-full bg-white/30 text-white p-3 placeholder-white"
                             color="white"
                         ></ClientInput>
-                        <button className="flex-1 lg:flex-initial bg-black text-white rounded-full w-fit flex p-3 gap-2" type="submit">
-                            <span>get in touch</span>
-                            <ArrowRight></ArrowRight>
+                        <button disabled={loading || success} className="flex-1  lg:flex-initial bg-black text-white rounded-full w-fit flex justify-between items-center p-3 gap-2" type="submit">
+                            {success ? <>
+                                <span>Added to email list</span>
+                                <CheckCircle className="text-green-500" />
+                            </> :
+
+                                loading ? <>
+                                    <span>Adding to Mailing List... </span>
+                                    <LoadingCircle /></>
+                                    :
+                                    <><span>get in touch</span>
+                                        <ArrowRight></ArrowRight></>
+                            }
                         </button>
                     </div>
                 </form>
@@ -32,5 +53,6 @@ function EmailLetter() {
         </div>
     )
 }
+
 
 export default EmailLetter

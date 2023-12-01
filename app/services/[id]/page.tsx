@@ -24,7 +24,7 @@ export let metadata: Metadata = {
 async function Services({ params }: { params: { id: string } }) {
     const service = await read(params.id, prisma) as DisplayServiceDTO
     const services = await getAll(1, 10, prisma);
-    console.log(service);
+    //console.log(service);
     metadata.title = service.title as string
     metadata.description = service.previewContent
     metadata.keywords = service.tags?.map(tag => tag.name)
@@ -35,10 +35,10 @@ async function Services({ params }: { params: { id: string } }) {
         images: [service.image?.src as string],
     }
     return (
-        <div className="">
-            <div className="flex flex-wrap">
+        <div className=" lg:px-5">
+            <div className="flex flex-wrap container mx-auto">
                 {services.records.map((service, index) => (
-                    <div key={index} className="p-5 lg:w-1/4">
+                    <div key={index} className="p-5 lg:w-1/4 flex-1">
                         <ServiceCard
                             id={service.id}
                             image={
@@ -51,7 +51,7 @@ async function Services({ params }: { params: { id: string } }) {
                 ))}
             </div>
 
-            <section id="description" className="py-5  font-nunito">
+            <section id="description" className="py-5  font-nunito container mx-auto">
                 <div className="text-center font-bold text-6xl">{service.title}</div>
                 {service?.ServiceDescription?.map((section, index) => (
                     <FloatingImageSection key={index} section={section} />
@@ -118,7 +118,7 @@ async function Services({ params }: { params: { id: string } }) {
 
                     </div>))}
             </section> : <></>}
-            <section className="my-5 font-nunito">
+            <section className="my-5 font-nunito container mx-auto">
                 <div className="text-4xl font-bold text-center">Frequently Asked Questions</div>
 
                 <Faqs faqs={faqs} />
@@ -135,11 +135,11 @@ async function Services({ params }: { params: { id: string } }) {
 
 const faqs = [
     {
-        question: 'What is React?',
+        question: 'What is React ?',
         answer: 'React is a JavaScript library for building user interfaces.',
     },
     {
-        question: 'How to install React?',
+        question: 'How to install React ?',
         answer: 'You can install React using npm or yarn.',
     },
     // Add more FAQs as needed
