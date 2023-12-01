@@ -33,7 +33,7 @@ function EmailLetter() {
                             className="flex-1 rounded-full bg-white/30 text-white p-3 placeholder-white"
                             color="white"
                         ></ClientInput>
-                        <button disabled={loading || success} className="flex-1  lg:flex-initial bg-black text-white rounded-full w-fit flex justify-between items-center p-3 gap-2" type="submit">
+                        <button disabled={loading || success} className="flex-1 disabled:cursor-not-allowed  lg:flex-initial bg-black text-white rounded-full w-fit flex justify-between items-center p-3 gap-2" type="submit">
                             {success ? <>
                                 <span>Added to email list</span>
                                 <CheckCircle className="text-green-500" />
