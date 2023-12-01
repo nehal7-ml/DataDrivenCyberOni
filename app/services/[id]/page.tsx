@@ -12,6 +12,8 @@ import Link from "next/link";
 import EmailLetter from "@/components/home/EmailLetter";
 import SubServiceCarousel from "@/components/services/SubServiceCarousel";
 import { LandPlot, Medal, Route, ScanText, Target, TestTubes } from "lucide-react";
+import AccordionItem from "@/components/services/AccordianItem";
+import ServiceFeatures from "@/components/services/ServiceFeatures";
 export let metadata: Metadata = {
     title: "",
     description: "",
@@ -56,16 +58,10 @@ async function Services({ params }: { params: { id: string } }) {
 
             <section className="my-5 font-nunito">
                 <div className="text-center text-xl font-light">Sometimes, we need to check the time, wondering when our work or meeting will finish, without getting caught by others.</div>
-                <div className="flex flex-col lg:flex-row gap-5 container mx-auto">
-                    <Image alt="section-2" src={'/service-2.png'} height={500} width={500} className="rounded-lg" />
-                    <div className="flex flex-col">
-                        {serviceFeatures.map((feature, index) => (<div key={index}>
-                            <div className="mb-4 border-b-2 ">
- 
-
-                            </div>
-
-                        </div>))}
+                <div className="flex flex-col justify-around items-center lg:flex-row  container mx-auto">
+                    <Image alt="section-2" src={'/service-2.png'} height={500} width={500} className="rounded-lg lg:w-1/3 px-5" />
+                    <div className="lg:w-1/2 px-5">
+                        <ServiceFeatures features={serviceFeatures} />
                     </div>
                 </div>
             </section>
