@@ -6,8 +6,9 @@ import { Activity, Monitor, Redo, ShoppingCart, BlocksIcon, Blocks, LayoutGrid, 
 import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
-import { getAll } from "@/crud/service";
+import { DisplayServiceDTO, getAll } from "@/crud/service";
 import { Image as CaseImage } from "@prisma/client";
+import PortfolioCarousel from "@/components/enterprise/PortfolioCarousel";
 async function Enterprise() {
     const services = await getAll(0, 0, prisma)
 
@@ -222,44 +223,8 @@ async function Enterprise() {
                     <Image className="object-cover flex-1 w-full" src={'/portfolio-underline.png'} alt="underline" height={50} width={200}></Image>
                 </div>
 
-                <div className="flex flex-col lg:flex-row lg:justify-start  justify-center lg:my-20 my-10">
-                    <div className="flex justify-center lg:gap-10 lg:justify-start lg:flex-col lg:w-1/3 text-right lg:text-4xl lg:px-10">
-                        {
-
-                            services.records.map((service, index) => (
-
-                                <div key={index} className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2">
-                                    <button className="peer peer/item focus:text-[#5380EA]">{service.title}
-                                    </button>
-                                    <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA]" />
-                                </div>
-
-                            ))
-
-
-                        }
-                    </div>
-
-                    {
-                        services.records.map((service, index) => (<div key={index}>
-
-
-                            <div className="hidden flex-wrap peer-focus/item:flex">
-                                {service.CaseStudies.map((caseStudy, index) => {
-                                    return (
-                                        <div key={index} className={`rounded-2xl aspect-square  w-1/2 p-3 overflow-hidden lg:w-1/4`}>
-                                            <Link className="w-full h-full " href={`/casestudy/${caseStudy.id}`}>
-                                                <Image className="rounded-lg" src={`${caseStudy.images ? (caseStudy.images as CaseImage[])[0].src : `https://picsum.photos/200?random=1`}`} alt="" height={400} width={400} />
-                                            </Link>
-                                        </div>
-                                    )
-                                }
-                                )}
-                            </div>
-
-                        </div>))
-
-                    }
+                <div className="">
+                        <PortfolioCarousel services={services.records as DisplayServiceDTO[] }/>
                 </div>
             </section>
 

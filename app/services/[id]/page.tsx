@@ -11,6 +11,7 @@ import { Image as CaseImage, Image as ServiceImage } from "@prisma/client";
 import Link from "next/link";
 import EmailLetter from "@/components/home/EmailLetter";
 import SubServiceCarousel from "@/components/services/SubServiceCarousel";
+import { LandPlot, Medal, Route, ScanText, Target, TestTubes } from "lucide-react";
 export let metadata: Metadata = {
     title: "",
     description: "",
@@ -54,7 +55,19 @@ async function Services({ params }: { params: { id: string } }) {
             </section>
 
             <section className="my-5 font-nunito">
+                <div className="text-center text-xl font-light">Sometimes, we need to check the time, wondering when our work or meeting will finish, without getting caught by others.</div>
+                <div className="flex flex-col lg:flex-row gap-5 container mx-auto">
+                    <Image alt="section-2" src={'/service-2.png'} height={500} width={500} className="rounded-lg" />
+                    <div className="flex flex-col">
+                        {serviceFeatures.map((feature, index) => (<div key={index}>
+                            <div className="mb-4 border-b-2 ">
+ 
 
+                            </div>
+
+                        </div>))}
+                    </div>
+                </div>
             </section>
 
             <section className="my-5 font-nunito">
@@ -90,7 +103,7 @@ async function Services({ params }: { params: { id: string } }) {
                     subservices={service.SubServices.map((subservice) => ({
                         content: subservice.description,
                         title: subservice.title,
-                        image: subservice.image? subservice.image.src: ''
+                        image: subservice.image ? subservice.image.src : ''
                     }))}
                 />
 
@@ -134,4 +147,32 @@ const faqs = [
     // Add more FAQs as needed
 ];
 
+const serviceFeatures = [
+    {
+        title: "Attention to Details",
+        content: "Lorem ipsum",
+        icon: <Route />
+    },
+    {
+        title: "A Plan for Success",
+        content: "You want results. We have found that the best way to get them is with up front research – of your company, competitors, target market and customer psychographics. Only after we fully understand you and your customers, do we recommend a plan of attack.",
+        icon: <LandPlot />
+    },
+    {
+        title: "Experts Only",
+        content: "Lorem ipsum",
+        icon: <TestTubes />
+    },
+    {
+        title: "Meeting Deadlines",
+        content: "Lorem ipsum",
+        icon: <Target />
+    },
+    {
+        title: "Award-Winning",
+        content: "Lorem ipsum",
+        icon: <Medal />
+    },
+
+]
 export default Services;
