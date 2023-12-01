@@ -9,6 +9,8 @@ import Faqs from "@/components/Faqs";
 import PayLater from "@/components/shared/Paylater";
 import { Image as CaseImage, Image as ServiceImage } from "@prisma/client";
 import Link from "next/link";
+import EmailLetter from "@/components/home/EmailLetter";
+import SubServiceCarousel from "@/components/services/SubServiceCarousel";
 export let metadata: Metadata = {
     title: "",
     description: "",
@@ -44,10 +46,15 @@ async function Services({ params }: { params: { id: string } }) {
                 ))}
             </div>
 
-            <section className="py-5">
+            <section id="description" className="py-5  font-nunito">
+                <div className="text-center font-bold text-6xl">{service.title}</div>
                 {service?.ServiceDescription?.map((section, index) => (
                     <FloatingImageSection key={index} section={section} />
                 ))}
+            </section>
+
+            <section className="my-5 font-nunito">
+
             </section>
 
             <section className="my-5 font-nunito">
@@ -77,8 +84,19 @@ async function Services({ params }: { params: { id: string } }) {
                     ]}
                 />
             </section>
+
+            {service.SubServices && <section className="my-5 font-nunito">
+                <SubServiceCarousel
+                    subservices={service.SubServices.map((subservice) => ({
+                        content: subservice.description,
+                        title: subservice.title,
+                        image: subservice.image? subservice.image.src: ''
+                    }))}
+                />
+
+            </section>}
             {service.CaseStudies.length > 0 ? <section className="my-5 font-nunito">
-                <div className="text-4xl font-bold text-center">Case Studies</div>
+                <div className="text-4xl font-bold text-center">Portfolio</div>
 
                 {service.CaseStudies.map((caseStudy, index) => (
                     <div key={index} className="flex flex-wrap container mx-auto gap-2 lg:gap-5 my-5">
@@ -93,6 +111,9 @@ async function Services({ params }: { params: { id: string } }) {
                 <div className="text-4xl font-bold text-center">Frequently Asked Questions</div>
 
                 <Faqs faqs={faqs} />
+            </section>
+            <section className="container mx-auto my-10 font-nunito lg:h-[300px]">
+                <EmailLetter />
             </section>
             <section className="flex justify-center items-center">
                 <PayLater value={service.valueBrought as string[]} />

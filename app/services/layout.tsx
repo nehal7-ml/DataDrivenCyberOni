@@ -30,13 +30,13 @@ function ServiceLayout({ children }: { children: ReactNode }) {
                 </div>
             </section>
             <section>
-                
+
             </section>
             {children}
             <section>
-                
+
             </section>
-            
+
         </div>
 
 

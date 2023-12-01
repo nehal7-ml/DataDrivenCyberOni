@@ -18,7 +18,7 @@ function ServiceCard({ id, image, previewContent, title }: ServiceCardProps) {
             <Image className="rounded-full h-10 w-10 mb-5"  src={image? image.src :"https://picsum.photos/200?random=1"} alt={id} height={30} width={30} />
             <div className="border-l-4 border-service-greeen px-3 mb-5 font-bold text-3xl">{title}</div>
             <div className="mb-5 line-clamp-3">{previewContent}</div>
-            < Link href={`/services/${id}`} className="flex gap-x-44 mb-5 text-blue-500">Learn more  <MoveRight /></Link>
+            < Link href={`/services/${id}#description`} className="flex gap-x-44 mb-5 text-blue-500">Learn more  <MoveRight /></Link>
         </div>
 
     </>)

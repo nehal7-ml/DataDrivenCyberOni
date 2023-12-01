@@ -30,7 +30,7 @@ export type CreateServiceDescription = {
 export type DisplayServiceDTO = Service & {
     image?: Image,
     tags?: Tag[],
-    SubServices?: SubService[],
+    SubServices?: (SubService & { image: Image })[],
     ServiceDescription?: (ServiceDescription & { image: Image })[],
     faqs: FAQ[],
     CaseStudies: CaseStudy[]
