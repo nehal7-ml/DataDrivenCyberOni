@@ -77,7 +77,7 @@ module.exports = {
         },
       },
       colors: {
-        "service-greeen": "#33D3D4",
+        "service-green": "#33D3D4",
       },
       borderRadius: {
         "br-full-tr-lg": "0 15px 100px 0",

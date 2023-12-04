@@ -99,7 +99,7 @@ async function Blogs() {
             </div>
 
             <div className="my-10 container mx-auto">
-                <div className="text-4xl font-bold my-2">Freelance</div>
+                <div className="text-4xl font-bold my-2">Random</div>
                 {data.recent[1] &&
                     <div className="conatiner relative flex overflow-hidden flex-col md:flex-row-reverse my-5 h-80 w-full rounded-2xl shadow-lg">
                         <div className="w-full absolute h-full lg:w-1/2 lg:static">
@@ -118,7 +118,7 @@ async function Blogs() {
 
             </div>
 
-            <div className="container mx-auto my-10">
+            {/* <div className="container mx-auto my-10">
                 <div className="text-4xl font-bold my-2 flex justify-between">
                     Reading List
                     <Link href={'/blogs/readinglist'} className="text-base text-[#FF5480] underline active:text-gray-400">view all</Link>
@@ -126,7 +126,7 @@ async function Blogs() {
                 <div className="">
 
                 </div>
-            </div>
+            </div> */}
 
 
         </div>

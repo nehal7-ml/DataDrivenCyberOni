@@ -63,7 +63,7 @@ export default async function RootLayout({
             darkMode={theme?.value === "dark" ? true : false}
           />
         </Suspense>
-        <main className="relative min-h-screen w-full px-5 pt-24 dark:bg-gray-900 dark:text-white lg:px-20">
+        <main className="relative min-h-screen w-full  pt-24 dark:bg-gray-900 dark:text-white ">
           {children}
         </main>
         {

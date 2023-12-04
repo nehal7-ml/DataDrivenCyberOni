@@ -12,7 +12,7 @@ function PayLater({ value }: { value?: string[] }) {
                 <div className="relative flex w-30 lg:w-60 justify-center items-center aspect-square rounded-[189px_180px_153px_124px/168px_196px_171px_155px] bg-gradient-to-bl from-emerald-300 to-emerald-500/50 backdrop-blur-sm p-6 shadow-md">
                     <p className="text-emerald-700 whitespace-pre-wrap font-bold m-2 text-xs lg:text-base line-clamp-3">{value? (value[3] || 'Custom add-ons without the monthly cost') :'Custom add-ons without the monthly cost'}</p>
                 </div>
-                <div className="relative flex w-20 lg:w-60 justify-center items-center aspect-square rounded-[107px_122px_108px_96px/117px_137px_111px_107px] bg-gradient-to-tl from-rose-300 to-rose-500 backdrop-blur-sm p-6 shadow-md">
+                <div className="relative flex w-30 lg:w-60 justify-center items-center aspect-square rounded-[107px_122px_108px_96px/117px_137px_111px_107px] bg-gradient-to-tl from-rose-300 to-rose-500 backdrop-blur-sm p-6 shadow-md">
                     <p className="text-rose-700 whitespace-pre-wrap font-bold m-2 text-xs lg:text-base line-clamp-3">{value? (value[2] || 'Custom AI Integration') :'Custom AI Integration'} </p>
                 </div>
             </div>

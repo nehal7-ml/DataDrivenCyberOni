@@ -6,9 +6,14 @@ import { Activity, Monitor, Redo, ShoppingCart, BlocksIcon, Blocks, LayoutGrid, 
 import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
+<<<<<<< HEAD
 import CalendlyPopup from "@/components/Calendly";
 import { getAll } from "@/crud/service";
+=======
+import { DisplayServiceDTO, getAll } from "@/crud/service";
+>>>>>>> 3fae6231aa7c864ff6194eafc2b9597d6926b4ce
 import { Image as CaseImage } from "@prisma/client";
+import PortfolioCarousel from "@/components/enterprise/PortfolioCarousel";
 async function Enterprise() {
     const services = await getAll(0, 0, prisma)
 
@@ -208,6 +213,7 @@ async function Enterprise() {
           </div>
         </section>
 
+<<<<<<< HEAD
         <section className="bg-[#EBF0FF] py-10 dark:bg-[#121212]">
           <div className="container mx-auto flex flex-col gap-5 p-5 lg:flex-row">
             <div className="lg:w-1/2">
@@ -238,6 +244,10 @@ async function Enterprise() {
                       <Redo />
                     </Link>
                   </div>
+=======
+                <div className="">
+                        <PortfolioCarousel services={services.records as DisplayServiceDTO[] }/>
+>>>>>>> 3fae6231aa7c864ff6194eafc2b9597d6926b4ce
                 </div>
                 <div className="relative h-fit overflow-hidden rounded-xl bg-gray-100  p-5 text-black hover:bg-[#0F172A] hover:text-white lg:h-52">
                   <div className="absolute right-0 top-0 h-3 w-full bg-blue-400"></div>

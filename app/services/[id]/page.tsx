@@ -11,18 +11,23 @@ import { Image as CaseImage, Image as ServiceImage } from "@prisma/client";
 import Link from "next/link";
 import EmailLetter from "@/components/home/EmailLetter";
 import SubServiceCarousel from "@/components/services/SubServiceCarousel";
+import { LandPlot, Medal, Route, ScanText, Target, TestTubes } from "lucide-react";
+import AccordionItem from "@/components/services/AccordianItem";
+import ServiceFeatures from "@/components/services/ServiceFeatures";
 export let metadata: Metadata = {
     title: "",
     description: "",
     openGraph: {},
-    category: 'service'
+    category: 'service',
+    keywords: ['']
 };
 async function Services({ params }: { params: { id: string } }) {
     const service = await read(params.id, prisma) as DisplayServiceDTO
     const services = await getAll(1, 10, prisma);
-    console.log(service);
+    //console.log(service);
     metadata.title = service.title as string
     metadata.description = service.previewContent
+    metadata.keywords = service.tags?.map(tag => tag.name)
     metadata.openGraph = {
         type: 'website',
         title: service.title,
@@ -145,14 +150,42 @@ async function Services({ params }: { params: { id: string } }) {
 
 const faqs = [
     {
-        question: 'What is React?',
+        question: 'What is React ?',
         answer: 'React is a JavaScript library for building user interfaces.',
     },
     {
-        question: 'How to install React?',
+        question: 'How to install React ?',
         answer: 'You can install React using npm or yarn.',
     },
     // Add more FAQs as needed
 ];
 
+const serviceFeatures = [
+    {
+        title: "Attention to Details",
+        content: "Lorem ipsum",
+        icon: <Route />
+    },
+    {
+        title: "A Plan for Success",
+        content: "You want results. We have found that the best way to get them is with up front research – of your company, competitors, target market and customer psychographics. Only after we fully understand you and your customers, do we recommend a plan of attack.",
+        icon: <LandPlot />
+    },
+    {
+        title: "Experts Only",
+        content: "Lorem ipsum",
+        icon: <TestTubes />
+    },
+    {
+        title: "Meeting Deadlines",
+        content: "Lorem ipsum",
+        icon: <Target />
+    },
+    {
+        title: "Award-Winning",
+        content: "Lorem ipsum",
+        icon: <Medal />
+    },
+
+]
 export default Services;

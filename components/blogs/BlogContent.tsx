@@ -16,12 +16,28 @@ function BlogContent({ content }: { content: string }) {
 
     useEffect(() => {
         setResizeScript(`<script id="resizeScript" >
-        window.document.children[0].addEventListener('resize',()=> {
-            console.log("html resizeiong");
+
+        const fonts = document.createElement('link');
+        fonts.rel="stylesheet"
+        fonts.href="https://fonts.googleapis.com/css?family=Inter"
+        document.head.appendChild(fonts);
+        const styles = document.createElement('style');
+        styles.textContent=\`
+        body {
+            font-family: "Inter", sans-serif;
+          }
+        \`
+        
+        document.head.appendChild(styles);
+
+
+        window.document.getElementsByTagName('html')[0].addEventListener('resize',()=> {
+            console.log("html resizeing");
             window.parent.postMessage({ type:"resize",size: window.document.getElementsByTagName('html')[0].scrollHeight}, "${window.origin}");
         })
         console.log("loading");
         window.parent.postMessage({ type:"resize", size: window.document.getElementsByTagName('html')[0].scrollHeight}, "${window.origin}");
+
 
 
         </script>`)
@@ -29,10 +45,10 @@ function BlogContent({ content }: { content: string }) {
         window.addEventListener("message", (event) => {
 
             console.log("loaded window", event.data);
-            if (iframe.current && event.data.type==="resize") iframe.current.style.height = event.data.size.toString() + "px";
+            if (iframe.current && event.data.type === "resize") iframe.current.style.height = (event.data.size+100).toString() + "px";
         });
 
-    }, []); 
+    }, []);
 
 
 
