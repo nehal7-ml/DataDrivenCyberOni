@@ -153,7 +153,7 @@ function ContactFormLOC() {
 
       {showThanks && (
         <>
-          <div className="flex w-full flex-col items-center justify-center p-10 text-center">
+          <div className="flex w-full h-full flex-col items-center justify-center p-10 text-center">
             <Mail />
             <Balancer>Check you email</Balancer>
           </div>
@@ -162,7 +162,7 @@ function ContactFormLOC() {
 
       {showError && (
         <>
-          <div className="flex w-full flex-col items-center justify-center p-10 text-center">
+          <div className="flex w-full h-full flex-col items-center justify-center p-10 text-center">
             <AlertCircle color="red" />
             <Balancer>An error occurred</Balancer>
           </div>
