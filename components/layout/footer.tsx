@@ -19,6 +19,14 @@ export default function Footer() {
           <Link className="hover:underline" href={"/enterprise"}>
             Enterprise
           </Link>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+            href="https://www.projectskip.me"
+          >
+            Our Non Profit
+          </a>
         </div>
         <div className="flex flex-col ">
           <div className="font-bold">Get In Touch</div>
