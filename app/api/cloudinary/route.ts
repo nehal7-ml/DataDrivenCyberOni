@@ -3,7 +3,7 @@ import { prisma } from "@/prisma/prismaClient";
 import { createEventDTO, read, remove as removeEvent, update } from "@/crud/event";
 import { NextRequest, NextResponse } from 'next/server'
 import apiHandler from "@/errorHandler";
-import { deleteFile, uploadFile } from "@/lib/cloudinary";
+import { deleteFile, uploadFile } from "@/lib/externalRequests/cloudinary";
 
 export const { POST, DELETE, GET, PATCH, PUT } = apiHandler({ POST: post });
 

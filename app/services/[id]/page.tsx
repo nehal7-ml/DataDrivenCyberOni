@@ -37,7 +37,7 @@ async function Services({ params }: { params: { id: string } }) {
     return (
         <div className=" lg:px-5">
             <div className="flex flex-wrap container mx-auto">
-                {services.records.map((service, index) => (
+                {services.records.slice(0,4).map((service, index) => (
                     <div key={index} className="p-5 lg:w-1/4 flex-1">
                         <ServiceCard
                             id={service.id}

@@ -2,7 +2,6 @@
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PopupModal } from "react-calendly";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNotify } from "../Notification";
 import { useRouter } from "next/navigation";

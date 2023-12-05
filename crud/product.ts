@@ -1,15 +1,15 @@
-import { Product, PrismaClient } from "@prisma/client";
-import { connectOrCreateObject as connectTag, createTagDTO } from "./tags";
-import { connectOrCreateObject as connectImage, createImageDTO } from "./images";
-import { createSupplierDTO } from "./supplier";
+import { Product, PrismaClient, Supplier, ProductStatus } from "@prisma/client";
+import { connectOrCreateObject as connectTag, CreateTagDTO } from "./tags";
+import { connectOrCreateObject as connectImage, CreateImageDTO } from "./images";
+import { CreateSupplierDTO } from "./supplier";
 
-export type createProductDTO = {
+export type CreateProductDTO = {
     sku: string;
     name: string;
-    status: string;
-    ratings?: number;
+    status: ProductStatus;
+    ratings?: number | null;
     inventory: number;
-    productBreakdown?: string;
+    productBreakdown?: string | null;
     shippingReturnPolicy: string;
     description: string;
     price: number;
@@ -17,9 +17,9 @@ export type createProductDTO = {
     displayPrice: number;
     category: string;
     subcategory?: string;
-    tags: createTagDTO[];
-    images: createImageDTO[];
-    suppliers?: createSupplierDTO[];
+    tags: CreateTagDTO[];
+    images: CreateImageDTO[];
+    suppliers?: CreateSupplierDTO[] | Supplier[];
     amazonProductId?: string;
     cjDropShippingId?: string;
 }
@@ -43,28 +43,56 @@ export type displayProductDTO = {
     amazonProductId?: string;
     cjDropShippingId?: string;
 }
-async function create(product: createProductDTO, prismaClient: PrismaClient) {
+async function create(product: CreateProductDTO, prismaClient: PrismaClient) {
     const products = prismaClient.product;
     let createdproduct = await products.create({
         data: {
             ...product,
             tags: { connectOrCreate: connectTag(product.tags) },
             images: { connectOrCreate: connectImage(product.images) },
-            suppliers: { create: product.suppliers }
+            suppliers: {
+                create: [
+                    ...product.suppliers as CreateSupplierDTO[]
+
+                ]
+            }
         }
     });
     return createdproduct
 }
 
-async function update(productId: string, product: createProductDTO, prismaClient: PrismaClient) {
+async function update(productId: string, product: CreateProductDTO, prismaClient: PrismaClient) {
     const products = prismaClient.product;
+    const suplierUpdate = {
+        create: [],
+        update: []
+    } as {
+        create: Array<any>, update: Array<{
+            where: { id: string },
+            data: Supplier
+
+        }>
+    }
+
+    for (const supplier of product.suppliers!) {
+        if ((supplier as Supplier).id) {
+            suplierUpdate.update.push({
+                where: { id: (supplier as Supplier).id as string },
+                data: supplier as Supplier
+
+            })
+        } else {
+            suplierUpdate.create.push(supplier)
+        }
+
+    }
     let createdproduct = await products.update({
         where: { id: productId },
         data: {
             ...product,
             tags: { connectOrCreate: connectTag(product.tags) },
             images: { connectOrCreate: connectImage(product.images) },
-            suppliers: { create: product.suppliers }
+            suppliers: suplierUpdate
         }
     });
     return createdproduct

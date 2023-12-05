@@ -1,7 +1,6 @@
 import { GptPrompt, PrismaClient } from "@prisma/client";
-import { connectOrCreateObject as connectTag, createTagDTO } from "./tags";
-import { connectOrCreateObject as connectImage, createImageDTO } from "./images";
-import { createSupplierDTO } from "./supplier";
+import { connectOrCreateObject as connectTag, CreateTagDTO } from "./tags";
+import { connectOrCreateObject as connectImage, CreateImageDTO } from "./images";
 
 export type createGptPromptDTO = {
     description: string;
@@ -17,8 +16,8 @@ export type createGptPromptDTO = {
     timesIntegrated: number;
     costPerToken: number;
     profitMargin: number;
-    tags: createTagDTO[];
-    image: createImageDTO;
+    tags: CreateTagDTO[];
+    image: CreateImageDTO;
 
 }
 async function create(prompt: createGptPromptDTO, prismaClient: PrismaClient) {
