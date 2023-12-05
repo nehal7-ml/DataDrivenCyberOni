@@ -77,7 +77,7 @@ export async function contactForm(sender: string, message: string, subject: stri
 export async function addToSendGrid(lead: Lead) {
 
     const list = await getList(process.env.SENDGRID_LIST as string);
-    console.log(list,);
+    // console.log(list,);
     const data = {
         list_ids: [
             list.id,

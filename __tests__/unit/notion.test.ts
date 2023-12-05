@@ -10,7 +10,7 @@ import { CreatePageParameters } from "@notionhq/client/build/src/api-endpoints";
 describe("test notion functions", () => {
     const record: CreatePageParams = {
         email: "email@example.com",
-        budget: "10010c,100",
+        budget: "100100",
         challenges: 'challenges',
         employess: "100000",
         message: "message",
@@ -26,6 +26,14 @@ describe("test notion functions", () => {
     it('should add contact to marketing', async () => {
 
         const resp = await addToMarketingCrm(record)
+
+        //console.log(resp);
+        expect(resp).toBe('page')
+    })
+
+    it('should add contact to marketing Using Small contact form data', async () => {
+
+        const resp = await addToMarketingCrm({email:record.email, name:record.name, message:record.message, referral:record.referral})
 
         //console.log(resp);
         expect(resp).toBe('page')
