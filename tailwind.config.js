@@ -28,10 +28,10 @@ module.exports = {
       backgroundImage: {
         "gradient-purple":
           "linear-gradient(to right,  #FF2DF7, #5200FF,#00F0FF)", // Add this line
-        "enterprise-bg": "url('/enterprise-bg.png')",
-        "enterprise-bg-2": "url('/enterprise-bg-2.png')",
-        "enterprise-bg-3": "url('/enterprise-bg-3.png')",
-        "contact-bg": "url('/contact-bg.png')",
+        "enterprise-bg": "url('/images/enterprise-bg.png')",
+        "enterprise-bg-2": "url('/images/enterprise-bg-2.png')",
+        "enterprise-bg-3": "url('/images/enterprise-bg-3.png')",
+        "contact-bg": "url('/images/contact-bg.png')",
       },
       boxShadow: {
         "left-shift-lg": "0 35px 60px -15px rgba(0, 0, 0, 0.3)",

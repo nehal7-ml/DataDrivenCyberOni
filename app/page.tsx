@@ -34,7 +34,7 @@ export default async function Home() {
               </div>
             </div>
             <Image
-              src={"/hero-1.png"}
+              src={"/images/hero-1.png"}
               alt={""}
               height={500}
               width={500}
@@ -106,7 +106,7 @@ export default async function Home() {
           <div className="lg:w-1/2 lg:h-full flex justify-center items-center">
             <Image
               className="flex-1 w-full h-full object-contain"
-              src={"/contact-form.png"}
+              src={"/images/contact-form.png"}
               alt="contact"
               height={1280}
               width={1200}
@@ -134,7 +134,7 @@ const homeSections: SectionProps[] = [
         solutions and saw their operations evolve in ways they never imagined.
       </div>
     ),
-    image: "/hero-2.png",
+    image: "/images/hero-2.png",
     imageFirst: false,
     linkTo: "/blogs",
   },
@@ -152,7 +152,7 @@ const homeSections: SectionProps[] = [
         efficiency, and empowered decision-making.{" "}
       </div>
     ),
-    image: "/hero-3.png",
+    image: "/images/hero-3.png",
     imageFirst: true,
     linkTo: "/blogs",
   },
@@ -171,7 +171,7 @@ const homeSections: SectionProps[] = [
         responses, predictive problem-solving, and tailored interactions.{" "}
       </div>
     ),
-    image: "/hero-4.png",
+    image: "/images/hero-4.png",
     imageFirst: false,
     linkTo: "/blogs",
   },
@@ -190,7 +190,7 @@ const homeSections: SectionProps[] = [
         solutions and saw their operations evolve in ways they never imagined.
       </div>
     ),
-    image: "/hero-5.png",
+    image: "/images/hero-5.png",
     imageFirst: true,
     linkTo: "/blogs",
   },
@@ -198,20 +198,20 @@ const homeSections: SectionProps[] = [
 
 const companies: Company[] = [
 
-  { name: 'google', image: '/Google cloud.png' },
-  { name: '', image: '/Ebay.png' },
-  { name: '', image: '/Tux.png' },
-  { name: '', image: '/Spotify.png' },
-  { name: '', image: '/Airbnb.png' },
-  { name: '', image: '/Facebook.png' },
-  { name: '', image: '/Coca Cola.png' },
-  { name: '', image: '/Zoom.png' },
-  { name: '', image: '/Creative Cloud.png' },
-  { name: '', image: '/Netflix.png' },
-  { name: '', image: '/Discord.png' },
-  { name: '', image: '/Figma.png' },
-  { name: '', image: '/Paypal.png' },
-  { name: '', image: '/Adobe.png' },
+  { name: 'google', image: '/images/Google cloud.png' },
+  { name: '', image: '/images/Ebay.png' },
+  { name: '', image: '/images/Tux.png' },
+  { name: '', image: '/images/Spotify.png' },
+  { name: '', image: '/images/Airbnb.png' },
+  { name: '', image: '/images/Facebook.png' },
+  { name: '', image: '/images/Coca Cola.png' },
+  { name: '', image: '/images/Zoom.png' },
+  { name: '', image: '/images/Creative Cloud.png' },
+  { name: '', image: '/images/Netflix.png' },
+  { name: '', image: '/images/Discord.png' },
+  { name: '', image: '/images/Figma.png' },
+  { name: '', image: '/images/Paypal.png' },
+  { name: '', image: '/images/Adobe.png' },
 
 
 
@@ -222,25 +222,25 @@ const sildes: SlideProps[] = [
   {
     name: 'Amaka Micheal',
     designation: 'Media Executive, Buying & Control',
-    image: '/review.jpg',
+    image: '/images/review.jpg',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
     name: 'Cody Johnston',
     designation: 'Media Executive, Buying & Control',
-    image: '/prof1.png',
+    image: '/images/prof1.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
     name: 'John Smith',
     designation: 'Media Executive, Buying & Control',
-    image: '/prof2.png',
+    image: '/images/prof2.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
     name: 'Micheal Scott',
     designation: 'Media Executive, Buying & Control',
-    image: '/prof3.png',
+    image: '/images/prof3.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
 ]

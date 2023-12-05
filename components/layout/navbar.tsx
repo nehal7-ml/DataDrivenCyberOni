@@ -44,7 +44,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
           <div className="relative">
             <Link href="/" className="flex items-center font-display text-2xl w-fit peer/logo">
               <Image
-                src="/logo.png"
+                src="/images/logo.png"
                 alt="Precedent logo"
                 width="30"
                 height="30"
@@ -66,7 +66,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                 Products
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
-              <div className="lg:absolute lg:left-auto lg:-translate-x-48 z-50 transition-all duration-700   w-screen lg:top-5 lg:w-[700px] hidden lg:peer-focus/product:hidden peer-focus/product:block peer-hover/product:block hover:block">
+              <div className="lg:absolute lg:left-auto lg:-translate-x-48 z-50 transition-all duration-700   w-screen lg:top-5 lg:w-[700px] hidden peer-focus/product:block peer-hover/product:block hover:block">
                 <MegaMenu groups={mainMenu} />
               </div>
 
@@ -236,7 +236,7 @@ const aboutMenu: MegamenuProps =
         <div className="text-gray-500 dark:gray-200">Our offices</div>
         <div className="flex gap-5 py-2">
           <div>
-            <Image src={'/about-1.png'} alt="location" height={300} width={400} className="rounded-3xl" />
+            <Image src={'/images/about-1.png'} alt="location" height={300} width={400} className="rounded-3xl" />
           </div>
           <div className="flex justify-center flex-col">
             <div className="font-bold">Serving customers from across the globe</div>
@@ -348,7 +348,7 @@ const mainMenu: MegamenuProps = [
       <div>
         <div>
           <div className="text-gray-500 dark:gray-200">Always Improving</div>
-          <Image src={'/dash.png'} alt="dash" width={200} height={200} />
+          <Image src={'/images/dash.png'} alt="dash" width={200} height={200} />
           <div className="flex flex-col gap-5 py-2">
             <div className="flex gap-3"><CheckCircle className="text-blue-700" />Debugging with product analytics</div>
             <div className="flex gap-3"><CheckCircle className="text-blue-700" />Why it’s never too early to add product ana...</div>

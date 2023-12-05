@@ -16,7 +16,7 @@ function PayLater({ value }: { value?: string[] }) {
                     <p className="text-rose-700 whitespace-pre-wrap font-bold m-2 text-xs lg:text-base line-clamp-3">{value? (value[2] || 'Custom AI Integration') :'Custom AI Integration'} </p>
                 </div>
             </div>
-            <Image src={'/pay-later.png'} alt="pay-later" height={500} width={500} />
+            <Image src={'/images/pay-later.png'} alt="pay-later" height={500} width={500} />
 
             <div className="text-center font-bold mb-5 font-nunito text-2xl">Build Now Pay later</div>
             <div>

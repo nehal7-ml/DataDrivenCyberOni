@@ -19,27 +19,26 @@ async function Enterprise() {
         <div className="relative bg-enterprise-bg bg-[length:100vw_50vw] bg-no-repeat dark:bg-[#061122] lg:h-[50vh]">
           <div className="container mx-auto flex h-full flex-col items-center justify-center ">
             <div className=" relative line-clamp-3 w-screen overflow-visible text-center font-nunito text-6xl font-bold leading-relaxed lg:w-[800px]">
-              <Image
-                className="absolute -z-10 w-full "
-                src={"/enterprise-hero.png"}
-                alt="enterprise-hero"
-                height={300}
-                width={900}
-              />
-
-              <div className="z-20">
-                <p>Welcome to </p>
-                <span className="text-[#5380EA]">CyberOni</span>
-                <p>Technologies</p>
+                <Image
+                  className="absolute z-0 w-full "
+                  src={"/images/enterprise-hero.png"}
+                  alt="enterprise-hero"
+                  height={300}
+                  width={900}
+                />
+              <div className="flex flex-col justify-center items-center text-center">
+                <p className="z-30 ">Welcome to </p>
+                <span className="text-[#5380EA] z-30 ">CyberOni</span>
+                <p className="z-30 ">Technologies</p>
               </div>
             </div>
 
-            <div className="text-black dark:text-gray-100">
+            <div className="text-black dark:text-gray-100 z-30">
               Are you facing difficulties with your Software? Do you have a
               website but lack traffic? No need to worry.
             </div>
 
-            <div id="__next" className="m-3">
+            <div id="__next" className="m-3 z-30">
               <CalendlyPopup
                 className="rounded-lg bg-[#0F172A] p-3 text-white dark:bg-blue-600"
                 CTAText="Schedule a consultation"
@@ -52,7 +51,7 @@ async function Enterprise() {
           <div className="flex max-h-full items-center justify-around gap-10 p-3 text-center">
             <div>
               <Image
-                src={"/project.png"}
+                src={"/images/project.png"}
                 alt="icon"
                 height={100}
                 width={100}
@@ -62,7 +61,7 @@ async function Enterprise() {
             </div>
             <div>
               <Image
-                src={"/client.png"}
+                src={"/images/client.png"}
                 alt="icon"
                 height={100}
                 width={100}
@@ -72,7 +71,7 @@ async function Enterprise() {
             </div>
             <div>
               <Image
-                src={"/experience.png"}
+                src={"/images/experience.png"}
                 alt="icon"
                 height={100}
                 width={100}
@@ -82,7 +81,7 @@ async function Enterprise() {
             </div>
             <div>
               <Image
-                src={"/companies.png"}
+                src={"/images/companies.png"}
                 alt="icon"
                 height={100}
                 width={100}
@@ -133,7 +132,7 @@ async function Enterprise() {
           <div className="grid w-full grid-cols-1 grid-rows-4 gap-3 text-center lg:grid-cols-4 lg:grid-rows-1">
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
-                src={"/step-1.png"}
+                src={"/images/step-1.png"}
                 alt="border"
                 className="lg:w-full object-contain w-40 h-40"
                 height={300}
@@ -150,7 +149,7 @@ async function Enterprise() {
             </div>
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
-                src={"/step-2.png"}
+                src={"/images/step-2.png"}
                 alt="border"
                 className=" lg:w-full object-contain w-40 h-40"
                 height={300}
@@ -168,7 +167,7 @@ async function Enterprise() {
             </div>
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
-                src={"/step-3.png"}
+                src={"/images/step-3.png"}
                 alt="border"
                 className="lg:w-full object-contain w-40 h-40"
                 height={300}
@@ -188,7 +187,7 @@ async function Enterprise() {
             </div>
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
-                src={"/step-4.png"}
+                src={"/images/step-4.png"}
                 alt="border"
                 className="lg:w-full object-contain w-40 h-40"
                 height={300}
@@ -312,7 +311,7 @@ async function Enterprise() {
           <div className="container mt-20 flex flex-wrap justify-center gap-5">
             <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
-                src={"/team.png"}
+                src={"/images/team.png"}
                 alt="brain"
                 height={50}
                 width={50}
@@ -331,7 +330,7 @@ async function Enterprise() {
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
-                src={"/brain.png"}
+                src={"/images/brain.png"}
                 alt="brain"
                 height={50}
                 width={50}
@@ -349,7 +348,7 @@ async function Enterprise() {
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
-                src={"/stopwatch.png"}
+                src={"/images/stopwatch.png"}
                 alt="brain"
                 height={50}
                 width={50}
@@ -367,7 +366,7 @@ async function Enterprise() {
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
-                src={"/price-tag.png"}
+                src={"/images/price-tag.png"}
                 alt="brain"
                 height={50}
                 width={50}
@@ -391,7 +390,7 @@ async function Enterprise() {
           <div className="font-nunito text-4xl font-bold">Our Portfolio</div>
           <Image
             className="w-full flex-1 object-cover"
-            src={"/portfolio-underline.png"}
+            src={"/images/portfolio-underline.png"}
             alt="underline"
             height={50}
             width={200}

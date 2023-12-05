@@ -7,7 +7,7 @@ function ContactButton() {
     return (
         <>
             <button className="peer fixed shadow-lg flex justify-center items-center bottom-5 right-5 lg:right-5 lg:bottom-5 h-16 w-16 rounded-full hover:shadow-xl hover:transition-all duration-75 z-[100]">
-                <Image className="object-contain" src={'/chat-button.png'} alt="chatbutton" width={60} height={60} />
+                <Image className="object-contain" src={'/images/chat-button.png'} alt="chatbutton" width={60} height={60} />
             </button>
             <Modal >
                 <ContactForm />

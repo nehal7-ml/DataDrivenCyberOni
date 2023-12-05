@@ -519,7 +519,7 @@ function ContactUs() {
           </div>
           <div className="absolute top-10 -z-0 h-1/3 w-full translate-y-1/2 blur-sm lg:static lg:z-0  lg:w-1/2 lg:translate-y-16 lg:blur-none">
             <Image
-              src={"/contact-graphic.svg"}
+              src={"/images/contact-graphic.svg"}
               alt="vector"
               width={340}
               height={250}

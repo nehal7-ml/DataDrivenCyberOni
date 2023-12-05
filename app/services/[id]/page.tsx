@@ -49,7 +49,7 @@ async function Services({ params }: { params: { id: string } }) {
           ))}
         </div>
 
-        <section id="description" className="py-5  font-nunito">
+        <section id="description" className="py-5  font-nunito container mx-auto">
           <div className="text-center text-6xl font-bold">{service.title}</div>
           {service?.ServiceDescription?.map((section, index) => (
             <FloatingImageSection key={index} section={section} />
@@ -71,14 +71,14 @@ async function Services({ params }: { params: { id: string } }) {
               {
                 content:
                   "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-                image: "/prof1.png",
+                image: "/images/prof1.png",
                 name: "Charlie rose",
                 position: "Ceo",
               },
               {
                 content:
                   "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-                image: "/prof2.png",
+                image: "/images/prof2.png",
                 name: "Charlie rose",
                 position: "Ceo",
               },
