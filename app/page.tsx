@@ -27,8 +27,10 @@ export default async function Home() {
                 to automate mundane tasks.
               </div>
               <div className="mx-3 h-[1px] bg-gradient-purple" />
-              <div id="__next" className="m-3 bg-gradient-purple w-fit rounded-full p-[2px]">
-                <CalendlyPopup CTAText="Schedule a consultation" className="bg-white dark:bg-gray-900 p-3 rounded-full" />
+              <div className="flex justify-center lg:justify-start">
+                <div id="__next" className="m-3 bg-gradient-purple w-fit rounded-full p-[2px]">
+                  <CalendlyPopup CTAText="Schedule a consultation" className="bg-white dark:bg-gray-900 p-3 rounded-full" />
+                </div>
               </div>
             </div>
             <Image
