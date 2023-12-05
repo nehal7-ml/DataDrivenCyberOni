@@ -35,101 +35,116 @@ async function Services({ params }: { params: { id: string } }) {
         images: [service.image?.src as string],
     }
     return (
-        <div className=" lg:px-5">
-            <div className="flex flex-wrap container mx-auto">
-                {services.records.slice(0,4).map((service, index) => (
-                    <div key={index} className="p-5 lg:w-1/4 flex-1">
-                        <ServiceCard
-                            id={service.id}
-                            image={
-                                service.image as ServiceImage
-                            }
-                            previewContent={service.previewContent}
-                            title={service.title}
-                        />
-                    </div>
-                ))}
+      <div className="">
+        <div className="flex flex-wrap">
+          {services.records.slice(0, 4).map((service, index) => (
+            <div key={index} className="p-5 lg:w-1/4">
+              <ServiceCard
+                id={service.id}
+                image={service.image as ServiceImage}
+                previewContent={service.previewContent}
+                title={service.title}
+              />
             </div>
-
-            <section id="description" className="py-5  font-nunito container mx-auto">
-                <div className="text-center font-bold text-6xl">{service.title}</div>
-                {service?.ServiceDescription?.map((section, index) => (
-                    <FloatingImageSection key={index} section={section} />
-                ))}
-            </section>
-
-            <section className="my-5 font-nunito">
-                <div className="text-center text-xl font-light">Sometimes, we need to check the time, wondering when our work or meeting will finish, without getting caught by others.</div>
-                <div className="flex flex-col justify-around items-center lg:flex-row  container mx-auto">
-                    <Image alt="section-2" src={'/service-2.png'} height={500} width={500} className="rounded-lg lg:w-1/3 px-5" />
-                    <div className="lg:w-1/2 px-5">
-                        <ServiceFeatures features={serviceFeatures} />
-                    </div>
-                </div>
-            </section>
-
-            <section className="my-5 font-nunito">
-                <div className="text-center font-nunito text-4xl font-semibold">
-                    Feedback from our clients
-                </div>
-                <div className="text-center text-lg font-light">
-                    Our WORK speaks louder than our WORD. Find out how we helped clients
-                    overcome challenges and succeed.
-                </div>
-                <ReviewCarousel
-                    reviews={[
-                        {
-                            content:
-                                "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-                            image: "/prof1.png",
-                            name: "Charlie rose",
-                            position: "Ceo",
-                        },
-                        {
-                            content:
-                                "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-                            image: "/prof2.png",
-                            name: "Charlie rose",
-                            position: "Ceo",
-                        },
-                    ]}
-                />
-            </section>
-
-            {service.SubServices && <section className="my-5 font-nunito">
-                <SubServiceCarousel
-                    subservices={service.SubServices.map((subservice) => ({
-                        content: subservice.description,
-                        title: subservice.title,
-                        image: subservice.image ? subservice.image.src : ''
-                    }))}
-                />
-
-            </section>}
-            {service.CaseStudies.length > 0 ? <section className="my-5 font-nunito">
-                <div className="text-4xl font-bold text-center">Portfolio</div>
-
-                {service.CaseStudies.map((caseStudy, index) => (
-                    <div key={index} className="flex flex-wrap container mx-auto gap-2 lg:gap-5 my-5">
-                        <Link href={`/casestudies/${caseStudy.id}`} className="relative overflow-hidden rounded-lg hover:shadow-2xl transition-shadow duration-300 shadow-lg lg:w-[170px] w-1/2 flex-col justify-center items-center">
-                            <Image className="object-fill aspect-square" height={170} width={170} alt="case image" src={caseStudy.images ? (caseStudy.images as CaseImage[])[0].src : 'https://picsum.photos/200'} />
-                            <div className="absolute text-center line-clamp-1 bottom-0 w-full py-5 bg-gradient-to-t from-black  to-black/0 text-white">{caseStudy.title}</div>
-                        </Link>
-
-                    </div>))}
-            </section> : <></>}
-            <section className="my-5 font-nunito container mx-auto">
-                <div className="text-4xl font-bold text-center">Frequently Asked Questions</div>
-
-                <Faqs faqs={faqs} />
-            </section>
-            <section className="container mx-auto my-10 font-nunito lg:h-[300px]">
-                <EmailLetter />
-            </section>
-            <section className="flex justify-center items-center">
-                <PayLater value={service.valueBrought as string[]} />
-            </section>
+          ))}
         </div>
+
+        <section id="description" className="py-5  font-nunito">
+          <div className="text-center text-6xl font-bold">{service.title}</div>
+          {service?.ServiceDescription?.map((section, index) => (
+            <FloatingImageSection key={index} section={section} />
+          ))}
+        </section>
+
+        <section className="my-5 font-nunito"></section>
+
+        <section className="my-5 font-nunito">
+          <div className="text-center font-nunito text-4xl font-semibold">
+            Feedback from our clients
+          </div>
+          <div className="text-center text-lg font-light">
+            Our WORK speaks louder than our WORD. Find out how we helped clients
+            overcome challenges and succeed.
+          </div>
+          <ReviewCarousel
+            reviews={[
+              {
+                content:
+                  "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+                image: "/prof1.png",
+                name: "Charlie rose",
+                position: "Ceo",
+              },
+              {
+                content:
+                  "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
+                image: "/prof2.png",
+                name: "Charlie rose",
+                position: "Ceo",
+              },
+            ]}
+          />
+        </section>
+
+        {service.SubServices && (
+          <section className="my-5 font-nunito">
+            <SubServiceCarousel
+              subservices={service.SubServices.map((subservice) => ({
+                content: subservice.description,
+                title: subservice.title,
+                image: subservice.image ? subservice.image.src : "",
+              }))}
+            />
+          </section>
+        )}
+        {service.CaseStudies.length > 0 ? (
+          <section className="my-5 font-nunito">
+            <div className="text-center text-4xl font-bold">Portfolio</div>
+
+            {service.CaseStudies.map((caseStudy, index) => (
+              <div
+                key={index}
+                className="container mx-auto my-5 flex flex-wrap gap-2 lg:gap-5"
+              >
+                <Link
+                  href={`/casestudies/${caseStudy.id}`}
+                  className="relative w-1/2 flex-col items-center justify-center overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl lg:w-[170px]"
+                >
+                  <Image
+                    className="aspect-square object-fill"
+                    height={170}
+                    width={170}
+                    alt="case image"
+                    src={
+                      caseStudy.images
+                        ? (caseStudy.images as CaseImage[])[0].src
+                        : "https://picsum.photos/200"
+                    }
+                  />
+                  <div className="absolute bottom-0 line-clamp-1 w-full bg-gradient-to-t from-black to-black/0 py-5  text-center text-white">
+                    {caseStudy.title}
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </section>
+        ) : (
+          <></>
+        )}
+        <section className="my-5 font-nunito">
+          <div className="text-center text-4xl font-bold">
+            Frequently Asked Questions
+          </div>
+
+          <Faqs faqs={faqs} />
+        </section>
+        <section className="container mx-auto my-10 font-nunito lg:h-[300px]">
+          <EmailLetter />
+        </section>
+        <section className="flex items-center justify-center">
+          <PayLater value={service.valueBrought as string[]} />
+        </section>
+      </div>
     );
 }
 
