@@ -14,8 +14,8 @@ import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Cyberoni",
-  description: Owner.about,
+  title: Owner.seo.metaTitle,
+  description: Owner.seo.metaDescription,
   keywords: Owner.seo.keywords,
   metadataBase: new URL(process.env.NEXTAUTH_URL as string),
   twitter: {
