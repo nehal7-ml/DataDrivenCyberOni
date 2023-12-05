@@ -86,7 +86,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
 
               </button>
-              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden lg:peer-focus/enterprise:hidden peer-focus/enterprise:block peer-hover/enterprise:block hover:block">
+              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/enterprise:block peer-hover/enterprise:block hover:block">
                 <MegaMenu groups={enterpriseMenu} />
               </div>
             </div>
