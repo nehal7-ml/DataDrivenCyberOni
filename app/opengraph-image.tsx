@@ -29,7 +29,7 @@ export default async function OG() {
         <img
           src={`${process.env.HOST}/monster_5.jpg`}
           alt="CyberOni Logo"
-           className="mb-4 h-20 w-20 opacity-95"
+          className="mb-4 h-20 w-20 opacity-95"
         />
       </div>
     ),
