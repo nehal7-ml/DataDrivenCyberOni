@@ -28,7 +28,7 @@ export default async function OG() {
         }}
       >
         <img
-          src={`${process.env.HOST}/images/logo.png`}
+          src={`${process.env.HOST}/monster_5.jpg`}
           alt="Precedent Logo"
           className="w-20 h-20 mb-4 opacity-95"
         />
