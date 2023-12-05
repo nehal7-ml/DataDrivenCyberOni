@@ -15,7 +15,7 @@ export const Owner = {
   seo: {
     metaTitle: "CyberOni: Innovative Software Solutions for Business Growth",
     metaDescription:
-      "Explore CyberOni's cutting-edge business software solutions in Denver and Jacksonville. Specializing in custom development, we elevate efficiency and drive growth with innovative technology",
+      "Unlock business innovation with CyberOni's remote software solutions. Specializing in custom tech development, we empower global efficiency and growth through advanced technology.",
     keywords: [
       "CyberOni Software Solutions",
       "Custom Software Development",
