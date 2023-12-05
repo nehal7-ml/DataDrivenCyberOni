@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         firstName = name.split(' ')[0]
     }
     await addToSendGrid({ email, firstName, lastName , city:subject})
-    console.log(email);
+    // console.log(email);
     await addToMarketingCrm({
         email: email,
         name,
