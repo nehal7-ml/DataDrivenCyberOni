@@ -27,7 +27,7 @@ describe("test notion functions", () => {
 
         const resp = await addToMarketingCrm(record)
 
-        console.log(resp);
+        //console.log(resp);
         expect(resp).toBe('page')
     })
 

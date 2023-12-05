@@ -44,15 +44,15 @@ export async function addToMarketingCrm(record: CreatePageParams) {
         properties: {
             "Email Address": { email: record.email },
             "Name": {title:[{text:{content:record.name}}]},
-            "Phone": { phone_number: record.phone },
-            "Message": { rich_text: [{ text: { content: record.message } }] },
-            "Company": { rich_text: [{ text: { content: record.company } }] },
-            "Referral": { rich_text: [{ text: { content: record.referral } }] },
-            "Time Line": { rich_text: [{ text: { content: record.timeline } }] },
-            "Current Challenges": { rich_text: [{ text: { content: record.challenges } }] },
-            "Number of Employees": { number: Number(record.employess) },
-            "Requirements": { multi_select: record.requirements?.map(requirement => ({ name: requirement })) },
-            "ReferralToken": { rich_text: [{ text: { content: record.refToken } }] }
+            "Phone":record.phone? { phone_number: record.phone }: null,
+            "Message": record.message? { rich_text: [{ text: { content: record.message } }] }:null,
+            "Company":  record.company?{ rich_text: [{ text: { content: record.company } }] }:null,
+            "Referral": record.referral?{ rich_text: [{ text: { content: record.referral } }] }:null,
+            "Time Line":record.timeline? { rich_text: [{ text: { content: record.timeline } }] }:null,
+            "Current Challenges":record.challenges? { rich_text: [{ text: { content: record.challenges } }] }:null,
+            "Number of Employees": record.employess?{ number: Number(record.employess) }:null,
+            "Requirements": record.requirements?{ multi_select: record.requirements?.map(requirement => ({ name: requirement })) }:null,
+            "ReferralToken":record.refToken? { rich_text: [{ text: { content: record.refToken } }] }:null
         },
     } as CreatePageParameters)
     // console.log("repsonse", respJson);

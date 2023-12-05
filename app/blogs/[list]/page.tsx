@@ -25,7 +25,7 @@ async function BlogList({ params }: { params: { list: string } }) {
                     <div className="conatiner mx-10 my-10 flex flex-wrap">
                         {data.list.map((blog, index) => {
                             return (
-                                <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-96`}>
+                                <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-96 h-fit`}>
                                     <Link href={`/blogs/post/${blog.id}`}>
                                         <div className="overflow-hidden h-full shadow-lg   dark:bg-gray-700 rounded-lg">
                                             <div className=" bg-gray-400 h-2/3">
@@ -39,7 +39,7 @@ async function BlogList({ params }: { params: { list: string } }) {
                                             <div className="px-6 py-1">
                                                 <div className="mb-2">by {blog.author.firstName} </div>
                                                 <div className="mb-2 font-bold text-2xl">{blog.title}</div>
-                                                <div className="">{blog.subTitle}</div>
+                                                <div className="line-clamp-2 lg:line-clamp-4">{blog.subTitle}</div>
                                             </div>
                                         </div>
                                     </Link>

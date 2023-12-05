@@ -12,10 +12,10 @@ export default async function Home() {
 
   return (
     <>
-      <div className="z-30 w-full py-32  dark:text-white ">
-        <section className="container mx-auto flex flex-col">
+      <div className="z-30 w-full dark:text-white ">
+        <section className="container mx-auto flex flex-col text-center lg:text-left">
           <div className="flex flex-col-reverse items-center justify-center lg:flex-row">
-            <div>
+            <div className="flex flex-col justify-center items-center lg:items-start lg:justify-start " >
               <div className="m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF] to-[#FF2DF7]  bg-clip-text text-5xl font-bold text-transparent">
                 With Ai
               </div>
@@ -26,7 +26,7 @@ export default async function Home() {
                 Our ambition is to reshape how you envision the use of your data
                 to automate mundane tasks.
               </div>
-              <div className="mx-3 h-[1px] bg-gradient-purple" />
+              <div className="mx-3 h-[1px] bg-gradient-purple w-full" />
               <div className="flex justify-center lg:justify-start">
                 <div id="__next" className="m-3 bg-gradient-purple w-fit rounded-full p-[2px]">
                   <CalendlyPopup CTAText="Schedule a consultation" className="bg-white dark:bg-gray-900 p-3 rounded-full" />

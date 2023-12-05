@@ -56,7 +56,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
           </div>
 
 
-          <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex absolute right-0 top-full h-screen w-screen max-h-screen overflow-y-auto pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black py-10'}   gap-10   h-screen w-full flex-col items-center justify-start lg:pt-0 lg:static lg:flex lg:flex-row lg:gap-5 lg:justify-center lg:h-full lg:bg-inherit lg:w-fit`}>
+          <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex absolute right-0 top-full h-screen w-screen max-h-screen overflow-y-auto pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black py-10'}   gap-10   h-screen w-full flex-col items-center justify-start xl:pt-0 xl:static xl:flex xl:flex-row xl:gap-5 xl:justify-center xl:h-full xl:bg-inherit xl:w-fit`}>
 
             <div className="relative group">
               <button
@@ -120,9 +120,9 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               </div>
             </div>
 
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  lg:hidden">Sign In</Link>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex lg:hidden">Sign Up</Link>
-            <ToggleDarkMode enabled={darkMode} className={'flex lg:hidden justify-center items-center'} />
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  xl:hidden">Sign In</Link>
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex xl:hidden">Sign Up</Link>
+            <ToggleDarkMode enabled={darkMode} className={'flex xl:hidden justify-center items-center'} />
 
           </div>
           <div className=" items-center justify-center flex gap-3 p-3">
@@ -135,12 +135,12 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
               </button>
             </div>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden lg:flex  min-w-fit">Sign In</Link>
-            <Link href={'/api/auth/signout'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden lg:flex min-w-fit">Sign Up</Link>
-            <ToggleDarkMode enabled={darkMode} className={'hidden lg:flex'} />
+            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex  min-w-fit">Sign In</Link>
+            <Link href={'/api/auth/signout'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex min-w-fit">Sign Up</Link>
+            <ToggleDarkMode enabled={darkMode} className={'hidden xl:flex'} />
           </div>
 
-          <div className="block lg:hidden">
+          <div className="block xl:hidden">
             <button
               onClick={toggleMobileMenu}
               aria-label="Navigation Options"
