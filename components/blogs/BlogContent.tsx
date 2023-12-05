@@ -35,7 +35,6 @@ function BlogContent({ content }: { content: string }) {
             console.log("html resizeing");
             window.parent.postMessage({ type:"resize",size: window.document.getElementsByTagName('html')[0].scrollHeight}, "${window.origin}");
         })
-        console.log("loading");
         window.parent.postMessage({ type:"resize", size: window.document.getElementsByTagName('html')[0].scrollHeight}, "${window.origin}");
 
 
@@ -54,7 +53,6 @@ function BlogContent({ content }: { content: string }) {
 
     // console.log(content);
     return (<>
-
         {<iframe ref={iframe} onLoad={resizeIframe} className="w-full h-fit overflow-y-auto z-50" src={getBlobURL(content + resizeScript, "text/html;")}></iframe>}
     </>);
 }
