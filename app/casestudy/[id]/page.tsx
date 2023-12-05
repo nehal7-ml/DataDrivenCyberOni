@@ -27,7 +27,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
 
         <>
             <div className="relative container mx-auto mt-8">
-                <Image className="absolute right-0 top-0" src={'/case-study-icon-2.svg'} alt="icon-2" height={130} width={75} />
+                <Image className="absolute right-0 top-0" src={'/images/case-study-icon-2.svg'} alt="icon-2" height={130} width={75} />
 
                 {/* Section 1: Title */}
                 <div className=" relative dark:bg-zinc-800 rounded-2xl shadow-lg p-5 mb-8 z-10">
@@ -40,12 +40,12 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                         <h2 className="text-2xl font-bold text-[#7850CD]">Problem statement</h2>
                         <p className="mt-4">{caseStudy.problemStatement}</p>
                     </section>
-                    <Image className="absolute -z-10 -translate-x-full  bottom-0 translate-y-10" src={'/case-study-icon-1.png'} alt="icon-1" height={130} width={75} />
+                    <Image className="absolute -z-10 -translate-x-full  bottom-0 translate-y-10" src={'/images/case-study-icon-1.png'} alt="icon-1" height={130} width={75} />
 
                 </div>
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
                     {caseStudy.images[0] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-1'} height={500} width={500} /> :
-                        <Image className="l rounded-lg object-contain" src={'/casestudy-1.png'} alt={'casestudy-1'} height={500} width={500} />
+                        <Image className="l rounded-lg object-contain" src={'/images/casestudy-1.png'} alt={'casestudy-1'} height={500} width={500} />
                     }
                 </div>
 
@@ -67,7 +67,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                             <li>Problem 3</li>
                         </ul>
                     </section>
-                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/case-study-icon-4.png'} alt="icon-1" height={130} width={75} />
+                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-1" height={130} width={75} />
                 </div>
 
 
@@ -90,7 +90,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                         <h2 className="text-2xl font-bold text-[#7850CD] mb-10">Understanding the Problem</h2>
                         <p>{caseStudy.userResearch}</p>
                     </div>
-                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/case-study-icon-4.png'} alt="icon-1" height={130} width={75} />
+                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-1" height={130} width={75} />
 
                 </section>
 
@@ -107,13 +107,13 @@ async function CaseStudy({ params }: { params: { id: string } }) {
 
 
                     </section>
-                    <Image className="absolute -z-10 -translate-x-full  bottom-0 translate-y-10" src={'/case-study-icon-1.png'} alt="icon-1" height={130} width={75} />
+                    <Image className="absolute -z-10 -translate-x-full  bottom-0 translate-y-10" src={'/images/case-study-icon-1.png'} alt="icon-1" height={130} width={75} />
 
                 </div>
 
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
                     {caseStudy.images[1] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-1'} height={500} width={500} /> :
-                        <Image className="l rounded-lg object-contain" src={'/casestudy-2.png'} alt={'casestudy-1'} height={500} width={500} />
+                        <Image className="l rounded-lg object-contain" src={'/images/casestudy-2.png'} alt={'casestudy-1'} height={500} width={500} />
                     }
                 </div>
 
@@ -175,7 +175,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                 </section>
 
                 <section className="relative mb-8 bg-[radial-gradient(closest-side_at_0_0,#744ACC_90%,#744ACCE5_100%)] flex flex-col justify-center items-center overflow-hidden">
-                    <Image className="object-contain" src={'/casestudy-3.png'} alt="casestudy-3" height={300} width={300} />
+                    <Image className="object-contain" src={'/images/casestudy-3.png'} alt="casestudy-3" height={300} width={300} />
                     <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-2/3 aspect-square h-full rounded-full  bg-gradient-to-b from-[#7850cd00] to-[#9D6FFF] z-0"></div>
                     <div className="absolute bottom-0 right-0 translate-x-1/3 translate-y-2/3 aspect-square h-full rounded-full  bg-gradient-to-t from-[#7850cd0b] to-[#9D6FFF] z-0"></div>
                     <div className="text-white p-10 z-10">

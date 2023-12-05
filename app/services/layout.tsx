@@ -20,7 +20,7 @@ function ServiceLayout({ children }: { children: ReactNode }) {
 
                 </div>
                 <div className="lg:w-1/2">
-                    <Image className="object-fill" src={'/service-hero.png'} alt="service-hero" height={500} width={500} />
+                    <Image className="object-fill" src={'/images/service-hero.png'} alt="service-hero" height={500} width={500} />
                 </div>
 
             </section>
@@ -43,10 +43,10 @@ function ServiceLayout({ children }: { children: ReactNode }) {
     </>);
 }
 
-const companies = [{ name: 'google', image: '/Google cloud.png' },
-{ name: 'Ebay', image: '/Ebay.png' },
-{ name: 'Tux', image: '/Tux.png' },
-{ name: 'Spotify', image: '/Spotify.png' },]
+const companies = [{ name: 'google', image: '/images/Google cloud.png' },
+{ name: 'Ebay', image: '/images/Ebay.png' },
+{ name: 'Tux', image: '/images/Tux.png' },
+{ name: 'Spotify', image: '/images/Spotify.png' },]
 
 
 export default ServiceLayout;
