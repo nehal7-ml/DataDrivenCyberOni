@@ -13,6 +13,7 @@ import Head from "next/head";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
+import { Facebook } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,
@@ -50,6 +51,7 @@ export default async function RootLayout({
     <html lang="en">
       <Head>
         <link rel="canonical" href="https://www.cybershoptech.com" />
+        <meta property="fb:app_id" content={process.env.FACEBOOK_ID} />
         {/* other meta tags */}
       </Head>
       <body
