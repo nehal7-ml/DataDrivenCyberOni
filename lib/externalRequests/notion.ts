@@ -37,23 +37,24 @@ export async function addToMarketingCrm(record: CreatePageParams) {
     const config = {
         headers,
     };
+    const properties = {
+        "Email Address": { email: record.email },
+        "Name": { title: [{ text: { content: record.name } }] },
+        "Phone": record.phone ? { phone_number: record.phone } : undefined,
+        "Message": record.message ? { rich_text: [{ text: { content: record.message } }] } : undefined,
+        "Company": record.company ? { rich_text: [{ text: { content: record.company } }] } : undefined,
+        "Referral": record.referral ? { rich_text: [{ text: { content: record.referral } }] } : undefined,
+        "Time Line": record.timeline ? { rich_text: [{ text: { content: record.timeline } }] } : undefined,
+        "Current Challenges": record.challenges ? { rich_text: [{ text: { content: record.challenges } }] } : undefined,
+        "Number of Employees": record.employess ? { number: Number(record.employess) } : undefined,
+        "Requirements": record.requirements ? { multi_select: record.requirements?.map(requirement => ({ name: requirement })) } : undefined,
+        "ReferralToken": record.refToken ? { rich_text: [{ text: { content: record.refToken } }] } : undefined
+    }
     const response = await notion.pages.create({
         parent: {
             database_id: marketing_crm_contacts_database_id as string,
         },
-        properties: {
-            "Email Address": { email: record.email },
-            "Name": {title:[{text:{content:record.name}}]},
-            "Phone":record.phone? { phone_number: record.phone }: null,
-            "Message": record.message? { rich_text: [{ text: { content: record.message } }] }:null,
-            "Company":  record.company?{ rich_text: [{ text: { content: record.company } }] }:null,
-            "Referral": record.referral?{ rich_text: [{ text: { content: record.referral } }] }:null,
-            "Time Line":record.timeline? { rich_text: [{ text: { content: record.timeline } }] }:null,
-            "Current Challenges":record.challenges? { rich_text: [{ text: { content: record.challenges } }] }:null,
-            "Number of Employees": record.employess?{ number: Number(record.employess) }:null,
-            "Requirements": record.requirements?{ multi_select: record.requirements?.map(requirement => ({ name: requirement })) }:null,
-            "ReferralToken":record.refToken? { rich_text: [{ text: { content: record.refToken } }] }:null
-        },
+        properties,
     } as CreatePageParameters)
     // console.log("repsonse", respJson);
     return response.object;
@@ -66,8 +67,8 @@ export async function getDatabase({
 }: {
     databaseId: string;
 }): Promise<any> {
-    
 
-    const response = await notion.databases.retrieve({database_id: databaseId})
+
+    const response = await notion.databases.retrieve({ database_id: databaseId })
     return response
 }
