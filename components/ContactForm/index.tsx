@@ -96,7 +96,7 @@ function ContactForm() {
               required
             >
               {referralOptions.map((option, index) => (
-                <option className="bg-slate-950" key={index} value={option} >
+                <option className="bg-white dark:bg-slate-950 text-white" key={index} value={option} >
                   {option}
                 </option>
               ))}
