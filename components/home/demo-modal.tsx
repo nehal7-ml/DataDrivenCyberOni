@@ -1,12 +1,12 @@
 import Modal from "@/components/shared/modal";
+import Image from "next/image";
 import {
-  useState,
   Dispatch,
   SetStateAction,
   useCallback,
   useMemo,
+  useState,
 } from "react";
-import Image from "next/image";
 
 const DemoModal = ({
   showDemoModal,
@@ -22,7 +22,7 @@ const DemoModal = ({
           <a href="https://cybershoptech.com">
             <Image
               src="/images/logo.png"
-              alt="Precedent Logo"
+              alt="CyberOni Logo"
               className="h-10 w-10 rounded-full"
               width={20}
               height={20}

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: Owner.seo.metaTitle,
     description: Owner.seo.metaDescription,
     creator: "@softwear4u", // Make sure to include the correct Twitter handle here
-    images: ["/images/logo.png"],
+    images: ["/monster_5.jpg"],
   },
   openGraph: {
     title: Owner.seo.metaTitle,
