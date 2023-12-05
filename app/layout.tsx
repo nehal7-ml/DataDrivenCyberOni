@@ -9,6 +9,7 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
+import Head from "next/head";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
@@ -47,6 +48,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <Head>
+        <link rel="canonical" href="https://www.cybershoptech.com" />
+        {/* other meta tags */}
+      </Head>
       <body
         className={`${cx(
           sfPro.variable,
