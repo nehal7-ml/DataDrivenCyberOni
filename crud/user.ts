@@ -19,7 +19,7 @@ export type displayUserDTO = {
     firstName?: string;
     lastName?: string;
     email: string;
-    emailVerified: boolean;
+    emailVerified: Date;
     role: Role
 }
 async function create(user: createUserDTO, prismaClient: PrismaClient) {

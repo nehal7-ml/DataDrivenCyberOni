@@ -1,5 +1,5 @@
 import { Event, EventStatus, PrismaClient, User } from "@prisma/client";
-import { createImageDTO } from "./images";
+import { CreateImageDTO } from "./images";
 
 
 export type createEventDTO = {
@@ -7,7 +7,7 @@ export type createEventDTO = {
     date: Date;
     location: string;
     description: string;
-    image?: createImageDTO;
+    image?: CreateImageDTO;
     eventLink: string;
     status: EventStatus;
     isVirtual: boolean;

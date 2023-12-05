@@ -4,6 +4,7 @@ export type createCartItemDTO = {
     quantity: number;
     productId: string;
     sessionId: string;
+    userId:string;
 }
 
 async function create(cartItem: createCartItemDTO, prismaClient: PrismaClient) {

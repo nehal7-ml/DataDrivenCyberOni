@@ -53,13 +53,21 @@ export async function addToMarketingCrm(record: CreatePageParams) {
             "Number of Employees": { number: Number(record.employess) },
             "Requirements": { multi_select: record.requirements?.map(requirement => ({ name: requirement })) },
             "ReferralToken": { rich_text: [{ text: { content: record.refToken } }] }
-        }
-
-
-        ,
+        },
     } as CreatePageParameters)
     // console.log("repsonse", respJson);
     return response.object;
 }
 
 
+
+export async function getDatabase({
+    databaseId,
+}: {
+    databaseId: string;
+}): Promise<any> {
+    
+
+    const response = await notion.databases.retrieve({database_id: databaseId})
+    return response
+}
