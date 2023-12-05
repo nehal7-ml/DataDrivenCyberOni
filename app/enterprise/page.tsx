@@ -397,57 +397,12 @@ async function Enterprise() {
             width={200}
           ></Image>
 
-          <PortfolioCarousel services={services.records as DisplayServiceDTO[]} />
 
         </div>
+        <PortfolioCarousel services={services.records as DisplayServiceDTO[]} />
 
-        <div className="my-10 flex flex-col justify-center  lg:my-20 lg:flex-row lg:justify-start">
-          <div className="flex justify-center text-right lg:w-1/3 lg:flex-col lg:justify-start lg:gap-10 lg:px-10 lg:text-4xl">
-            {services.records.map((service, index) => (
-              <div
-                key={index}
-                className="flex cursor-pointer items-center  justify-center gap-2 hover:underline focus:text-[#5380EA]"
-              >
-                <button className="peer/item peer focus:text-[#5380EA]">
-                  {service.title}
-                </button>
-                <MoveRight className="hidden h-full w-10 peer-focus:text-[#5380EA] lg:peer-focus:block" />
-              </div>
-            ))}
-          </div>
 
-          {services.records.map((service, index) => (
-            <div key={index}>
-              <div className="hidden flex-wrap peer-focus/item:flex">
-                {service.CaseStudies.map((caseStudy, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={`aspect-square w-1/2  overflow-hidden rounded-2xl p-3 lg:w-1/4`}
-                    >
-                      <Link
-                        className="h-full w-full "
-                        href={`/casestudy/${caseStudy.id}`}
-                      >
-                        <Image
-                          className="rounded-lg"
-                          src={`${caseStudy.images
-                              ? (caseStudy.images as CaseImage[])[0].src
-                              : `https://picsum.photos/200?random=1`
-                            }`}
-                          alt=""
-                          height={400}
-                          width={400}
-                        />
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+             </section>
 
       <section className="bg-enterprise-bg-3 bg-cover bg-no-repeat py-10 dark:bg-[#061122] lg:bg-[length:100vw_60vw]">
         <div className="text-center text-4xl font-bold">Testimonial</div>
