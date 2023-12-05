@@ -101,13 +101,15 @@ export default async function Home() {
           <div className="flex-1">
             <ContactForm></ContactForm>
           </div>
-          <Image
-            className="flex-1"
-            src={"/contact-form.png"}
-            alt="contact"
-            height={500}
-            width={500}
-          ></Image>
+          <div className="lg:w-1/2 lg:h-full flex justify-center items-center">
+            <Image
+              className="flex-1 w-full h-full object-contain"
+              src={"/contact-form.png"}
+              alt="contact"
+              height={1280}
+              width={1200}
+            ></Image>
+          </div>
         </section>
       </div>
     </>
