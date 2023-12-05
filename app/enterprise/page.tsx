@@ -121,7 +121,7 @@ async function Enterprise() {
           </div>
 
           <div className="my-5 flex flex-col items-center justify-center gap-5">
-            <div className="font-nunito text-4xl font-semibold">
+            <div className="font-nunito text-4xl font-semibold text-center" >
               Cyberoni&apos;s Strategic Development Path
             </div>
             <div className="mx-5 w-1/3 text-center">
@@ -131,11 +131,11 @@ async function Enterprise() {
           </div>
 
           <div className="grid w-full grid-cols-1 grid-rows-4 gap-3 text-center lg:grid-cols-4 lg:grid-rows-1">
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/step-1.png"}
                 alt="border"
-                className="w-full object-contain"
+                className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
               />
@@ -148,11 +148,11 @@ async function Enterprise() {
                 </div>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/step-2.png"}
                 alt="border"
-                className=" w-full object-contain"
+                className=" lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
               />
@@ -166,11 +166,11 @@ async function Enterprise() {
                 </div>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/step-3.png"}
                 alt="border"
-                className="w-full object-contain"
+                className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
               />
@@ -186,11 +186,11 @@ async function Enterprise() {
                 </div>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/step-4.png"}
                 alt="border"
-                className="w-full object-contain"
+                className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
               />
@@ -210,8 +210,8 @@ async function Enterprise() {
       </section>
 
       <section className="bg-[#EBF0FF] py-10 dark:bg-[#121212]">
-        <div className="container mx-auto flex flex-col gap-5 p-5 lg:flex-row">
-          <div className="lg:w-1/2">
+        <div className="container mx-auto  flex flex-col gap-5 p-5 lg:flex-row">
+          <div className="lg:w-1/2 text-center lg:text-left">
             <div className="text-2xl font-bold text-[#2478FE]">
               Service we Offer
             </div>
@@ -295,7 +295,7 @@ async function Enterprise() {
       </section>
 
       <section className="bg-enterprise-bg-2 bg-cover bg-no-repeat py-10  backdrop-blur-lg dark:bg-[#061122] lg:min-h-screen">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4 ">
           <div className="text-center">
             <div className="font-bold text-[#5380EA]">Why choose us</div>
             <div className="text-4xl font-bold">
