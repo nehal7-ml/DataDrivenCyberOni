@@ -63,7 +63,7 @@ async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaC
         where: { id: blogId },
         data: {
             ...blog,
-            images: { connectOrCreate: connectImages(blog.images) },
+            images:  connectImages(blog.images) ,
             tags: { connectOrCreate: connectTags(blog.tags) },
             author: { connect: { email: blog.author.email } }
         }
@@ -154,7 +154,27 @@ export function getFeatured(prisma: PrismaClient) {
     return featured;
 
 }
+export async function addView(id:string, prisma:PrismaClient) {
+    const blogs= prisma.blog;
+    const update = await blogs.update({
+        where: {id},
+        data: {
+            Views: {increment: 1}
+        },
+        include: {
+            tags: true,
+            author: {
+                include: {
+                    image: true,
+                }
+            },
+            images: true,
+            Likes: true
+        }
+    })
 
+    return update
+}
 export function getRecent(prisma: PrismaClient) {
     const recentDate = new Date(Date.now() - 90 * (24 * 60 * 60 * 1000)) // 90 days
     const recent = prisma.blog.findMany({

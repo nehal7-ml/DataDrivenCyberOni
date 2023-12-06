@@ -1,4 +1,4 @@
-import { DisplayBlogDTO, read } from "@/crud/blog";
+import { DisplayBlogDTO, addView, read } from "@/crud/blog";
 import React, { ReactEventHandler, Suspense, useRef } from 'react'
 import parse from 'html-react-parser';
 import Image from "next/image";
@@ -74,7 +74,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
 
 async function getData(id: string) {
-    const blog = await read(id, prisma)
+    const blog = await addView(id, prisma)
     if (blog) return blog as DisplayBlogDTO
     else redirect('/404')
 

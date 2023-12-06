@@ -19,7 +19,7 @@ function BlogContainer({ blog }: { blog: DisplayBlogDTO }) {
                 </div>
 
                 <div className="absolute flex lg:flex-col gap-5 -top-10 right-0 lg:top-10 lg:right-0 lg:translate-x-full p-3">
-                    <BlogStats id={blog.id} likes={blog.Likes!.length} views={1000} />
+                    <BlogStats id={blog.id} likes={blog.Likes!.length} views={blog.Views as number} />
                 </div>
             </div>
         </>
