@@ -9,6 +9,7 @@ import BlogContainer from "@/components/blogs/BlogContainer";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import BlogContent from "@/components/blogs/BlogContent";
+import { cookies } from "next/headers";
 export const dynamic = 'force-dynamic';
 export let metadata: Metadata = {
     title: "Blog Post",
@@ -30,6 +31,8 @@ async function BlogPost({ params }: { params: { id: string } }) {
     metadata.category = blog.tags.join(" ")
     metadata.keywords = blog.tags?.map(tag => tag.name)
 
+    const cookieStore = cookies();
+    const theme =  cookieStore.get("theme") || "light";
 
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
@@ -44,9 +47,9 @@ async function BlogPost({ params }: { params: { id: string } }) {
                         <div className="m-4">by. {blog.author.firstName} {blog.author.lastName} </div>
                     </div>
                 </div>
-                <div className="relative mx-auto flex flex-col  items-center lg:py-10  lg:px-10 px-1 py-5 min-h-screen container">
+                <div className="relative mx-auto flex flex-col  items-center my-10 xl:py-10  xl:px-10 px-1 py-5 min-h-screen container">
                     <div className="max-w-full flex justify-center items-center">{blog.images[0] ? <Image priority={true} className="object-contain m-2 w-full h-[40vh] rounded-lg" src={blog.images[0].src} alt="Blog_image" width={500} height={300}></Image> : <></>}</div>
-                    {<BlogContent content={blog.content} />}
+                    {<BlogContent content={blog.content} theme={theme} />}
                     <BlogContainer blog={blog} />
 
                 </div>

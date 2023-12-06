@@ -14,11 +14,11 @@ function BlogContainer({ blog }: { blog: DisplayBlogDTO }) {
         <>
             <ProgressBar container={blogContainer} ></ProgressBar>
             <div ref={blogContainer} className="absolute w-full h-full">
-                <div className="absolute flex lg:flex-col gap-5 -top-10 lg:top-10 lg:left-0 lg:-translate-x-full p-3">
+                <div className="absolute flex xl:flex-col gap-5 -top-10 xl:top-10 xl:left-0 xl:-translate-x-full p-3">
                     <BlogShare />
                 </div>
 
-                <div className="absolute flex lg:flex-col gap-5 -top-10 right-0 lg:top-10 lg:right-0 lg:translate-x-full p-3">
+                <div className="absolute flex xl:flex-col gap-5 -top-10 right-0 xl:top-10 xl:right-0 xl:translate-x-full p-3">
                     <BlogStats id={blog.id} likes={blog.Likes!.length} views={blog.Views as number} />
                 </div>
             </div>

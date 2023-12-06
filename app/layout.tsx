@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   themeColor: "#0074e4",
+  other: {
+    "fb:app_id": process.env.FACEBOOK_ID as string
+  }
 };
 
 export default async function RootLayout({
@@ -51,8 +54,6 @@ export default async function RootLayout({
     <html lang="en">
       <Head>
         <link rel="canonical" href="https://www.cybershoptech.com" />
-        <meta property="fb:app_id" content={process.env.FACEBOOK_ID} />
-        {/* other meta tags */}
       </Head>
       <body
         className={`${cx(
