@@ -32,7 +32,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
     metadata.keywords = blog.tags?.map(tag => tag.name)
 
     const cookieStore = cookies();
-    const theme =  cookieStore.get("theme") || "light";
+    const theme = cookieStore.get("theme")?.value as string === 'dark' ? 'dark' : "light";
 
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
