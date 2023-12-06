@@ -10,8 +10,9 @@ import CalendlyPopup from "@/components/Calendly";
 import { DisplayServiceDTO, getAll } from "@/crud/service";
 import { Image as CaseImage } from "@prisma/client";
 import PortfolioCarousel from "@/components/enterprise/PortfolioCarousel";
+import { getFeatured } from "../../crud/service";
 async function Enterprise() {
-  const services = await getAll(0, 0, prisma)
+  const services = await getFeatured(prisma)
 
   return (
     <div className="w-full">
@@ -19,13 +20,13 @@ async function Enterprise() {
         <div className="relative bg-enterprise-bg bg-[length:100vw_50vw] bg-no-repeat dark:bg-[#061122] lg:h-[50vh]">
           <div className="container mx-auto flex h-full flex-col items-center justify-center ">
             <div className=" relative line-clamp-3 w-screen overflow-visible text-center font-nunito text-6xl font-bold leading-relaxed lg:w-[800px]">
-                <Image
-                  className="absolute z-0 w-full "
-                  src={"/images/enterprise-hero.png"}
-                  alt="enterprise-hero"
-                  height={300}
-                  width={900}
-                />
+              <Image
+                className="absolute z-0 w-full "
+                src={"/images/enterprise-hero.png"}
+                alt="enterprise-hero"
+                height={300}
+                width={900}
+              />
               <div className="flex flex-col justify-center items-center text-center">
                 <p className="z-30 ">Welcome to </p>
                 <span className="text-[#5380EA] z-30 ">CyberOni</span>
@@ -398,10 +399,10 @@ async function Enterprise() {
 
 
         </div>
-        <PortfolioCarousel services={services.records as DisplayServiceDTO[]} />
+        <PortfolioCarousel services={services as DisplayServiceDTO[]} />
 
 
-             </section>
+      </section>
 
       <section className="bg-enterprise-bg-3 bg-cover bg-no-repeat py-10 dark:bg-[#061122] lg:bg-[length:100vw_60vw]">
         <div className="text-center text-4xl font-bold">Testimonial</div>
