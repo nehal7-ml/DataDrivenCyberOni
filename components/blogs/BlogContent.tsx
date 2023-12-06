@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 
 import { getCookie } from 'cookies-next';
+import TextLoaders from "../loaders/TextLoaders";
+import { getRandomFromArray } from "@/lib/utils";
 
 function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'light' }) {
     const getBlobURL = (code: string, type: string) => {
@@ -85,7 +87,11 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
     })
     window.parent.postMessage({ type:"resize", size: window.document.getElementsByTagName('html')[0].scrollHeight}, "${window.origin}");
 
-
+    
+    const links = document.getElementsByTagName('a');
+      for (let link of links) {
+        link.target= "_top"
+      }
 
     </script>`
         setResizeScript(script)
@@ -108,7 +114,17 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
 
     // console.log(content);
     return (<>
-        {<iframe ref={iframe} className={`w-full h-fit overflow-y-auto z-50  ${loaded ? 'opacity-100' : 'opacity-0'}`} src={getBlobURL(content + resizeScript + injectScript, "text/html;")}></iframe>}
+        {<iframe ref={iframe} className={`w-full h-fit overflow-y-auto z-50  ${loaded ? 'opacity-100 transition-opacity duration-700 ease-in-out' : 'opacity-0'}`} src={getBlobURL(content + resizeScript + injectScript, "text/html;")}></iframe>}
+        {!loaded && <div className="w-fu h-full z-50  flex flex-wrap ">
+            {new Array(30).fill(1).map((value, index) => {
+
+                return (
+                    <div key={index} className={`${getRandomFromArray(['w-64', 'w-80', 'w-96', 'w-72', 'w-52', 'w-full'])}`}>
+                        <TextLoaders></TextLoaders>
+                    </div>
+                )
+            })}
+        </div>}
     </>);
 }
 
