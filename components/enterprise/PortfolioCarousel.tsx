@@ -6,7 +6,7 @@ import { Image as CaseImage } from "@prisma/client"
 import { DisplayServiceDTO } from "@/crud/service"
 import { MoveRight } from "lucide-react"
 function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
-    const [currentGrid, setCurrentGrid] = useState(services[0].CaseStudies);
+    const [currentGrid, setCurrentGrid] = useState(services[0].CaseStudies|| []);
 
 
     return (
@@ -18,7 +18,7 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
                     services.map((service, index) => (
 
                         <div key={index} className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2">
-                            <button onClick={()=>setCurrentGrid(service.CaseStudies)} className="peer peer/item focus:text-[#5380EA]">{service.title}
+                            <button onClick={()=>setCurrentGrid(service.CaseStudies || [])} className="peer peer/item focus:text-[#5380EA]">{service.title}
                             </button>
                             <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA]" />
                         </div>
@@ -32,7 +32,7 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
             {
 
                 <div className="flex-wrap flex lg:w-2/3">
-                    {currentGrid.map((caseStudy, index) => {
+                    {currentGrid?.map((caseStudy, index) => {
                         return (
                             <div key={index} className={`rounded-2xl aspect-square  w-1/2 p-3 overflow-hidden lg:w-1/4`}>
                                 <Link className="w-full h-full " href={`/casestudy/${caseStudy.id}`}>

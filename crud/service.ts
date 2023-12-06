@@ -1,4 +1,4 @@
-import { Service, PrismaClient, Prisma, Image, Tag, SubService, ServiceDescription, FAQ } from "@prisma/client";
+import { Service, PrismaClient, Prisma, Image, Tag, SubService, ServiceDescription, FAQ, CaseStudy } from "@prisma/client";
 import { CreateTagDTO, create as createTag, connectOrCreateObject as connectTags, TagSchema } from "./tags";
 import { CreateImageDTO, create as createImage, connectOrCreateObject as connectImage, ImageSchema } from "./images";
 import { CreateSubServiceDTO, SubserviceSchema, create as createSubService, update as updateSubService } from "./subService";
@@ -36,8 +36,9 @@ export type CreateFaqDTO = {
 export type DisplayServiceDTO = Service & {
     image?: Image,
     tags?: Tag[],
-    SubServices?: SubService[],
-    ServiceDescription?: (ServiceDescription & { image: Image })[]
+    SubServices?: (SubService & { image: Image })[],
+    ServiceDescription?: (ServiceDescription & { image: Image })[],
+    CaseStudies?: CaseStudy[]
 
 }
 
@@ -191,10 +192,13 @@ async function update(serviceId: string, service: CreateServiceDTO, prismaClient
 
             },
             include: {
-                SubServices: true,
+                SubServices: {
+                    include: {
+                        image: true
+                    }
+                },
                 image: true,
                 tags: true,
-                ServiceDescription: true,
             }
         });
     if (service.SubServices && service.SubServices?.length > 0) {
@@ -254,7 +258,11 @@ async function read(serviceId: string, prismaClient: PrismaClient) {
     const existingservice = await services.findUnique({
         where: { id: serviceId },
         include: {
-            SubServices: true,
+            SubServices: {
+                include: {
+                    image: true,
+                }
+            },
             ServiceDescription: {
                 include: {
                     image: true
@@ -262,6 +270,7 @@ async function read(serviceId: string, prismaClient: PrismaClient) {
             },
             image: true,
             tags: true,
+            CaseStudies: true,
         }
     })
     if (existingservice) return existingservice;
@@ -286,8 +295,8 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
         where: {
         },
         include: {
-            // reviews: true,
-
+            image: true,
+            tags: true,
         }
     })
 
@@ -299,9 +308,15 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
 }
 
 
-export async function getFeatured(prisma:PrismaClient) {
+export async function getFeatured(prisma: PrismaClient) {
     const services = prisma.service;
-    const records = await services.findMany({where: {featured: true}, take:5, orderBy: {hourlyRate:'desc'}})
+    const records = await services.findMany({
+        where: { featured: true }, take: 5, orderBy: { hourlyRate: 'desc' }, include: {
+            tags: true,
+            image: true,
+            CaseStudies: true
+        }
+    })
     return records
 
 }

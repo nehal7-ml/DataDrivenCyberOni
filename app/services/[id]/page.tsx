@@ -14,6 +14,7 @@ import SubServiceCarousel from "@/components/services/SubServiceCarousel";
 import { LandPlot, Medal, Route, ScanText, Target, TestTubes } from "lucide-react";
 import AccordionItem from "@/components/services/AccordianItem";
 import ServiceFeatures from "@/components/services/ServiceFeatures";
+import { redirect } from "next/navigation";
 export let metadata: Metadata = {
     title: "",
     description: "",
@@ -22,8 +23,10 @@ export let metadata: Metadata = {
     keywords: ['']
 };
 async function Services({ params }: { params: { id: string } }) {
-    const service = await read(params.id, prisma) as DisplayServiceDTO
+    const service = await read(params.id, prisma)as DisplayServiceDTO
     const services = await getAll(1, 10, prisma);
+
+    if(!service) redirect('/404');
     //console.log(service);
     metadata.title = service.title as string
     metadata.description = service.previewContent
@@ -51,7 +54,7 @@ async function Services({ params }: { params: { id: string } }) {
 
         <section id="description" className="py-5  font-nunito container mx-auto">
           <div className="text-center text-6xl font-bold">{service.title}</div>
-          {service?.ServiceDescription?.map((section, index) => (
+          {service.ServiceDescription?.map((section, index) => (
             <FloatingImageSection key={index} section={section} />
           ))}
         </section>
@@ -97,11 +100,11 @@ async function Services({ params }: { params: { id: string } }) {
             />
           </section>
         )}
-        {service.CaseStudies.length > 0 ? (
+        {service.CaseStudies && service.CaseStudies.length> 0 ? (
           <section className="my-5 font-nunito">
             <div className="text-center text-4xl font-bold">Portfolio</div>
 
-            {service.CaseStudies.map((caseStudy, index) => (
+            {service.CaseStudies?.map((caseStudy, index) => (
               <div
                 key={index}
                 className="container mx-auto my-5 flex flex-wrap gap-2 lg:gap-5"
