@@ -1,0 +1,11 @@
+# robots.txt for cybershoptech.com
+
+# Block sensitive directories
+User-agent: *
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /api/
+
+# Allow everything else
+User-agent: *
+Allow: /

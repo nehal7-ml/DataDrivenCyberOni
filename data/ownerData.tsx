@@ -13,9 +13,9 @@ export const Owner = {
     instagram: "https://www.instagram.com/softwear4u",
   },
   seo: {
-    metaTitle: "CyberOni - Software Solutions",
+    metaTitle: "CyberOni: Innovative Software Solutions for Business Growth",
     metaDescription:
-      "Discover CyberOni's advanced software solutions, tailored for businesses seeking innovation and efficiency. Specializing in custom development, we provide state-of-the-art technology solutions in Denver and Jacksonville, enhancing business performance and growth.",
+      "Unlock business innovation with CyberOni's remote software solutions. Specializing in custom tech development, we empower global efficiency and growth through advanced technology.",
     keywords: [
       "CyberOni Software Solutions",
       "Custom Software Development",

@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import { Owner } from "../data/ownerData";
 import { ImageResponse } from "next/server";
+import { Owner } from "../data/ownerData";
 export const runtime = "edge";
 export const alt = Owner.company;
 export const contentType = "image/png";
 
 export default async function OG() {
-
-  console.log("Og Url",import.meta.url);
+  console.log("Og Url", import.meta.url);
   const sfPro = await fetch(
     new URL("./fonts/SF-Pro-Display-Medium.otf", import.meta.url),
   ).then((res) => res.arrayBuffer());
@@ -28,11 +27,10 @@ export default async function OG() {
         }}
       >
         <img
-          src={`${process.env.HOST}/images/logo.png`}
-          alt="Precedent Logo"
-          className="w-20 h-20 mb-4 opacity-95"
+          src={`${process.env.HOST}/images/monster_5.jpg`}
+          alt="CyberOni Logo"
+          className="mb-4 h-20 w-20 opacity-95"
         />
-
       </div>
     ),
     {

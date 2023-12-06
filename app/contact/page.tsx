@@ -1,41 +1,44 @@
-'use client'
-import Image from "next/image";
-import { submitContact } from "./submit";
-import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
-import { Instagram, Mail, Facebook, Linkedin, Twitter, X, Loader2 } from "lucide-react";
-import Balancer from "react-wrap-balancer";
-import { LoadingCircle, LoadingSpinner } from "@/components/shared/icons";
-import { AlertCircle } from "lucide-react";
-import Loading from "@/components/Loading";
+"use client";
 import ClientInput from "@/components/layout/ClientInput";
 import { Owner } from "data/ownerData";
-import Link from "next/link";
-import Datepicker, { DateType, DateValueType } from "react-tailwindcss-datepicker";
+import {
+  AlertCircle,
+  Facebook,
+  Instagram,
+  Loader2,
+  Mail,
+  X,
+} from "lucide-react";
+import Image from "next/image";
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import { DateValueType } from "react-tailwindcss-datepicker";
+import Balancer from "react-wrap-balancer";
+import { submitContact } from "./submit";
 // import { useNotify } from "@/components/Notification";
 import GoogleCaptchaWrapper from "@/components/GoogleCaptchaWrapper";
-import { useReCaptcha } from "next-recaptcha-v3";
 import { useNotify } from "@/components/Notification";
 import PayLater from "@/components/shared/Paylater";
+import { useReCaptcha } from "next-recaptcha-v3";
 //import CalendlyPopup from "@/components/Calendly";
 // import CalendlyModal from "@/components/Calendly/CalendlyModal";
 
 function HocWrapper() {
-
-  return <>
-    <GoogleCaptchaWrapper >
-      <ContactUs />
-    </GoogleCaptchaWrapper>
-  </>
+  return (
+    <>
+      <GoogleCaptchaWrapper>
+        <ContactUs />
+      </GoogleCaptchaWrapper>
+    </>
+  );
 }
 
 function ContactUs() {
-
   const [showForm, setShowForm] = useState(true);
   const [showThanks, setShowThanks] = useState(false);
   const [showError, setShowError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const form = useRef<HTMLFormElement>(null)
+  const form = useRef<HTMLFormElement>(null);
   const [movinDate, setMovinDate] = useState<DateValueType>({
     startDate: null,
     endDate: null,
@@ -43,7 +46,7 @@ function ContactUs() {
 
   const today = new Date();
 
-  const notify = useNotify()
+  const notify = useNotify();
   // Subtract one day (24 hours)
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
@@ -73,19 +76,27 @@ function ContactUs() {
   const { executeRecaptcha, loaded } = useReCaptcha();
 
   const handleValueChange = (newValue: DateValueType) => {
-    console.log(new Date(newValue?.startDate as string).toLocaleDateString(), newValue?.startDate);
-    let date = newValue?.startDate ? new Date(newValue?.startDate as string).toLocaleDateString() : ""
+    console.log(
+      new Date(newValue?.startDate as string).toLocaleDateString(),
+      newValue?.startDate,
+    );
+    let date = newValue?.startDate
+      ? new Date(newValue?.startDate as string).toLocaleDateString()
+      : "";
     setMovinDate(newValue);
-    setFormData(prev => ({ ...prev, date }))
+    setFormData((prev) => ({ ...prev, date }));
   };
 
   const formatDateString = (dateString: string) => {
     // Remove non-numeric characters from the input
-    const numericValue = dateString.replace(/\D/g, '');
+    const numericValue = dateString.replace(/\D/g, "");
 
     // Format the numeric value as MM/DD/YYYY
     if (numericValue.length >= 4) {
-      return `${numericValue.slice(0, 2)}/${numericValue.slice(2, 4)}/${numericValue.slice(4, 8)}`;
+      return `${numericValue.slice(0, 2)}/${numericValue.slice(
+        2,
+        4,
+      )}/${numericValue.slice(4, 8)}`;
     } else if (numericValue.length >= 2) {
       return `${numericValue.slice(0, 2)}/${numericValue.slice(2, 4)}`;
     } else {
@@ -102,7 +113,7 @@ function ContactUs() {
     }
 
     // Additional validation for month and day
-    const parts = dateString.split('/');
+    const parts = dateString.split("/");
     const month = parseInt(parts[0], 10);
     const day = parseInt(parts[1], 10);
 
@@ -118,62 +129,62 @@ function ContactUs() {
   }
 
   function handleCalendlyClose() {
-    setShowCalendly(false)
+    setShowCalendly(false);
   }
 
-
-  function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+  function handleInputChange(
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) {
     const { name, value } = event.target;
-    if (name === 'terms') {
-
+    if (name === "terms") {
       const { checked } = event.target as HTMLInputElement;
       console.log(name, checked);
 
-      setFormData(prev => ({ ...prev, terms: checked }))
-
-    } else setFormData(prev => ({ ...prev, [name]: value }))
+      setFormData((prev) => ({ ...prev, terms: checked }));
+    } else setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
   async function handleSubmit(formData: FormData) {
     console.log("submitting");
-    setLoading(true)
-    const token = await executeRecaptcha('Contact_Submit')
+    setLoading(true);
+    const token = await executeRecaptcha("Contact_Submit");
 
     const res = await submitContact(formData, token);
 
     if (res == 200) {
-      notify('message sent successfully', 'success');
+      notify("message sent successfully", "success");
       setValidation(false);
       setLoading(false);
-      setShowCalendly(true)
-
-    }
-    else notify('failed to send', 'fail')
-    setLoading(false)
+      setShowCalendly(true);
+    } else notify("failed to send", "fail");
+    setLoading(false);
   }
-
 
   useEffect(() => {
     if (!movinDate?.endDate && !movinDate?.endDate) {
-      setDateInvalid(true)
-      return
+      setDateInvalid(true);
+      return;
     } else {
-      setDateInvalid(false)
+      setDateInvalid(false);
     }
   }, [movinDate]);
 
   useEffect(() => {
     async function runCaptcha() {
-      const token = await executeRecaptcha('Contact_Visit');
-      const res = await fetch('/api/captcha', { method: 'POST', body: JSON.stringify({ token }) })
+      const token = await executeRecaptcha("Contact_Visit");
+      const res = await fetch("/api/captcha", {
+        method: "POST",
+        body: JSON.stringify({ token }),
+      });
 
-      if (res.status == 200) setCaptchaPassed(true)
+      if (res.status == 200) setCaptchaPassed(true);
       else setCaptchaPassed(false);
     }
 
-    if (loaded) runCaptcha()
+    if (loaded) runCaptcha();
   }, [loaded, executeRecaptcha]);
-
 
   function handleSubmitButton(event: MouseEvent) {
     event.preventDefault();
@@ -181,15 +192,13 @@ function ContactUs() {
     form.current?.checkValidity();
     console.log(inputValid);
     if (inputValid) {
-      setLoading(true)
+      setLoading(true);
       console.log("valid input");
-      form.current?.requestSubmit()
+      form.current?.requestSubmit();
     }
   }
 
-
   useEffect(() => {
-
     console.log("formsdata", formData.terms);
     if (
       formData.companySize.match(/\d{1,}/) &&
@@ -198,29 +207,35 @@ function ContactUs() {
       formData.budget.match(/[0-9,]{1,}/) &&
       formData.firstName.match(/^[a-zA-Z\- ]{1,50}$/) &&
       formData.lastName.match(/^[a-zA-Z\- ]{1,50}$/) &&
-      formData.email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/) &&
-      formData.phone.match(/^(\+\d{1,2}\s?)?(\(\d{3}\)|\d{3})([\s.\-]?)\d{3}([\s.\-]?)\d{4}$/) &&
+      formData.email.match(
+        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+      ) &&
+      formData.phone.match(
+        /^(\+\d{1,2}\s?)?(\(\d{3}\)|\d{3})([\s.\-]?)\d{3}([\s.\-]?)\d{4}$/,
+      ) &&
       formData.source.match(/^[a-zA-Z\- ]{1,100}$/) &&
       formData.message &&
       formData.terms
     ) {
       setInputValid(true);
-    } else setInputValid(false)
-
-
+    } else setInputValid(false);
   }, [formData]);
 
   return (
     <>
-      <div className="relative min-h-screen bg-contact-bg bg-contain bg-no-repeat pt-40 lg:pb-20 text-gray-700">
-        <div className="container relative mx-auto flex flex-col justify-center gap-5 rounded-lg bg-white dark:bg-zinc-900 px-1 lg:px-10 py-10 shadow-top lg:w-5/6 lg:flex-row ">
-          <div className="z-10 min-h-screen bg-[#ffffff2a] lg:w-1/2 p-3 rounded-2xl">
+      <div className="relative min-h-screen bg-contact-bg bg-contain bg-no-repeat pt-40 text-gray-700 lg:pb-20">
+        <div className="container relative mx-auto flex flex-col justify-center gap-5 rounded-lg bg-white px-1 py-10 shadow-top dark:bg-zinc-900 lg:w-5/6 lg:flex-row lg:px-10 ">
+          <div className="z-10 min-h-screen rounded-2xl bg-[#ffffff2a] p-3 lg:w-1/2">
             <div>
               <h1 className="text-5xl text-[#7E86F6]">Get in Touch</h1>
               <p className="text-xl">We are here for you! How can we help?</p>
             </div>
             {showForm && (
-              <form ref={form} action={(formdata) => handleSubmit(formdata)} className="mt-4 px-5 ">
+              <form
+                ref={form}
+                action={(formdata) => handleSubmit(formdata)}
+                className="mt-4 px-5 "
+              >
                 <div className="my-7 flex flex-col ">
                   <input
                     type="text"
@@ -228,10 +243,9 @@ function ContactUs() {
                     pattern="\d{1,}"
                     placeholder="Number of Employees"
                     title="only numbers"
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
-
                   />
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -241,10 +255,9 @@ function ContactUs() {
                     pattern="^[a-zA-Z\-0-9 ]{1,50}$"
                     placeholder="Company Name"
                     title="only letters, numbers, spaces, -"
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
-
                   />
                 </div>
                 <div className="my-7 flex flex-col dark:text-gray-100">
@@ -254,24 +267,25 @@ function ContactUs() {
                     pattern="^.{1,250}$"
                     disabled={true}
                     placeholder="Tell us about your Requirements"
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
-                    required />
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    required
+                  />
                   <div className="flex max-w-full flex-wrap">
-
                     <div className="m-2 flex items-center gap-3 p-3">
                       <input
                         name="mlModels"
                         value="Cutting-edge Machine Learning Models"
                         type="checkbox"
                       ></input>
-                      <label htmlFor="">Cutting-edge Machine Learning Models</label>
+                      <label htmlFor="">
+                        Cutting-edge Machine Learning Models
+                      </label>
                     </div>
                     <div className="m-2 flex items-center gap-3 p-3">
                       <input
                         name="dataAnalysis"
                         value="Innovative Data Analysis"
                         type="checkbox"
-
                       ></input>
                       <label htmlFor="">Innovative Data Analysis</label>
                     </div>
@@ -280,7 +294,6 @@ function ContactUs() {
                         name="relatimeData"
                         value="Real-time Data Processing"
                         type="checkbox"
-
                       ></input>
                       <label htmlFor="">Real-time Data Processing</label>
                     </div>
@@ -289,7 +302,6 @@ function ContactUs() {
                         name="webDev"
                         value="Web development"
                         type="checkbox"
-
                       ></input>
                       <label htmlFor="">Web development</label>
                     </div>
@@ -298,7 +310,6 @@ function ContactUs() {
                         name="appDev"
                         value="App developement"
                         type="checkbox"
-
                       ></input>
                       <label htmlFor="">App developement</label>
                     </div>
@@ -309,18 +320,27 @@ function ContactUs() {
                     name="timeline"
                     title="Project Time Line"
                     placeholder="Project Time Line"
-                    className="rounded-md text-gray-700 border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 text-gray-700 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
                     defaultValue={""}
                   >
-                    <option value="" className="text-gray-700"  disabled={true}>Select Time line</option>
-                    <option className="text-gray-700" value="1-month">1 Month</option>
+                    <option value="" className="text-gray-700" disabled={true}>
+                      Select Time line
+                    </option>
+                    <option className="text-gray-700" value="1-month">
+                      1 Month
+                    </option>
 
-                    <option className="text-gray-700" value="3-months">3 Months</option>
-                    <option className="text-gray-700" value="6-months">6 Months</option>
-                    <option className="text-gray-700" value="12-months">12 Months</option>
-
+                    <option className="text-gray-700" value="3-months">
+                      3 Months
+                    </option>
+                    <option className="text-gray-700" value="6-months">
+                      6 Months
+                    </option>
+                    <option className="text-gray-700" value="12-months">
+                      12 Months
+                    </option>
                   </select>
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -330,10 +350,9 @@ function ContactUs() {
                     pattern="[0-9,]{1,}"
                     title="only numbers and `,` allowed"
                     placeholder="Your Max budget"
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
-
                   />
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -344,9 +363,8 @@ function ContactUs() {
                     pattern="^[a-zA-Z\- ]{1,50}$"
                     title="only alphabets, - and spaces are allowed"
                     required
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     onChange={handleInputChange}
-
                   />
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -357,9 +375,8 @@ function ContactUs() {
                     pattern="^[a-zA-Z\- ]{1,50}$"
                     title="only alphabets, - and spaces are allowed"
                     required
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     onChange={handleInputChange}
-
                   />
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -370,9 +387,8 @@ function ContactUs() {
                     pattern="^[a-zA-Z\- ]{1,50}$"
                     title="only alphabets, - and spaces are allowed"
                     required
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     onChange={handleInputChange}
-
                   />
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -381,9 +397,8 @@ function ContactUs() {
                     name="email"
                     placeholder="Email Address"
                     onChange={handleInputChange}
-
                     required
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                   ></ClientInput>
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -393,10 +408,9 @@ function ContactUs() {
                     placeholder="Phone number"
                     title="enter valid phone number eg: +1 (123) 456-7890 , 1234567890, 123-456-7890"
                     pattern="^(\+\d{1,2}\s?)?(\(\d{3}\)|\d{3})([\s.\-]?)\d{3}([\s.\-]?)\d{4}$"
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
-
                   />
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -408,7 +422,7 @@ function ContactUs() {
                     title="only alphabets, - and spaces are allowed"
                     onChange={handleInputChange}
                     required
-                    className="rounded-md border-0 bg-contact-input outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                   />
                 </div>
 
@@ -423,11 +437,10 @@ function ContactUs() {
                     id="message"
                     name="message"
                     rows={4}
-                    className="w-full rounded-md border-0  border-b-2 bg-contact-input placeholder-gray-500 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input w-full rounded-md  border-0 border-b-2 placeholder-gray-500 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
                     placeholder="Your Message"
                     required
                     onChange={handleInputChange}
-
                   ></textarea>
                 </div>
 
@@ -441,10 +454,10 @@ function ContactUs() {
                     onChange={handleInputChange}
                   />
                   <p>
-                    By submitting this, I authorize Cyber Tech shop to
-                    contact me at my contact number and information provided
-                    message and data rates may apply to opt out at any time
-                    email : {Owner.email}
+                    By submitting this, I authorize Cyber Tech shop to contact
+                    me at my contact number and information provided message and
+                    data rates may apply to opt out at any time email :{" "}
+                    {Owner.email}
                   </p>
                 </div>
 
@@ -454,50 +467,104 @@ function ContactUs() {
                   disabled={!captchaPassed}
                   onClick={handleSubmitButton}
                 >
-                  submit
+                  Submit
                 </button>
               </form>
             )}
 
-
-
-
             {validation && (
-
               <>
-                <div className=" absolute top-0 left-0 w-full h-full flex min-h-screen bg-[#312f3249] items-center justify-center">
+                <div className=" absolute left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-[#312f3249]">
                   <div className="relative ">
-                    <div className="w-96 min-h-96 h-fit bg-gray-50 rounded-xl flex flex-col justify-center items-center p-5 text-center gap-3">
-                      {(!formData.companySize.match(/\d{1,}/)) ? <div className="text-red-400">invalid Company Size</div> : <></>}
-                      {(!formData.companyName.match(/^[a-zA-Z0-9\- ]{1,50}$/)) ? <div className="text-red-400">invalid Company Name no special characters allowed</div> : <></>}
-                      {(!formData.challenges.match(/^[a-zA-Z\- ]{1,150}$/)) ? <div className="text-red-400">invalid Challenges provide NA if none, only alphabets (max 150 characters)</div> : <></>}
-                      {(!formData.budget.match(/[0-9,]{1,}/)) ? <div className="text-red-400">invalid Budget</div> : <></>}
-                      {(!formData.firstName.match(/^[a-zA-Z\- ]{1,50}$/)) ? <div className="text-red-400">invalid first name</div> : <></>}
-                      {(!formData.lastName.match(/^[a-zA-Z\- ]{1,50}$/)) ? <div className="text-red-400">invalid last name</div> : <></>}
-                      {(!formData.email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)) ? <div className="text-red-400">invalid email</div> : <></>}
-                      {(!formData.phone.match(/^(\+\d{1,2}\s?)?(\(\d{3}\)|\d{3})([\s.\-]?)\d{3}([\s.\-]?)\d{4}$/)) ? <div className="text-red-400">invalid Phone number</div> : <></>}
-                      {(!formData.source.match(/^[a-zA-Z\- ]{1,100}$/)) ? <div className="text-red-400">invalid source (let us know how you heard of us)</div> : <></>}
-                      {(!formData.message) ? <div className="text-red-400">invalid Message</div> : <></>}
-                      {!(formData.terms) ? <div className="text-red-400">Tick Checkbox to continue</div> : <></>}
+                    <div className="min-h-96 flex h-fit w-96 flex-col items-center justify-center gap-3 rounded-xl bg-gray-50 p-5 text-center">
+                      {!formData.companySize.match(/\d{1,}/) ? (
+                        <div className="text-red-400">invalid Company Size</div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.companyName.match(/^[a-zA-Z0-9\- ]{1,50}$/) ? (
+                        <div className="text-red-400">
+                          invalid Company Name no special characters allowed
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.challenges.match(/^[a-zA-Z\- ]{1,150}$/) ? (
+                        <div className="text-red-400">
+                          invalid Challenges provide NA if none, only alphabets
+                          (max 150 characters)
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.budget.match(/[0-9,]{1,}/) ? (
+                        <div className="text-red-400">invalid Budget</div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.firstName.match(/^[a-zA-Z\- ]{1,50}$/) ? (
+                        <div className="text-red-400">invalid first name</div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.lastName.match(/^[a-zA-Z\- ]{1,50}$/) ? (
+                        <div className="text-red-400">invalid last name</div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.email.match(
+                        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                      ) ? (
+                        <div className="text-red-400">invalid email</div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.phone.match(
+                        /^(\+\d{1,2}\s?)?(\(\d{3}\)|\d{3})([\s.\-]?)\d{3}([\s.\-]?)\d{4}$/,
+                      ) ? (
+                        <div className="text-red-400">invalid Phone number</div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.source.match(/^[a-zA-Z\- ]{1,100}$/) ? (
+                        <div className="text-red-400">
+                          invalid source (let us know how you heard of us)
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.message ? (
+                        <div className="text-red-400">invalid Message</div>
+                      ) : (
+                        <></>
+                      )}
+                      {!formData.terms ? (
+                        <div className="text-red-400">
+                          Tick Checkbox to continue
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                     </div>
-                    {loading && <div className="absolute top-0 left-0 flex justify-center items-center w-full h-full">
-                      <Loader2 className='animate-spin' />
-                    </div>}
+                    {loading && (
+                      <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center">
+                        <Loader2 className="animate-spin" />
+                      </div>
+                    )}
                     <button
                       type="button"
                       onClick={() => {
-                        setValidation(false); form.current?.checkValidity();
+                        setValidation(false);
+                        form.current?.checkValidity();
                       }}
-                      className="absolute right-1 top-1 hover:text-red-400" >
+                      className="absolute right-1 top-1 hover:text-red-400"
+                    >
                       <X />
                     </button>
                   </div>
-
                 </div>
               </>
-            )
-
-            }
+            )}
 
             {showThanks && (
               <>

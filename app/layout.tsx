@@ -9,13 +9,15 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
+import Head from "next/head";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
+import { Facebook } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: "Cyberoni",
-  description: Owner.about,
+  title: Owner.seo.metaTitle,
+  description: Owner.seo.metaDescription,
   keywords: Owner.seo.keywords,
   metadataBase: new URL(process.env.NEXTAUTH_URL as string),
   twitter: {
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
     title: Owner.seo.metaTitle,
     description: Owner.seo.metaDescription,
     creator: "@softwear4u", // Make sure to include the correct Twitter handle here
-    images: ["/images/logo.png"],
+    images: ["/images/monster_5.jpg"],
   },
   openGraph: {
     title: Owner.seo.metaTitle,
@@ -47,6 +49,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <Head>
+        <link rel="canonical" href="https://www.cybershoptech.com" />
+        <meta property="fb:app_id" content={process.env.FACEBOOK_ID} />
+        {/* other meta tags */}
+      </Head>
       <body
         className={`${cx(
           sfPro.variable,

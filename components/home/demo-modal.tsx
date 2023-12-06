@@ -1,12 +1,12 @@
 import Modal from "@/components/shared/modal";
+import Image from "next/image";
 import {
-  useState,
   Dispatch,
   SetStateAction,
   useCallback,
   useMemo,
+  useState,
 } from "react";
-import Image from "next/image";
 
 const DemoModal = ({
   showDemoModal,
@@ -19,8 +19,10 @@ const DemoModal = ({
     <Modal showModal={showDemoModal} setShowModal={setShowDemoModal}>
       <div className="w-full overflow-hidden md:max-w-md md:rounded-2xl md:border md:border-gray-100 md:shadow-xl">
         <div className="flex flex-col items-center justify-center space-y-3 bg-white px-4 py-6 pt-8 text-center md:px-16">
-          <a href="https://precedent.dev">
+          <a href="https://cybershoptech.com">
             <Image
+              src="/logo.png"
+              alt="CyberOni Logo"
               src="/images/logo.png"
               alt="Precedent Logo"
               className="h-10 w-10 rounded-full"
