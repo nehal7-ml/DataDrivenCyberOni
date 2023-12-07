@@ -276,50 +276,79 @@ const enterpriseMenu: MegamenuProps = [
 
 const productMenu: MegamenuProps = [
   {
-    type: 'Links',
-    title: "Buisness Solutions",
+    type: "Links",
+    title: "Business Solutions",
     links: [
-      { href: '/docs', name: 'Convert', subTitle: 'Analyze conversation', icon: <Repeat2 className=" text-blue-700" /> },
-      { href: '/docs', name: 'Enage', subTitle: 'Measure active usage', icon: <PlusCircle className="text-blue-700" /> },
-      { href: '/docs', name: 'Retain', subTitle: 'Find retentation drivers', icon: <Fullscreen className="text-blue-700" /> },
-      { href: '/docs', name: 'Product Adoption', subTitle: 'Maximize all customers', icon: <Users className="text-blue-700" /> },
-
-
-    ]
+      {
+        href: "/docs",
+        name: "Convert",
+        subTitle: "Analyze conversation",
+        icon: <Repeat2 className=" text-blue-700" />,
+      },
+      {
+        href: "/docs",
+        name: "Enage",
+        subTitle: "Measure active usage",
+        icon: <PlusCircle className="text-blue-700" />,
+      },
+      {
+        href: "/docs",
+        name: "Retain",
+        subTitle: "Find retentation drivers",
+        icon: <Fullscreen className="text-blue-700" />,
+      },
+      {
+        href: "/docs",
+        name: "Product Adoption",
+        subTitle: "Maximize all customers",
+        icon: <Users className="text-blue-700" />,
+      },
+    ],
   },
   {
-    type: 'Links',
+    type: "Links",
     title: "Industry Solutions",
     links: [
-      { href: '/docs', name: 'eCommerce', subTitle: '', icon: <></> },
-      { href: '/casestudy', name: 'SaaS', subTitle: '', icon: <></> },
-      { href: '/blogs', name: 'Financial Services', subTitle: '', icon: <></> },
-
-
-    ]
+      { href: "/docs", name: "eCommerce", subTitle: "", icon: <></> },
+      { href: "/casestudy", name: "SaaS", subTitle: "", icon: <></> },
+      { href: "/blogs", name: "Financial Services", subTitle: "", icon: <></> },
+    ],
   },
 
   {
-    type: 'Node',
-    node: <>
-      <div>
-        <div className="text-gray-500 dark:gray-200">Insight</div>
-        <div className="flex flex-col gap-5 py-2">
-          <div className="flex gap-3"><Lightbulb className="text-blue-700" />Debugging with product analytics</div>
-          <div className="flex gap-3"><Lightbulb className="text-blue-700" />Why it’s never too early to add product ana...</div>
-          <div className="flex gap-3"><Lightbulb className="text-blue-700" />Data implementation, starting with the ‘why’</div>
+    type: "Node",
+    node: (
+      <>
+        <div>
+          <div className="dark:gray-200 text-gray-500">Insight</div>
+          <div className="flex flex-col gap-5 py-2">
+            <div className="flex gap-3">
+              <Lightbulb className="text-blue-700" />
+              Debugging with product analytics
+            </div>
+            <div className="flex gap-3">
+              <Lightbulb className="text-blue-700" />
+              Why it’s never too early to add product ana...
+            </div>
+            <div className="flex gap-3">
+              <Lightbulb className="text-blue-700" />
+              Data implementation, starting with the ‘why’
+            </div>
+          </div>
+          <Link className="flex  gap-4" href={"#"}>
+            See all <MoveRight />
+          </Link>
         </div>
-        <Link className="flex  gap-4" href={'#'}>See all <MoveRight /></Link>
-      </div>
-    </>
-  }
-]
+      </>
+    ),
+  },
+];
 
 const mainMenu: MegamenuProps = [
 
   {
     type: 'Links',
-    title: "Powerfull and Simple Analytics",
+    title: "Powerful and Simple Analytics",
     links: [
       { href: '/docs', name: 'Interactive Reports', subTitle: 'Learn about your users', icon: <BarChart className=" text-blue-700" /> },
       { href: '/docs', name: 'Team Dashboard & Alerts', subTitle: 'Monitor your metricse', icon: <AppWindow className="text-blue-700" /> },
