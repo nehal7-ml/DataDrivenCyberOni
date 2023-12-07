@@ -1,20 +1,21 @@
 'use client'
 import { AlertCircle, Mail, PlaneIcon, Send } from "lucide-react";
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { LoadingCircle } from "../shared/icons";
 import Balancer from "react-wrap-balancer";
 import ClientInput from "../layout/ClientInput";
 import GoogleCaptchaWrapper from "../GoogleCaptchaWrapper";
 import { useReCaptcha } from "next-recaptcha-v3";
+import Link from "next/link";
 
-function ContactForm() {
+function ContactForm(props: { onModal?: boolean, showModal?: boolean, setShowModal?: Dispatch<SetStateAction<boolean>> }) {
   return <>
     <GoogleCaptchaWrapper >
-      <ContactFormLOC />
+      <ContactFormLOC {...props} />
     </GoogleCaptchaWrapper>
   </>
 }
-function ContactFormLOC() {
+function ContactFormLOC(props: { onModal?: boolean, showModal?: boolean, setShowModal?: Dispatch<SetStateAction<boolean>> }) {
 
   const referralOptions = [
     "Google",
@@ -48,17 +49,18 @@ function ContactFormLOC() {
     if (name && email && message) {
       const token = await executeRecaptcha('Contact_Submit_Modal')
 
-      let captchaRes = await fetch('/api/captcha', {method: 'POST' ,body: JSON.stringify({token})})
-      if(captchaRes.status!==200) {
+      let captchaRes = await fetch('/api/captcha', { method: 'POST', body: JSON.stringify({ token }) })
+      if (captchaRes.status !== 200) {
         setShowError(true);
         setShowForm(false)
 
-        return 
+        return
       }
       let res = await fetch(`/api/marketing/contact`, { method: "POST", body: JSON.stringify({ name, email, subject: selectedInterest, message, referral }) })
       setShowForm(false)
       if (res.status === 200) {
         setShowThanks(true)
+        hideModal()
       }
       else {
         setShowError(true)
@@ -66,6 +68,11 @@ function ContactFormLOC() {
 
     }
   };
+
+  function hideModal() {
+    if (props.onModal && props.setShowModal) props.setShowModal(false);
+
+  }
 
   return (
     <div className="mx-auto h-full min-h-fit w-full rounded-lg bg-[#5001EAAD] p-6 shadow-lg">
@@ -135,13 +142,18 @@ function ContactFormLOC() {
               required
             ></textarea>
           </div>
-          <button
-            type="submit"
-            className="flex items-center justify-center rounded-lg bg-[#A91079] px-8 py-4 text-white hover:bg-blue-900"
-          >
-            <Send color="white" className="mx-2" />
-            <span className="mx-2">Send Message</span>
-          </button>
+          <div className="flex justify-center lg:justify-start gap-5 p-3">
+            <button
+              type="submit"
+              className="flex items-center justify-center rounded-lg bg-[#A91079] px-8 py-4 text-white hover:bg-blue-900"
+            >
+              <Send color="white" className="mx-2" />
+              <span className="mx-2">Send Message</span>
+            </button>
+            <Link onClick={hideModal} href={`/contact?name=${name}&email=${email}&message=${message}`} className="bg-gradient-to-b from-orange-400 to-orange-500 text-center text-white p-4 rounded-lg">
+              Enterprise Contact
+            </Link>
+          </div>
         </form>
       )}
 

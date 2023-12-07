@@ -7,8 +7,45 @@ import AuthorCard from "@/components/blogs/AuthorCard"
 import { Image as UserImage } from "@prisma/client"
 import { redirect } from "next/navigation"
 import Link from "next/link"
-
+import { Metadata, ResolvingMetadata } from "next"
+import { ImageResponse } from "next/server";
+type Props = {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 export const dynamic = 'force-dynamic';
+export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  // read route params
+  const id = params.id
+  const { page } = searchParams
+
+  // fetch data
+  const author = await getAuthor(id, Number(page), prisma);
+
+  // optionally access and extend (rather than replace) parent metadata
+  let metadata: Metadata = {};
+  metadata.title = `Author: ${author?.firstName}`
+  metadata.description = `Deatils of blog Author, ${author?.firstName}`
+  metadata.openGraph = {
+    type: 'article',
+    title: metadata.title,
+    description: metadata.title,
+    images: new ImageResponse(<>
+      {
+        author?.image? <><div className="w-[1200px] h-[630px]" >
+          <Image className="object-contain" src={author.image.src} alt="Author DP" width={300} height={300}/>
+        </div></>: 
+        <>
+          <div className="w-[1200px] h-[630px] bg-orange-500">
+              <div className="text-center font-bold text-5xl text-white uppercase">{author?.firstName?.slice(0)}</div>
+          </div>
+        </>
+      }
+      
+    </>)
+  }
+  return metadata
+}
 async function BlogAuthor({ params: { id }, searchParams }: { params: { id: string, page: number }, searchParams: { page: number } }) {
   const { page } = searchParams
   const author = await getAuthor(id, page, prisma);

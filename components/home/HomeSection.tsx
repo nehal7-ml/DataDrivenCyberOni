@@ -68,7 +68,7 @@ const Section = ({
           <Image src={image} alt={image} height={500} width={500} />
         </div>
         {/* Text */}
-        <div className="p-8 lg:w-1/2">
+        <div className="p-8 lg:w-1/2 text-center lg:text-left">
           <div className="m-3 w-fit bg-gradient-purple bg-clip-text text-5xl font-bold text-transparent">
             {title}
           </div>
