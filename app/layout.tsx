@@ -13,7 +13,7 @@ import Head from "next/head";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
-import { Facebook } from 'lucide-react';
+import { Facebook } from "lucide-react";
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: Owner.seo.metaTitle,
     description: Owner.seo.metaDescription,
     creator: "@softwear4u", // Make sure to include the correct Twitter handle here
-    images: ["/monster_5.jpg"],
+    images: ["/images/monster_5.jpg"],
   },
   openGraph: {
     title: Owner.seo.metaTitle,
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
   },
   themeColor: "#0074e4",
   other: {
-    "fb:app_id": process.env.FACEBOOK_ID as string
+    "fb:app_id": process.env.FACEBOOK_ID as string,
   },
   viewport: {
-    width: 'device-width',
+    width: "device-width",
     initialScale: 1,
-    maximumScale: 1
-  }
+    maximumScale: 1,
+  },
 };
 
 export default async function RootLayout({
@@ -75,7 +75,14 @@ export default async function RootLayout({
         `}
       </Script>
 
-
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=G-55E14FBFE1"
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+        ></iframe>
+      </noscript>
 
       <body
         className={`${cx(
