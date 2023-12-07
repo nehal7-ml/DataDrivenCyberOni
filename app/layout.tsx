@@ -63,18 +63,18 @@ export default async function RootLayout({
       </Head>
       <Script
         strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=G-3YKTJT9TGN"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_MANAGER}`}
         async
       />
       <Script strategy="afterInteractive" id="google-tag-manager">
         {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-3YKTJT9TGN', {
-            page_path: window.location.pathname,
-          });
-        `}
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${process.env.GOOGLE_TAG_MANAGER}', {
+      page_path: window.location.pathname,
+    });
+  `}
       </Script>
 
       <body
