@@ -7,14 +7,13 @@ import { Analytics } from "@vercel/analytics/react";
 import cx from "classnames";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
-import { Suspense } from "react";
 import Head from "next/head";
+import { cookies } from "next/headers";
+import Script from "next/script";
+import { Suspense } from "react";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
-import { Facebook } from "lucide-react";
-import Script from "next/script";
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,
@@ -63,7 +62,7 @@ export default async function RootLayout({
       </Head>
       <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TAG_MANAGER}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}`}
         async
       />
       <Script strategy="afterInteractive" id="google-tag-manager">
@@ -71,10 +70,24 @@ export default async function RootLayout({
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', '${process.env.GOOGLE_TAG_MANAGER}', {
+    gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}', {
       page_path: window.location.pathname,
     });
   `}
+      </Script>
+      <Script strategy="afterInteractive" id="facebook-pixel">
+        {`
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL}');
+      fbq('track', 'PageView');
+    `}
       </Script>
 
       <body
