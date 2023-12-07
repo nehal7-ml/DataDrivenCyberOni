@@ -7,19 +7,25 @@ import Link from "next/link";
 import CommentForm from "@/components/blogs/CommentForm";
 import BlogContainer from "@/components/blogs/BlogContainer";
 import { redirect } from "next/navigation";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 import BlogContent from "@/components/blogs/BlogContent";
 import { cookies } from "next/headers";
 export const dynamic = 'force-dynamic';
-export let metadata: Metadata = {
-    title: "Blog Post",
-    description: "",
-    openGraph: {},
-    category: 'blog',
-    keywords: ['blog']
-};
-async function BlogPost({ params }: { params: { id: string } }) {
+
+type Props = {
+    params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(    { params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    // read route params
+    const id = params.id
+
+    // fetch data
     const blog = await getData(params.id);
+
+    // optionally access and extend (rather than replace) parent metadata
+    let metadata: Metadata = {};
     metadata.title = blog.title as string
     metadata.description = blog.description
     metadata.openGraph = {
@@ -30,6 +36,10 @@ async function BlogPost({ params }: { params: { id: string } }) {
     }
     metadata.category = blog.tags.join(" ")
     metadata.keywords = blog.tags?.map(tag => tag.name)
+    return metadata
+}
+async function BlogPost({ params }: { params: { id: string } }) {
+    const blog = await getData(params.id);
 
     const cookieStore = cookies();
     const theme = cookieStore.get("theme")?.value as string === 'dark' ? 'dark' : "light";
