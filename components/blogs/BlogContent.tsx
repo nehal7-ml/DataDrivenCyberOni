@@ -108,7 +108,7 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
             }
         });
 
-    }, []);
+    }, [darkTheme, theme]);
 
 
 
