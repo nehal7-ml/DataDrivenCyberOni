@@ -60,29 +60,22 @@ export default async function RootLayout({
     <html lang="en">
       <Head>
         <link rel="canonical" href="https://www.cybershoptech.com" />
-        <title>Your Page Title</title>
       </Head>
       <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=G-55E14FBFE1`}
+        src="https://www.googletagmanager.com/gtag/js?id=G-55E14FBFE1"
+        async
       />
-      <Script id="google-tag-manager" strategy="afterInteractive">
+      <Script strategy="afterInteractive" id="google-tag-manager">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-55E14FBFE1');
+          gtag('config', 'G-55E14FBFE1', {
+            page_path: window.location.pathname,
+          });
         `}
       </Script>
-
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=G-55E14FBFE1"
-          height="0"
-          width="0"
-          style={{ display: "none", visibility: "hidden" }}
-        ></iframe>
-      </noscript>
 
       <body
         className={`${cx(
