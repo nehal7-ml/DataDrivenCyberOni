@@ -13,7 +13,8 @@ import Head from "next/head";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
-import { Facebook } from 'lucide-react';
+import { Facebook } from "lucide-react";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     title: Owner.seo.metaTitle,
     description: Owner.seo.metaDescription,
     creator: "@softwear4u", // Make sure to include the correct Twitter handle here
-    images: ["/monster_5.jpg"],
+    images: ["/images/monster_5.jpg"],
   },
   openGraph: {
     title: Owner.seo.metaTitle,
@@ -36,6 +37,14 @@ export const metadata: Metadata = {
     type: "website",
   },
   themeColor: "#0074e4",
+  other: {
+    "fb:app_id": process.env.FACEBOOK_ID as string,
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
 };
 
 export default async function RootLayout({
@@ -51,9 +60,30 @@ export default async function RootLayout({
     <html lang="en">
       <Head>
         <link rel="canonical" href="https://www.cybershoptech.com" />
-        <meta property="fb:app_id" content={process.env.FACEBOOK_ID} />
-        {/* other meta tags */}
+        <title>Your Page Title</title>
       </Head>
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=G-55E14FBFE1`}
+      />
+      <Script id="google-tag-manager" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-55E14FBFE1');
+        `}
+      </Script>
+
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=G-55E14FBFE1"
+          height="0"
+          width="0"
+          style={{ display: "none", visibility: "hidden" }}
+        ></iframe>
+      </noscript>
+
       <body
         className={`${cx(
           sfPro.variable,
@@ -61,16 +91,16 @@ export default async function RootLayout({
           abel.variable,
           nunito.variable,
         )} 
-                        ${theme?.value} antialiased `}
+                        ${theme?.value} overflow-x-hidden antialiased`}
       >
-        <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white" />
+        <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white " />
         <Suspense fallback="...">
           <NavBar
             session={session}
             darkMode={theme?.value === "dark" ? true : false}
           />
         </Suspense>
-        <main className="relative min-h-screen w-full  pt-24 dark:bg-gray-900 dark:text-white ">
+        <main className="relative min-h-screen w-full  overflow-x-hidden pt-24 dark:bg-gray-900 dark:text-white">
           {children}
         </main>
         {
