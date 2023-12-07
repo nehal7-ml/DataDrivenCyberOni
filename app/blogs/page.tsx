@@ -18,7 +18,7 @@ async function Blogs() {
     const data = (await getData()) as BlogHomeProps
     // console.log(data.recent.slice(1, 2))
     return (
-        <div className="z-10  dark:text-white ">
+        <div className="z-10  dark:text-white lg:px-10">
             <div className="container mx-auto my-10">
                 <div className="flex flex-col lg:flex-row  w-full my-10">
                     <div className="w-full  rounded-lg">
@@ -111,8 +111,8 @@ async function Blogs() {
                         </div>
                         <div className="p-5 z-30 lg:p-10 w-full lg:w-1/2 lg:dark:bg-slate-800 ">
                             <p className="text-xl font-thin my-2">By {data.recent[1].author.firstName}</p>
-                            <h2 className="text-5xl font-semibold mb-2">{data.recent[1].title}</h2>
-                            <p className="text-lg">{data.recent[1].description}</p>
+                            <h2 className="text-3xl font-semibold mb-2">{data.recent[1].title}</h2>
+                            <p className="text-base line-clamp-2">{data.recent[1].description}</p>
                         </div>
                     </div>}
 
