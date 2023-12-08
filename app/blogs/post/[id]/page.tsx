@@ -20,12 +20,7 @@ type Props = {
     searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateStaticParams() {
-    const blogs = await getAll(0, 0, prisma)
-    return blogs.records.map((post) => ({
-        id: seoUrl(post.title, post.id)
-    }))
-}
+
 
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
     // read route params
@@ -46,8 +41,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
     metadata.twitter = {
         title: blog.title,
         images: [blog.images.length > 0 ? blog.images[0].src : ""],
-        description: blog.description,
-        
+        description: blog.description,      
 
     }
     metadata.category = blog.tags.join(" ")
@@ -61,7 +55,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
     const id = extractUUID(seoTitle)
     const blog = await getData(id);
 
-    console.log("Currect url", seoTitle, encodeURIComponent(seoUrl(blog.title, blog.id)));
+    // console.log("Currect url", seoTitle, encodeURIComponent(seoUrl(blog.title, blog.id)));
     if (!blog) redirect('/404');
 
     if (seoTitle !== encodeURIComponent(seoUrl(blog.title, blog.id))) redirect('/404'); //redirec if link in not matching

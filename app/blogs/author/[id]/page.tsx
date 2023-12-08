@@ -33,16 +33,16 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
     description: metadata.title,
     images: new ImageResponse(<>
       {
-        author?.image? <><div className="w-[1200px] h-[630px]" >
-          <Image className="object-contain" src={author.image.src} alt="Author DP" width={300} height={300}/>
-        </div></>: 
-        <>
-          <div className="w-[1200px] h-[630px] bg-orange-500">
+        author?.image ? <><div className="w-[1200px] h-[630px]" >
+          <Image className="object-contain" src={author.image.src} alt="Author DP" width={300} height={300} />
+        </div></> :
+          <>
+            <div className="w-[1200px] h-[630px] bg-orange-500">
               <div className="text-center font-bold text-5xl text-white uppercase">{author?.firstName?.slice(0)}</div>
-          </div>
-        </>
+            </div>
+          </>
       }
-      
+
     </>)
   }
   return metadata
