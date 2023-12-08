@@ -1,3 +1,4 @@
+import { seoUrl } from "@/lib/utils";
 import { Image } from "@prisma/client";
 import Link from "next/link";
 import React from 'react'
@@ -13,7 +14,7 @@ function DetailedCard({ author, title, description, images, id }: DetailedProps)
 
     // console.log(author, title, description)
     return (
-        <Link href={`/blogs/post/${id}`}>
+        <Link href={`/blogs/post/${seoUrl(title, id)}`}>
 
             <div className="relative rounded-lg shadow-lg overflow-hidden w-full h-full">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
