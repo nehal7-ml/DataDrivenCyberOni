@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   viewport: {
     width: 'device-width',
     initialScale: 1,
-    maximumScale:1
+    maximumScale: 1
   }
 };
 
@@ -74,15 +74,8 @@ export default async function RootLayout({
           gtag('config', 'G-55E14FBFE1');
         `}
       </Script>
-     
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=G-55E14FBFE1"
-          height="0"
-          width="0"
-          style={{ display: "none", visibility: "hidden" }}
-        ></iframe>
-      </noscript>
+
+
 
       <body
         className={`${cx(
@@ -102,6 +95,14 @@ export default async function RootLayout({
         </Suspense>
         <main className="relative min-h-screen w-full  overflow-x-hidden pt-24 dark:bg-gray-900 dark:text-white">
           {children}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=G-55E14FBFE1"
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            ></iframe>
+          </noscript>
         </main>
         {
           <Suspense>
