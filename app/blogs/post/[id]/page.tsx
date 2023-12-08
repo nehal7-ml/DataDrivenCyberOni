@@ -43,6 +43,13 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
         description: blog.description,
         images: [blog.images.length > 0 ? blog.images[0].src : ""]
     }
+    metadata.twitter = {
+        title: blog.title,
+        images: [blog.images.length > 0 ? blog.images[0].src : ""],
+        description: blog.description,
+        
+
+    }
     metadata.category = blog.tags.join(" ")
     metadata.keywords = blog.tags?.map(tag => tag.name)
     return metadata
@@ -54,9 +61,9 @@ async function BlogPost({ params }: { params: { id: string } }) {
     const id = extractUUID(seoTitle)
     const blog = await getData(id);
 
-    console.log("Currect url",seoTitle,  encodeURIComponent(seoUrl(blog.title, blog.id)));
+    console.log("Currect url", seoTitle, encodeURIComponent(seoUrl(blog.title, blog.id)));
     if (!blog) redirect('/404');
-    
+
     if (seoTitle !== encodeURIComponent(seoUrl(blog.title, blog.id))) redirect('/404'); //redirec if link in not matching
 
 
