@@ -1,4 +1,4 @@
-import { DisplayBlogDTO, addView, read } from "@/crud/blog";
+import { DisplayBlogDTO, addView, getAll, read } from "@/crud/blog";
 import React, { ReactEventHandler, Suspense, useRef } from 'react'
 import parse from 'html-react-parser';
 import Image from "next/image";
@@ -17,7 +17,15 @@ type Props = {
     searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function generateMetadata(    { params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateStaticParams() {
+    const blogs = await getAll(0, 0, prisma)
+
+    return blogs.records.map((post) => ({
+        slug: post.id,
+    }))
+}
+
+export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
     // read route params
     const id = params.id
 
