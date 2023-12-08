@@ -53,8 +53,13 @@ async function BlogPost({ params }: { params: { id: string } }) {
     const seoTitle = params.id
     const id = extractUUID(seoTitle)
     const blog = await getData(id);
+
+    console.log("Currect url",seoTitle,  encodeURIComponent(seoUrl(blog.title, blog.id)));
     if (!blog) redirect('/404');
-    if (seoTitle !== seoUrl(blog.title, blog.id)) redirect('/404');
+    
+    if (seoTitle !== encodeURIComponent(seoUrl(blog.title, blog.id))) redirect('/404'); //redirec if link in not matching
+
+
     const cookieStore = cookies();
     const theme = cookieStore.get("theme")?.value as string === 'dark' ? 'dark' : "light";
 
