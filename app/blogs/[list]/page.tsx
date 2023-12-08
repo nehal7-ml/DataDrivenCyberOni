@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
+import { seoUrl } from "@/lib/utils";
 
 async function BlogList({ params }: { params: { list: string } }) {
     const data = await getData(params.list);
@@ -26,7 +27,7 @@ async function BlogList({ params }: { params: { list: string } }) {
                         {data.list.map((blog, index) => {
                             return (
                                 <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-96 h-fit`}>
-                                    <Link href={`/blogs/post/${blog.id}`}>
+                                    <Link href={`/blogs/post/${seoUrl(blog.title, blog.id)}`}>
                                         <div className="overflow-hidden h-full shadow-lg   dark:bg-gray-700 rounded-lg">
                                             <div className=" bg-gray-400 h-2/3">
                                                 <Image

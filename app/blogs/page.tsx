@@ -5,6 +5,7 @@ import Link from "next/link"
 import React from 'react'
 
 import prisma from "@/lib/prisma";
+import { seoUrl } from "@/lib/utils";
 export type BlogHomeProps = {
     featured: DisplayBlogDTO;
     recent: DisplayBlogDTO[];
@@ -40,7 +41,7 @@ async function Blogs() {
                         </div>
                         {data.recent.slice(0, 4).map((blog, index) => {
                             return (
-                                <Link key={index} href={`/blogs/post/${blog.id}`} className="p-5">
+                                <Link key={index} href={`/blogs/post/${seoUrl(blog.title, blog.id)}`} className="p-5">
                                     <div key={index} className="flex flex-col">
                                         <span className="font-thin">{(new Date(blog.date)).toLocaleString()}</span>
                                         <span className="hover:underline hover:text-[#FF5480]">{blog.title}</span>

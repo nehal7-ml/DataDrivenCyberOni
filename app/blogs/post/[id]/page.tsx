@@ -10,6 +10,9 @@ import { redirect } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";
 import BlogContent from "@/components/blogs/BlogContent";
 import { cookies } from "next/headers";
+import slugify from "slugify";
+import { extractUUID, seoUrl } from "@/lib/utils";
+
 export const dynamic = 'force-dynamic';
 
 type Props = {
@@ -19,18 +22,16 @@ type Props = {
 
 export async function generateStaticParams() {
     const blogs = await getAll(0, 0, prisma)
-
     return blogs.records.map((post) => ({
-        slug: post.id,
+        id: seoUrl(post.title, post.id)
     }))
 }
 
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
     // read route params
-    const id = params.id
-
-    // fetch data
-    const blog = await getData(params.id);
+    const seoTitle = params.id
+    const id = extractUUID(seoTitle)
+    const blog = await getData(id);
 
     // optionally access and extend (rather than replace) parent metadata
     let metadata: Metadata = {};
@@ -46,9 +47,14 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
     metadata.keywords = blog.tags?.map(tag => tag.name)
     return metadata
 }
-async function BlogPost({ params }: { params: { id: string } }) {
-    const blog = await getData(params.id);
 
+
+async function BlogPost({ params }: { params: { id: string } }) {
+    const seoTitle = params.id
+    const id = extractUUID(seoTitle)
+    const blog = await getData(id);
+    if (!blog) redirect('/404');
+    if (seoTitle !== seoUrl(blog.title, blog.id)) redirect('/404');
     const cookieStore = cookies();
     const theme = cookieStore.get("theme")?.value as string === 'dark' ? 'dark' : "light";
 

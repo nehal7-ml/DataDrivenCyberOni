@@ -9,6 +9,7 @@ import { redirect } from "next/navigation"
 import Link from "next/link"
 import { Metadata, ResolvingMetadata } from "next"
 import { ImageResponse } from "next/server";
+import { seoUrl } from "@/lib/utils"
 type Props = {
   params: { id: string }
   searchParams: { [key: string]: string | string[] | undefined }
@@ -69,7 +70,7 @@ async function BlogAuthor({ params: { id }, searchParams }: { params: { id: stri
         {
           author?.blogs.map((blog, index) => {
             return <div key={index} className={`w-full  p-5  lg:h-[500px]`}>
-              <Link href={`/blogs/post/${blog.id}`} className="">
+              <Link href={`/blogs/post/${seoUrl(blog.title, blog.id)}`} className="">
                 <div className="overflow-hidden h-full shadow-lg   dark:bg-gray-700 rounded-lg">
                   <div className=" bg-gray-400 h-2/3">
                     <Image
@@ -99,7 +100,7 @@ async function BlogAuthor({ params: { id }, searchParams }: { params: { id: stri
           <div className="p-2 text-center">Recent</div>
           {recent.slice(0, 4).map((blog, index) => {
             return <div key={index} className="p-4">
-              <Link href={`/blogs/post/${blog.id}`} className="p-2 my-1 hover:underline" >
+              <Link href={`/blogs/post/${seoUrl(blog.title, blog.id)}`} className="p-2 my-1 hover:underline" >
                 <p className="p-4">{blog.title}</p>
               </Link>
               <div className="dark:text-gray-500 line-clamp-2 px-4">{blog.description}</div>
@@ -114,7 +115,7 @@ async function BlogAuthor({ params: { id }, searchParams }: { params: { id: stri
             return <div key={index} className="p-4 flex justify-center items-center gap-2">
               <Image className="p-1 rounded-md aspect-square w-1/3 h-full object-contain" alt="blog-image" src={blog.images[0] ? blog.images[0].src : 'https://picsum.photos/200'} width={50} height={50}></Image>
               <div className="w-2/3">
-                <Link href={`/blogs/post/${blog.id}`} className="p-2 my-1 hover:underline" >
+                <Link href={`/blogs/post/${seoUrl(blog.title, blog.id)}`} className="p-2 my-1 hover:underline" >
                   <p>{blog.title}</p>
                 </Link>
                 <div className=" dark:text-gray-500  line-clamp-2 ">{blog.description}</div>
