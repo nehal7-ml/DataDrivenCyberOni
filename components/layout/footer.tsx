@@ -33,7 +33,14 @@ export default function Footer() {
           <Link className="hover:underline" href={"/contact"}>
             Contact
           </Link>
-
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+            href="https://form.jotform.com/233444925421050"
+          >
+            Get Support
+          </a>
           <div>support@cybershoptech.com</div>
           <div>Denver, Co </div>
         </div>
