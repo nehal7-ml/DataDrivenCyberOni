@@ -1,8 +1,5 @@
-import ContactForm from "@/components/ContactForm";
 import CompanyCarousel from "@/components/home/CompanyCarousel";
-import PayLater from "@/components/shared/Paylater";
-import { getAll } from "@/crud/service";
-import { seoUrl } from "@/lib/utils";
+
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
