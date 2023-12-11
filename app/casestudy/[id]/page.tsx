@@ -4,25 +4,48 @@ import Image from "next/image";
 import prisma from "@/lib/prisma";
 import { CreateImageDTO } from "@/crud/images";
 import { Image as UserImage } from "@prisma/client";
-import { Metadata } from "next";
-export let metadata: Metadata = {
-    title: "",
-    description: "",
-    openGraph: {},
-    category: 'Case Study'
-};
-async function CaseStudy({ params }: { params: { id: string } }) {
-    const caseStudy = await read(params.id, prisma)
+import { Metadata, ResolvingMetadata } from "next";
+import { extractUUID } from "@/lib/utils";
 
-    metadata.title = caseStudy.title as string
-    metadata.description = caseStudy.preview
+
+type Props = {
+    params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+  }
+  
+  
+  
+  
+  export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    // read route params
+    const seoTitle = params.id
+    const id = extractUUID(seoTitle)
+    const caseStudy = await read(id, prisma)
+  
+    // optionally access and extend (rather than replace) parent metadata
+    let metadata: Metadata = {};
+    metadata.title = caseStudy?.title as string
+    metadata.description = caseStudy?.preview
     metadata.openGraph = {
-        type: 'article',
-        title: caseStudy.title,
-        description: caseStudy.preview,
-        images: [caseStudy.images.length > 0 ? caseStudy.images[0].src : ""]
+      type: 'article',
+      title: caseStudy?.title,
+      description: caseStudy?.preview,
+      images: [caseStudy?.images ? caseStudy.images[0].src : ""]
     }
-    
+    metadata.twitter = {
+      title: caseStudy?.title,
+      images: [caseStudy?.images ? caseStudy.images[0].src : ""],
+      description: caseStudy?.preview,
+  
+    }
+    metadata.keywords = caseStudy?.title.split('')
+    return metadata
+  }
+async function CaseStudy({ params }: { params: { id: string } }) {
+    const seoTitle = params.id
+    const id = extractUUID(seoTitle)
+    const caseStudy = await read(id, prisma)
+
     return (
 
         <>

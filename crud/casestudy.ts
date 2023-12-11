@@ -102,10 +102,10 @@ export async function remove(caseStudyId: string, prisma: PrismaClient) {
 
 export async function getAll(page: number, pageSize: number, prismaClient: PrismaClient) {
     const caseStudys = prismaClient.caseStudy;
-    if (pageSize !== 10 && pageSize != 30 && pageSize !== 50) throw new Error('page size must be 10, 30 or 50')
+    if (pageSize !== 10 && pageSize != 30 && pageSize !== 50 && pageSize !== 0) throw new Error('page size must be 10, 30 or 50')
 
     let allrecords = await caseStudys.findMany({
-        skip: (page - 1) * pageSize, take: pageSize,
+        skip:page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
         where: {
         },
 
