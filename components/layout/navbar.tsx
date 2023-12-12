@@ -37,7 +37,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
         className={`fixed top-0 w-screen flex justify-center ${scrolled
           ? "border-b border-gray-200 bg-white/10 backdrop-blur-xl"
           : "bg-white/0"
-          } z-[100] transition-all lg:h-24 h-16`}
+          } z-[100] transition-all xl:h-24 h-16`}
       >
         <div className=" flex items-center justify-between w-full text-black dark:text-white mx-5">
 
@@ -58,64 +58,64 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 
           <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex absolute right-0 top-full h-screen w-screen max-h-screen overflow-y-auto pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black py-10'}   gap-10   h-screen w-full flex-col items-center justify-start xl:pt-0 xl:static xl:flex xl:flex-row xl:gap-5 xl:justify-center xl:h-full xl:bg-inherit xl:w-fit`}>
 
-            <div className="relative group">
+            <div className="relative xl:h-full">
               <button
                 onClick={toggleProductsDropdown}
-                className="md:focus:outline-none hover:text-blue-500 peer/product"
+                className="md:focus:outline-none hover:text-blue-500 peer/product  xl:h-full"
               >
                 Products
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
-              <div className="lg:absolute lg:left-auto lg:-translate-x-48 z-50 transition-all duration-700   w-screen lg:top-5 lg:w-[700px] hidden peer-focus/product:block peer-hover/product:block hover:block">
+              <div className="xl:absolute xl:left-auto xl:-translate-x-48 z-50  transition-all duration-700   w-screen xl:top-20 xl:w-[700px] hidden focus-visible:block peer-focus/product:block peer-hover/product:block hover:block">
                 <MegaMenu groups={mainMenu} />
               </div>
 
             </div>
-            <div className="relative">
-              <Link href="#" className="hover:text-blue-500 peer/solution">
+            <div className="relative xl:h-full">
+              <button className="hover:text-blue-500 peer/solution xl:h-full">
                 Solutions
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
-              </Link>
-              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden lg:peer-focus/solution:hidden peer-focus/solution:block peer-hover/solution:block hover:block">
+              </button>
+              <div className="xl:absolute xl:-translate-x-48 transition-all duration-300 xl:top-20 xl:w-[600px] hidden xl:peer-focus/solution:hidden peer-focus/solution:block peer-hover/solution:block hover:block">
                 <MegaMenu groups={productMenu} />
               </div>
             </div>
-            <div className="relative">
-              <button className="hover:text-blue-500 peer/enterprise">
+            <div className="relative xl:h-full">
+              <button className="hover:text-blue-500 peer/enterprise xl:h-full">
                 Enterprise
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
 
               </button>
-              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden peer-focus/enterprise:block peer-hover/enterprise:block hover:block">
+              <div className="xl:absolute xl:-translate-x-48 transition-all duration-300 xl:top-20 xl:w-[600px] hidden peer-focus/enterprise:block peer-hover/enterprise:block hover:block">
                 <MegaMenu groups={enterpriseMenu} />
               </div>
             </div>
-            <div className="relative group">
+            <div className="relative xl:h-full">
               <button
-                className=" peer/explore md:focus:outline-none hover:text-blue-500"
+                className=" peer/explore md:focus:outline-none hover:text-blue-500 xl:h-full"
               >
                 Explore
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
 
             </div>
-            <div className="relative">
-              <button className="hover:text-blue-500 peer/market">
+            <div className="relative xl:h-full">
+              <button className="hover:text-blue-500 peer/market xl:h-full">
                 Marketplace
               </button>
 
             </div>
-            <div className="relative">
-              <button className="hover:text-blue-500 peer/pricing">
+            <div className="relative xl:h-full">
+              <button className="hover:text-blue-500 peer/pricing xl:h-full">
                 Pricing
               </button>
 
             </div>
-            <div className="relative">
-              <button className="hover:text-blue-500 peer/about">
+            <div className="relative xl:h-full">
+              <button className="hover:text-blue-500 peer/about xl:h-full">
                 About
               </button>
-              <div className="lg:absolute lg:-translate-x-48 transition-all duration-300 lg:top-5 lg:w-[600px] hidden lg:peer-focus/about:hidden peer-focus/about:block peer-hover/about:block hover:block">
+              <div className="xl:absolute xl:-translate-x-48 transition-all duration-300 xl:top-20 xl:w-[600px] hidden xl:peer-focus/about:hidden peer-focus/about:block peer-hover/about:block hover:block">
                 <MegaMenu groups={aboutMenu} />
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               <input
                 type="text"
                 placeholder="Search"
-                className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 lg:w-38"
+                className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 xl:w-38"
               />
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
               </button>
@@ -186,7 +186,7 @@ function ToggleDarkMode({ enabled, className }: { enabled: boolean, className?: 
   }, [isToggled]);
 
   return (
-    <div className={"container flex justify-center items-center  lg:mx-auto lg:w-12 " + className}>
+    <div className={"container flex justify-center items-center  xl:mx-auto xl:w-12 " + className}>
       <label className="flex items-center cursor-pointer">
         <div className="relative">
           <input
