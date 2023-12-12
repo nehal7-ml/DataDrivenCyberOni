@@ -10,7 +10,17 @@ const nextConfig = {
       {
         source: "/github",
         destination: "https://github.com/TechWithTy/DataDrivenCyberOni",
-        permanent: false,
+        permanent: true,
+      },
+      {
+        source: "/support",
+        destination: "https://form.jotform.com/233444925421050",
+        permanent: true,
+      },
+      {
+        source: "/schedule",
+        destination: "https://calendly.com/cyberoni/quick-zoom-meeting",
+        permanent: true,
       },
     ];
   },
