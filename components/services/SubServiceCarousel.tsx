@@ -44,7 +44,7 @@ function SubServiceCarousel({ subservices }: { subservices: SubServiceProps[] })
                             </div>
                             <Image
                                 src={imageArray[Math.floor(Math.random()*3)]} // Replace with the actual profile image URL
-                                alt={`${subservice.name}'s Profile`}
+                                alt={`${subservice.name} image`}
                                 className=" object-cover lg:col-span-1 col-span-2"
                                 height={300}
                                 width={300}

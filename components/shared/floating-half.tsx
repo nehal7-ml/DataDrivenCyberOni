@@ -29,7 +29,7 @@ const FloatingHalfSection: React.FC<ImageSectionProps> = ({
       >
         {/* Image */}
         <div className="lg:w-1/2">
-          <Image src={image} alt={image} height={500} width={500} />
+          <Image src={image} alt={title} height={500} width={500} />
         </div>
         {/* Text and Button */}
         <div className={`p-8 lg:w-1/2 ${buttonAlignmentClass}`}>

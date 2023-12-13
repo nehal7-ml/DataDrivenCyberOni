@@ -42,8 +42,12 @@ export const metadata: Metadata = {
   viewport: {
     width: "device-width",
     initialScale: 1,
-    maximumScale: 1,
+    maximumScale: 1
   },
+  alternates: {
+    canonical: "https://www.cybershoptech.com"
+  }
+  
 };
 
 export default async function RootLayout({
@@ -57,9 +61,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
-        <link rel="canonical" href="https://www.cybershoptech.com" />
-      </Head>
+
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}`}
@@ -97,7 +99,7 @@ export default async function RootLayout({
           abel.variable,
           nunito.variable,
         )} 
-                        ${theme?.value} overflow-x-hidden antialiased`}
+        ${theme?.value} overflow-x-hidden antialiased`}
       >
         <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white " />
         <Suspense fallback="...">
