@@ -53,7 +53,7 @@ async function Enterprise() {
             <div>
               <Image
                 src={"/images/project.png"}
-                alt="icon"
+                alt="project"
                 height={100}
                 width={100}
               ></Image>
@@ -63,7 +63,7 @@ async function Enterprise() {
             <div>
               <Image
                 src={"/images/client.png"}
-                alt="icon"
+                alt="client"
                 height={100}
                 width={100}
               ></Image>
@@ -73,7 +73,7 @@ async function Enterprise() {
             <div>
               <Image
                 src={"/images/experience.png"}
-                alt="icon"
+                alt="exp"
                 height={100}
                 width={100}
               ></Image>
@@ -83,7 +83,7 @@ async function Enterprise() {
             <div>
               <Image
                 src={"/images/companies.png"}
-                alt="icon"
+                alt="conmpany"
                 height={100}
                 width={100}
               ></Image>
@@ -134,7 +134,7 @@ async function Enterprise() {
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/images/step-1.png"}
-                alt="border"
+                alt="step-1"
                 className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
@@ -151,7 +151,7 @@ async function Enterprise() {
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/images/step-2.png"}
-                alt="border"
+                alt="step-2"
                 className=" lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
@@ -169,7 +169,7 @@ async function Enterprise() {
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/images/step-3.png"}
-                alt="border"
+                alt="step-3"
                 className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
@@ -189,7 +189,7 @@ async function Enterprise() {
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/images/step-4.png"}
-                alt="border"
+                alt="step-4"
                 className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
@@ -313,7 +313,7 @@ async function Enterprise() {
             <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
                 src={"/images/team.png"}
-                alt="brain"
+                alt="team"
                 height={50}
                 width={50}
               ></Image>
@@ -350,7 +350,7 @@ async function Enterprise() {
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
                 src={"/images/stopwatch.png"}
-                alt="brain"
+                alt="watch"
                 height={50}
                 width={50}
               ></Image>
@@ -368,7 +368,7 @@ async function Enterprise() {
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
                 src={"/images/price-tag.png"}
-                alt="brain"
+                alt="price"
                 height={50}
                 width={50}
               ></Image>

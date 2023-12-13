@@ -90,7 +90,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                             <li>Problem 3</li>
                         </ul>
                     </section>
-                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-1" height={130} width={75} />
+                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-4" height={130} width={75} />
                 </div>
 
 
@@ -113,7 +113,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                         <h2 className="text-2xl font-bold text-[#7850CD] mb-10">Understanding the Problem</h2>
                         <p>{caseStudy.userResearch}</p>
                     </div>
-                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-1" height={130} width={75} />
+                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-4" height={130} width={75} />
 
                 </section>
 

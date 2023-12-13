@@ -88,7 +88,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
                 <div className="w-full flex flex-col items-center justify-center gap-5">
                     <Link href={`/blogs/author/${blog.author.id}?page=1`} >
                         <div className="w-20 h-20 rounded-full overflow-hidden">
-                            {blog.author.image ? <Image src={blog.author.image.src} alt="image" height={50} width={50} />
+                            {blog.author.image ? <Image src={blog.author.image.src} alt="Author Dp" height={50} width={50} />
                                 :
                                 <div className="w-full h-full bg-orange-500 flex items-center justify-center text-center text-3xl">{blog.author.firstName ? blog.author.firstName[0] : 'A'}</div>
                             }

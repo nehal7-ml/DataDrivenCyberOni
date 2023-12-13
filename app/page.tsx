@@ -35,7 +35,7 @@ export default async function Home() {
             </div>
             <Image
               src={"/images/hero-1.png"}
-              alt={""}
+              alt={"hero-1"}
               height={500}
               width={500}
             ></Image>
