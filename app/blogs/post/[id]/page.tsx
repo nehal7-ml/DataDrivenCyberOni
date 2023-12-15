@@ -73,7 +73,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
                         <div className="flex flex-wrap container gap-1 m-4">
                             {blog.tags.map((tag, index) => (<span key={index} className="p-1 px-2">#{tag.name}</span>))}
                         </div>
-                        <div className="m-4 font-bold">{blog.description}</div>
+                        <div className="m-4 font-semibold text-sm">{blog.description}</div>
                         <div className="m-4">by. {blog.author.firstName} {blog.author.lastName} </div>
                     </div>
                 </div>
