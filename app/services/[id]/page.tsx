@@ -60,7 +60,7 @@ async function Services({ params }: { params: { id: string } }) {
     <div className="">
       <div className="flex flex-wrap">
         {services.records.slice(0, 4).map((service, index) => (
-          <div key={index} className="p-5 lg:w-1/4">
+          <div key={index} className="p-5 lg:w-1/4 flex-1">
             <ServiceCard
               id={service.id}
               image={service.image as ServiceImage}

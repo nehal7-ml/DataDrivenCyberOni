@@ -12,9 +12,9 @@ async function BlogList({ params }: { params: { list: string } }) {
     const data = await getData(params.list);
 
     return (
-        <div className="">
-            <div className="container mx-auto">
-                <div className="mx-10 text-5xl my-5 capitalize">
+        <div className="px-5 lg:px-16">
+            <div className="container mx-auto ">
+                <div className="mx-10 text-3xl my-5 capitalize">
                     {params.list}
                 </div>
                 <div className="mx-10 w-1/2">
@@ -39,8 +39,8 @@ async function BlogList({ params }: { params: { list: string } }) {
                                             </div>
                                             <div className="px-6 py-1">
                                                 <div className="mb-2">by {blog.author.firstName} </div>
-                                                <div className="mb-2 font-bold text-2xl">{blog.title}</div>
-                                                <div className="line-clamp-2 lg:line-clamp-4">{blog.subTitle}</div>
+                                                <div className="mb-2 font-bold text-base">{blog.title}</div>
+                                                <div className="text-sm line-clamp-2 lg:line-clamp-4">{blog.subTitle}</div>
                                             </div>
                                         </div>
                                     </Link>
