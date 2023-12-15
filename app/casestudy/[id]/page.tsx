@@ -49,7 +49,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
     return (
 
         <>
-            <div className="relative container mx-auto mt-8">
+            <div className="relative container mx-auto mt-8 px-5 xl:px-16">
                 <Image className="absolute right-0 top-0" src={'/images/case-study-icon-2.svg'} alt="icon-2" height={130} width={75} />
 
                 {/* Section 1: Title */}
