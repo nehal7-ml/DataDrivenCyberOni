@@ -19,7 +19,7 @@ function UserPersonaCard({ name, age, bio, gender, goals, image, painPoints }: U
                 <div className="absolute bottom-0 w-full flex flex-col justify-end items-center">
                     <p className="text-xl font-bold">Name: {name}</p>
                     <p className="text-xl font-bold"><strong>Age:</strong>Age: {age}</p>
-                    <p className="text-xl font-bold"><strong>Gender:</strong>Gender: {gender}</p>
+                    <p className="text-xl font-bold"><strong>Gender:</strong> {gender}</p>
                 </div>
             </div>
             <div className="lg:w-1/2 p-4">
