@@ -20,7 +20,7 @@ function PayLater({ value }: { value?: string[] }) {
 
             <div className="text-center font-bold mb-5 font-nunito text-2xl">Build Now Pay later</div>
             <div>
-                <Link href={'#'} className="rounded-full flex gap-3 bg-[#33D460] shadow-[0_10px_25px_0_#33D3D454] p-3 w-fit text-white text-center justify-center items-center">Apply Now <MoveRight /></Link>
+                <Link href={'https://buy.stripe.com/00g8wVdnCdMt0Y88wx'} className="rounded-full flex gap-3 bg-[#33D460] shadow-[0_10px_25px_0_#33D3D454] p-3 w-fit text-white text-center justify-center items-center">Apply Now <MoveRight /></Link>
             </div>
         </div>);
 }

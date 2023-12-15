@@ -14,12 +14,12 @@ export type createUserDTO = {
     role: Role;
 }
 
-export type displayUserDTO = {
+export type DisplayUserDTO = {
     id: string;
     firstName?: string;
     lastName?: string;
     email: string;
-    emailVerified: Date;
+    emailVerified?: Date;
     role: Role
 }
 async function create(user: createUserDTO, prismaClient: PrismaClient) {
