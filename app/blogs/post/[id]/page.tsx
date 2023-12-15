@@ -69,7 +69,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
             <div className="w-full ">
                 <div className="w-full bg-white dark:bg-gray-900 py-5">
                     <div className="container mx-auto whitespace-pre-line break-words">
-                        <div className="m-4  text-4xl lg:text-4xl font-bold">{blog.title}</div>
+                        <div className="m-4  text-xl lg:text-2xl font-bold">{blog.title}</div>
                         <div className="flex flex-wrap container gap-1 m-4">
                             {blog.tags.map((tag, index) => (<span key={index} className="p-1 px-2">#{tag.name}</span>))}
                         </div>
@@ -90,11 +90,11 @@ async function BlogPost({ params }: { params: { id: string } }) {
                         <div className="w-20 h-20 rounded-full overflow-hidden">
                             {blog.author.image ? <Image src={blog.author.image.src} alt="Author Dp" height={50} width={50} />
                                 :
-                                <div className="w-full h-full bg-orange-500 flex items-center justify-center text-center text-3xl">{blog.author.firstName ? blog.author.firstName[0] : 'A'}</div>
+                                <div className="w-full h-full bg-orange-500 flex items-center justify-center text-center text-xl">{blog.author.firstName ? blog.author.firstName[0] : 'A'}</div>
                             }
                         </div>
                     </Link>
-                    <div className="text-3xl">
+                    <div className="text-xl">
                         {blog.author.firstName}
                     </div>
                 </div>
