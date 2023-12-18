@@ -28,8 +28,8 @@ export default async function Home() {
               </div>
               <div className="mx-3 h-[1px] bg-gradient-purple w-full" />
               <div className="flex justify-center lg:justify-start">
-                <div id="__next" className="m-3 bg-gradient-purple w-fit rounded-full p-[2px]">
-                  <CalendlyPopup CTAText="Schedule a consultation" className="bg-white dark:bg-gray-900 p-3 rounded-full" />
+                <div id="__next" className="m-3 bg-gradient-purple w-fit rounded-full py-[0.1rem] px-[0.1rem]">
+                  <CalendlyPopup CTAText="Schedule a consultation" className="bg-white dark:bg-gray-900 p-[0.4rem] rounded-full" />
                 </div>
               </div>
             </div>
