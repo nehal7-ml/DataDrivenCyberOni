@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import { CreateImageDTO } from "@/crud/images";
 import { Image as UserImage } from "@prisma/client";
 import { Metadata, ResolvingMetadata } from "next";
-import { extractUUID } from "@/lib/utils";
+import { extractUUID, stripFileExtension } from "@/lib/utils";
 
 
 type Props = {
@@ -67,8 +67,8 @@ async function CaseStudy({ params }: { params: { id: string } }) {
 
                 </div>
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
-                    {caseStudy.images[0] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-1'} height={500} width={500} /> :
-                        <Image className="l rounded-lg object-contain" src={'/images/casestudy-1.png'} alt={'casestudy-1'} height={500} width={500} />
+                    {caseStudy.images[0] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-preview'} height={500} width={500} /> :
+                        <Image className="rounded-lg object-contain" src={'/images/casestudy-1.png'} alt={'casestudy-1'} height={500} width={500} />
                     }
                 </div>
 
@@ -135,8 +135,8 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                 </div>
 
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
-                    {caseStudy.images[1] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-1'} height={500} width={500} /> :
-                        <Image className="l rounded-lg object-contain" src={'/images/casestudy-2.png'} alt={'casestudy-1'} height={500} width={500} />
+                    {caseStudy.images[1] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-image-2'} height={500} width={500} /> :
+                        <Image className="l rounded-lg object-contain" src={'/images/casestudy-2.png'} alt={'casestudy-2'} height={500} width={500} />
                     }
                 </div>
 
@@ -169,7 +169,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                     {caseStudy.wireFrames && <>
                         <h2 className="text-[#7850CD]">Wireframes</h2>
                         <div className="flex gap-2 flex-wrap max-w-full">
-                            {caseStudy.wireFrames.map((wireframe, index) => <Image key={index} src={wireframe.src} alt={"architecture"} height={500} width={500} />)}</div>
+                            {caseStudy.wireFrames.map((wireframe, index) => <Image key={index} src={wireframe.src} alt={`wireframe-${index}`} height={500} width={500} />)}</div>
 
                     </>}
                 </section>
@@ -190,8 +190,8 @@ async function CaseStudy({ params }: { params: { id: string } }) {
 
                         <div className="flex gap-2 flex-wrap max-w-full">
                             {caseStudy.hifiDesign.map((image, index) => <div key={index} className="flex flex-col justify-center items-center" >
-                                <Image src={image.src} alt={image.name as string} height={500} width={500} />
-                                <div className="font-bold"># {image.name}</div>
+                                <Image src={image.src} alt={stripFileExtension(image.name || `hifi-design-${index}`) as string} height={500} width={500} />
+                                <div className="font-bold"># {stripFileExtension(image.name as string)}</div>
                             </div>)}
                         </div>
                     </>}

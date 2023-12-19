@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { getCookie } from 'cookies-next';
+import { getCookie,  } from 'cookies-next';
 import TextLoaders from "../loaders/TextLoaders";
 import { getRandomFromArray } from "@/lib/utils";
 
