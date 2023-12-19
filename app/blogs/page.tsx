@@ -5,7 +5,7 @@ import Link from "next/link"
 import React from 'react'
 
 import prisma from "@/lib/prisma";
-import { seoUrl } from "@/lib/utils";
+import { seoUrl, stripFileExtension } from "@/lib/utils";
 import Image from "next/image";
 export type BlogHomeProps = {
     featured: DisplayBlogDTO;
@@ -102,12 +102,12 @@ async function Blogs() {
 
             <div className="my-10 container mx-auto">
                 <div className="text-2xl font-bold my-2">Random</div>
-                {data.recent[1] &&
+                {data.recent[Math.floor(Math.random() * (data.recent.length))] &&
                     <Link href={`/blogs/post/${seoUrl(data.recent[1].title, data.recent[1].id)}`} className="conatiner relative flex overflow-hidden flex-col md:flex-row-reverse my-5 h-80 w-full rounded-2xl shadow-lg">
                         <div className="w-full absolute h-full lg:w-1/2 lg:static">
                             {data.recent[1] && data.recent[1].images[0] ?
                                 // eslint-disable-next-line @next/next/no-img-element
-                                <Image width={500} height={500} src={data.recent[1].images[0].src} alt={data.recent[1].images[0].name || 'blog_preview'} className="w-full h-full object-cover" /> :
+                                <Image width={500} height={500} src={data.recent[1].images[0].src} alt={stripFileExtension(data.recent[1].images[0].name || 'blog_preview') } className="w-full h-full object-cover" /> :
                                 <div className="bg-[#1c0042e7] w-full h-full"></div>
                             }
                         </div>

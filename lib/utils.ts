@@ -151,3 +151,17 @@ export function seoUrl(title: string, id: string) {
 
 
 }
+
+export function stripFileExtension(fileName: string): string {
+  // Find the last occurrence of the dot (.) character
+  const lastDotIndex = fileName.lastIndexOf('.');
+
+  // Check if a dot was found and it is not the first character
+  if (lastDotIndex !== -1 && lastDotIndex > 0) {
+    // Extract the substring without the file extension
+    return fileName.slice(0, lastDotIndex);
+  }
+
+  // If there is no dot or it's the first character, return the original file name
+  return fileName;
+}
