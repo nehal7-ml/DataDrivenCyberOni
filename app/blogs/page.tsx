@@ -6,6 +6,7 @@ import React from 'react'
 
 import prisma from "@/lib/prisma";
 import { seoUrl } from "@/lib/utils";
+import Image from "next/image";
 export type BlogHomeProps = {
     featured: DisplayBlogDTO;
     recent: DisplayBlogDTO[];
@@ -106,7 +107,7 @@ async function Blogs() {
                         <div className="w-full absolute h-full lg:w-1/2 lg:static">
                             {data.recent[1] && data.recent[1].images[0] ?
                                 // eslint-disable-next-line @next/next/no-img-element
-                                <img src={data.recent[1].images[0].src} alt="blog" className="w-full h-full"></img> :
+                                <Image width={500} height={500} src={data.recent[1].images[0].src} alt={data.recent[1].images[0].name || 'blog_preview'} className="w-full h-full object-cover" /> :
                                 <div className="bg-[#1c0042e7] w-full h-full"></div>
                             }
                         </div>
