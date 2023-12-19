@@ -24,15 +24,15 @@ export async function verifyAccess(user: DisplayUserDTO, path: string, method: H
             return true;
         }
         if (path.match(/^\/api\/users\/all/)) {
-            return true;
+            return false;
         }
 
-        if (path.match(/^\/api\/users\/[a-z0-9]{25}$/) && method === 'GET') {
+        if (path.match(/^\/api\/users\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/) && method === 'GET') {
             const userId = path.split('/')[3];
             if (userId === user.id) return true
 
         }
-        if (path.match(/^\/api\/users\/[a-z0-9]{25}$/) && method === 'PUT') {
+        if (path.match(/^\/api\/users\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/) && method === 'PUT') {
             const userId = path.split('/')[3];
             if (userId === user.id) return true
 
