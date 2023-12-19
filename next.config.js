@@ -22,6 +22,16 @@ const nextConfig = {
         destination: "https://calendly.com/cyberoni/quick-zoom-meeting",
         permanent: true,
       },
+      {
+        source: "/apply/full-stack",
+        destination: "https://form.jotform.com/233470488980164",
+        permanent: true,
+      },
+      {
+        source: "/hire-a-dev",
+        destination: "https://form.jotform.com/233471176876163",
+        permanent: true,
+      },
     ];
   },
   experimental: {
