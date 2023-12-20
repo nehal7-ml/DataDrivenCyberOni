@@ -12,11 +12,12 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
     }
 
     const [loaded, setLoaded] = useState(false);
-
-    const cookie = getCookie('theme')
+    const body = useRef<HTMLBodyElement>(null);
+    let cookie = useRef(getCookie('theme'));
     const [injectScript, setInjectScript] = useState('')
     const [resizeScript, setResizeScript] = useState('')
 
+    const [classList, setClassList] = useState<DOMTokenList>();
     const iframe = useRef<HTMLIFrameElement>(null)
 
 
@@ -52,14 +53,14 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
 
     useEffect(() => {
         console.log(cookie);
-        if (cookie === 'dark') {
+        cookie.current = getCookie('theme')
+        if (cookie.current === 'dark') {
             setInjectScript(darkTheme);
         } else {
             setInjectScript(lightTheme);
 
         }
-    }, [cookie, darkTheme, lightTheme]);
-
+    }, [cookie, darkTheme, lightTheme, classList]);
 
     useEffect(() => {
         const script = `<script id="resizeScript" >
@@ -97,7 +98,7 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
         setResizeScript(script)
 
         if (theme === 'dark') setInjectScript(darkTheme)
-
+        else setInjectScript(lightTheme)
         window.addEventListener("message", (event) => {
 
             console.log("loaded window", event.data);
@@ -108,7 +109,14 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
             }
         });
 
-    }, [darkTheme, theme]);
+        window.addEventListener('theme', (event:CustomEventInit)=> {
+            console.log(event.detail);
+            if (event.detail.theme === 'dark') setInjectScript(darkTheme)
+            else setInjectScript(lightTheme)
+        });
+
+    });
+
 
 
 
