@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";
 import BlogContent from "@/components/blogs/BlogContent";
 import { cookies } from "next/headers";
-import slugify from "slugify";
 import { extractUUID, seoUrl, stripFileExtension } from "@/lib/utils";
 
 export const dynamic = 'force-dynamic';
@@ -26,7 +25,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
     // read route params
     const seoTitle = params.id
     const id = extractUUID(seoTitle)
-    const blog = await getData(id);
+    const blog = await read(id, prisma) as DisplayBlogDTO;
 
     // optionally access and extend (rather than replace) parent metadata
     let metadata: Metadata = {};
@@ -108,6 +107,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
 async function getData(id: string) {
     const blog = await addView(id, prisma)
+    // console.log(blog.title);
     if (blog) return blog as DisplayBlogDTO
     else redirect('/404')
 
