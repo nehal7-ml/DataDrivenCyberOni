@@ -115,10 +115,7 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
             else setInjectScript(lightTheme)
         });
 
-    });
-
-
-
+    },[theme, darkTheme, lightTheme]);
 
     // console.log(content);
     return (<>

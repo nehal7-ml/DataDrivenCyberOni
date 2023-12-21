@@ -1,4 +1,4 @@
-import { DisplayBlogDTO, addView, getAll, read } from "@/crud/blog";
+import { addView, getAll, read } from "@/crud/blog";
 import React, { ReactEventHandler, Suspense, useRef } from 'react'
 import parse from 'html-react-parser';
 import Image from "next/image";
@@ -11,6 +11,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import BlogContent from "@/components/blogs/BlogContent";
 import { cookies } from "next/headers";
 import { extractUUID, seoUrl, stripFileExtension } from "@/lib/utils";
+import { DisplayBlogDTO } from "@/crud/DTOs";
 
 export const dynamic = 'force-dynamic';
 

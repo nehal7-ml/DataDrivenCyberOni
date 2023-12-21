@@ -1,12 +1,13 @@
 import React from 'react'
 import BlogListLoader from "./loading"
-import { DisplayBlogDTO, getEssential, getFeatured, getPopular, getRecent } from "@/crud/blog";
+import { getEssential, getFeatured, getPopular, getRecent } from "@/crud/blog";
 import { get } from "http";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { seoUrl } from "@/lib/utils";
+import { DisplayBlogDTO } from "@/crud/DTOs";
 
 async function BlogList({ params }: { params: { list: string } }) {
     const data = await getData(params.list);

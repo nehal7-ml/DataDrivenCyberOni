@@ -1,14 +1,15 @@
 import BlogCard from "@/components/blogs/BlogCard";
 import DetailedCard from "@/components/blogs/DetailedCard";
-import { DisplayBlogDTO, getEssential, getFeatured, getPopular, getRecent } from "@/crud/blog"
+import {  getEssential, getFeatured, getPopular, getRecent } from "@/crud/blog"
 import Link from "next/link"
 import React from 'react'
 
 import prisma from "@/lib/prisma";
 import { seoUrl, stripFileExtension } from "@/lib/utils";
 import Image from "next/image";
+import { DisplayBlogDTO } from "@/crud/DTOs";
 export type BlogHomeProps = {
-    featured: DisplayBlogDTO;
+    featured: DisplayBlogDTO ;
     recent: DisplayBlogDTO[];
     essential: DisplayBlogDTO[];
     popular: DisplayBlogDTO[];

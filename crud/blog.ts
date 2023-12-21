@@ -1,117 +1,75 @@
-import { Blog, PrismaClient, Tag, User, Image, BlogComment, BlogLike } from "@prisma/client";
-import { connectOrCreateObject as connectTags, CreateTagDTO } from "./tags";
-import { connectOrCreateObject as connectImages, CreateImageDTO } from "./images";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { PrismaClient } from "@prisma/client";
+import { connectOrCreateObject as connectTags, } from "./tags";
+import { connectOrCreateObject as connectImages, } from "./images";
+import { CommentDTO, CreateBlogDTO } from "./DTOs";
 
 
-export type CreateBlogDTO = {
-    title: string;
-    subTitle: string;
-    description: string;
-    featured: boolean;
-    date: Date;
-    content: string;
-    author: { id?: string, email: string },
-    images: CreateImageDTO[],
-    tags: CreateTagDTO[]
-}
-
-export type DisplayBlogDTO = {
-    id: string;
-    title: string;
-    subTitle: string;
-    description: string;
-    featured: boolean;
-    date: Date;
-    content: string;
-    author: User & {
-
-        image: Image
-    };
-    tags: Tag[]
-    images: Image[],
-    Comments?: BlogComment[],
-    Likes?: BlogLike[],
-    Views?: number
-}
-
-export type CommentDTO = {
-    name: string,
-    email: string,
-    comment: string,
-    blogId: string,
-}
 
 async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
-    const blogs = prismaClient.blog;
-    let createdblog = await blogs.create({
-        data: {
-            ...blog,
-            images: { connect: blog.images.map(image => { return { id: image.id as string } }) },
-            tags: { connectOrCreate: connectTags(blog.tags) },
-            author: { connect: { email: blog.author.email } }
-        }
-    });
-    return createdblog
+  const blogs = prismaClient.blog;
+  let createdblog = await blogs.create({
+    data: {
+      ...blog,
+      images: await connectImages(blog.images, []),
+      tags: { connectOrCreate: connectTags(blog.tags) },
+      author: { connect: { email: blog.author.email } }
+    }
+  });
+  return createdblog
 
 
 }
+
 
 async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaClient) {
-    const blogs = prismaClient.blog;
-    const updatedBlog = await blogs.update({
-        where: { id: blogId },
-        data: {
-            ...blog,
-            images:  connectImages(blog.images) ,
-            tags: { connectOrCreate: connectTags(blog.tags) },
-            author: { connect: { email: blog.author.email } }
-        }
-    })
-    return updatedBlog
+  const blogs = prismaClient.blog;
+  const oldBlog = await blogs.findUnique({ where: { id: blogId }, include: { images: true, tags: true } })
+  const updatedBlog = await blogs.update({
+    where: { id: blogId },
+    data: {
+      ...blog,
+      images: await connectImages(blog.images, oldBlog!.images),
+      tags: { connectOrCreate: connectTags(blog.tags) },
+      author: { connect: { email: blog.author.email } }
+    }
+  })
+  return updatedBlog
 
 }
-
 
 
 async function remove(blogId: string, prismaClient: PrismaClient) {
-    const blogs = prismaClient.blog;
-    const existingblog = await blogs.findUnique({ where: { id: blogId } })
-    if (existingblog) {
-        await blogs.delete({ where: { id: blogId } })
-    }
+  const blogs = prismaClient.blog;
+  const existingblog = await blogs.findUnique({ where: { id: blogId } })
+  if (existingblog) {
+    await blogs.delete({ where: { id: blogId } })
+  }
 }
-
-
 async function read(blogId: string, prismaClient: PrismaClient) {
-    const blogs = prismaClient.blog;
-    const existingblog = await blogs.findUnique({
-        where: { id: blogId },
+  const blogs = prismaClient.blog;
+  const existingblog = await blogs.findUnique({
+    where: { id: blogId },
+    select: {
+      userId: false,
+      content: true,
+      date: true,
+      description: true,
+      featured: true,
+      id: true,
+      title: true,
+      subTitle: true,
+      author: {
         select: {
-            userId: false,
-            content: true,
-            date: true,
-            description: true,
-            featured: true,
-            id: true,
-            title: true,
-            subTitle: true,
-            author: {
-                include: {
-                    image: true,
-                }
-            },
-            tags: true,
-            images: true,
-            Likes: true,
-            Views: true,
-            Comments: {
-                take: 10, skip: 0
-            }
-
+          id: true,
+          email: true
         }
-    })
-    if (existingblog) return existingblog as DisplayBlogDTO;
+      },
+      tags: true,
+      images: true,
+      Comments: true
+    }
+  })
+  if (existingblog) return existingblog;
 
 }
 
@@ -169,7 +127,8 @@ export async function addView(id:string, prisma:PrismaClient) {
                 }
             },
             images: true,
-            Likes: true
+            Likes: true,
+            Comments:true,
         }
     })
 
