@@ -1,4 +1,4 @@
-import { DisplayUserDTO } from "@/crud/user";
+import { DisplayUserDTO } from "@/crud/DTOs";
 import { Role } from "@prisma/client";
 
 import { describe, expect, it, afterAll } from "@jest/globals";

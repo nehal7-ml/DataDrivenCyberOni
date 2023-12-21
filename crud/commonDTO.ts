@@ -1,7 +1,7 @@
 import { Event, GptPrompt, Service } from "@prisma/client";
 import { DisplayBlogDTO } from "./blog";
 import { displayProductDTO } from "./product";
-import { DisplayUserDTO } from "./user";
+import { DisplayUserDTO } from "./DTOs";
 
 export type GetAllRecordsDTO = {
     records: DisplayUserDTO[] | displayProductDTO[] | DisplayBlogDTO[] | Service[] | Event[] | GptPrompt[];

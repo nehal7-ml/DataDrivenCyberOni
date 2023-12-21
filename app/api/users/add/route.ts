@@ -1,4 +1,5 @@
-import { create, createUserDTO } from "@/crud/user";
+import { create } from "@/crud/user";
+import { CreateUserDTO } from "@/crud/DTOs";
 import apiHandler from "@/errorHandler";
 import { prisma } from "@/prisma/prismaClient";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -11,7 +12,7 @@ async function post(req: Request) {
 
 
     if (req.method === "POST") {
-        const user = await req.json() as createUserDTO;
+        const user = await req.json() as CreateUserDTO;
         const newUser = await create(user, prisma);
         return NextResponse.json({ message: "Add success", data: newUser }, { status: 200 });
     }

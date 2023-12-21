@@ -1,5 +1,5 @@
 
-import { DisplayUserDTO } from "@/crud/user";
+import { DisplayUserDTO } from "@/crud/DTOs";
 import { Role } from "@prisma/client";
 import { HttpError } from "./utils";
 

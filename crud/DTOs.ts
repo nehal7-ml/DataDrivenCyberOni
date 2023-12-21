@@ -1,7 +1,5 @@
-import { Blog, BlogComment, Image, PricingModel, Service, ServiceDescription, SubService, Tag, User } from "@prisma/client";
+import { Blog, BlogComment, Image, PricingModel, Role, Service, ServiceDescription, SubService, Tag, User } from "@prisma/client";
 import { CreateTagDTO } from "../../cyberoni-crud-dashboard/crud/tags";
-
-
 
 export type CreateBlogDTO = {
     title: string;
@@ -87,3 +85,36 @@ export type CommentDTO = {
     blogId: string;
 };
 
+
+export type CreateUserDTO = {
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    image?: CreateImageDTO;
+    address?: CreateAddressDTO;
+    role: Role;
+};
+
+export type DisplayUserDTO = {
+    id: string;
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    emailVerified?: Date;
+    role: Role;
+};
+export type CreateAddressDTO = {
+    id?: string;
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+};
+
+
+export type CredentialAuthDTO = {
+    email: string;
+    password: string;
+}
