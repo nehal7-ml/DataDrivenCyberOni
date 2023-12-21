@@ -1,7 +1,8 @@
 import { User, PrismaClient, Role } from "@prisma/client";
-import { connectOrCreateObject, CreateImageDTO } from "./images";
+import { connectOrCreateObject } from "./images";
 import { createAddressDTO } from "./address";
 import { GetAllRecordsDTO } from "./commonDTO";
+import { CreateImageDTO } from "./DTOs";
 
 
 export type createUserDTO = {
