@@ -1,51 +1,50 @@
 /**
  * @jest-environment node
+ * 
  */
 
-import {GET, DELETE, PUT} from '@/app/api/events/[id]/route'
-import {POST as addEventHandler} from '@/app/api/events/[id]/route'
-import * as getAllEventHandler from '@/app/api/events/[id]/route'
+import {GET as getEvent, DELETE as deleteEvent, PUT as updateEvent} from '@/app/api/events/[id]/route'
+import {POST as addeventHandler} from '@/app/api/events/add/route'
 import { createMocks } from 'node-mocks-http'
 import { describe, expect, test, it, beforeAll } from '@jest/globals';
 import { CreateTagDTO } from "@/crud/tags";
-import { Event, EventStatus } from "@prisma/client";
-import { CreateImageDTO } from "@/crud/DTOs";
-import { createEventDTO } from "@/crud/event";
+import { Event } from "@prisma/client";
+import { CreateImageDTO, CreateEventDTO } from "@/crud/DTOs";
+import { NextRequest } from "next/server";
 
 
-describe('Testing Events Api', () => {
-    const mockEvent: createEventDTO = {
+describe('Testing events Api', () => {
+    const mockEvent: CreateEventDTO = {
+        name: 'TEst Tilte',
         date: new Date(),
-        description: 'Test description',
-        eventLink: 'http://test.com',
-        isVirtual:false,
-        location: 'San fransico, CA',
-        name: 'Event name',
+        description: 'test description',
+        eventLink: 'http://event.com/',
+        isVirtual: false,
+        location: 'SF, CA',
         status:"UPCOMING",
+        image: {src: 'example.image.com',name:'test image'},
+       
     };
 
-    let createdEvent: Event;
+    let createdevent: Event;
 
 
     it('Adds a event to the test database', async () => {
-        const { req, res } = createMocks({
+        const req  = new NextRequest('http://localhost:3000/api/bogs/add', {
             method: 'POST',
-            body: mockEvent,
+            body: JSON.stringify(mockEvent)
         })
+        const response = await addeventHandler(req);
 
-        const response = await addEventHandler(req);
-
-        expect(response.status).toEqual(200);
-        createdEvent = (await response.json()).data;
-    });
-    it('delete Event', async () => {
-        const { req, res } = createMocks({
+        expect(response?.status).toEqual(200);
+        createdevent = (await response?.json()).data;
+    },10000);
+    it('delete event', async () => {
+        const req  = new NextRequest('http://localhost:3000/api/events/', {
             method: 'DELETE',
-            body: mockEvent,
         })
-
-        const response = await DELETE(req, { params: { id: createdEvent.id } });
+        const response = await deleteEvent(req, { params: { id: createdevent.id } });
         expect(response.status).toBe(200)
-    })
+    },10000)
 
 });

@@ -4,13 +4,13 @@
  */
 
 import {GET as getBlog, DELETE as deleteBlog, PUT as updateBlog} from '@/app/api/blogs/[id]/route'
-import {POST as addblogHandler} from '@/app/api/blogs/[id]/route'
-import {GET as getBlogs} from '@/app/api/blogs/[id]/route'
+import {POST as addblogHandler} from '@/app/api/blogs/add/route'
 import { createMocks } from 'node-mocks-http'
 import { describe, expect, test, it, beforeAll } from '@jest/globals';
 import { CreateTagDTO } from "@/crud/tags";
 import { Blog } from "@prisma/client";
 import { CreateImageDTO, CreateBlogDTO } from "@/crud/DTOs";
+import { NextRequest } from "next/server";
 
 
 describe('Testing blogs Api', () => {
@@ -38,24 +38,21 @@ describe('Testing blogs Api', () => {
 
 
     it('Adds a blog to the test database', async () => {
-        const { req, res } = createMocks({
+        const req  = new NextRequest('http://localhost:3000/api/bogs/add', {
             method: 'POST',
-            body: mockblog,
+            body: JSON.stringify(mockblog)
         })
-        console.log(typeof addblogHandler);
         const response = await addblogHandler(req);
 
-        expect(response.status).toEqual(200);
-        createdblog = (await response.json()).data;
-    });
+        expect(response?.status).toEqual(200);
+        createdblog = (await response?.json()).data;
+    },10000);
     it('delete blog', async () => {
-        const { req, res } = createMocks({
+        const req  = new NextRequest('http://localhost:3000/api/blogs/', {
             method: 'DELETE',
-            body: mockblog,
         })
-
         const response = await deleteBlog(req, { params: { id: createdblog.id } });
         expect(response.status).toBe(200)
-    })
+    },10000)
 
 });
