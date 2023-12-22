@@ -9,7 +9,7 @@ export const { GET } = apiHandler({ GET: get });
 
 async function get(req: NextRequest, { params }: { params: { prefix: string } }) {
     const updated = await addClick(params.prefix, ReferralType.AFFILIATE , prisma)
-    return NextResponse.redirect(`${process.env.HOST}${updated.link}`)
+    return NextResponse.redirect(`${updated.link}`)
 
 
 }
