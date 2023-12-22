@@ -47,7 +47,7 @@ describe('Testing Products Api', () => {
             body: JSON.stringify(mockProduct)
         })
 
-        const response = await request.post('/api/products/add').send(JSON.stringify(mockProduct));
+        const response = await addProductHandler(req);
 
         expect(response.status).toEqual(200);
         createdProduct = (await response.json()).data;

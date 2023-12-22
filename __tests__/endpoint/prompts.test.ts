@@ -2,15 +2,15 @@
  * @jest-environment node
  */
 
-import {GET, DELETE, PUT} from '@/app/api/products/[id]/route'
-import {POST as addPromptHandler} from '@/app/api/products/[id]/route'
-import * as getAllPromptHandler from '@/app/api/products/[id]/route'
+import {GET, DELETE, PUT} from '@/app/api/prompts/[id]/route'
+import {POST as addPromptHandler} from '@/app/api/prompts/add/route'
 import { createMocks } from 'node-mocks-http'
 import { describe, expect, test, it, beforeAll } from '@jest/globals';
 import { CreateTagDTO } from "@/crud/tags";
 import { CreateImageDTO } from "@/crud/DTOs";
 import { createGptPromptDTO } from "@/crud/prompt";
 import { GptPrompt } from "@prisma/client";
+import { NextRequest } from "next/server";
 
 
 describe('Testing Prompts Api', () => {
@@ -40,24 +40,22 @@ describe('Testing Prompts Api', () => {
 
 
     it('Adds a product to the test database', async () => {
-        const { req, res } = createMocks({
+        const req  = new NextRequest('http://localhost:3000/api/prompts/add', {
             method: 'POST',
-            body: mockPrompt,
+            body: JSON.stringify(mockPrompt)
         })
 
         const response = await addPromptHandler(req);
 
         expect(response.status).toEqual(200);
         createdPrompt = (await response.json()).data;
-    });
+    },10000);
     it('delete Prompt', async () => {
-        const { req, res } = createMocks({
+        const req  = new NextRequest('http://localhost:3000/api/prompts', {
             method: 'DELETE',
-            body: mockPrompt,
         })
-
         const response = await DELETE(req, { params: { id: createdPrompt.id } });
         expect(response.status).toBe(200)
-    })
+    },10000)
 
 });
