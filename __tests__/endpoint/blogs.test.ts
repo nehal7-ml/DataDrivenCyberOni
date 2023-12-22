@@ -8,7 +8,7 @@ import {POST as addblogHandler} from '@/app/api/blogs/[id]/route'
 import {GET as getBlogs} from '@/app/api/blogs/[id]/route'
 import { createMocks } from 'node-mocks-http'
 import { describe, expect, test, it, beforeAll } from '@jest/globals';
-import { CreateTagDTO } from "@/crud/tags";
+import { CreateTagDTO } from "@/crud/DTOs";
 import { Blog } from "@prisma/client";
 import { CreateImageDTO, CreateBlogDTO } from "@/crud/DTOs";
 

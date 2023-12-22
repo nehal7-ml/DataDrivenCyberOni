@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/prisma/prismaClient";
-import { createEventDTO, read, remove as removeEvent, update } from "@/crud/event";
+import { read, remove as removeEvent, update } from "@/crud/event";
+import { CreateEventDTO } from "@/crud/DTOs";
 import { NextRequest, NextResponse } from 'next/server'
 import apiHandler from "@/errorHandler";
 import { deleteFile, uploadFile } from "@/lib/externalRequests/cloudinary";

@@ -1,5 +1,6 @@
 import { GptPrompt, PrismaClient } from "@prisma/client";
-import { connectOrCreateObject as connectTag, CreateTagDTO } from "./tags";
+import { connectOrCreateObject as connectTag } from "./tags";
+import { CreateTagDTO } from "./DTOs";
 import { connectOrCreateObject as connectImage, CreateImageDTO } from "./images";
 
 export type createGptPromptDTO = {

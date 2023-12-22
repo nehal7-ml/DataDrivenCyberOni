@@ -7,7 +7,7 @@ import {POST as addProductHandler} from '@/app/api/products/[id]/route'
 import * as getAllProductHandler from '@/app/api/products/[id]/route'
 import { createMocks } from 'node-mocks-http'
 import { describe, expect, test, it, beforeAll } from '@jest/globals';
-import { CreateTagDTO } from "@/crud/tags";
+import { CreateTagDTO } from "@/crud/DTOs";
 import { CreateProductDTO } from "@/crud/product";
 import { Product, ProductStatus } from "@prisma/client";
 import { CreateImageDTO } from "@/crud/DTOs";

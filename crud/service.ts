@@ -1,5 +1,7 @@
 import { Service, PrismaClient, Prisma, Image, Tag, SubService, ServiceDescription, FAQ, CaseStudy } from "@prisma/client";
-import { CreateTagDTO, create as createTag, connectOrCreateObject as connectTags, TagSchema } from "./tags";
+import { create as createTag, connectOrCreateObject as connectTags } from "./tags";
+import { CreateTagDTO } from "./DTOs";
+import { TagSchema } from "./jsonSchemas";
 import { CreateImageDTO, create as createImage, connectOrCreateObject as connectImage, ImageSchema } from "./images";
 import { CreateSubServiceDTO, SubserviceSchema, create as createSubService, update as updateSubService } from "./subService";
 import { prisma } from "@/prisma/prismaClient";
