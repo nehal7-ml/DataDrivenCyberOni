@@ -6,14 +6,15 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
+import { seoUrl } from "@/lib/utils";
 
 async function BlogList({ params }: { params: { list: string } }) {
     const data = await getData(params.list);
 
     return (
-        <div className="">
-            <div className="container mx-auto">
-                <div className="mx-10 text-5xl my-5 capitalize">
+        <div className="px-5 lg:px-16">
+            <div className="container mx-auto ">
+                <div className="mx-10 text-3xl my-5 capitalize">
                     {params.list}
                 </div>
                 <div className="mx-10 w-1/2">
@@ -25,8 +26,8 @@ async function BlogList({ params }: { params: { list: string } }) {
                     <div className="conatiner mx-10 my-10 flex flex-wrap">
                         {data.list.map((blog, index) => {
                             return (
-                                <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-96`}>
-                                    <Link href={`/blogs/post/${blog.id}`}>
+                                <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-96 h-fit`}>
+                                    <Link href={`/blogs/post/${seoUrl(blog.title, blog.id)}`}>
                                         <div className="overflow-hidden h-full shadow-lg   dark:bg-gray-700 rounded-lg">
                                             <div className=" bg-gray-400 h-2/3">
                                                 <Image
@@ -38,8 +39,8 @@ async function BlogList({ params }: { params: { list: string } }) {
                                             </div>
                                             <div className="px-6 py-1">
                                                 <div className="mb-2">by {blog.author.firstName} </div>
-                                                <div className="mb-2 font-bold text-2xl">{blog.title}</div>
-                                                <div className="">{blog.subTitle}</div>
+                                                <div className="mb-2 font-bold text-base">{blog.title}</div>
+                                                <div className="text-sm line-clamp-2 lg:line-clamp-4">{blog.subTitle}</div>
                                             </div>
                                         </div>
                                     </Link>

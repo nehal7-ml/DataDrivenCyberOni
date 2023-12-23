@@ -1,6 +1,5 @@
-import ContactForm from "@/components/ContactForm";
 import CompanyCarousel from "@/components/home/CompanyCarousel";
-import PayLater from "@/components/shared/Paylater";
+
 import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,8 +18,8 @@ function ServiceLayout({ children }: { children: ReactNode }) {
                     <Link href={'#'} className="rounded-full p-3 bg-service-green text-white flex items-center w-fit gap-3 my-5 shadow-[0_10px_40px_0px_#33D3D454]">Get Started <MoveRight /></Link>
 
                 </div>
-                <div className="w-1/2">
-                    <Image className="object-fill" src={'/service-hero.png'} alt="service-hero" height={500} width={500} />
+                <div className="lg:w-1/2">
+                    <Image className="object-fill" src={'/images/service-hero.png'} alt="service-hero" height={500} width={500} />
                 </div>
 
             </section>
@@ -43,10 +42,10 @@ function ServiceLayout({ children }: { children: ReactNode }) {
     </>);
 }
 
-const companies = [{ name: 'google', image: '/Google cloud.png' },
-{ name: 'Ebay', image: '/Ebay.png' },
-{ name: 'Tux', image: '/Tux.png' },
-{ name: 'Spotify', image: '/Spotify.png' },]
+const companies = [{ name: 'google', image: '/images/Google cloud.png' },
+{ name: 'Ebay', image: '/images/Ebay.png' },
+{ name: 'Tux', image: '/images/Tux.png' },
+{ name: 'Spotify', image: '/images/Spotify.png' },]
 
 
 export default ServiceLayout;

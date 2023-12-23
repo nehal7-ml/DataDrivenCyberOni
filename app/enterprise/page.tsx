@@ -10,8 +10,9 @@ import CalendlyPopup from "@/components/Calendly";
 import { DisplayServiceDTO, getAll } from "@/crud/service";
 import { Image as CaseImage } from "@prisma/client";
 import PortfolioCarousel from "@/components/enterprise/PortfolioCarousel";
+import { getFeatured } from "../../crud/service";
 async function Enterprise() {
-  const services = await getAll(0, 0, prisma)
+  const services = await getFeatured(prisma)
 
   return (
     <div className="w-full">
@@ -20,26 +21,25 @@ async function Enterprise() {
           <div className="container mx-auto flex h-full flex-col items-center justify-center ">
             <div className=" relative line-clamp-3 w-screen overflow-visible text-center font-nunito text-6xl font-bold leading-relaxed lg:w-[800px]">
               <Image
-                className="absolute -z-10 w-full "
-                src={"/enterprise-hero.png"}
+                className="absolute z-0 w-full "
+                src={"/images/enterprise-hero.png"}
                 alt="enterprise-hero"
                 height={300}
                 width={900}
               />
-
-              <div className="z-20">
-                <p>Welcome to </p>
-                <span className="text-[#5380EA]">CyberOni</span>
-                <p>Technologies</p>
+              <div className="flex flex-col justify-center items-center text-center">
+                <p className="z-30 ">Welcome to </p>
+                <span className="text-[#5380EA] z-30 ">CyberOni</span>
+                <p className="z-30 ">Technologies</p>
               </div>
             </div>
 
-            <div className="text-black dark:text-gray-100">
+            <div className="text-black dark:text-gray-100 z-30">
               Are you facing difficulties with your Software? Do you have a
               website but lack traffic? No need to worry.
             </div>
 
-            <div id="__next" className="m-3">
+            <div id="__next" className="m-3 z-30">
               <CalendlyPopup
                 className="rounded-lg bg-[#0F172A] p-3 text-white dark:bg-blue-600"
                 CTAText="Schedule a consultation"
@@ -52,8 +52,8 @@ async function Enterprise() {
           <div className="flex max-h-full items-center justify-around gap-10 p-3 text-center">
             <div>
               <Image
-                src={"/project.png"}
-                alt="icon"
+                src={"/images/project.png"}
+                alt="project"
                 height={100}
                 width={100}
               ></Image>
@@ -62,8 +62,8 @@ async function Enterprise() {
             </div>
             <div>
               <Image
-                src={"/client.png"}
-                alt="icon"
+                src={"/images/client.png"}
+                alt="client"
                 height={100}
                 width={100}
               ></Image>
@@ -72,8 +72,8 @@ async function Enterprise() {
             </div>
             <div>
               <Image
-                src={"/experience.png"}
-                alt="icon"
+                src={"/images/experience.png"}
+                alt="exp"
                 height={100}
                 width={100}
               ></Image>
@@ -82,8 +82,8 @@ async function Enterprise() {
             </div>
             <div>
               <Image
-                src={"/companies.png"}
-                alt="icon"
+                src={"/images/companies.png"}
+                alt="conmpany"
                 height={100}
                 width={100}
               ></Image>
@@ -121,7 +121,7 @@ async function Enterprise() {
           </div>
 
           <div className="my-5 flex flex-col items-center justify-center gap-5">
-            <div className="font-nunito text-4xl font-semibold">
+            <div className="font-nunito text-4xl font-semibold text-center" >
               Cyberoni&apos;s Strategic Development Path
             </div>
             <div className="mx-5 w-1/3 text-center">
@@ -131,11 +131,11 @@ async function Enterprise() {
           </div>
 
           <div className="grid w-full grid-cols-1 grid-rows-4 gap-3 text-center lg:grid-cols-4 lg:grid-rows-1">
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center items-center">
               <Image
-                src={"/step-1.png"}
-                alt="border"
-                className="w-full object-contain"
+                src={"/images/step-1.png"}
+                alt="step-1"
+                className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
               />
@@ -148,11 +148,11 @@ async function Enterprise() {
                 </div>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center items-center">
               <Image
-                src={"/step-2.png"}
-                alt="border"
-                className=" w-full object-contain"
+                src={"/images/step-2.png"}
+                alt="step-2"
+                className=" lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
               />
@@ -166,11 +166,11 @@ async function Enterprise() {
                 </div>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center items-center">
               <Image
-                src={"/step-3.png"}
-                alt="border"
-                className="w-full object-contain"
+                src={"/images/step-3.png"}
+                alt="step-3"
+                className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
               />
@@ -186,11 +186,11 @@ async function Enterprise() {
                 </div>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center items-center">
               <Image
-                src={"/step-4.png"}
-                alt="border"
-                className="w-full object-contain"
+                src={"/images/step-4.png"}
+                alt="step-4"
+                className="lg:w-full object-contain w-40 h-40"
                 height={300}
                 width={300}
               />
@@ -210,8 +210,8 @@ async function Enterprise() {
       </section>
 
       <section className="bg-[#EBF0FF] py-10 dark:bg-[#121212]">
-        <div className="container mx-auto flex flex-col gap-5 p-5 lg:flex-row">
-          <div className="lg:w-1/2">
+        <div className="container mx-auto  flex flex-col gap-5 p-5 lg:flex-row">
+          <div className="lg:w-1/2 text-center lg:text-left">
             <div className="text-2xl font-bold text-[#2478FE]">
               Service we Offer
             </div>
@@ -295,7 +295,7 @@ async function Enterprise() {
       </section>
 
       <section className="bg-enterprise-bg-2 bg-cover bg-no-repeat py-10  backdrop-blur-lg dark:bg-[#061122] lg:min-h-screen">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4 ">
           <div className="text-center">
             <div className="font-bold text-[#5380EA]">Why choose us</div>
             <div className="text-4xl font-bold">
@@ -312,8 +312,8 @@ async function Enterprise() {
           <div className="container mt-20 flex flex-wrap justify-center gap-5">
             <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
-                src={"/team.png"}
-                alt="brain"
+                src={"/images/team.png"}
+                alt="team"
                 height={50}
                 width={50}
               ></Image>
@@ -331,7 +331,7 @@ async function Enterprise() {
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
-                src={"/brain.png"}
+                src={"/images/brain.png"}
                 alt="brain"
                 height={50}
                 width={50}
@@ -349,8 +349,8 @@ async function Enterprise() {
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
-                src={"/stopwatch.png"}
-                alt="brain"
+                src={"/images/stopwatch.png"}
+                alt="watch"
                 height={50}
                 width={50}
               ></Image>
@@ -367,8 +367,8 @@ async function Enterprise() {
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
-                src={"/price-tag.png"}
-                alt="brain"
+                src={"/images/price-tag.png"}
+                alt="price"
                 height={50}
                 width={50}
               ></Image>
@@ -391,7 +391,7 @@ async function Enterprise() {
           <div className="font-nunito text-4xl font-bold">Our Portfolio</div>
           <Image
             className="w-full flex-1 object-cover"
-            src={"/portfolio-underline.png"}
+            src={"/images/portfolio-underline.png"}
             alt="underline"
             height={50}
             width={200}
@@ -399,10 +399,10 @@ async function Enterprise() {
 
 
         </div>
-        <PortfolioCarousel services={services.records as DisplayServiceDTO[]} />
+        <PortfolioCarousel services={services as DisplayServiceDTO[]} />
 
 
-             </section>
+      </section>
 
       <section className="bg-enterprise-bg-3 bg-cover bg-no-repeat py-10 dark:bg-[#061122] lg:bg-[length:100vw_60vw]">
         <div className="text-center text-4xl font-bold">Testimonial</div>

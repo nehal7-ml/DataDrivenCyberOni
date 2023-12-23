@@ -12,10 +12,10 @@ export default async function Home() {
 
   return (
     <>
-      <div className="z-30 w-full py-32  dark:text-white ">
-        <section className="container mx-auto flex flex-col">
+      <div className="z-30 w-full dark:text-white ">
+        <section className="container mx-auto flex flex-col text-center lg:text-left">
           <div className="flex flex-col-reverse items-center justify-center lg:flex-row">
-            <div>
+            <div className="flex flex-col justify-center items-center lg:items-start lg:justify-start " >
               <div className="m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF] to-[#FF2DF7]  bg-clip-text text-5xl font-bold text-transparent">
                 With Ai
               </div>
@@ -26,14 +26,16 @@ export default async function Home() {
                 Our ambition is to reshape how you envision the use of your data
                 to automate mundane tasks.
               </div>
-              <div className="mx-3 h-[1px] bg-gradient-purple" />
-              <div id="__next" className="m-3 bg-gradient-purple w-fit rounded-full p-[2px]">
-                <CalendlyPopup CTAText="Schedule a consultation" className="bg-white dark:bg-gray-900 p-3 rounded-full" />
+              <div className="mx-3 h-[1px] bg-gradient-purple w-full" />
+              <div className="flex justify-center lg:justify-start">
+                <div id="__next" className="m-3 bg-gradient-purple w-fit rounded-full py-[0.1rem] px-[0.1rem]">
+                  <CalendlyPopup CTAText="Schedule a consultation" className="bg-white dark:bg-gray-900 p-[0.4rem] rounded-full" />
+                </div>
               </div>
             </div>
             <Image
-              src={"/hero-1.png"}
-              alt={""}
+              src={"/images/hero-1.png"}
+              alt={"hero-1"}
               height={500}
               width={500}
             ></Image>
@@ -104,7 +106,7 @@ export default async function Home() {
           <div className="lg:w-1/2 lg:h-full flex justify-center items-center">
             <Image
               className="flex-1 w-full h-full object-contain"
-              src={"/contact-form.png"}
+              src={"/images/contact-form.png"}
               alt="contact"
               height={1280}
               width={1200}
@@ -132,7 +134,7 @@ const homeSections: SectionProps[] = [
         solutions and saw their operations evolve in ways they never imagined.
       </div>
     ),
-    image: "/hero-2.png",
+    image: "/images/hero-2.png",
     imageFirst: false,
     linkTo: "/blogs",
   },
@@ -150,7 +152,7 @@ const homeSections: SectionProps[] = [
         efficiency, and empowered decision-making.{" "}
       </div>
     ),
-    image: "/hero-3.png",
+    image: "/images/hero-3.png",
     imageFirst: true,
     linkTo: "/blogs",
   },
@@ -169,7 +171,7 @@ const homeSections: SectionProps[] = [
         responses, predictive problem-solving, and tailored interactions.{" "}
       </div>
     ),
-    image: "/hero-4.png",
+    image: "/images/hero-4.png",
     imageFirst: false,
     linkTo: "/blogs",
   },
@@ -188,7 +190,7 @@ const homeSections: SectionProps[] = [
         solutions and saw their operations evolve in ways they never imagined.
       </div>
     ),
-    image: "/hero-5.png",
+    image: "/images/hero-5.png",
     imageFirst: true,
     linkTo: "/blogs",
   },
@@ -196,20 +198,20 @@ const homeSections: SectionProps[] = [
 
 const companies: Company[] = [
 
-  { name: 'google', image: '/Google cloud.png' },
-  { name: '', image: '/Ebay.png' },
-  { name: '', image: '/Tux.png' },
-  { name: '', image: '/Spotify.png' },
-  { name: '', image: '/Airbnb.png' },
-  { name: '', image: '/Facebook.png' },
-  { name: '', image: '/Coca Cola.png' },
-  { name: '', image: '/Zoom.png' },
-  { name: '', image: '/Creative Cloud.png' },
-  { name: '', image: '/Netflix.png' },
-  { name: '', image: '/Discord.png' },
-  { name: '', image: '/Figma.png' },
-  { name: '', image: '/Paypal.png' },
-  { name: '', image: '/Adobe.png' },
+  { name: 'google', image: '/images/Google cloud.png' },
+  { name: '', image: '/images/Ebay.png' },
+  { name: '', image: '/images/Tux.png' },
+  { name: '', image: '/images/Spotify.png' },
+  { name: '', image: '/images/Airbnb.png' },
+  { name: '', image: '/images/Facebook.png' },
+  { name: '', image: '/images/Coca Cola.png' },
+  { name: '', image: '/images/Zoom.png' },
+  { name: '', image: '/images/Creative Cloud.png' },
+  { name: '', image: '/images/Netflix.png' },
+  { name: '', image: '/images/Discord.png' },
+  { name: '', image: '/images/Figma.png' },
+  { name: '', image: '/images/Paypal.png' },
+  { name: '', image: '/images/Adobe.png' },
 
 
 
@@ -220,25 +222,25 @@ const sildes: SlideProps[] = [
   {
     name: 'Amaka Micheal',
     designation: 'Media Executive, Buying & Control',
-    image: '/review.jpg',
+    image: '/images/review.jpg',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
     name: 'Cody Johnston',
     designation: 'Media Executive, Buying & Control',
-    image: '/prof1.png',
+    image: '/images/prof1.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
     name: 'John Smith',
     designation: 'Media Executive, Buying & Control',
-    image: '/prof2.png',
+    image: '/images/prof2.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
   {
     name: 'Micheal Scott',
     designation: 'Media Executive, Buying & Control',
-    image: '/prof3.png',
+    image: '/images/prof3.png',
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
 ]

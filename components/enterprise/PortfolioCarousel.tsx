@@ -5,8 +5,9 @@ import React, { useState } from 'react'
 import { Image as CaseImage } from "@prisma/client"
 import { DisplayServiceDTO } from "@/crud/service"
 import { MoveRight } from "lucide-react"
+import { seoUrl } from "@/lib/utils"
 function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
-    const [currentGrid, setCurrentGrid] = useState(services[0].CaseStudies);
+    const [currentGrid, setCurrentGrid] = useState(services[0].CaseStudies || []);
 
 
     return (
@@ -18,7 +19,7 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
                     services.map((service, index) => (
 
                         <div key={index} className="focus:text-[#5380EA] cursor-pointer hover:underline  flex justify-center items-center gap-2">
-                            <button onClick={()=>setCurrentGrid(service.CaseStudies)} className="peer peer/item focus:text-[#5380EA]">{service.title}
+                            <button onClick={() => setCurrentGrid(service.CaseStudies || [])} className="peer peer/item focus:text-[#5380EA]">{service.title}
                             </button>
                             <MoveRight className="h-full w-10 hidden lg:peer-focus:block peer-focus:text-[#5380EA]" />
                         </div>
@@ -32,11 +33,11 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
             {
 
                 <div className="flex-wrap flex lg:w-2/3">
-                    {currentGrid.map((caseStudy, index) => {
+                    {currentGrid?.map((caseStudy, index) => {
                         return (
                             <div key={index} className={`rounded-2xl aspect-square  w-1/2 p-3 overflow-hidden lg:w-1/4`}>
-                                <Link className="w-full h-full " href={`/casestudy/${caseStudy.id}`}>
-                                    <Image className="rounded-lg" src={`${caseStudy.images ? (caseStudy.images as CaseImage[])[0].src : `https://picsum.photos/200?random=1`}`} alt="" height={400} width={400} />
+                                <Link className="w-full h-full " href={`/casestudy/${seoUrl(caseStudy.title, caseStudy.id)}`}>
+                                    <Image className="rounded-lg object-cover" src={`${caseStudy.images ? (caseStudy.images as CaseImage[])[0].src : `https://picsum.photos/200?random=1`}`} alt="Case-study-image" height={400} width={400} />
                                 </Link>
                             </div>
                         )

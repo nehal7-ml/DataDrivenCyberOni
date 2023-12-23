@@ -63,7 +63,7 @@ async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaC
         where: { id: blogId },
         data: {
             ...blog,
-            images: { connectOrCreate: connectImages(blog.images) },
+            images:  connectImages(blog.images) ,
             tags: { connectOrCreate: connectTags(blog.tags) },
             author: { connect: { email: blog.author.email } }
         }
@@ -118,10 +118,10 @@ async function read(blogId: string, prismaClient: PrismaClient) {
 async function getAll(page: number, pageSize: number, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
 
-    if (pageSize !== 10 && pageSize != 30 && pageSize !== 50) throw new Error('page size must be 10, 30 or 50')
+    if (pageSize !== 10 && pageSize != 30 && pageSize !== 50 &&pageSize!==0) throw new Error('page size must be 10, 30 or 50')
 
     let allBlogs = await blogs.findMany({
-        skip: (page - 1) * pageSize, take: pageSize,
+        skip:page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
         where: {
         },
         include: {
@@ -154,7 +154,27 @@ export function getFeatured(prisma: PrismaClient) {
     return featured;
 
 }
+export async function addView(id:string, prisma:PrismaClient) {
+    const blogs= prisma.blog;
+    const update = await blogs.update({
+        where: {id},
+        data: {
+            Views: {increment: 1}
+        },
+        include: {
+            tags: true,
+            author: {
+                include: {
+                    image: true,
+                }
+            },
+            images: true,
+            Likes: true
+        }
+    })
 
+    return update
+}
 export function getRecent(prisma: PrismaClient) {
     const recentDate = new Date(Date.now() - 90 * (24 * 60 * 60 * 1000)) // 90 days
     const recent = prisma.blog.findMany({

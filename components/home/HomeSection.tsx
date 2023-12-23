@@ -68,18 +68,20 @@ const Section = ({
           <Image src={image} alt={image} height={500} width={500} />
         </div>
         {/* Text */}
-        <div className="p-8 lg:w-1/2">
+        <div className="p-8 lg:w-1/2 text-center lg:text-left">
           <div className="m-3 w-fit bg-gradient-purple bg-clip-text text-5xl font-bold text-transparent">
             {title}
           </div>
           <div className="m-3 text-xl font-bold">{subTitle}</div>
           <div className="m-3">{content}</div>
           <div className="m-3 h-[1px] bg-gradient-purple"></div>
-          <button className={`m-3 rounded-full bg-gradient-purple py-[13px] px-[1px] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}>
-            <Link href={linkTo} className="rounded-full bg-white p-3 dark:bg-gray-900 ">
-              Learn More
-            </Link>
-          </button>
+          <div className="flex justify-center lg:justify-start">
+            <button className={`m-3 rounded-full bg-gradient-purple py-[0.4rem] px-[0.1rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}>
+              <Link href={linkTo} className="rounded-full bg-white p-[0.4rem] dark:bg-gray-900 ">
+                Learn More
+              </Link>
+            </button>
+          </div>
         </div>
       </div>
     </section>

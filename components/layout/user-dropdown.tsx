@@ -50,8 +50,8 @@ export default function UserDropdown({ session }: { session: Session }) {
           className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-gray-300 transition-all duration-75 focus:outline-none active:scale-95 sm:h-9 sm:w-9"
         >
           <Image
-            alt={email}
-            src={image || `https://avatars.dicebear.com/api/micah/${email}.svg`}
+            alt={`avatar-${email}`}
+            src={image || `https://api.dicebear.com/7.x/micah/svg?seed=${email}`}
             width={40}
             height={40}
           />
