@@ -22,6 +22,7 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
 
 
     const darkTheme = `
+    <script src="https://cdn.tailwindcss.com"></script>
     <script id="themeScript" >
     const themeStyles = document.createElement('style');
     themeStyles.textContent=\`
@@ -37,6 +38,8 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
     `
 
     const lightTheme = `
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <script id="themeScript" >
     const themeStyles = document.createElement('style');
     themeStyles.textContent=\`
@@ -65,19 +68,18 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
     useEffect(() => {
         const script = `<script id="resizeScript" >
 
-    const fonts = document.createElement('link');
-    fonts.rel="stylesheet"
-    fonts.href="https://fonts.googleapis.com/css?family=Inter"
-    document.head.appendChild(fonts);
-    const styles = document.createElement('style');
-    styles.textContent=\`
-    body {
-        font-family: "Inter", sans-serif;
-      }
-    a {
-        color: pink;
-    }
-    \`
+                    const fonts = document.createElement('link');
+                    fonts.rel="stylesheet"
+                    fonts.href="https://fonts.googleapis.com/css?family=Inter"
+                    document.head.appendChild(fonts);
+                    const styles = document.createElement('style');
+                    styles.textContent=\`
+                    body {
+                        font-family: "Inter", sans-serif;
+                    }
+                    a {
+                        color: pink;
+                    }\`
     
     document.head.appendChild(styles);
 
@@ -103,19 +105,23 @@ function BlogContent({ content, theme }: { content: string, theme: 'dark' | 'lig
 
             console.log("loaded window", event.data);
             if (iframe.current && event.data.type === "resize") {
-                iframe.current.style.height = (event.data.size + 100).toString() + "px";
+                iframe.current.style.height = (event.data.size ).toString() + "px";
                 setLoaded(true)
 
             }
         });
 
+       
+
+    },[darkTheme, lightTheme, theme]);
+
+    useEffect(() => {
         window.addEventListener('theme', (event:CustomEventInit)=> {
             console.log(event.detail);
             if (event.detail.theme === 'dark') setInjectScript(darkTheme)
             else setInjectScript(lightTheme)
         });
-
-    });
+    },[darkTheme, lightTheme]);
 
 
 
