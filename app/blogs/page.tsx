@@ -18,6 +18,7 @@ export type BlogHomeProps = {
 export const dynamic = 'force-dynamic';
 async function Blogs() {
     const data = (await getData()) as BlogHomeProps
+    const random = data.recent[Math.floor(Math.random() * (data.recent.length))]
     // console.log(data.recent.slice(1, 2))
     return (
         <div className="z-10  dark:text-white px-5 xl:px-16 ">
@@ -102,19 +103,19 @@ async function Blogs() {
 
             <div className="my-10 container mx-auto">
                 <div className="text-2xl font-bold my-2">Random</div>
-                {data.recent[Math.floor(Math.random() * (data.recent.length))] &&
-                    <Link href={`/blogs/post/${seoUrl(data.recent[1].title, data.recent[1].id)}`} className="conatiner relative flex overflow-hidden flex-col md:flex-row-reverse my-5 h-80 w-full rounded-2xl shadow-lg">
+                {random &&
+                    <Link href={`/blogs/post/${seoUrl(random.title, random.id)}`} className="conatiner relative flex overflow-hidden flex-col md:flex-row-reverse my-5 h-80 w-full rounded-2xl shadow-lg">
                         <div className="w-full absolute h-full lg:w-1/2 lg:static">
-                            {data.recent[1] && data.recent[1].images[0] ?
+                            {random.images[0] ?
                                 // eslint-disable-next-line @next/next/no-img-element
-                                <Image width={500} height={500} src={data.recent[1].images[0].src} alt={stripFileExtension(data.recent[1].images[0].name || 'blog_preview') } className="w-full h-full object-cover" /> :
+                                <Image width={500} height={500} src={random.images[0].src} alt={stripFileExtension(random.images[0].name || 'blog_preview') } className="w-full h-full object-cover" /> :
                                 <div className="bg-[#1c0042e7] w-full h-full"></div>
                             }
                         </div>
                         <div className="p-5 z-30 lg:p-10 w-full lg:w-1/2 lg:dark:bg-slate-800 ">
-                            <p className="text-lg font-thin my-2">By {data.recent[1].author.firstName}</p>
-                            <h2 className="text-2xl font-semibold mb-2">{data.recent[1].title}</h2>
-                            <p className="text-base line-clamp-2">{data.recent[1].description}</p>
+                            <p className="text-lg font-thin my-2">By {random.author.firstName}</p>
+                            <h2 className="text-2xl font-semibold mb-2">{random.title}</h2>
+                            <p className="text-base line-clamp-4">{random.description}</p>
                         </div>
                     </Link>}
 
