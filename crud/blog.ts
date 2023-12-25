@@ -187,6 +187,9 @@ export function getRecent(prisma: PrismaClient) {
                     image: true,
                 }
             }, images: true
+        },
+        orderBy: {
+            date: 'desc'
         }
     });
     return recent;
