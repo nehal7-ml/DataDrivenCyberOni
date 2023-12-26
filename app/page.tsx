@@ -99,13 +99,13 @@ export default async function Home() {
           <EmailLetter></EmailLetter>
         </section>
 
-        <section className="conatiner flex flex-col-reverse lg:flex-row lg:px-10">
-          <div className="flex-1">
+        <section className="conatiner flex flex-col-reverse lg:flex-row lg:px-10 justify-center items-center">
+          <div className="lg:w-1/2">
             <ContactForm></ContactForm>
           </div>
-          <div className="lg:w-1/2 lg:h-full flex justify-center items-center">
+          <div className="lg:w-1/2 h-[35rem] flex justify-center items-center">
             <Image
-              className="flex-1 w-full h-full object-contain"
+              className="flex-1 w-full h-full object-scale-down"
               src={"/images/contact-form.png"}
               alt="contact"
               height={1280}
