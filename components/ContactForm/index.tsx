@@ -76,7 +76,7 @@ function ContactFormLOC(props: { onModal?: boolean, showModal?: boolean, setShow
 
   return (
     <div className="relative mx-auto h-full min-h-fit w-full rounded-lg bg-[#5001EAAD] p-6 shadow-lg">
-      <button className="absolute top-4 right-4 hover:text-red-500 cursor-pointer" onClick={()=>props.setShowModal? props.setShowModal(false):{}}><X /></button>
+      {props.setShowModal && <button className="absolute top-4 right-4 hover:text-red-500 cursor-pointer" onClick={()=>props.setShowModal? props.setShowModal(false):{}}><X /></button>}
       {showForm && (
         <form className="h-full w-full lg:p-6 " onSubmit={handleSubmit}>
           <h1 className="my-2 text-4xl">Contact us</h1>
