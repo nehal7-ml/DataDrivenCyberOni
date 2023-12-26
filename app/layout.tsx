@@ -11,9 +11,9 @@ import Head from "next/head";
 import { cookies } from "next/headers";
 import Script from "next/script";
 import { Suspense } from "react";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
+import { authOptions } from "@/lib/nextAuthAdapter";
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,

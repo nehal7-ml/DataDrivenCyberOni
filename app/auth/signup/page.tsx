@@ -35,7 +35,7 @@ export default async function SignUp() {
             <div className="flex flex-col p-5 justify-center items-center">
                 <h1 className="text-4xl text-center lg:text-[96px] ">No worries</h1>
             </div>
-            <div className="w-1/3">
+            <div className="lg:w-1/3">
                 <SignupForm />
             </div>
         </div>

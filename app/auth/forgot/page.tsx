@@ -36,7 +36,10 @@ export default async function Forgot() {
             <div className="flex flex-col p-5 justify-center items-center">
                 <h1 className="text-4xl text-center lg:text-[96px] ">No worries...</h1>
             </div>
-            <ForgotPassword />
+            <div className="lg:w-1/3">
+                <ForgotPassword />
+
+            </div>
         </div>
     )
 

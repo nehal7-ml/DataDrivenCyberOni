@@ -1,13 +1,12 @@
 'use client'
-import ClientInput from "@/components/ClientInput"
 import { RotateCcw } from "lucide-react"
 import React, { useEffect, useState, useTransition } from 'react'
 import { resetPassword } from "./submit"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Message } from "@/components/AuthMessage"
-import { useFormState } from "react-dom"
 import PasswordChecklist from "react-password-checklist"
 import Link from "next/link"
+import ClientInput from "@/components/layout/ClientInput"
 
 
 function ResetPasswordForm() {

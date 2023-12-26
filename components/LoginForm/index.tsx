@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from 'react'
 import ClientInput from "@/components/layout/ClientInput"
-import { getCsrfToken } from "next-auth/react";
+import { getCsrfToken , signIn} from "next-auth/react";
 import { Github, Google } from "../shared/icons";
 import AuthFormFooter from "../shared/auth-form-footer";
 
@@ -52,7 +52,7 @@ function LoginForm() {
                             placeholder=""
                             required
                         />
-                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 dark:bg-slate-900   px-1 dark:text-gray-100 transition-all   text-sm font-bold mb-2" htmlFor="email">
+                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-slate-900 backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-500 transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
                             Email
                         </label>
                     </div>
@@ -65,7 +65,7 @@ function LoginForm() {
                             placeholder=""
                             required
                         />
-                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 dark:bg-slate-900 bg-white  px-1 text-gray-500 dark:text-gray-50  transition-all   text-sm font-bold mb-2" htmlFor="email">
+                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-slate-900 backdrop-blur-sm px-1 text-gray-500 dark:text-gray-50  transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="password">
                             Password
                         </label>
                     </div>
@@ -79,15 +79,21 @@ function LoginForm() {
                 </form>
                 <div className="my-4 text-center font-bold  flex items-center justify-center gap-3"><hr className="w-1/3" /> OR <hr className="w-1/3" /></div>
                 <div className="flex justify-center items-center gap-4">
-                    <div>
-                        <Google />
-                    </div>
-                    <div>
-                        <Facebook />
-                    </div>
-                    <div>
-                        <Github/>
-                    </div>
+                    <button onClick={()=>signIn("google")}>
+                        <div>
+                            <Google />
+                        </div>
+                    </button>
+                    <button onClick={()=>signIn("facebook")}>
+                        <div>
+                            <Facebook />
+                        </div>
+                    </button>
+                    <button onClick={()=>signIn("github")}>
+                        <div>
+                            <Github/>
+                        </div>
+                    </button>
                 </div>
                 <AuthFormFooter />
                 

@@ -92,6 +92,7 @@ export type CreateUserDTO = {
     email: string;
     image?: CreateImageDTO;
     address?: CreateAddressDTO;
+    password?: string;
     role: Role;
 };
 

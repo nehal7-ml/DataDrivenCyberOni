@@ -3,12 +3,14 @@ import { connectOrCreateObject } from "./images";
 import { GetAllRecordsDTO } from "./commonDTO";
 import { CreateUserDTO, CredentialAuthDTO } from "./DTOs";
 import bcrypt from "bcrypt"
+import { AdapterAccount } from "next-auth/adapters";
 
-async function create(user: CreateUserDTO, prismaClient: PrismaClient) {
+async function createWithPassword(user: CreateUserDTO, prismaClient: PrismaClient) {
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { email: user.email } });
     if (existingUser) throw {status:400 ,message: `User ${user.email} already exists`};
     else {
+
         let createdUser = await users.create({
             data: {
                 email: user.email,
@@ -21,6 +23,34 @@ async function create(user: CreateUserDTO, prismaClient: PrismaClient) {
         return createdUser
     }
 
+}
+
+export async function getUserByAccount({ providerAccountId, provider }: { providerAccountId: string, provider: string }, prisma:PrismaClient) {
+    const users = prisma.user;
+    const accounts = prisma.account;
+    const account = await accounts.findUnique({ where: { provider_providerAccountId: {provider, providerAccountId} } , include: {
+        user:true
+    }});
+    return account?.user
+}
+
+export async function link(accountToLink: AdapterAccount, prisma:PrismaClient) {
+    const accounts = prisma.account;
+    const account = await accounts.create({
+        data: accountToLink
+    })
+    return account 
+
+}
+export async function unLink({ providerAccountId, provider }: { providerAccountId: string, provider: string }, prisma:PrismaClient) {
+    const accounts = prisma.account;
+    const account = await accounts.delete({
+        where: {
+            provider_providerAccountId: {provider, providerAccountId}
+        },
+
+    })
+    return account 
 }
 
 async function update(userId: string, user: CreateUserDTO, prismaClient: PrismaClient) {
@@ -103,4 +133,4 @@ export async function getUserByEmail(email: string, prismaClient: PrismaClient) 
     else throw { status: 400, message: `User ${email} doesn't exists` };
 }
 
-export { create, update, remove, read, getAll }
+export { createWithPassword, update, remove, read, getAll }
