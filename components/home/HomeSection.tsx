@@ -77,7 +77,7 @@ const Section = ({
           <div className="m-3 h-[1px] bg-gradient-purple"></div>
           <div className="flex justify-center lg:justify-start">
             <button className={`m-3 rounded-full bg-gradient-purple py-[0.4rem] px-[0.1rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}>
-              <Link href={linkTo} className="rounded-full bg-white p-[0.4rem] dark:bg-gray-900 ">
+              <Link href={linkTo} className="rounded-full bg-white p-[0.6rem] dark:bg-gray-900 ">
                 Learn More
               </Link>
             </button>

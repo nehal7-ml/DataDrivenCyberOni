@@ -16,12 +16,13 @@ export default async function Home() {
               <div className="m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF] to-[#FF2DF7]  bg-clip-text text-5xl font-bold text-transparent">
                 With Ai
               </div>
-              <div className="m-3 text-5xl font-bold">
-                Revolutionize Your Business
+              <div className="m-3 text-4xl font-bold">
+                Revolutionize Your Business with Data-Driven Mastery: Transform,
+                Automate, Personalize{" "}
               </div>
               <div className="m-3">
-                Our ambition is to reshape how you envision the use of your data
-                to automate mundane tasks.
+                Embark on an Data-Infused Journey to Redefine Your Businesses
+                Success
               </div>
               <div className="mx-3 h-[1px] w-full bg-gradient-purple" />
               <div className="flex justify-center lg:justify-start">
@@ -31,7 +32,7 @@ export default async function Home() {
                 >
                   <CalendlyPopup
                     CTAText="Schedule a consultation"
-                    className="rounded-full bg-white p-[0.4rem] dark:bg-gray-900"
+                    className="rounded-full bg-white p-[0.6rem] dark:bg-gray-900"
                   />
                 </div>
               </div>
@@ -109,7 +110,7 @@ export default async function Home() {
           <div className="flex items-center justify-center lg:h-full lg:w-1/2">
             <Image
               className="h-full w-full flex-1 object-contain"
-              src={"/images/contact-form.png"}
+              src={"/images/contact-forms/bg-removed/contact-blue-sweater.png"}
               alt="contact"
               height={1280}
               width={1200}
@@ -120,83 +121,75 @@ export default async function Home() {
     </>
   );
 }
-
 const homeSections: SectionProps[] = [
   {
-    title: "Data Driven Solutions",
-    subTitle:
-      "Transform, Automate, and Personalize: The AI-Driven Journey to Business Success!",
+    title: "Revolutionize Your Strategy with Advanced Business Intelligence",
+    subTitle: "Harness the Power of AI for Unmatched Data Insights!",
     content: (
       <div>
-        Imagine a world where every decision is backed by data insights, where
-        automation streamlines operations, and where every customer feels
-        they&apos;re getting a uniquely tailored experience. This is not a
-        dream; it&apos;s a reality for our partners. Dive into the success
-        stories of businesses that took the leap with Cyberoni&apos;s AI
-        solutions and saw their operations evolve in ways they never imagined.
+        Discover the cutting-edge in business intelligence with Cyberoni`s AI
+        solutions. Our technology empowers businesses to make data-backed
+        decisions, elevating strategies with precise, actionable insights. From
+        boosting operational efficiency to customizing customer interactions,
+        our AI tools are a game-changer. Explore success stories that showcase
+        tangible, transformative results with our AI partnerships.
       </div>
     ),
-    image: "/images/hero-2.png",
+    image: "/images/key-sections/background-removed/Data-3d.png",
     imageFirst: false,
     linkTo: "/blogs",
   },
   {
-    title: "Solutions Tailored For You",
-    subTitle:
-      "Harness the Power of YOUR Data with Cyberoni's Expert AI Models!",
+    title: "Transform Your Marketing with AI-Driven Automation",
+    subTitle: "Effortless Marketing Automation for Optimal Results!",
     content: (
       <div>
-        Every business is unique, and so is its data. Using AI models that
-        haven&apos;t been trained on your specific business data is like trying
-        to fit a square peg in a round hole. At Cyberoni, our deep expertise in
-        data science allows us to craft AI solutions tailored just for you. By
-        leveraging your own data, we ensure accurate predictions, unparalleled
-        efficiency, and empowered decision-making.{" "}
+        Embrace the new era of business with Cyberoni`s AI-driven marketing
+        automation. Our tools are designed to streamline your marketing efforts,
+        enhancing efficiency and effectiveness. Dive into the future of
+        automated marketing strategies, where you can focus on strategic growth
+        while our AI takes care of the rest, delivering outstanding results.
       </div>
     ),
-    image: "/images/hero-3.png",
+    image: "/images/key-sections/background-removed/Automation.png",
     imageFirst: true,
     linkTo: "/blogs",
   },
-
   {
-    title: "Elevating Support",
-    subTitle:
-      "Redefine Customer Interactions: AI-Powered Service & Support with Cyberoni!",
+    title: "Custom AI Solutions for Unique Business Challenges",
+    subTitle: "Precision-Driven AI Tailored to Your Business Needs!",
     content: (
       <div>
-        The expectations of modern customers are ever-evolving. They demand
-        swift, accurate, and personalized support round the clock. How can
-        businesses meet such expectations without compromising efficiency? The
-        answer lies in AI. Cyberoni&apos;s AI solutions seamlessly integrate
-        into your customer service and tech support systems, ensuring instant
-        responses, predictive problem-solving, and tailored interactions.{" "}
+        At Cyberoni, we recognize the uniqueness of each business. Our AI models
+        are expertly crafted to match your specific data and operational needs,
+        offering unparalleled accuracy and relevance. Experience the benefit of
+        customized AI solutions that drive smarter strategies and amplify
+        efficiency across your business operations.
       </div>
     ),
-    image: "/images/hero-4.png",
+    image: "/images/key-sections/background-removed/Tailored.png",
+    imageFirst: true,
+    linkTo: "/blogs",
+  },
+  {
+    title: "Redefine Customer Support with AI Innovation",
+    subTitle: "Elevate Your Customer Experience with Smart AI Solutions!",
+    content: (
+      <div>
+        Meet the modern demands of customer support with Cyberoni`s AI
+        solutions. Our technology ensures quick, precise, and individualized
+        support, seamlessly integrating into your systems. Enhance customer
+        satisfaction and operational effectiveness while proactively addressing
+        issues with our predictive analytics. Step into the future of customer
+        support with Cyberoni.
+      </div>
+    ),
+    image: "/images/key-sections/background-removed/Support.png",
     imageFirst: false,
-    linkTo: "/blogs",
-  },
-
-  {
-    title: "Data Driven Solutions",
-    subTitle:
-      "Transform, Automate, and Personalize: The AI-Driven Journey to Business Success!",
-    content: (
-      <div>
-        Imagine a world where every decision is backed by data insights, where
-        automation streamlines operations, and where every customer feels
-        they&apos;re getting a uniquely tailored experience. This is not a
-        dream; it&apos;s a reality for our partners. Dive into the success
-        stories of businesses that took the leap with Cyberoni&apos;s AI
-        solutions and saw their operations evolve in ways they never imagined.
-      </div>
-    ),
-    image: "/images/hero-5.png",
-    imageFirst: true,
     linkTo: "/blogs",
   },
 ];
+
 
 const companies: Company[] = [
   { name: "google", image: "/images/Google cloud.png" },
