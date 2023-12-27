@@ -25,15 +25,15 @@ export default async function SignUp() {
 
 
     if (session) {
-        const user = session.user as DisplayUserDTO;
+        const user = session.user as unknown as DisplayUserDTO;
         if (user) redirect('/')
     }
 
     return (
         <div className="flex gap-2 lg:gap-5 flex-col lg:flex-row justify-between items-center py-5 max-h-screen">
-            <Image src={'/images/signup-bg.png'} width={700} height={900} alt="login_bg" className="absolute object-contain h-full right-10 w-fit my-10" />
+            <Image src={'/images/signup-bg.png'} width={700} height={900} alt="login_bg" className="absolute object-contain h-full right-10 w-fit " />
             <div className="flex flex-col p-5 justify-center items-center">
-                <h1 className="text-4xl text-center lg:text-[96px] ">No worries</h1>
+                <h1 className="text-4xl text-center lg:text-[96px] ">Roll the Carpet !</h1>
             </div>
             <div className="lg:w-1/3">
                 <SignupForm />

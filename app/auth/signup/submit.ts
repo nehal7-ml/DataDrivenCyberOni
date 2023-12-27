@@ -10,7 +10,8 @@ export async function signUpSubmit(state: {
     password: string,
     success?: boolean,
     error?: string,
-    token: string
+    token: string,
+    valid: boolean
 }) {
 
     try {

@@ -7,6 +7,7 @@ import ClientInput from "@/components/layout/ClientInput"
 import { getCsrfToken , signIn} from "next-auth/react";
 import { Github, Google } from "../shared/icons";
 import AuthFormFooter from "../shared/auth-form-footer";
+import OauthLogin from "../OauthLogin";
 
 function LoginForm() {
     const searchParams = useSearchParams();
@@ -78,23 +79,7 @@ function LoginForm() {
                     <Link className="hover:text-blue-500 hover:underline text-center text-sm py-1" href={'/auth/forgot'}>Forgot Password?</Link>
                 </form>
                 <div className="my-4 text-center font-bold  flex items-center justify-center gap-3"><hr className="w-1/3" /> OR <hr className="w-1/3" /></div>
-                <div className="flex justify-center items-center gap-4">
-                    <button onClick={()=>signIn("google")}>
-                        <div>
-                            <Google />
-                        </div>
-                    </button>
-                    <button onClick={()=>signIn("facebook")}>
-                        <div>
-                            <Facebook />
-                        </div>
-                    </button>
-                    <button onClick={()=>signIn("github")}>
-                        <div>
-                            <Github/>
-                        </div>
-                    </button>
-                </div>
+                <OauthLogin />
                 <AuthFormFooter />
                 
             </div>

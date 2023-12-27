@@ -26,7 +26,7 @@ export default async function Forgot() {
 
 
     if (session) {
-        const user = session.user as DisplayUserDTO;
+        const user = session.user as unknown  as DisplayUserDTO;
         if (user) redirect('/')
     }
 
