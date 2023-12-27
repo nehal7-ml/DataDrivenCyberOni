@@ -116,7 +116,6 @@ function BlogContent({ content, theme , href}: { content: string, theme: 'dark' 
         }
     }, [cookie,classList]);
 
-    console.log(window.location.href, decodeURI(href));
     useEffect(() => {
         
         window.addEventListener("message", (event) => {
