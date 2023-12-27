@@ -322,7 +322,7 @@ export async function getFeatured(prisma: PrismaClient) {
 }
 
 
-export async function searchByTerm(search: string, page: number, prisma: PrismaClient) {
+export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
     const services = prisma.service;
 
 

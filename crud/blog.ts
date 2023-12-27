@@ -294,7 +294,7 @@ async function getComments(id: string, page: number, prisma: PrismaClient) {
     return readComments
 }
 
-export async function searchByTerm(search: string, page: number, prisma: PrismaClient) {
+export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
     const blogs = prisma.blog;
     const records = await blogs.findMany({
         where: {
@@ -323,6 +323,7 @@ export async function searchByTerm(search: string, page: number, prisma: PrismaC
             ]
         }
     })
+    return records
 
 }
 
