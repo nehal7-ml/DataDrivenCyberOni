@@ -13,7 +13,7 @@ function BlogContainer({ blog }: { blog: DisplayBlogDTO }) {
 
         <>
             <ProgressBar container={blogContainer} ></ProgressBar>
-            <div ref={blogContainer} className="absolute w-full h-full container mx-auto px-16">
+            <div ref={blogContainer} className="absolute w-full h-full container mx-auto px-[5rem]">
                 <div className="absolute xl:w-10 flex xl:flex-col gap-5 -top-10 xl:top-10 left-0 xl:translate-x-4  p-3">
                     <BlogShare />
                 </div>

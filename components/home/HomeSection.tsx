@@ -69,12 +69,12 @@ const Section = ({
         </div>
         {/* Text */}
         <div className="p-8 lg:w-1/2 text-center lg:text-left">
-          <div className="m-3 w-fit bg-gradient-purple bg-clip-text text-5xl font-bold text-transparent">
+          <div className="p-3 w-fit h-fit bg-gradient-purple bg-clip-text text-3xl font-bold text-transparent">
             {title}
           </div>
-          <div className="m-3 text-xl font-bold">{subTitle}</div>
-          <div className="m-3">{content}</div>
-          <div className="m-3 h-[1px] bg-gradient-purple"></div>
+          <div className="p-3 text-lg font-bold">{subTitle}</div>
+          <div className="p-3">{content}</div>
+          <div className="h-[1px] bg-gradient-purple"></div>
           <div className="flex justify-center lg:justify-start">
             <button className={`m-3 rounded-full bg-gradient-purple py-[0.4rem] px-[0.1rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}>
               <Link href={linkTo} className="rounded-full bg-white p-[0.4rem] dark:bg-gray-900 ">
