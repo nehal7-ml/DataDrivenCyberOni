@@ -1,13 +1,13 @@
 "use client";
-import Image from "next/image";
-import React, { ReactNode, useEffect } from "react";
 import { useAnimate, useInView } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
+import { ReactNode, useEffect } from "react";
 export type SectionProps = {
   title: string;
   subTitle: string;
-    content: ReactNode;
-    linkTo: string,
+  content: ReactNode;
+  linkTo: string;
   image: string;
   imageFirst?: boolean;
 };
@@ -16,7 +16,7 @@ const Section = ({
   title,
   subTitle,
   content,
-    image,
+  image,
   linkTo,
   imageFirst = false,
 }: SectionProps) => {
@@ -68,16 +68,21 @@ const Section = ({
           <Image src={image} alt={image} height={500} width={500} />
         </div>
         {/* Text */}
-        <div className="p-8 lg:w-1/2 text-center lg:text-left">
-          <div className="m-3 w-fit bg-gradient-purple bg-clip-text text-5xl font-bold text-transparent">
+        <div className="p-8 text-center lg:w-1/2 lg:text-left">
+          <div className="sm:text-3l m-3 w-fit bg-gradient-purple bg-clip-text text-5xl font-bold text-transparent">
             {title}
           </div>
           <div className="m-3 text-xl font-bold">{subTitle}</div>
           <div className="m-3">{content}</div>
           <div className="m-3 h-[1px] bg-gradient-purple"></div>
           <div className="flex justify-center lg:justify-start">
-            <button className={`m-3 rounded-full bg-gradient-purple py-[0.4rem] px-[0.1rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}>
-              <Link href={linkTo} className="rounded-full bg-white p-[0.6rem] dark:bg-gray-900 ">
+            <button
+              className={`m-3 rounded-full bg-gradient-purple px-[0.1rem] py-[0.4rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}
+            >
+              <Link
+                href={linkTo}
+                className="rounded-full bg-white p-[0.6rem] dark:bg-gray-900 "
+              >
                 Learn More
               </Link>
             </button>

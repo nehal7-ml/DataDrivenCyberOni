@@ -6,6 +6,7 @@ import Section, { SectionProps } from "@/components/home/HomeSection";
 import Slide, { SlideProps } from "@/components/home/Slide";
 import SlideShow from "@/components/home/SlideShow";
 import Image from "next/image";
+import Link from "next/link";
 export default async function Home() {
   return (
     <>
@@ -13,7 +14,7 @@ export default async function Home() {
         <section className="container mx-auto flex flex-col text-center lg:text-left">
           <div className="flex flex-col-reverse items-center justify-center lg:flex-row">
             <div className="flex flex-col items-center justify-center lg:items-start lg:justify-start ">
-              <div className="m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF] to-[#FF2DF7]  bg-clip-text text-5xl font-bold text-transparent">
+              <div className="sm:text-3l m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF]  to-[#FF2DF7] bg-clip-text text-5xl font-bold text-transparent">
                 With Ai
               </div>
               <div className="m-3 text-4xl font-bold">
@@ -66,7 +67,10 @@ export default async function Home() {
           );
         })}
 
-        <section className="container mx-auto">
+        <section className="container mx-auto text-center">
+          <h2 className="  m-3 w-fit bg-gradient-purple bg-clip-text text-3xl font-bold text-transparent">
+            Customer Reviews and Feedback
+          </h2>
           <SlideShow
             slides={sildes.map((card, index) => {
               return (
@@ -82,6 +86,27 @@ export default async function Home() {
               );
             })}
           ></SlideShow>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-semibold text-blue-600 hover:text-blue-800"
+              aria-label="View our business"
+            >
+              View our Business
+            </Link>
+            &nbsp;|&nbsp;
+            <Link
+              href="/google-business"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-semibold text-blue-600 hover:text-blue-800"
+              aria-label="View our business"
+            >
+              Write a Review
+            </Link>
+          </div>
         </section>
         {homeSections.slice(2, 5).map((item, index) => {
           return (
@@ -190,7 +215,6 @@ const homeSections: SectionProps[] = [
   },
 ];
 
-
 const companies: Company[] = [
   { name: "google", image: "/images/Google cloud.png" },
   { name: "", image: "/images/Ebay.png" },
@@ -214,7 +238,6 @@ const images = [
   "/images/reviews/Pink_Girl.jpg",
 ];
 function getRandomImage(): string {
-  
   const randomIndex = Math.floor(Math.random() * images.length);
   return images[randomIndex];
 }
