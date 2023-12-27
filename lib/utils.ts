@@ -166,7 +166,7 @@ export function stripFileExtension(fileName: string): string {
   return fileName;
 }
 
-export function generateRandomArray(originalArray: string[] |number[], n:number, seed:string) {
+export function generateRandomArray(originalArray: string[] | number[], n: number, seed: string) {
   const randomArray = [];
   const originalArrayLength = originalArray.length;
 
@@ -180,3 +180,13 @@ export function generateRandomArray(originalArray: string[] |number[], n:number,
   return randomArray;
 }
 
+
+export function cleanHtmlString(inputString: string) {
+  // Remove HTML tags (including partial tags)
+  const withoutTags = inputString.replace(/<[^>]*>?/g, '');
+
+  // Remove HTML keywords (you can customize this list)
+  const withoutKeywords = withoutTags.replace(/\b(?:html|head|body|div|span|p|h[1-6])\b/gi, '');
+
+  return withoutKeywords;
+}

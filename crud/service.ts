@@ -321,4 +321,80 @@ export async function getFeatured(prisma: PrismaClient) {
 
 }
 
+
+export async function searchByTerm(search: string, page: number, prisma: PrismaClient) {
+    const services = prisma.service;
+
+
+    const records = await services.findMany({
+        skip: page === 0 ? 0 : (page - 1) * 5, 
+        take: page === 0 ? 9999 : 5,
+        where: {
+            OR: [
+                {
+                    title: {
+                        contains: search
+                    }
+                },
+
+                {
+                    ServiceDescription: {
+                        some: {
+                            content: {
+                                contains: search
+                            }
+                        }
+                    }
+                },
+
+                {
+                    SubServices: {
+                        some: {
+                            OR: [
+                                {
+                                    description: {
+                                        contains: search
+                                    }
+                                },
+                                {
+                                    title: {
+                                        contains: search
+                                    }
+                                },
+                                {
+                                    serviceDeliverables: {
+                                        array_contains: search
+                                    }
+                                },
+                                {
+                                    tags: {
+                                        some: {
+                                            name: {
+                                                contains: search
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+
+                        }
+                    }
+                },
+                {
+                    tags: {
+                        some: {
+                            name: {
+                                contains: search,
+
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    })
+
+    return records;
+}
+
 export { create, update, remove, read, getAll }

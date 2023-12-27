@@ -9,16 +9,9 @@ import sanitize from "xss";
 import parser from 'html-react-parser'
 
 function BlogContent({ content, theme , href}: { content: string, theme: 'dark' | 'light', href: string}) {
-    const getBlobURL = (code: string, type: string) => {
-        return "data:text/html;charset=utf-8," + encodeURI(code)
-    }
 
     const [loaded, setLoaded] = useState(true);
-    const body = useRef<HTMLBodyElement>(null);
-    let cookie = useRef(getCookie('theme'));
-    const [injectScript, setInjectScript] = useState('')
 
-    const [classList, setClassList] = useState<DOMTokenList>();
     const iframe = useRef<HTMLIFrameElement>(null)
     const resizeScript = `<script id="resizeScript" >
     const body= document.querySelector('body')
@@ -106,16 +99,6 @@ function BlogContent({ content, theme , href}: { content: string, theme: 'dark' 
         </html>
 
     `
-
-    useEffect(() => {
-        console.log(cookie);
-        cookie.current = getCookie('theme')
-        if (cookie.current === 'dark') {
-        } else {
-
-        }
-    }, [cookie,classList]);
-
     useEffect(() => {
         
         window.addEventListener("message", (event) => {
