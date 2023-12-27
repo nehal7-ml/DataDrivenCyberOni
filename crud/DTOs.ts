@@ -1,4 +1,4 @@
-import { Blog, BlogComment, EventStatus, Image, PricingModel, Role, Service, ServiceDescription, SubService, Tag, User } from "@prisma/client";
+import { Blog, BlogComment, BlogLike, EventStatus, Image, PricingModel, Role, Service, ServiceDescription, SubService, Tag, User } from "@prisma/client";
 
 export type CreateBlogDTO = {
     title: string;
@@ -13,7 +13,7 @@ export type CreateBlogDTO = {
     tags: CreateTagDTO[];
 };
 
-export type DisplayBlogDTO = Blog & { author: User & {image: Image}; tags: Tag[], images:Image[], Comments: BlogComment[]}; 
+export type DisplayBlogDTO = Blog & { author: User & {image: Image}; tags: Tag[], images:Image[], Comments: BlogComment[], Likes: BlogLike[]}; 
 
 export type CreateImageDTO = {
     id?: string | undefined;
@@ -103,6 +103,7 @@ export type DisplayUserDTO = {
     email: string;
     emailVerified?: Date;
     role: Role;
+    image:Image
 };
 export type CreateAddressDTO = {
     id?: string;

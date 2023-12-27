@@ -6,9 +6,10 @@ import { LayoutDashboard, LogOut } from "lucide-react";
 import Popover from "@/components/shared/popover";
 import Image from "next/image";
 import { Session } from "next-auth";
+import { DisplayUserDTO } from "@/crud/DTOs";
 
 export default function UserDropdown({ session }: { session: Session }) {
-  const { email, image } = session?.user || {};
+  const { email, image }  = session?.user as unknown  as DisplayUserDTO|| {};
   const [openPopover, setOpenPopover] = useState(false);
 
   if (!email) return null;
@@ -51,7 +52,7 @@ export default function UserDropdown({ session }: { session: Session }) {
         >
           <Image
             alt={`avatar-${email}`}
-            src={image || `https://api.dicebear.com/7.x/micah/svg?seed=${email}`}
+            src={image? image.src : `https://api.dicebear.com/7.x/initials/svg?seed=${email}` }
             width={40}
             height={40}
           />

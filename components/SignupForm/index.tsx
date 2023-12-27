@@ -6,13 +6,38 @@ import React, { useEffect, useState } from 'react'
 import ClientInput from "@/components/layout/ClientInput"
 import { getCsrfToken } from "next-auth/react";
 import { Github, Google } from "../shared/icons";
+import GoogleCaptchaWrapper from "../GoogleCaptchaWrapper";
+import { useReCaptcha } from "next-recaptcha-v3";
+import { signUpSubmit } from "@/app/auth/signup/submit";
 
 function SignupForm() {
+    return <>
+        <GoogleCaptchaWrapper >
+            <SignupFormLOC />
+        </GoogleCaptchaWrapper>
+    </>
+}
+function SignupFormLOC() {
     const searchParams = useSearchParams();
     const [csrfToken, setCsrfToken] = useState("");
     const [search, setSearch] = useState({
         error: searchParams.get('error') as string,
 
+    });
+    const { executeRecaptcha, loaded } = useReCaptcha();
+
+    const [state, setState] = useState<{
+        token: string,
+        email: string,
+        password: string,
+        success?: boolean,
+        error?: string,
+
+    }>({
+        password: "",
+        success: undefined,
+        token: searchParams.get("token") as string,
+        email: ""
     });
 
     useEffect(() => {
@@ -29,11 +54,20 @@ function SignupForm() {
         })
     }, [searchParams]);
 
+    async function submit() {
+        if (!loaded) setState(prev => ({ ...prev, error: "captcha not loaded" }))
+        const token = await executeRecaptcha('signup_submit');
+        setState(prev => ({ ...prev, token }));
+
+        const newState = await signUpSubmit({...state, token});
+        setState(newState);
+    }
+
     return (
         <>
             <div className="container mx-auto max-w-md border rounded-xl backdrop-blur-sm bg-gray-50/10 dark:bg-black/5 py-5 max-h-[80vh]">
 
-                <form method="POST" action={'/api/auth/callback/credentials'} className="flex flex-col px-5 pt-5 pb-1 bg-transparent rounded-2xl text-gray-950 dark:text-gray-50">
+                <form method="POST" action={submit} className="flex flex-col px-5 pt-5 pb-1 bg-transparent rounded-2xl text-gray-950 dark:text-gray-50">
                     <h1 className="text-bold text-2xl dark:text-gray-50 my-1">Signup</h1>
                     <p className="text-base my-1">Just some details to get you in.!</p>
                     {search.error === 'CredentialsSignin' ?
@@ -49,6 +83,11 @@ function SignupForm() {
                             id="username"
                             type="email"
                             placeholder=""
+                            value={state.email}
+                            onChange={(e) => setState(prev => ({
+                                ...prev,
+                                email: e.target.value
+                            }))}
                             required
                         />
                         <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 dark:bg-slate-900   px-1 dark:text-gray-100 transition-all   text-sm font-bold mb-2" htmlFor="email">
@@ -62,6 +101,11 @@ function SignupForm() {
                             name="password"
                             type="password"
                             placeholder=""
+                            value={state.password}
+                            onChange={(e) => setState(prev => ({
+                                ...prev,
+                                password: e.target.value
+                            }))}
                             required
                         />
                         <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 dark:bg-slate-900 bg-white  px-1 text-gray-500 dark:text-gray-50  transition-all   text-sm font-bold mb-2" htmlFor="email">
@@ -72,7 +116,7 @@ function SignupForm() {
 
                         <ClientInput
                             className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
-                            name="password"
+                            name="confirm"
                             type="password"
                             placeholder=""
                             required
@@ -98,7 +142,7 @@ function SignupForm() {
                         <Facebook />
                     </div>
                     <div>
-                        <Github/>
+                        <Github />
                     </div>
                 </div>
                 <div className="my-2 text-center mt-5">

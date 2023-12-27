@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import ProgressBar from "./BlogReadProgess";
 import BlogShare from "./BlogShare";
-import { DisplayBlogDTO } from "@/crud/blog";
 import BlogStats from "./BlogStats";
+import { DisplayBlogDTO } from "@/crud/DTOs";
 
 function BlogContainer({ blog }: { blog: DisplayBlogDTO }) {
     const blogContainer = useRef<HTMLDivElement>(null)

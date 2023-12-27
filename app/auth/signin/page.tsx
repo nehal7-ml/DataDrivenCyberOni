@@ -25,8 +25,8 @@ export default async function SignIn() {
 
 
     if (session) {
-        const user = session.user as DisplayUserDTO;
-        if (user.role == 'ADMIN' || user.role == 'SUPERUSER') redirect('/')
+        const user = session.user as unknown as DisplayUserDTO;
+        if (user) redirect('/')
     }
 
     return (

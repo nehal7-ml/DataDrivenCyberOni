@@ -168,8 +168,9 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
               </button>
             </div>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex  min-w-fit">Sign In</Link>
-            <Link href={'/api/auth/signout'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex min-w-fit">Sign Up</Link>
+            {session ? <><UserDropdown session={session} /></> : 
+            <><Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex  min-w-fit">Sign In</Link>
+              <Link href={'/auth/signup'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex min-w-fit">Sign Up</Link></>}
             <ToggleDarkMode enabled={darkMode} className={'hidden xl:flex'} />
           </div>
 
