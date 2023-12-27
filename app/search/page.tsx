@@ -17,9 +17,9 @@ async function SearchResults({ searchParams }: { searchParams: { q: string, page
                 <div className="flex gap-4 min-h-screen w-full">
 
                     <div className="h-full w-1/6">
-                        <div className="text-xl text-gray-500">Filter Results</div>
+                        <div className="text-xl text-gray-500 mb-5">Filter Results</div>
                         <Link href={{ query: { q: searchParams.q, page: searchParams.page, type: undefined }, pathname: '/search' }}>
-                            <div className={`${!searchParams.type ? 'font-bold' : 'font-light'}`}>All</div>
+                            <div className={`${!searchParams.type ? 'font-bold' : 'font-light'} `}>All</div>
                         </Link>
                         <Link href={{ query: { q: searchParams.q, page: searchParams.page, type: 'blogs' }, pathname: '/search' }}>
                             <div className={`${searchParams.type === 'blogs' ? 'font-bold' : 'font-light'}`}>Blogs</div>
