@@ -12,7 +12,7 @@ function ContactButton() {
                 <Image className="object-contain" src={'/images/chat-button.png'} alt="chatbutton" width={60} height={60} />
             </button>
             <Modal setShowModal={setShow} showModal={show} >
-                <ContactForm onModal={true} setShowModal={setShow} />
+                    <ContactForm onModal={true} setShowModal={setShow} />
             </Modal>
         </>
 

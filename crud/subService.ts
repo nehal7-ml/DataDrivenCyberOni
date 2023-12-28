@@ -1,8 +1,7 @@
 import { PricingModel, PrismaClient, SubService } from "@prisma/client"
-import { CreateImageDTO, ImageSchema } from "./images";
 import { connectOrCreateObject } from "./tags";
-import { CreateTagDTO } from "./DTOs";
-import { TagSchema } from "./jsonSchemas";
+import { CreateImageDTO, CreateTagDTO } from "./DTOs";
+import { ImageSchema, TagSchema } from "./jsonSchemas";
 export type CreateSubServiceDTO = {
     id?: string;
     title: string;
@@ -25,50 +24,6 @@ export type Discount = {
     name: string;
     value: string;
 }
-
-
-export const SubserviceSchema = {
-    "type": "object",
-    "properties": {
-        "id": { "type": "string" },
-        "title": { "type": "string" },
-        "pricingModel": { enum: [PricingModel.DEFAULT, PricingModel.AGGRESSIVE] },
-        "discounts": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": { "type": "string" },
-                    "value": { "type": "string" }
-                },
-                "required": ["name", "value"]
-            }
-        },
-        "serviceDeliverables": {
-            "type": "array",
-            "items": { "type": "string" }
-        },
-        "serviceUsageScore": { "type": "number" },
-        "description": { "type": "string" },
-        "department": { "type": "string" },
-        "estimated_hours_times_fifty_percent": { "type": "number" },
-        "estimated_hours_times_one_hundred_percent": { "type": "number" },
-        "overheadCost": { "type": "number" },
-        "complexity": { "type": "number" },
-        "skillLevel": { "type": "string" },
-        "image": { "$ref": "#/definitions/CreateImageDTO" },
-        "tags": {
-            "type": "array",
-            "items": { "$ref": "#/definitions/CreateTagDTO" }
-        }
-    },
-    "required": ["title", "pricingModel", "discounts", "serviceDeliverables", "serviceUsageScore", "description", "department", "estimated_hours_times_fifty_percent", "estimated_hours_times_one_hundred_percent", "overheadCost", "complexity", "skillLevel"],
-    "definitions": {
-        "CreateImageDTO": ImageSchema,
-        "CreateTagDTO": TagSchema
-    }
-}
-
 
 export async function create(newSubService: CreateSubServiceDTO, serviceId: string, prismaClient: PrismaClient) {
     const subServices = prismaClient.subService;

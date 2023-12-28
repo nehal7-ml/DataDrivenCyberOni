@@ -1,6 +1,6 @@
 import ms from "ms";
 import slugify from "slugify";
-
+import seedRandom from 'seedrandom'
 export interface HttpError extends Error {
   status: number;
   message: string;
@@ -145,9 +145,9 @@ export function extractUUID(dataURI: string) {
 
 
 export function seoUrl(title: string, id: string) {
-  return slugify(`${title} ${id}`, {
+  return encodeURIComponent(slugify(`${title} ${id}`, {
     replacement: '-'
-  })
+  }))
 
 
 }
@@ -164,4 +164,29 @@ export function stripFileExtension(fileName: string): string {
 
   // If there is no dot or it's the first character, return the original file name
   return fileName;
+}
+
+export function generateRandomArray(originalArray: string[] | number[], n: number, seed: string) {
+  const randomArray = [];
+  const originalArrayLength = originalArray.length;
+
+  const rng = seedRandom(seed);
+
+  for (let i = 0; i < n; i++) {
+    const randomIndex = Math.floor(rng() * originalArrayLength);
+    randomArray.push(originalArray[randomIndex]);
+  }
+
+  return randomArray;
+}
+
+
+export function cleanHtmlString(inputString: string) {
+  // Remove HTML tags (including partial tags)
+  const withoutTags = inputString.replace(/<[^>]*>?/g, '');
+
+  // Remove HTML keywords (you can customize this list)
+  const withoutKeywords = withoutTags.replace(/\b(?:html|head|body|div|span|p|h[1-6])\b/gi, '');
+
+  return withoutKeywords;
 }

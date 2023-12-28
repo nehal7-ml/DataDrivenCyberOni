@@ -35,8 +35,8 @@ async function BlogList({ params }: { params: { list: string } }) {
                                                     className="w-full h-full object-cover"
                                                     src={blog.images[0] ? blog.images[0].src : 'https://placehold.co/600x400'}
                                                     alt={blog.title}
-                                                    height={200}
-                                                    width={200} />
+                                                    height={450}
+                                                    width={500} />
                                             </div>
                                             <div className="px-6 py-1">
                                                 <div className="mb-2">by {blog.author.firstName} </div>

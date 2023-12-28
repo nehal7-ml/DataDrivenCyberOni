@@ -1,7 +1,10 @@
-import { PrismaClient } from "@prisma/client";
-import { connectOrCreateObject as connectTags, } from "./tags";
-import { connectOrCreateObject as connectImages, } from "./images";
+import { Blog, PrismaClient, Tag, User, Image, BlogComment, BlogLike } from "@prisma/client";
+import { connectOrCreateObject as connectTags } from "./tags";
+import { connectOrCreateObject as connectImages } from "./images";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { cleanHtmlString } from "@/lib/utils";
 import { CommentDTO, CreateBlogDTO } from "./DTOs";
+
 
 
 
@@ -150,6 +153,9 @@ export function getRecent(prisma: PrismaClient) {
                     image: true,
                 }
             }, images: true
+        },
+        orderBy: {
+            date: 'desc'
         }
     });
     return recent;
@@ -251,6 +257,39 @@ async function getComments(id: string, page: number, prisma: PrismaClient) {
     })
 
     return readComments
+}
+
+export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
+    const blogs = prisma.blog;
+    const records = await blogs.findMany({
+        where: {
+            OR: [
+                {
+                    title: {
+                        contains: search,
+                    },
+
+                },
+                {
+                    description: {
+                        contains: search,
+                    }
+                },
+                {
+                    subTitle: {
+                        contains: search
+                    }
+                },
+                {
+                    content: {
+                        contains: cleanHtmlString(search),
+                    }
+                }
+            ]
+        }
+    })
+    return records
+
 }
 
 export async function addLike(blogId: string, userEmail: string, prisma: PrismaClient) {

@@ -7,7 +7,7 @@ import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
 import { ReactNode, useEffect, useState } from "react";
-import { ActivitySquare, AppWindow, BarChart, Book, BookCheck, Briefcase, CheckCircle, ChevronDown, Cog, Cpu, FileStack, Fullscreen, Group, HeartHandshake, HelpCircle, Info, Layers3, LifeBuoy, Lightbulb, LineChart, Lock, MailQuestion, MapPin, Megaphone, Menu, Moon, MoveRight, Newspaper, Phone, PieChart, PlusCircle, Repeat2, Sun, Terminal, TerminalSquare, ThumbsUp, Users } from "lucide-react";
+import { ActivitySquare, AppWindow, BarChart, Book, BookCheck, Briefcase, CheckCircle, ChevronDown, Cog, Cpu, FileStack, Fullscreen, Group, HeartHandshake, HelpCircle, Info, Layers3, LifeBuoy, Lightbulb, LineChart, Lock, MailQuestion, MapPin, Megaphone, Menu, Moon, MoveRight, Newspaper, Phone, PieChart, PlusCircle, Repeat2, Search, Sun, Terminal, TerminalSquare, ThumbsUp, Users } from "lucide-react";
 import { setCookie } from 'cookies-next';
 import MegaMenu, { MegamenuProps } from "../MegaMenu";
 
@@ -160,13 +160,24 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
           </div>
           <div className=" items-center justify-center flex gap-3 p-3">
             <div className="relative block">
-              <input
-                type="text"
-                placeholder="Search"
-                className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 xl:w-38"
-              />
-              <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
-              </button>
+              <form action="/search" method="GET">
+                <input
+                  type="number"
+                  name='page'
+                  value={1}
+                  hidden
+                  className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 xl:w-38"
+                />
+                <input
+                  type="text"
+                  name='q'
+                  placeholder="Search"
+                  className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 xl:w-38"
+                />
+                <button type="submit"  className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <Search />
+                </button>
+              </form>
             </div>
             {session ? <><UserDropdown session={session} /></> : 
             <><Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex  min-w-fit">Sign In</Link>
