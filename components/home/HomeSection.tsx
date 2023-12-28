@@ -56,7 +56,7 @@ const Section = ({
   const buttonAlignmentClass = imageFirst ? "text-right" : "text-left";
 
   return (
-    <section className={`my-5  lg:py-2`}>
+    <section className={`my-5 lg:my-10  lg:py-2`}>
       <div className={`container mx-auto grid grid-cols-1 grid-rows-[min-content_1fr_min-content] auto-rows-min lg:grid-cols-2 lg:grid-rows-[min-content_1fr] `}
       >
         <div className={`p-3 lg:px-7 h-fit bg-gradient-purple bg-clip-text text-4xl lg:col-span-1 font-bold text-transparent text-center lg:text-left`}>
@@ -77,7 +77,7 @@ const Section = ({
           <div className="h-[1px] bg-gradient-purple"></div>
           <div className="flex justify-center lg:justify-start">
             <button
-              className={`m-3 rounded-full bg-gradient-purple px-[0.1rem] py-[0.4rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}
+              className={`m-3 rounded-full bg-gradient-purple px-[0.1rem] py-[0.6rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}
             >
               <Link
                 href={linkTo}
