@@ -1,13 +1,13 @@
 "use client";
-import Image from "next/image";
-import React, { ReactNode, useEffect } from "react";
 import { useAnimate, useInView } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
+import { ReactNode, useEffect } from "react";
 export type SectionProps = {
   title: string;
   subTitle: string;
   content: ReactNode;
-  linkTo: string,
+  linkTo: string;
   image: string;
   imageFirst?: boolean;
 };
@@ -76,8 +76,13 @@ const Section = ({
           <div className="pb-2">{content}</div>
           <div className="h-[1px] bg-gradient-purple"></div>
           <div className="flex justify-center lg:justify-start">
-            <button className={`m-3 rounded-full bg-gradient-purple py-[0.4rem] px-[0.1rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}>
-              <Link href={linkTo} className="rounded-full bg-white p-[0.4rem] dark:bg-gray-900 ">
+            <button
+              className={`m-3 rounded-full bg-gradient-purple px-[0.1rem] py-[0.4rem] hover:shadow-md dark:hover:shadow-[0_4px_10px_1px_#000000] ${buttonAlignmentClass}`}
+            >
+              <Link
+                href={linkTo}
+                className="rounded-full bg-white p-[0.6rem] dark:bg-gray-900 "
+              >
                 Learn More
               </Link>
             </button>

@@ -32,6 +32,16 @@ const nextConfig = {
         destination: "https://form.jotform.com/233471176876163",
         permanent: true,
       },
+      {
+        source: "/reviews",
+        destination: "https://g.page/r/CfS7tYPMVQ8ZEAI/review",
+        permanent: true,
+      },
+      {
+        source: "/google-business",
+        destination: "https://maps.app.goo.gl/44BHLXSPYw6mNotMA",
+        permanent: true,
+      },
     ];
   },
   experimental: {
