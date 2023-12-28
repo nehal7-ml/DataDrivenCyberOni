@@ -1,7 +1,6 @@
 import { PricingModel } from "@prisma/client";
 
 
-
 export const ImageSchema = {
     "type": "object",
     "properties": {
