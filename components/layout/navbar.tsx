@@ -164,7 +164,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                 <input
                   type="number"
                   name='page'
-                  value={1}
+                  defaultValue={1}
                   hidden
                   className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 xl:w-38"
                 />
