@@ -12,6 +12,8 @@ import BlogContent from "@/components/blogs/BlogContent";
 import { cookies } from "next/headers";
 import { extractUUID, seoUrl, stripFileExtension } from "@/lib/utils";
 import { DisplayBlogDTO } from "@/crud/DTOs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/nextAuthAdapter";
 
 export const dynamic = 'force-dynamic';
 
@@ -51,6 +53,8 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
 
 async function BlogPost({ params }: { params: { id: string } }) {
+    const session = await getServerSession(authOptions);
+
     const seoTitle = params.id
     const id = extractUUID(seoTitle)
     const blog = await getData(id);
@@ -63,7 +67,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
     const cookieStore = cookies();
     const theme = cookieStore.get("theme")?.value as string === 'dark' ? 'dark' : "light";
-
+    
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
             <div className="w-full ">
@@ -80,7 +84,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
                 <div className="relative mx-auto flex flex-col  items-center my-10 xl:py-10  xl:px-10 px-1 py-5 min-h-screen container">
                     <div className="max-w-full flex justify-center items-center">{blog.images[0] ? <Image priority={true} className="object-contain m-2 w-full h-[40vh] rounded-lg" src={blog.images[0].src} alt={ stripFileExtension(blog.images[0].name || 'blog_image')} width={500} height={300}></Image> : <></>}</div>
                     {<BlogContent content={blog.content} theme={theme} />}
-                    <BlogContainer blog={blog} />
+                    <BlogContainer blog={blog}  session={session}/>
 
                 </div>
 

@@ -30,7 +30,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
   };
 
 
-  console.log(session?.user);
+  console.log(session);
   return (
     <>
       <div
@@ -154,7 +154,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 
 
             <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  xl:hidden">Sign In</Link>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex xl:hidden">Sign Up</Link>
+            <Link href={'/auth/signup'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex xl:hidden">Sign Up</Link>
             <ToggleDarkMode enabled={darkMode} className={'flex xl:hidden justify-center items-center'} />
 
           </div>

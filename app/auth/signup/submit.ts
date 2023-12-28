@@ -18,6 +18,7 @@ export async function signUpSubmit(state: {
         const { success } = await verifyCaptcha(state.token);
         if (!success) state.error = "Captch failed try again";
         else {
+
             const newUser = await createWithPassword({
                 email: state.email,
                 role: Role.USER,

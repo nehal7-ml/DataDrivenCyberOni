@@ -7,7 +7,7 @@ function AuthLayout({
 }) {
     return (
 
-        <div className="h-screen">
+        <div className="">
             {children}
         </div>
     );

@@ -1,5 +1,5 @@
 import Credentials from "next-auth/providers/credentials";
-import { NextAuthOptions, RequestInternal } from "next-auth";
+import { NextAuthOptions, RequestInternal, SessionOptions } from "next-auth";
 import { authorizeWithPassword, createWithPassword, getUserByEmail, getUserByAccount as getAccount, read as getUser, update, remove, link, unLink } from "@/crud/user";
 import { prisma } from "@/prisma/prismaClient";
 import { PrismaClient, Role } from "@prisma/client";
@@ -28,15 +28,20 @@ export const authOptions: NextAuthOptions = {
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            allowDangerousEmailAccountLinking: true
+
 
         }),
         Facebook({
             clientId: process.env.FACEBOOK_CLIENT_ID as string,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
+            allowDangerousEmailAccountLinking: true
+
         }),
         Github({
             clientId: process.env.GITHUB_CLIENT_ID as string,
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+            allowDangerousEmailAccountLinking: true
         }),
     ],
     pages: {
@@ -44,13 +49,28 @@ export const authOptions: NextAuthOptions = {
 
     },
 
+    session: {
+        strategy: "database",
 
+    },
+
+    useSecureCookies: process.env.NODE_ENV ==='production',
     callbacks: {
+        jwt: async ({ token, user, session, trigger }) => {
+            user && (token.user = user)
+            if (trigger === "update" && session?.name) {
+                // Note, that `session` can be any arbitrary object, remember to validate it!
+                token.name = session.name
+                //token.user = user
+            }
+            return token
+        },
 
         session: async ({ session, token }) => {
             
             token && token.user && (session.user = token.user)
 
+            //console.log("session callback",session, token);
             return session
         },
 
@@ -82,7 +102,7 @@ async function authorize(credentials: Record<"password" | "username", string> | 
 export default function MyAdapter(client: PrismaClient, options = {}): Adapter {
     return {
         async createUser(user: Omit<AdapterUser, "id">) {
-            // console.log("create users/...");
+            //console.log("create users/...");
             const createUser: CreateUserDTO = {
                 ...user,
                 role: Role.USER,
@@ -94,7 +114,7 @@ export default function MyAdapter(client: PrismaClient, options = {}): Adapter {
             return newUser as AdapterUser
         },
         async getUser(id: string) {
-            // console.log("find user...");
+            //console.log("find user...");
             try {
 
                 const user = await getUser(id, client);
@@ -117,7 +137,7 @@ export default function MyAdapter(client: PrismaClient, options = {}): Adapter {
         },
         async getUserByAccount({ providerAccountId, provider }: { providerAccountId: string, provider: string }) {
             const account = await getAccount({ providerAccountId, provider }, prisma)
-            // console.log("get  Account/...", account);
+           // console.log("get  Account/...", account);
             if (!account) return null;
             return account as AdapterUser
         },
@@ -130,7 +150,7 @@ export default function MyAdapter(client: PrismaClient, options = {}): Adapter {
             return
         },
         async linkAccount(account: AdapterAccount) {
-            console.log("Link  Account/...", account);
+            // console.log("Link  Account/...", account);
 
             const linkedAccount = await link(account, client)
             return linkedAccount as AdapterAccount

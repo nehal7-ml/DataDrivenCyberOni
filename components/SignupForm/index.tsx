@@ -23,10 +23,7 @@ function SignupForm() {
 function SignupFormLOC() {
     const searchParams = useSearchParams();
     const [csrfToken, setCsrfToken] = useState("");
-    const [search, setSearch] = useState({
-        error: searchParams.get('error') as string,
 
-    });
     const { executeRecaptcha, loaded } = useReCaptcha();
     const [confirm, setConfirm] = useState("");
     const [state, setState] = useState<{
@@ -53,11 +50,8 @@ function SignupFormLOC() {
         loadToken();
     }, []);
 
-    useEffect(() => {
-        setSearch({
-            error: searchParams.get('error') as string,
-        })
-    }, [searchParams]);
+
+
 
     async function submit() {
         if (!state.valid) {
@@ -86,14 +80,14 @@ function SignupFormLOC() {
 
     return (
         <>
-            <div className="container mx-auto max-w-md border rounded-xl backdrop-blur-sm bg-gray-50/10 dark:bg-black/5 py-3 max-h-[85vh]">
+            <div className="container mx-auto max-w-md border rounded-xl backdrop-blur-sm bg-gray-50/10 dark:bg-black/5 py-3 h-fit">
 
                 <form  action={submit} className="relative flex flex-col px-5 pt-5 pb-1 bg-transparent rounded-2xl text-gray-950 dark:text-gray-50 mb-5">
                     <h1 className="text-bold text-2xl dark:text-gray-50 my-1">Signup</h1>
                     <p className="text-base my-1">Just some details to get you in.!</p>
-                    {search.error === 'CredentialsSignin' ?
+                    {state.error  ?
                         <div className="bg-rose-500/80 rounded-lg px-4 py-1 text-gray-200 my-3 ring-red-600 ring-2">
-                            Wrong credentials try again with correct credentials
+                            {state.error}
                         </div> : <></>}
                     <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
                     <div className="relative my-2">

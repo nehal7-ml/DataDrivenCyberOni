@@ -4,12 +4,15 @@ import { GetAllRecordsDTO } from "./commonDTO";
 import { CreateUserDTO, CredentialAuthDTO } from "./DTOs";
 import bcrypt from "bcrypt"
 import { AdapterAccount } from "next-auth/adapters";
+import { randomUUID } from "crypto";
 
 async function createWithPassword(user: CreateUserDTO, prismaClient: PrismaClient) {
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { email: user.email } });
-    if (existingUser) throw {status:400 ,message: `User ${user.email} already exists`};
+    if (existingUser) throw { status: 400, message: `User ${user.email} already exists` };
     else {
+        if(!user.password) user.password = randomUUID()
+        const hashedPassword = await bcrypt.hash(user.password as string, 10)
 
         let createdUser = await users.create({
             data: {
@@ -17,7 +20,8 @@ async function createWithPassword(user: CreateUserDTO, prismaClient: PrismaClien
                 firstName: user.firstName,
                 lastName: user.lastName,
                 image: { create: user.image },
-                address: { create: user.address }
+                address: { create: user.address },
+                password: hashedPassword
             }
         });
         return createdUser
@@ -25,39 +29,43 @@ async function createWithPassword(user: CreateUserDTO, prismaClient: PrismaClien
 
 }
 
-export async function getUserByAccount({ providerAccountId, provider }: { providerAccountId: string, provider: string }, prisma:PrismaClient) {
+export async function getUserByAccount({ providerAccountId, provider }: { providerAccountId: string, provider: string }, prisma: PrismaClient) {
     const users = prisma.user;
     const accounts = prisma.account;
-    const account = await accounts.findUnique({ where: { provider_providerAccountId: {provider, providerAccountId} } , include: {
-        user:true
-    }});
+    const account = await accounts.findUnique({
+        where: { provider_providerAccountId: { provider, providerAccountId } }, 
+        
+        include: {
+            user: true
+        }
+    });
     return account?.user
 }
 
-export async function link(accountToLink: AdapterAccount, prisma:PrismaClient) {
+export async function link(accountToLink: AdapterAccount, prisma: PrismaClient) {
     const accounts = prisma.account;
     const account = await accounts.create({
         data: accountToLink
     })
-    return account 
+    return account
 
 }
-export async function unLink({ providerAccountId, provider }: { providerAccountId: string, provider: string }, prisma:PrismaClient) {
+export async function unLink({ providerAccountId, provider }: { providerAccountId: string, provider: string }, prisma: PrismaClient) {
     const accounts = prisma.account;
     const account = await accounts.delete({
         where: {
-            provider_providerAccountId: {provider, providerAccountId}
+            provider_providerAccountId: { provider, providerAccountId }
         },
 
     })
-    return account 
+    return account
 }
 
 async function update(userId: string, user: CreateUserDTO, prismaClient: PrismaClient) {
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { id: userId } })
 
-    if (!existingUser) throw {status:400 ,message: `User ${user.email} doesn't exists`};
+    if (!existingUser) throw { status: 400, message: `User ${user.email} doesn't exists` };
     else {
         let updatedUser = await users.update({
             where: { id: userId }, data: {
@@ -75,7 +83,7 @@ async function update(userId: string, user: CreateUserDTO, prismaClient: PrismaC
 async function remove(userId: string, prismaClient: PrismaClient) {
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { id: userId } })
-    if (existingUser) throw {status:400 ,message: `User ${userId} doesn't exists`};
+    if (existingUser) throw { status: 400, message: `User ${userId} doesn't exists` };
     else {
         await users.delete({ where: { id: userId } });
         return true;
@@ -85,7 +93,7 @@ async function read(userId: string, prismaClient: PrismaClient) {
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { id: userId } })
     if (existingUser) return existingUser
-    else throw{status:400 ,message: `User ${userId} doesn't exists`};
+    else throw { status: 400, message: `User ${userId} doesn't exists` };
 }
 
 async function getAll(page: number, pageSize: number, prismaClient: PrismaClient) {
@@ -117,7 +125,7 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
 export async function authorizeWithPassword({ email, password }: CredentialAuthDTO, prisma: PrismaClient) {
     const users = prisma.user
     const user = await users.findUnique({ where: { email: email.toLowerCase() } })
-    if (!user || user.role === 'CUSTOMER' || user.role === 'USER') throw { message: `Invalid credentials account doesn't exist or insufucient permissions`, status: 400 };
+    if (!user) throw { message: `Invalid credentials account doesn't exist or insufucient permissions`, status: 400 };
 
     else {
         const authorized = await bcrypt.compare(password, user.password as string)

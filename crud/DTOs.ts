@@ -13,7 +13,15 @@ export type CreateBlogDTO = {
     tags: CreateTagDTO[];
 };
 
-export type DisplayBlogDTO = Blog & { author: User & {image: Image}; tags: Tag[], images:Image[], Comments: BlogComment[], Likes: BlogLike[]}; 
+export type DisplayBlogDTO = Blog & { 
+    author: User & 
+    {image: Image}; 
+    tags: Tag[], 
+    images:Image[], 
+    Comments: BlogComment[], 
+    _count: {
+        Likes: number
+    }}; 
 
 export type CreateImageDTO = {
     id?: string | undefined;
@@ -103,7 +111,7 @@ export type DisplayUserDTO = {
     email: string;
     emailVerified?: Date;
     role: Role;
-    image:Image
+    image?:Image |null
 };
 export type CreateAddressDTO = {
     id?: string;
