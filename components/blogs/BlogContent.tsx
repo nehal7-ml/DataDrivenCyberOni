@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { getCookie, } from 'cookies-next';
 import TextLoaders from "../loaders/TextLoaders";
 import { generateRandomArray, getRandomFromArray } from "@/lib/utils";
-import sanitize from "xss";
-import parser from 'html-react-parser'
+
+import xss from "xss";
 
 function BlogContent({ content, theme, href }: { content: string, theme: 'dark' | 'light', href: string }) {
 
@@ -127,7 +127,6 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
             }
         });
     }, []);
-    // console.log(content);
     return (<>
         {<iframe ref={iframe} className={`w-full h-fit overflow-y-auto z-50  ${loaded ? 'opacity-100' : 'opacity-0'}`} sandbox="allow-scripts allow-same-origin" srcDoc={container}></iframe>}
         {!loaded && <div className="w-fu h-full z-50  flex flex-wrap ">
