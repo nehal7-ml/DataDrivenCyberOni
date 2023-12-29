@@ -30,7 +30,6 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
   };
 
 
-  console.log(session);
   return (
     <>
       <div

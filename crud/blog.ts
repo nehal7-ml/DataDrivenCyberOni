@@ -4,6 +4,7 @@ import { connectOrCreateObject as connectImages } from "./images";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { cleanHtmlString } from "@/lib/utils";
 import { CommentDTO, CreateBlogDTO } from "./DTOs";
+import { getUserByEmail } from "./user";
 
 
 
@@ -115,7 +116,7 @@ export function getFeatured(prisma: PrismaClient) {
     return featured;
 
 }
-export async function addView(id: string, prisma: PrismaClient) {
+export async function addView({ id, userEmail }: { id: string, userEmail?: string }, prisma: PrismaClient) {
     const blogs = prisma.blog;
     const update = await blogs.update({
         where: { id },
@@ -130,9 +131,16 @@ export async function addView(id: string, prisma: PrismaClient) {
                 }
             },
             images: true,
+            Likes: userEmail ? {
+                where: {
+                    user: {
+                        email: userEmail
+                    }
+                }
+            } : {},
             _count: {
                 select: {
-                    Likes:true
+                    Likes: true
                 }
             },
             Comments: true,
@@ -304,6 +312,24 @@ export async function addLike(blogId: string, userEmail: string, prisma: PrismaC
             }
         }
     })
+    return true
+
+}
+
+export async function removeLike(blogId: string, userEmail: string, prisma: PrismaClient) {
+    const BlogLike = prisma.blogLike;
+    const user = await getUserByEmail(userEmail, prisma);
+    if (!user) return true;
+    const Like = await BlogLike.delete({
+        where: {
+            userId_blogId: {
+                blogId,
+                userId: user.id
+            }
+        }
+    })
+
+    return false
 
 }
 

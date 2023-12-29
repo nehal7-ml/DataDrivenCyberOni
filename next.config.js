@@ -5,7 +5,15 @@ const nextConfig = {
   
   images: {
     dangerouslyAllowSVG:true,
-    domains: ["lh3.googleusercontent.com", "vercel.com","placehold.co","images.unsplash.com", "res.cloudinary.com", "picsum.photos","api.dicebear.com"],
+    domains: [
+      "lh3.googleusercontent.com", 
+    "vercel.com",
+    "placehold.co",
+    "images.unsplash.com", 
+    "res.cloudinary.com", 
+    "picsum.photos",
+    "api.dicebear.com",
+  "avatars.githubusercontent.com"],
   },
   async redirects() {
     return [

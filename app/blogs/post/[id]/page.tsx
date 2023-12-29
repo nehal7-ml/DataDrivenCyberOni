@@ -84,22 +84,22 @@ async function BlogPost({ params }: { params: { id: string } }) {
                 <div className="relative mx-auto flex flex-col  items-center my-10 xl:py-10  xl:px-10 px-1 py-5 min-h-screen container">
                     <div className="max-w-full flex justify-center items-center">{blog.images[0] ? <Image priority={true} className="object-contain m-2 w-full h-[40vh] rounded-lg" src={blog.images[0].src} alt={ stripFileExtension(blog.images[0].name || 'blog_image')} width={500} height={300}></Image> : <></>}</div>
                     {<BlogContent href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`} content={blog.content} theme={theme} />}
-                    <BlogContainer blog={blog}  session={session}/>
+                    <BlogContainer liked={blog.Likes.length>0} blog={blog}  session={session}/>
 
                 </div>
 
 
                 <div className="w-full flex flex-col items-center justify-center gap-5">
-                    <Link href={`/blogs/author/${blog.author.id}?page=1`} >
+                    <Link href={`/blogs/author/${blog.author.id}?page=1`} className="flex justify-center items-center" >
                         <div className="w-20 h-20 rounded-full overflow-hidden">
-                            {blog.author.image ? <Image src={blog.author.image.src} alt="Author Dp" height={50} width={50} />
+                            {blog.author.image ? <Image src={blog.author.image.src} alt="Author Dp" height={50} width={50} className="object-fill h-full w-full" />
                                 :
                                 <div className="w-full h-full bg-orange-500 flex items-center justify-center text-center text-xl">{blog.author.firstName ? blog.author.firstName[0] : 'A'}</div>
                             }
                         </div>
                     </Link>
                     <div className="text-xl">
-                        {blog.author.firstName}
+                        {blog.author.firstName || blog.author.email}
                     </div>
                 </div>
                 <CommentForm id={params.id} comments={blog.Comments} />
@@ -110,8 +110,8 @@ async function BlogPost({ params }: { params: { id: string } }) {
 }
 
 
-async function getData(id: string) {
-    const blog = await addView(id, prisma)
+async function getData(id: string, userEmail?:string ) {
+    const blog = await addView({id,userEmail }, prisma)
     // console.log(blog.title);
     if (blog) return blog as DisplayBlogDTO
     else redirect('/404')

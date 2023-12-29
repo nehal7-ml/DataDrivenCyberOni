@@ -19,6 +19,7 @@ export type DisplayBlogDTO = Blog & {
     tags: Tag[], 
     images:Image[], 
     Comments: BlogComment[], 
+    Likes: BlogLike[],
     _count: {
         Likes: number
     }}; 
