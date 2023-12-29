@@ -7,7 +7,6 @@ import {GET as getEvent, DELETE as deleteEvent, PUT as updateEvent} from '@/app/
 import {POST as addeventHandler} from '@/app/api/events/add/route'
 import { createMocks } from 'node-mocks-http'
 import { describe, expect, test, it, beforeAll } from '@jest/globals';
-import { CreateTagDTO } from "@/crud/tags";
 import { Event } from "@prisma/client";
 import { CreateImageDTO, CreateEventDTO } from "@/crud/DTOs";
 import { NextRequest } from "next/server";
