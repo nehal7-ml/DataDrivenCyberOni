@@ -1,125 +1,48 @@
-'use client'
-import { RotateCcw } from "lucide-react"
-import React, { useEffect, useState, useTransition } from 'react'
-import { resetPassword } from "./submit"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Message } from "@/components/AuthMessage"
-import PasswordChecklist from "react-password-checklist"
-import Link from "next/link"
+
+import { getProviders, signIn, getCsrfToken, useSession } from "next-auth/react"
+import NextAuth, { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/nextAuthAdapter"
 import ClientInput from "@/components/layout/ClientInput"
+import { ArrowRight, ArrowRightCircle } from "lucide-react"
+import Image from "next/image"
+import { ReadonlyURLSearchParams, redirect } from "next/navigation"
+import { cookies } from 'next/headers'
+import { NextRequest } from "next/server"
+import Link from "next/link"
+import LoginForm from "@/components/LoginForm"
+import { DisplayUserDTO } from "@/crud/DTOs"
+import SignupForm from "@/components/SignupForm"
+import ForgotPassword from "@/components/ForgotForm"
+import ResetPasswordForm from "@/components/PasswordResetForm"
 
 
-function ResetPasswordForm() {
+export default async function Forgot() {
 
-    const [active, setActive] = useState(false);
-    const searchParams = useSearchParams();
-    const [confirm, setConfirm] = useState("");
-    const [err, setErr] = useState<string | undefined>(undefined);
-    const [success, setSuccess] = useState<boolean | undefined>(false);
-    const [state, setState] = useState<{
-        token: string,
-        password: string,
-        recaptcha: string,
-        success?: boolean,
-        error?: string,
+    const session = await getServerSession(authOptions)
 
-    }>({
-        password: "",
-        success: success,
-        recaptcha: "",
-        token: searchParams.get("token") as string
-    });
-    const [isPending, startTransition] = useTransition()
-    const router = useRouter()
-    async function submit() {
-        const newState = await resetPassword(state);
-        setState(newState);
+    // console.log(search);
+    // If the user is already logged in, redirect.
+    // Note: Make sure not to redirect to the same page
+    // To avoid an infinite loop!
+
+
+    if (session) {
+        const user = session.user as unknown  as DisplayUserDTO;
+        if (user) redirect('/')
     }
 
+    return (
+        <div className="relative flex gap-2 lg:gap-5 flex-col lg:flex-row justify-center items-center py-5 max-h-screen">
+            <Image src={'/images/forgot-bg.png'} width={700} height={900} alt="login_bg" className="absolute object-contain h-full right-10 w-fit" />
+            <div className="flex flex-col p-5 justify-center items-center">
+                <h1 className="text-4xl text-center lg:text-[96px] ">No worries...</h1>
+            </div>
+            <div className="lg:w-1/3">
+                <ResetPasswordForm />
 
-
-
-    useEffect(() => {
-        setState(prev => ({
-            ...prev,
-            token: searchParams.get('token') as string
-        }))
-    }, [searchParams]);
-
-
-    return (<>
-        {state.success === true ?
-            <div>
-                <Message message="Password reset Sucessfull" type="green" />
-                <Link href={'/api/auth/signin'} className="text-blue-600 underline cursor-pointer">click to login</Link>
-
-            </div >
-            : state.error ?
-
-                <>
-                    <Message message={`Error occured: ${state.error}`} type="red" />
-
-                </> :
-
-
-
-                <form className="container " action={submit}>
-                    <h1 className="text-bold text-4xl">Reset Password</h1>
-                    <input name="recaptcha" type="hidden" defaultValue={""} />
-                    <input name="token" type="hidden" defaultValue={searchParams.get('token') as string} />
-                    <input name="success" type="hidden" defaultValue={'false'} />
-                    <input name="error" type="hidden" defaultValue={""} />
-                    <div className="relative my-10">
-                        <ClientInput
-                            className="peer shadow-lg appearance-none border rounded-xl w-full py-4 px-4 bg-transparent text-gray-700  leading-tight focus:outline-none focus:shadow-outline invalid"
-                            name="password"
-                            id="password"
-                            type="password"
-                            placeholder=""
-                            value={state.password}
-                            onChange={e => setState(prev => ({ ...prev, password: e.target.value }))}
-                            required
-                        />
-                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50  px-1 text-gray-500 transition-all   text-sm font-bold mb-2" htmlFor="email">
-                            New Password
-                        </label>
-                    </div>
-                    <div className="relative my-10">
-                        <ClientInput
-                            className="peer shadow-lg appearance-none border rounded-xl w-full py-4 px-4 bg-transparent text-gray-700  leading-tight focus:outline-none focus:shadow-outline invalid"
-                            name="passwordRepeat"
-                            id="passwordRepeat"
-                            type="password"
-                            placeholder=""
-                            value={confirm}
-                            onChange={e => setConfirm(e.target.value)}
-                            required
-                        />
-                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50  px-1 text-gray-500 transition-all   text-sm font-bold mb-2" htmlFor="email">
-                            Confirm Password
-                        </label>
-                    </div>
-
-                    <PasswordChecklist
-                        className="mb-4"
-                        rules={["minLength", "specialChar", "number", "capital", "match"]}
-                        minLength={8}
-                        value={state.password}
-                        valueAgain={confirm}
-                        onChange={(isValid) => { setActive(isValid); }}
-                    />
-
-                    <div className="flex items-center justify-center">
-                        <button disabled={!active && searchParams.get('token') == null} className={`disabled:cursor-not-allowed disabled:bg-gray-700 disabled:text-gray-500 flex rounded-xl hover:shadow-md p-4 font-bold text-2xl gap-2 text-center justify-center items-center bg-blue-600 text-white`} type="submit">
-                            <div className="flex-1">Reset password</div>
-                            <div className="w-10 h-10 rounded-full bg-black flex justify-center items-center">
-                                <RotateCcw className="text-white" />
-                            </div>
-                        </button></div>
-                </form>}
-
-    </>
+            </div>
+        </div>
     )
+
 }
 
-export default ResetPasswordForm

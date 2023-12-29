@@ -43,7 +43,8 @@ function ForgotPassword() {
                         <button className="w-full flex px-10 bg-gradient-to-r rounded-lg from-[#E948C5] via-[#CD407B] to-[#75042D] disabled:cursor-not-allowed disabled:text-gray-400 hover:shadow-sm p-4 font-bold text-base gap-2 text-center justify-center items-center" type="submit">
                             <div className="flex-1">Reset password</div>
 
-                        </button></div>
+                        </button>
+                    </div>
                 </form> :
 
                 error === 'NotFound' ?

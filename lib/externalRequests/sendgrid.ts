@@ -112,15 +112,15 @@ export async function addToSendGrid(lead: Lead) {
 }
 
 
-export async function sendPasswordEmail({ email, password }: { email: string, password: string }) {
+export async function sendPasswordEmail({ email, password, subject }: { email: string, password: string , subject:string}) {
 
     const msg: sgMail.MailDataRequired = {
         to: email, // Change to your recipient
         from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
-        subject: 'Welcome to Apartment Guru',
+        subject: subject,
         html: `
           <section>
-            <h1>Welcome to Apartment Guru</h1>
+            <h1>Welcome to Cyberoni</h1>
             
             <p>Login using the following credentials:</p>
             <div>
@@ -162,7 +162,7 @@ export async function sendPasswordReset(email: string, token: string, subject: s
     const msg: sgMail.MailDataRequired = {
       to: email, // Change to your recipient
       from: process.env.SENDGRID_EMAIL as string, // Change to your verified sender
-      subject: 'Cyberoni crud Password reset request',
+      subject: 'Cyberoni Password reset request',
       html: `
             <section>
               <h1>Welcome to CyberOni</h1>
