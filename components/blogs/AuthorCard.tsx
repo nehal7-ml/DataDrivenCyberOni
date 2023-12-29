@@ -7,7 +7,7 @@ function AuthorCard({ author }: { author: { id: string, image?: userImage, first
     return (<div className="w-full flex flex-col gap-5 p-10 justify-center items-center dark:bg-zinc-900 rounded-md">
         <Link href={`/blogs/author/${author.id}?page=1`} >
             <div className="w-20 h-20 rounded-full overflow-hidden">
-                {author.image ? <Image src={author.image.src} alt="image" height={50} width={50} />
+                {author.image ? <Image className="object-cover" src={author.image.src} alt="author-dp" height={50} width={50} />
                     :
                     <div className="w-full h-full bg-orange-500 flex items-center justify-center text-center text-3xl">{author.firstName ? author.firstName[0] : 'A'}</div>
                 }

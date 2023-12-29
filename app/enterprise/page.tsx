@@ -1,10 +1,20 @@
+import CalendlyPopup from "@/components/Calendly";
 import ReviewCarousel from "@/components/ReviewCarousel";
+import PortfolioCarousel from "@/components/enterprise/PortfolioCarousel";
 import EmailLetter from "@/components/home/EmailLetter";
-import { getGroup } from "@/crud/casestudy";
+import { DisplayServiceDTO } from "@/crud/service";
 import { testimonials } from "@/data/testimonials";
-import { Activity, Monitor, Redo, ShoppingCart, BlocksIcon, Blocks, LayoutGrid, Search, ArrowRight, MoveRight } from "lucide-react";
+import prisma from "@/lib/prisma";
+import {
+  Activity,
+  LayoutGrid,
+  Monitor,
+  Redo,
+  ShoppingCart,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+<<<<<<< HEAD
 import prisma from "@/lib/prisma";
 import CalendlyPopup from "@/components/Calendly";
 import { DisplayServiceDTO, getAll } from "@/crud/service";
@@ -13,11 +23,16 @@ import PortfolioCarousel from "@/components/enterprise/PortfolioCarousel";
 import { getFeatured } from "../../crud/service";
 async function Enterprise() {
   const services = await getFeatured(prisma)
+=======
+import { getFeatured } from "../../crud/service";
+async function Enterprise() {
+  const services = await getFeatured(prisma);
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
 
   return (
     <div className="w-full">
       <section className="w-full ">
-        <div className="relative bg-enterprise-bg bg-[length:100vw_50vw] bg-no-repeat dark:bg-[#061122] lg:h-[50vh]">
+        <div className="relative bg-enterprise-bg bg-[length:100vw_50vw] bg-no-repeat lg:h-[50vh] dark:bg-[#061122]">
           <div className="container mx-auto flex h-full flex-col items-center justify-center ">
             <div className=" relative line-clamp-3 w-screen overflow-visible text-center font-nunito text-6xl font-bold leading-relaxed lg:w-[800px]">
               <Image
@@ -27,19 +42,33 @@ async function Enterprise() {
                 height={300}
                 width={900}
               />
+<<<<<<< HEAD
               <div className="flex flex-col justify-center items-center text-center">
                 <p className="z-30 ">Welcome to </p>
                 <span className="text-[#5380EA] z-30 ">CyberOni</span>
+=======
+              <div className="flex flex-col items-center justify-center text-center">
+                <p className="z-30 ">Welcome to </p>
+                <span className="z-30 text-[#5380EA] ">CyberOni</span>
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 <p className="z-30 ">Technologies</p>
               </div>
             </div>
 
+<<<<<<< HEAD
             <div className="text-black dark:text-gray-100 z-30">
+=======
+            <div className="z-30 text-black dark:text-gray-100">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
               Are you facing difficulties with your Software? Do you have a
               website but lack traffic? No need to worry.
             </div>
 
+<<<<<<< HEAD
             <div id="__next" className="m-3 z-30">
+=======
+            <div id="__next" className="z-30 m-3">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
               <CalendlyPopup
                 className="rounded-lg bg-[#0F172A] p-3 text-white dark:bg-blue-600"
                 CTAText="Schedule a consultation"
@@ -53,7 +82,11 @@ async function Enterprise() {
             <div>
               <Image
                 src={"/images/project.png"}
+<<<<<<< HEAD
                 alt="icon"
+=======
+                alt="project"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={100}
                 width={100}
               ></Image>
@@ -63,7 +96,11 @@ async function Enterprise() {
             <div>
               <Image
                 src={"/images/client.png"}
+<<<<<<< HEAD
                 alt="icon"
+=======
+                alt="client"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={100}
                 width={100}
               ></Image>
@@ -73,7 +110,11 @@ async function Enterprise() {
             <div>
               <Image
                 src={"/images/experience.png"}
+<<<<<<< HEAD
                 alt="icon"
+=======
+                alt="exp"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={100}
                 width={100}
               ></Image>
@@ -83,7 +124,11 @@ async function Enterprise() {
             <div>
               <Image
                 src={"/images/companies.png"}
+<<<<<<< HEAD
                 alt="icon"
+=======
+                alt="conmpany"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={100}
                 width={100}
               ></Image>
@@ -97,45 +142,57 @@ async function Enterprise() {
               Thank you for your interest in us!
             </div>
           </div>
-          <div className="my-5 flex flex-col items-center justify-center font-nunito text-5xl font-bold">
+          <div className="sm:text-3l my-5 flex flex-col items-center justify-center font-nunito text-5xl font-bold">
             <p>Founded over 7 years ago, CyberOni</p>
             <p>
               Technologies is now the main{" "}
               <span className="text-rose-600">Data Science</span>
             </p>
             <p>
-              and<span className="text-rose-600"> web development</span>{" "}
-              agency in Colorado.
+              and<span className="text-rose-600"> web development</span> agency
+              in Colorado.
             </p>
           </div>
           <div className="px-5 font-nunito text-lg font-semibold text-[#475569]">
             At Cyberoni, we blend advanced technology with strategic business
-            insights to foster growth and prosperity for your brand. Our
-            mission is to engineer bespoke digital solutions that aren&apos;t
-            just effective but also resonate with your unique business
-            identity. We are dedicated to nurturing your online presence so
-            that it not only takes root but thrives and blossoms in the
-            digital marketplace. Each solution is intricately designed with
-            your business goals in mind, ensuring a personalized experience
-            that promotes your site&apos;s growth and success.
+            insights to foster growth and prosperity for your brand. Our mission
+            is to engineer bespoke digital solutions that aren&apos;t just
+            effective but also resonate with your unique business identity. We
+            are dedicated to nurturing your online presence so that it not only
+            takes root but thrives and blossoms in the digital marketplace. Each
+            solution is intricately designed with your business goals in mind,
+            ensuring a personalized experience that promotes your site&apos;s
+            growth and success.
           </div>
 
           <div className="my-5 flex flex-col items-center justify-center gap-5">
+<<<<<<< HEAD
             <div className="font-nunito text-4xl font-semibold text-center" >
+=======
+            <div className="text-center font-nunito text-4xl font-semibold">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
               Cyberoni&apos;s Strategic Development Path
             </div>
             <div className="mx-5 w-1/3 text-center">
-              A four-part sequence, each representing a pivotal stage or
-              element in the business strategy.
+              A four-part sequence, each representing a pivotal stage or element
+              in the business strategy.
             </div>
           </div>
 
           <div className="grid w-full grid-cols-1 grid-rows-4 gap-3 text-center lg:grid-cols-4 lg:grid-rows-1">
+<<<<<<< HEAD
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/images/step-1.png"}
                 alt="border"
                 className="lg:w-full object-contain w-40 h-40"
+=======
+            <div className="flex flex-1 flex-col items-center justify-center">
+              <Image
+                src={"/images/step-1.png"}
+                alt="step-1"
+                className="h-40 w-40 object-contain lg:w-full"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={300}
                 width={300}
               />
@@ -148,11 +205,19 @@ async function Enterprise() {
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/images/step-2.png"}
                 alt="border"
                 className=" lg:w-full object-contain w-40 h-40"
+=======
+            <div className="flex flex-1 flex-col items-center justify-center">
+              <Image
+                src={"/images/step-2.png"}
+                alt="step-2"
+                className=" h-40 w-40 object-contain lg:w-full"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={300}
                 width={300}
               />
@@ -160,37 +225,49 @@ async function Enterprise() {
                 <div className="text-3xl text-[#E4A321]">Solution Design</div>
                 <div className="mx-auto w-2/3">
                   {" "}
-                  Cyberoni experts design a custom solution blueprint,
-                  focusing on scalability and integration with current
-                  systems.
+                  Cyberoni experts design a custom solution blueprint, focusing
+                  on scalability and integration with current systems.
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/images/step-3.png"}
                 alt="border"
                 className="lg:w-full object-contain w-40 h-40"
+=======
+            <div className="flex flex-1 flex-col items-center justify-center">
+              <Image
+                src={"/images/step-3.png"}
+                alt="step-3"
+                className="h-40 w-40 object-contain lg:w-full"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={300}
                 width={300}
               />
               <div className="flex flex-col gap-3">
-                <div className="text-3xl text-[#E4A321]">
-                  Proof of Concept
-                </div>
+                <div className="text-3xl text-[#E4A321]">Proof of Concept</div>
                 <div className="mx-auto w-2/3">
                   {" "}
-                  Implement a pilot project using a subset of the
-                  client&apos;s data to demonstrate the effectiveness of the
-                  solution.
+                  Implement a pilot project using a subset of the client&apos;s
+                  data to demonstrate the effectiveness of the solution.
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
             <div className="flex-1 flex flex-col justify-center items-center">
               <Image
                 src={"/images/step-4.png"}
                 alt="border"
                 className="lg:w-full object-contain w-40 h-40"
+=======
+            <div className="flex flex-1 flex-col items-center justify-center">
+              <Image
+                src={"/images/step-4.png"}
+                alt="step-4"
+                className="h-40 w-40 object-contain lg:w-full"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={300}
                 width={300}
               />
@@ -200,8 +277,8 @@ async function Enterprise() {
                 </div>
                 <div className="mx-auto w-2/3">
                   Use APIs, middleware, or custom development to connect
-                  Cyberoni&apos;s software with existing databases, CRM, ERP,
-                  or other software systems.
+                  Cyberoni&apos;s software with existing databases, CRM, ERP, or
+                  other software systems.
                 </div>
               </div>
             </div>
@@ -211,14 +288,18 @@ async function Enterprise() {
 
       <section className="bg-[#EBF0FF] py-10 dark:bg-[#121212]">
         <div className="container mx-auto  flex flex-col gap-5 p-5 lg:flex-row">
+<<<<<<< HEAD
           <div className="lg:w-1/2 text-center lg:text-left">
+=======
+          <div className="text-center lg:w-1/2 lg:text-left">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
             <div className="text-2xl font-bold text-[#2478FE]">
               Service we Offer
             </div>
             <div className="font-nunito text-4xl font-extrabold">
-              Cyberoni is committed to forging genuine partnerships,
-              delivering exceptional value in every investment. Our expertise
-              spans multiple domains, including but not limited to:
+              Cyberoni is committed to forging genuine partnerships, delivering
+              exceptional value in every investment. Our expertise spans
+              multiple domains, including but not limited to:
             </div>
           </div>
           <div className="container overflow-x-auto lg:w-1/2 ">
@@ -294,7 +375,11 @@ async function Enterprise() {
         </div>
       </section>
 
+<<<<<<< HEAD
       <section className="bg-enterprise-bg-2 bg-cover bg-no-repeat py-10  backdrop-blur-lg dark:bg-[#061122] lg:min-h-screen">
+=======
+      <section className="bg-enterprise-bg-2 bg-cover bg-no-repeat py-10  backdrop-blur-lg lg:min-h-screen dark:bg-[#061122]">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
         <div className="container mx-auto px-4 ">
           <div className="text-center">
             <div className="font-bold text-[#5380EA]">Why choose us</div>
@@ -313,7 +398,11 @@ async function Enterprise() {
             <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
                 src={"/images/team.png"}
+<<<<<<< HEAD
                 alt="brain"
+=======
+                alt="team"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={50}
                 width={50}
               ></Image>
@@ -322,11 +411,10 @@ async function Enterprise() {
                 With Cyberoni, you gain access to a wealth of professional web
                 development experience. We stay at the forefront of technology
                 and trends to ensure that your project not only meets but
-                exceeds industry standards. Our goal is to transform your
-                vision into a digital reality, delivering a project that is
-                not just complete but ahead of its time. Our team’s dedication
-                to growth ensures your website will always be on the cutting
-                edge.
+                exceeds industry standards. Our goal is to transform your vision
+                into a digital reality, delivering a project that is not just
+                complete but ahead of its time. Our team’s dedication to growth
+                ensures your website will always be on the cutting edge.
               </div>
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
@@ -339,18 +427,22 @@ async function Enterprise() {
               <div className="text-2xl font-bold">Committed Team</div>
               <div className="text-base text-zinc-800">
                 Our team is the heart of Cyberoni. We are a group of driven,
-                tech-savvy professionals, dedicated to delivering only the
-                best. We understand that our success is measured by the
-                success of your website. That’s why we immerse ourselves in
-                every project, applying meticulous attention to detail to
-                create websites that are not just functional but also thrive
-                in today’s digital landscape.
+                tech-savvy professionals, dedicated to delivering only the best.
+                We understand that our success is measured by the success of
+                your website. That’s why we immerse ourselves in every project,
+                applying meticulous attention to detail to create websites that
+                are not just functional but also thrive in today’s digital
+                landscape.
               </div>
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
                 src={"/images/stopwatch.png"}
+<<<<<<< HEAD
                 alt="brain"
+=======
+                alt="watch"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={50}
                 width={50}
               ></Image>
@@ -360,15 +452,19 @@ async function Enterprise() {
                 committed to delivering high-quality, fully-tested websites
                 promptly. We understand the pace of business and strive to
                 provide you with fast turnaround times without compromising on
-                quality. From initial concept to final launch, we streamline
-                our development process to get your project live, allowing you
-                to start meeting your business objectives faster.
+                quality. From initial concept to final launch, we streamline our
+                development process to get your project live, allowing you to
+                start meeting your business objectives faster.
               </div>
             </div>
             <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
               <Image
                 src={"/images/price-tag.png"}
+<<<<<<< HEAD
                 alt="brain"
+=======
+                alt="price"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 height={50}
                 width={50}
               ></Image>
@@ -396,15 +492,19 @@ async function Enterprise() {
             height={50}
             width={200}
           ></Image>
-
-
         </div>
         <PortfolioCarousel services={services as DisplayServiceDTO[]} />
+<<<<<<< HEAD
 
 
       </section>
 
       <section className="bg-enterprise-bg-3 bg-cover bg-no-repeat py-10 dark:bg-[#061122] lg:bg-[length:100vw_60vw]">
+=======
+      </section>
+
+      <section className="bg-enterprise-bg-3 bg-cover bg-no-repeat py-10 lg:bg-[length:100vw_60vw] dark:bg-[#061122]">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
         <div className="text-center text-4xl font-bold">Testimonial</div>
         <ReviewCarousel reviews={testimonials} />
       </section>

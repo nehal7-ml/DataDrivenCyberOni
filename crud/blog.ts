@@ -2,6 +2,7 @@ import { Blog, PrismaClient, Tag, User, Image, BlogComment, BlogLike } from "@pr
 import { connectOrCreateObject as connectTags, CreateTagDTO } from "./tags";
 import { connectOrCreateObject as connectImages, CreateImageDTO } from "./images";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { cleanHtmlString } from "@/lib/utils";
 
 
 export type CreateBlogDTO = {
@@ -63,7 +64,11 @@ async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaC
         where: { id: blogId },
         data: {
             ...blog,
+<<<<<<< HEAD
             images:  connectImages(blog.images) ,
+=======
+            images: connectImages(blog.images),
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
             tags: { connectOrCreate: connectTags(blog.tags) },
             author: { connect: { email: blog.author.email } }
         }
@@ -118,10 +123,10 @@ async function read(blogId: string, prismaClient: PrismaClient) {
 async function getAll(page: number, pageSize: number, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
 
-    if (pageSize !== 10 && pageSize != 30 && pageSize !== 50) throw new Error('page size must be 10, 30 or 50')
+    if (pageSize !== 10 && pageSize != 30 && pageSize !== 50 && pageSize !== 0) throw new Error('page size must be 10, 30 or 50')
 
     let allBlogs = await blogs.findMany({
-        skip: (page - 1) * pageSize, take: pageSize,
+        skip: page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
         where: {
         },
         include: {
@@ -154,12 +159,21 @@ export function getFeatured(prisma: PrismaClient) {
     return featured;
 
 }
+<<<<<<< HEAD
 export async function addView(id:string, prisma:PrismaClient) {
     const blogs= prisma.blog;
     const update = await blogs.update({
         where: {id},
         data: {
             Views: {increment: 1}
+=======
+export async function addView(id: string, prisma: PrismaClient) {
+    const blogs = prisma.blog;
+    const update = await blogs.update({
+        where: { id },
+        data: {
+            Views: { increment: 1 }
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
         },
         include: {
             tags: true,
@@ -187,6 +201,9 @@ export function getRecent(prisma: PrismaClient) {
                     image: true,
                 }
             }, images: true
+        },
+        orderBy: {
+            date: 'desc'
         }
     });
     return recent;
@@ -288,6 +305,39 @@ async function getComments(id: string, page: number, prisma: PrismaClient) {
     })
 
     return readComments
+}
+
+export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
+    const blogs = prisma.blog;
+    const records = await blogs.findMany({
+        where: {
+            OR: [
+                {
+                    title: {
+                        contains: search,
+                    },
+
+                },
+                {
+                    description: {
+                        contains: search,
+                    }
+                },
+                {
+                    subTitle: {
+                        contains: search
+                    }
+                },
+                {
+                    content: {
+                        contains: cleanHtmlString(search),
+                    }
+                }
+            ]
+        }
+    })
+    return records
+
 }
 
 export { create, update, remove, read, getAll, getAuthor, addComment, getComments }

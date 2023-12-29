@@ -1,11 +1,12 @@
 'use client'
-import { AlertCircle, Mail, PlaneIcon, Send } from "lucide-react";
-import React, { useState } from 'react';
+import { AlertCircle, Mail, PlaneIcon, Send, X } from "lucide-react";
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { LoadingCircle } from "../shared/icons";
 import Balancer from "react-wrap-balancer";
 import ClientInput from "../layout/ClientInput";
 import GoogleCaptchaWrapper from "../GoogleCaptchaWrapper";
 import { useReCaptcha } from "next-recaptcha-v3";
+<<<<<<< HEAD
 
 function ContactForm() {
   return <>
@@ -15,6 +16,18 @@ function ContactForm() {
   </>
 }
 function ContactFormLOC() {
+=======
+import Link from "next/link";
+
+function ContactForm(props: { onModal?: boolean, showModal?: boolean, setShowModal?: Dispatch<SetStateAction<boolean>> }) {
+  return <>
+    <GoogleCaptchaWrapper >
+      <ContactFormLOC {...props} />
+    </GoogleCaptchaWrapper>
+  </>
+}
+function ContactFormLOC(props: { onModal?: boolean, showModal?: boolean, setShowModal?: Dispatch<SetStateAction<boolean>> }) {
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
 
   const referralOptions = [
     "Google",
@@ -43,22 +56,32 @@ function ContactFormLOC() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Here, you can handle form submission, e.g., sending data to a server.
-    console.log('Form submitted:', { selectedInterest, name, email, message });
+    // console.log('Form submitted:', { selectedInterest, name, email, message });
 
     if (name && email && message) {
       const token = await executeRecaptcha('Contact_Submit_Modal')
 
+<<<<<<< HEAD
       let captchaRes = await fetch('/api/captcha', {method: 'POST' ,body: JSON.stringify({token})})
       if(captchaRes.status!==200) {
         setShowError(true);
         setShowForm(false)
 
         return 
+=======
+      let captchaRes = await fetch('/api/captcha', { method: 'POST', body: JSON.stringify({ token }) })
+      if (captchaRes.status !== 200) {
+        setShowError(true);
+        setShowForm(false)
+
+        return
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
       }
       let res = await fetch(`/api/marketing/contact`, { method: "POST", body: JSON.stringify({ name, email, subject: selectedInterest, message, referral }) })
       setShowForm(false)
       if (res.status === 200) {
         setShowThanks(true)
+        hideModal()
       }
       else {
         setShowError(true)
@@ -67,8 +90,14 @@ function ContactFormLOC() {
     }
   };
 
+  function hideModal() {
+    if (props.onModal && props.setShowModal) props.setShowModal(false);
+
+  }
+
   return (
-    <div className="mx-auto h-full min-h-fit w-full rounded-lg bg-[#5001EAAD] p-6 shadow-lg">
+    <div className="relative mx-auto h-full min-h-fit w-full rounded-lg bg-[#5001EAAD] p-6 shadow-lg">
+      {props.setShowModal && <button className="absolute top-4 right-4 hover:text-red-500 cursor-pointer" onClick={()=>props.setShowModal? props.setShowModal(false):{}}><X /></button>}
       {showForm && (
         <form className="h-full w-full lg:p-6 " onSubmit={handleSubmit}>
           <h1 className="my-2 text-4xl">Contact us</h1>
@@ -135,13 +164,18 @@ function ContactFormLOC() {
               required
             ></textarea>
           </div>
-          <button
-            type="submit"
-            className="flex items-center justify-center rounded-lg bg-[#A91079] px-8 py-4 text-white hover:bg-blue-900"
-          >
-            <Send color="white" className="mx-2" />
-            <span className="mx-2">Send Message</span>
-          </button>
+          <div className="flex justify-center lg:justify-start gap-5 p-3">
+            <button
+              type="submit"
+              className="flex items-center justify-center rounded-lg bg-[#A91079] px-8 py-4 text-white hover:bg-blue-900"
+            >
+              <Send color="white" className="mx-2" />
+              <span className="mx-2">Send Message</span>
+            </button>
+            <Link onClick={hideModal} href={`/contact?name=${name}&email=${email}&message=${message}`} className="bg-gradient-to-b from-orange-400 to-orange-500 text-center text-white p-4 rounded-lg">
+              Enterprise Contact
+            </Link>
+          </div>
         </form>
       )}
 

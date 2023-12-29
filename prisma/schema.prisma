@@ -435,7 +435,11 @@ model Referral {
   link        String
   fallback    String
   click       Int
+<<<<<<< HEAD
 
+=======
+  utmProps    Json?
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
   @@unique([type, prefix], name: "referralId")
 }
 
@@ -458,7 +462,7 @@ model Property {
   type         PropertyType
   featured     Boolean        @default(false)
   bedroomCount Int
-  bathCount    Int
+  bathCount    Float
   fee          String
   process      String         @db.Text
   link         String?        @db.Text

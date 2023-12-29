@@ -7,14 +7,18 @@ import { Analytics } from "@vercel/analytics/react";
 import cx from "classnames";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
-import { Suspense } from "react";
 import Head from "next/head";
+import { cookies } from "next/headers";
+import Script from "next/script";
+import { Suspense } from "react";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
+<<<<<<< HEAD
 import { Facebook } from 'lucide-react';
 import Script from "next/script";
+=======
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,
@@ -38,6 +42,7 @@ export const metadata: Metadata = {
   },
   themeColor: "#0074e4",
   other: {
+<<<<<<< HEAD
     "fb:app_id": process.env.FACEBOOK_ID as string
   },
   viewport: {
@@ -45,6 +50,19 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale:1
   }
+=======
+    "fb:app_id": process.env.FACEBOOK_ID as string,
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1
+  },
+  alternates: {
+    canonical: "https://www.cybershoptech.com"
+  }
+  
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
 };
 
 export default async function RootLayout({
@@ -58,6 +76,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+<<<<<<< HEAD
       <Head>
         <link rel="canonical" href="https://www.cybershoptech.com" />
         <title>Your Page Title</title>
@@ -83,6 +102,38 @@ export default async function RootLayout({
           style={{ display: "none", visibility: "hidden" }}
         ></iframe>
       </noscript>
+=======
+
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}`}
+        async
+      />
+      <Script strategy="afterInteractive" id="google-tag-manager">
+        {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}', {
+      page_path: window.location.pathname,
+    });
+  `}
+      </Script>
+      <Script strategy="afterInteractive" id="facebook-pixel">
+        {`
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL}');
+      fbq('track', 'PageView');
+    `}
+      </Script>
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
 
       <body
         className={`${cx(
@@ -91,7 +142,11 @@ export default async function RootLayout({
           abel.variable,
           nunito.variable,
         )} 
+<<<<<<< HEAD
                         ${theme?.value} overflow-x-hidden antialiased`}
+=======
+        ${theme?.value} overflow-x-hidden antialiased`}
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
       >
         <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white " />
         <Suspense fallback="...">
@@ -100,8 +155,20 @@ export default async function RootLayout({
             darkMode={theme?.value === "dark" ? true : false}
           />
         </Suspense>
+<<<<<<< HEAD
         <main className="relative min-h-screen w-full  overflow-x-hidden pt-24 dark:bg-gray-900 dark:text-white">
+=======
+        <main className="relative min-h-screen w-full  overflow-x-hidden pt-16 xl:pt-24 dark:bg-gray-900 dark:text-white">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
           {children}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=G-55E14FBFE1"
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            ></iframe>
+          </noscript>
         </main>
         {
           <Suspense>

@@ -4,29 +4,56 @@ import Image from "next/image";
 import prisma from "@/lib/prisma";
 import { CreateImageDTO } from "@/crud/images";
 import { Image as UserImage } from "@prisma/client";
-import { Metadata } from "next";
-export let metadata: Metadata = {
-    title: "",
-    description: "",
-    openGraph: {},
-    category: 'Case Study'
-};
-async function CaseStudy({ params }: { params: { id: string } }) {
-    const caseStudy = await read(params.id, prisma)
+import { Metadata, ResolvingMetadata } from "next";
+import { extractUUID, stripFileExtension } from "@/lib/utils";
 
-    metadata.title = caseStudy.title as string
-    metadata.description = caseStudy.preview
+
+type Props = {
+    params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+  }
+  
+  
+  
+  
+  export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    // read route params
+    const seoTitle = params.id
+    const id = extractUUID(seoTitle)
+    const caseStudy = await read(id, prisma)
+  
+    // optionally access and extend (rather than replace) parent metadata
+    let metadata: Metadata = {};
+    metadata.title = caseStudy?.title as string
+    metadata.description = caseStudy?.preview
     metadata.openGraph = {
-        type: 'article',
-        title: caseStudy.title,
-        description: caseStudy.preview,
-        images: [caseStudy.images.length > 0 ? caseStudy.images[0].src : ""]
+      type: 'article',
+      title: caseStudy?.title,
+      description: caseStudy?.preview,
+      images: [caseStudy?.images ? caseStudy.images[0].src : ""]
     }
-    
+    metadata.twitter = {
+      title: caseStudy?.title,
+      images: [caseStudy?.images ? caseStudy.images[0].src : ""],
+      description: caseStudy?.preview,
+  
+    }
+    metadata.keywords = caseStudy?.title.split('')
+    return metadata
+  }
+async function CaseStudy({ params }: { params: { id: string } }) {
+    const seoTitle = params.id
+    const id = extractUUID(seoTitle)
+    const caseStudy = await read(id, prisma)
+
     return (
 
         <>
+<<<<<<< HEAD
             <div className="relative container mx-auto mt-8">
+=======
+            <div className="relative container mx-auto mt-8 px-5 xl:px-16">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 <Image className="absolute right-0 top-0" src={'/images/case-study-icon-2.svg'} alt="icon-2" height={130} width={75} />
 
                 {/* Section 1: Title */}
@@ -44,8 +71,13 @@ async function CaseStudy({ params }: { params: { id: string } }) {
 
                 </div>
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
+<<<<<<< HEAD
                     {caseStudy.images[0] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-1'} height={500} width={500} /> :
                         <Image className="l rounded-lg object-contain" src={'/images/casestudy-1.png'} alt={'casestudy-1'} height={500} width={500} />
+=======
+                    {caseStudy.images[0] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-preview'} height={500} width={500} /> :
+                        <Image className="rounded-lg object-contain" src={'/images/casestudy-1.png'} alt={'casestudy-1'} height={500} width={500} />
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                     }
                 </div>
 
@@ -67,7 +99,11 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                             <li>Problem 3</li>
                         </ul>
                     </section>
+<<<<<<< HEAD
                     <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-1" height={130} width={75} />
+=======
+                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-4" height={130} width={75} />
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 </div>
 
 
@@ -90,7 +126,11 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                         <h2 className="text-2xl font-bold text-[#7850CD] mb-10">Understanding the Problem</h2>
                         <p>{caseStudy.userResearch}</p>
                     </div>
+<<<<<<< HEAD
                     <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-1" height={130} width={75} />
+=======
+                    <Image className="absolute z-0 translate-x-1/2 right-0 bottom-0 translate-y-10" src={'/images/case-study-icon-4.png'} alt="icon-4" height={130} width={75} />
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
 
                 </section>
 
@@ -112,8 +152,13 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                 </div>
 
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
+<<<<<<< HEAD
                     {caseStudy.images[1] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-1'} height={500} width={500} /> :
                         <Image className="l rounded-lg object-contain" src={'/images/casestudy-2.png'} alt={'casestudy-1'} height={500} width={500} />
+=======
+                    {caseStudy.images[1] ? <Image className=" rounded-lg object-contain" src={caseStudy.images[0].src} alt={'casestudy-image-2'} height={500} width={500} /> :
+                        <Image className="l rounded-lg object-contain" src={'/images/casestudy-2.png'} alt={'casestudy-2'} height={500} width={500} />
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                     }
                 </div>
 
@@ -146,7 +191,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                     {caseStudy.wireFrames && <>
                         <h2 className="text-[#7850CD]">Wireframes</h2>
                         <div className="flex gap-2 flex-wrap max-w-full">
-                            {caseStudy.wireFrames.map((wireframe, index) => <Image key={index} src={wireframe.src} alt={"architecture"} height={500} width={500} />)}</div>
+                            {caseStudy.wireFrames.map((wireframe, index) => <Image key={index} src={wireframe.src} alt={`wireframe-${index}`} height={500} width={500} />)}</div>
 
                     </>}
                 </section>
@@ -167,8 +212,8 @@ async function CaseStudy({ params }: { params: { id: string } }) {
 
                         <div className="flex gap-2 flex-wrap max-w-full">
                             {caseStudy.hifiDesign.map((image, index) => <div key={index} className="flex flex-col justify-center items-center" >
-                                <Image src={image.src} alt={image.name as string} height={500} width={500} />
-                                <div className="font-bold"># {image.name}</div>
+                                <Image src={image.src} alt={stripFileExtension(image.name || `hifi-design-${index}`) as string} height={500} width={500} />
+                                <div className="font-bold"># {stripFileExtension(image.name as string)}</div>
                             </div>)}
                         </div>
                     </>}

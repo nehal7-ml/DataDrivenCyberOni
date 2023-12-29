@@ -3,39 +3,62 @@ import Image from "next/image";
 import Section, { SectionProps } from "@/components/home/HomeSection";
 import CompanyCarousel, { Company } from "@/components/home/CompanyCarousel";
 import SlideShow from "@/components/home/SlideShow";
-import Slide, { SlideProps } from "@/components/home/Slide";
+import Slide from "@/components/home/Slide";
 import ContactForm from "@/components/ContactForm";
 import EmailLetter from "@/components/home/EmailLetter";
 import CalendlyPopup from "@/components/Calendly";
+import { companies, homeSections, sildes } from "@/data/homeData";
+import Link from "next/link";
 export default async function Home() {
-
-
   return (
     <>
       <div className="z-30 w-full dark:text-white ">
         <section className="container mx-auto flex flex-col text-center lg:text-left">
           <div className="flex flex-col-reverse items-center justify-center lg:flex-row">
+<<<<<<< HEAD
             <div className="flex flex-col justify-center items-center lg:items-start lg:justify-start " >
               <div className="m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF] to-[#FF2DF7]  bg-clip-text text-5xl font-bold text-transparent">
+=======
+            <div className="flex flex-col items-center justify-center lg:items-start lg:justify-start ">
+              <div className="sm:text-3l m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF]  to-[#FF2DF7] bg-clip-text text-5xl font-bold text-transparent">
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 With Ai
               </div>
-              <div className="m-3 text-5xl font-bold">
-                Revolutionize Your Business
+              <div className="m-3 text-4xl font-bold">
+                Revolutionize Your Business with Data-Driven Mastery: Transform,
+                Automate, Personalize{" "}
               </div>
               <div className="m-3">
-                Our ambition is to reshape how you envision the use of your data
-                to automate mundane tasks.
+                Embark on an Data-Infused Journey to Redefine Your Businesses
+                Success
               </div>
+<<<<<<< HEAD
               <div className="mx-3 h-[1px] bg-gradient-purple w-full" />
               <div className="flex justify-center lg:justify-start">
                 <div id="__next" className="m-3 bg-gradient-purple w-fit rounded-full p-[2px]">
                   <CalendlyPopup CTAText="Schedule a consultation" className="bg-white dark:bg-gray-900 p-3 rounded-full" />
+=======
+              <div className="mx-3 h-[1px] w-full bg-gradient-purple" />
+              <div className="flex justify-center lg:justify-start">
+                <div
+                  id="__next"
+                  className="m-3 w-fit rounded-full bg-gradient-purple px-[0.1rem] py-[0.1rem]"
+                >
+                  <CalendlyPopup
+                    CTAText="Schedule a consultation"
+                    className="rounded-full bg-white p-[0.6rem] dark:bg-gray-900"
+                  />
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
                 </div>
               </div>
             </div>
             <Image
               src={"/images/hero-1.png"}
+<<<<<<< HEAD
               alt={""}
+=======
+              alt={"hero-1"}
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
               height={500}
               width={500}
             ></Image>
@@ -62,7 +85,10 @@ export default async function Home() {
           );
         })}
 
-        <section className="container mx-auto">
+        <section className="container mx-auto text-center">
+          <h2 className="  m-3 w-fit bg-gradient-purple bg-clip-text text-3xl font-bold text-transparent">
+            Customer Reviews and Feedback
+          </h2>
           <SlideShow
             slides={sildes.map((card, index) => {
               return (
@@ -78,6 +104,27 @@ export default async function Home() {
               );
             })}
           ></SlideShow>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-semibold text-blue-600 hover:text-blue-800"
+              aria-label="View our business"
+            >
+              View our Business
+            </Link>
+            &nbsp;|&nbsp;
+            <Link
+              href="/google-business"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-semibold text-blue-600 hover:text-blue-800"
+              aria-label="View our business"
+            >
+              Write a Review
+            </Link>
+          </div>
         </section>
         {homeSections.slice(2, 5).map((item, index) => {
           return (
@@ -99,13 +146,17 @@ export default async function Home() {
           <EmailLetter></EmailLetter>
         </section>
 
-        <section className="conatiner flex flex-col-reverse lg:flex-row lg:px-10">
-          <div className="flex-1">
+        <section className="conatiner flex flex-col-reverse lg:flex-row lg:px-10 justify-center items-center">
+          <div className="lg:w-1/2">
             <ContactForm></ContactForm>
           </div>
-          <div className="lg:w-1/2 lg:h-full flex justify-center items-center">
+          <div className="lg:w-1/2 h-[35rem] flex justify-center items-center">
             <Image
+<<<<<<< HEAD
               className="flex-1 w-full h-full object-contain"
+=======
+              className="flex-1 w-full h-full object-scale-down"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
               src={"/images/contact-form.png"}
               alt="contact"
               height={1280}
@@ -119,6 +170,7 @@ export default async function Home() {
 }
 
 
+<<<<<<< HEAD
 const homeSections: SectionProps[] = [
   {
     title: "Data Driven Solutions",
@@ -244,3 +296,7 @@ const sildes: SlideProps[] = [
     content: `It's all about getting your message in front of the right audience and creating those valuable relationships. Learn More about how DOML can help you do just that - all with a simple, easy-to-use platform.`
   },
 ]
+=======
+
+
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a

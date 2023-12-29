@@ -224,10 +224,12 @@ function ContactUs() {
   return (
     <>
       <div className="relative min-h-screen bg-contact-bg bg-contain bg-no-repeat pt-40 text-gray-700 lg:pb-20">
-        <div className="container relative mx-auto flex flex-col justify-center gap-5 rounded-lg bg-white px-1 py-10 shadow-top dark:bg-zinc-900 lg:w-5/6 lg:flex-row lg:px-10 ">
+        <div className="container relative mx-auto flex flex-col justify-center gap-5 rounded-lg bg-white px-1 py-10 shadow-top lg:w-5/6 lg:flex-row lg:px-10 dark:bg-zinc-900 ">
           <div className="z-10 min-h-screen rounded-2xl bg-[#ffffff2a] p-3 lg:w-1/2">
             <div>
-              <h1 className="text-5xl text-[#7E86F6]">Get in Touch</h1>
+              <h1 className="sm:text-3l text-5xl text-[#7E86F6]">
+                Get in Touch
+              </h1>
               <p className="text-xl">We are here for you! How can we help?</p>
             </div>
             {showForm && (
@@ -476,7 +478,7 @@ function ContactUs() {
               <>
                 <div className=" absolute left-0 top-0 flex h-full min-h-screen w-full items-center justify-center bg-[#312f3249]">
                   <div className="relative ">
-                    <div className="min-h-96 flex h-fit w-96 flex-col items-center justify-center gap-3 rounded-xl bg-gray-50 p-5 text-center">
+                    <div className="flex h-fit min-h-96 w-96 flex-col items-center justify-center gap-3 rounded-xl bg-gray-50 p-5 text-center">
                       {!formData.companySize.match(/\d{1,}/) ? (
                         <div className="text-red-400">invalid Company Size</div>
                       ) : (
@@ -587,7 +589,11 @@ function ContactUs() {
           <div className="absolute top-10 -z-0 h-1/3 w-full translate-y-1/2 blur-sm lg:static lg:z-0  lg:w-1/2 lg:translate-y-16 lg:blur-none">
             <Image
               src={"/images/contact-graphic.svg"}
+<<<<<<< HEAD
               alt="vector"
+=======
+              alt="contact-graphic"
+>>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
               width={340}
               height={250}
               className="w-full object-contain"
