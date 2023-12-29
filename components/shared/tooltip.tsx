@@ -9,10 +9,12 @@ export default function Tooltip({
   children,
   content,
   fullWidth,
+  type
 }: {
   children: ReactNode;
   content: ReactNode | string;
   fullWidth?: boolean;
+  type?: 'button' | 'submit'
 }) {
   const [openTooltip, setOpenTooltip] = useState(false);
 
@@ -22,9 +24,10 @@ export default function Tooltip({
     <>
       {isMobile && (
         <button
-          type="button"
+          type={type}
           className={`${fullWidth ? "w-full" : "inline-flex"}`}
           onClick={() => setOpenTooltip(true)}
+
         >
           {children}
         </button>
@@ -44,7 +47,12 @@ export default function Tooltip({
         <TooltipPrimitive.Provider delayDuration={100}>
           <TooltipPrimitive.Root>
             <TooltipPrimitive.Trigger className="hidden sm:inline-flex" asChild>
-              {children}
+              <button
+                type={type}
+                className={`${fullWidth ? "w-full" : "inline-flex"}`}
+              >
+                {children}
+              </button>
             </TooltipPrimitive.Trigger>
             <TooltipPrimitive.Content
               sideOffset={4}

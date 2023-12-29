@@ -40,7 +40,7 @@ function LikeButtonLOC({ email, blogId, likes, liked }: { email?: string, blogId
             setCurrent(prev => prev + 1)
             const state = await submitLike({ blogId: blogId, email: email, token: token });
             setState(state)
-            if(!state.success) setCurrent(prev => prev - 1)
+            if (!state.success) setCurrent(prev => prev - 1)
 
         }
     }
@@ -62,19 +62,21 @@ function LikeButtonLOC({ email, blogId, likes, liked }: { email?: string, blogId
 
             const state = await submitUnlike({ blogId: blogId, email: email, token: token });
             setState(state)
-            if(state.success) setCurrent(prev => prev + 1)
-         }
+            if (state.success) setCurrent(prev => prev + 1)
+        }
     }
 
     return (
-        <form action={(state.success ) ? unlike : like} className="flex flex-col justify-center items-center " >
-            <input name="blogId" defaultValue={blogId} hidden />
-            <input name="email" defaultValue={email} hidden />
-            <Tooltip content={`${state.success ? 'remove like' : 'like'}`} >
-                <button type="submit" >
-                    <Heart className={`${state.success ? 'fill-rose-500 text-rose-500' : ''}`} />
-                </button>
+        <form action={(state.success) ? unlike : like} className="flex lg:flex-col gap-1 justify-center items-center " >
+            <div>
+                <input name="blogId" defaultValue={blogId} hidden />
+                <input name="email" defaultValue={email} hidden />
+            </div>
+            <Tooltip type="submit" content={`${state.success ? 'remove like' : 'like'}`} >
+
+                <Heart className={`${state.success ? 'fill-rose-500 text-rose-500' : ''} cursor-pointer`} />
             </Tooltip>
+
             {current}
         </form>
     )
