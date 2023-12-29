@@ -36,8 +36,6 @@
     transform: translate(10px, -10px);
   }
 }
-<<<<<<< HEAD
-=======
 
 @layer components {
   .Blog-Post a {
@@ -72,4 +70,3 @@
   overflow-y: auto;
 }
 
->>>>>>> 8f0d6c8a059d87d1f0d68193e496ec3a953c9e6a
