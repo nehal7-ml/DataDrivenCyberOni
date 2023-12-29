@@ -1,6 +1,7 @@
 import { User, PrismaClient } from "@prisma/client";
 import { connectOrCreateObject } from "./images";
 import { GetAllRecordsDTO } from "./commonDTO";
+import { CreateImageDTO } from "./DTOs";
 import { CreateUserDTO, CredentialAuthDTO } from "./DTOs";
 import bcrypt from "bcrypt"
 import { AdapterAccount } from "next-auth/adapters";
