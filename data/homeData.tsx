@@ -49,7 +49,7 @@ export const homeSections: SectionProps[] = [
         </div>
       ),
       image: "/images/key-sections/background-removed/Tailored.png",
-      imageFirst: true,
+      imageFirst: false,
       linkTo: "/blogs",
     },
     {
@@ -66,7 +66,7 @@ export const homeSections: SectionProps[] = [
         </div>
       ),
       image: "/images/key-sections/background-removed/Support.png",
-      imageFirst: false,
+      imageFirst: true,
       linkTo: "/blogs",
     },
   ];
