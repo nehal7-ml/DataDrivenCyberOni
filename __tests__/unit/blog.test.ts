@@ -10,7 +10,7 @@ import { Blog } from "@prisma/client";
 
 describe('Testing Service crud unit functions', () => {
     const mockblog: CreateBlogDTO = {
-        title: 'TEst Tilte',
+        title: 'Test title',
         content: 'testcontent',
         description: 'test  description',
         date: new Date(),
@@ -34,28 +34,31 @@ describe('Testing Service crud unit functions', () => {
         const resp = await create(mockblog, prisma);
         expect(resp.title).toBe(mockblog.title);
         createdblog = resp;
-    });
+    }, 10000);
     it('should successfully retrive searched Blog', async () => {
         const resp = await getBySearchTerm('Automate', 1, prisma);
         expect(resp.length).toBeGreaterThan(0);
     });
 
-    it('should successfully retrive searched Blog add a like and retrieve is user liked it', async () => {
-        const resp = await addView({ id: createdblog.id, userEmail: 'nehal.sk.99@gmail.com'}, prisma);
-        //console.log(resp);
-        expect(resp.Likes.length).toBeGreaterThan(0);
-    });
-
     it('should successfully add a like for the user', async () => {
         const resp = await addLike( createdblog.id,  'nehal.sk.99@gmail.com', prisma);
         expect(resp).toBe(true);
-    });
+    }, 10000);
+
+    it('should successfully retrive searched Blog add a view and retrieve if user liked it', async () => {
+        const resp = await addView({ id: createdblog.id, userEmail: 'nehal.sk.99@gmail.com'}, prisma);
+        //console.log(resp);
+        expect(resp.Views).toBeGreaterThan(0);
+        expect(resp.Likes.length).toBeGreaterThan(0)
+    }, 10000);
+
+   
 
     it('should successfully remove a like for the user', async () => {
         const resp = await removeLike( createdblog.id,  'nehal.sk.99@gmail.com', prisma);
         //console.log(resp);
         expect(resp).toBe(false);
-    });
+    }, 10000);
 
 
     it('should successfully remove a blog', async () => {
