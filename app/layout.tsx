@@ -37,17 +37,17 @@ export const metadata: Metadata = {
   },
   themeColor: "#0074e4",
   other: {
-    "fb:app_id": process.env.FACEBOOK_ID as string
+    "fb:app_id": process.env.FACEBOOK_ID as string,
   },
   viewport: {
-    width: 'device-width',
+    width: "device-width",
     initialScale: 1,
     maximumScale: 1
   },
   alternates: {
     canonical: "https://www.cybershoptech.com"
   }
-  
+
 };
 
 export default async function RootLayout({
@@ -99,7 +99,7 @@ export default async function RootLayout({
           abel.variable,
           nunito.variable,
         )} 
-        ${theme?.value} overflow-x-hidden antialiased`}
+                        ${theme?.value} overflow-x-hidden antialiased`}
       >
         <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white " />
         <Suspense fallback="...">

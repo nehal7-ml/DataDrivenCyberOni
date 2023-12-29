@@ -1,29 +1,35 @@
 import Image from "next/image";
-import React from 'react'
 
 export type SlideProps = {
-    image: string;
-    name: string;
-    content: string;
-    designation: string;
-
-
-}
+  name: string;
+  designation?: string; // Optional since some reviews don't include this
+  image?: string; // Optional as not all reviews might have associated images
+  content: string;
+  additionalInfo?: string; // For owner responses or any additional review details
+};
 function Slide({ image, name, content, designation }: SlideProps) {
-    return (
-        <div className="flex flex-col gap-5 justify-center items-center lg:flex-row mx-10 p-10">
-            <div className="rounded-[15%] shadow-left-shift-lg bg-gradient-purple m-4 p-0.5 h-60 w-60  overflow-hidden">
-                <Image className="rounded-[15%] w-full h-full object-cover" src={image} alt={name}  width={500} height={500}></Image>
-            </div>
-            <div className="mx-10 flex-1 lg:h-60 flex flex-col justify-center">
-                <div className="whitespace-pre-line my-2 text-lg text-center lg:text-left">{content}</div>
-                <div className="my-2 text-center lg:text-left">{name}</div>
-                <div className="my-2 text-center lg:text-left">{designation}</div>
-            </div>
-
+  return (
+    <div className="mx-10 flex flex-col items-center justify-center gap-5 p-10 lg:flex-row">
+      <div className="m-4 h-60 w-60 overflow-hidden rounded-[15%] bg-gradient-purple p-0.5  shadow-left-shift-lg">
+        {image && (
+          <Image
+            className="h-full w-full rounded-[15%] object-cover"
+            src={image}
+            alt={name}
+            width={500}
+            height={500}
+          ></Image>
+        )}
+      </div>
+      <div className="mx-10 flex flex-1 flex-col justify-center lg:h-60">
+        <div className="my-2 whitespace-pre-line text-center text-lg lg:text-left">
+          {content}
         </div>
-
-    )
+        <div className="my-2 text-center lg:text-left">{name}</div>
+        <div className="my-2 text-center lg:text-left">{designation}</div>
+      </div>
+    </div>
+  );
 }
 
-export default Slide
+export default Slide;

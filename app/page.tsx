@@ -1,31 +1,31 @@
 
 import Image from "next/image";
-import Section from "@/components/home/HomeSection";
-import CompanyCarousel from "@/components/home/CompanyCarousel";
+import Section, { SectionProps } from "@/components/home/HomeSection";
+import CompanyCarousel, { Company } from "@/components/home/CompanyCarousel";
 import SlideShow from "@/components/home/SlideShow";
 import Slide from "@/components/home/Slide";
 import ContactForm from "@/components/ContactForm";
 import EmailLetter from "@/components/home/EmailLetter";
 import CalendlyPopup from "@/components/Calendly";
 import { companies, homeSections, sildes } from "@/data/homeData";
+import Link from "next/link";
 export default async function Home() {
-
-
   return (
     <>
       <div className="z-30 w-full dark:text-white ">
         <section className="container mx-auto flex flex-col text-center lg:text-left">
           <div className="flex flex-col-reverse items-center justify-center lg:flex-row">
-            <div className="flex flex-col justify-center items-center lg:items-start lg:justify-start " >
-              <div className="m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF] to-[#FF2DF7]  bg-clip-text text-5xl font-bold text-transparent">
+            <div className="flex flex-col items-center justify-center lg:items-start lg:justify-start ">
+              <div className="sm:text-3l m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF]  to-[#FF2DF7] bg-clip-text text-5xl font-bold text-transparent">
                 With Ai
               </div>
-              <div className="m-3 text-5xl font-bold">
-                Revolutionize Your Business
+              <div className="m-3 text-4xl font-bold">
+                Revolutionize Your Business with Data-Driven Mastery: Transform,
+                Automate, Personalize{" "}
               </div>
               <div className="m-3">
-                Our ambition is to reshape how you envision the use of your data
-                to automate mundane tasks.
+                Embark on an Data-Infused Journey to Redefine Your Businesses
+                Success
               </div>
               <div className="mx-3 h-[1px] bg-gradient-purple w-full" />
               <div className="flex justify-center lg:justify-start">
@@ -63,7 +63,10 @@ export default async function Home() {
           );
         })}
 
-        <section className="container mx-auto">
+        <section className="container mx-auto text-center">
+          <h2 className="  m-3 w-fit bg-gradient-purple bg-clip-text text-3xl font-bold text-transparent">
+            Customer Reviews and Feedback
+          </h2>
           <SlideShow
             slides={sildes.map((card, index) => {
               return (
@@ -79,6 +82,27 @@ export default async function Home() {
               );
             })}
           ></SlideShow>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-semibold text-blue-600 hover:text-blue-800"
+              aria-label="View our business"
+            >
+              View our Business
+            </Link>
+            &nbsp;|&nbsp;
+            <Link
+              href="/google-business"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-semibold text-blue-600 hover:text-blue-800"
+              aria-label="View our business"
+            >
+              Write a Review
+            </Link>
+          </div>
         </section>
         {homeSections.slice(2, 5).map((item, index) => {
           return (
