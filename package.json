@@ -8,6 +8,7 @@
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "start": "next start",
+    "test": "jest",
     "lint": "next lint"
   },
   "dependencies": {
@@ -21,7 +22,6 @@
     "@sendgrid/mail": "^7.7.0",
     "@vercel/analytics": "^0.1.11",
     "@vercel/og": "^0.0.26",
-    "bcrypt": "^5.1.1",
     "bcrypt": "^5.1.1",
     "classnames": "^2.3.2",
     "cloudinary": "^1.41.0",
