@@ -76,7 +76,7 @@ function ResetPasswordForm() {
                                 onChange={e => setState(prev => ({ ...prev, password: e.target.value }))}
                                 required
                             />
-                            <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-slate-900  px-1 text-gray-500 transition-all   text-sm font-bold mb-2" htmlFor="email">
+                            <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-slate-900  px-1 text-gray-700 dark:text-gray-200 transition-all   text-sm font-bold mb-2" htmlFor="email">
                                 New Password
                             </label>
                         </div>
@@ -91,7 +91,7 @@ function ResetPasswordForm() {
                                 onChange={e => setConfirm(e.target.value)}
                                 required
                             />
-                            <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50  px-1 text-gray-500 transition-all   text-sm font-bold mb-2" htmlFor="email">
+                            <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-slate-900  px-1 text-gray-600 dark:text-gray-200 transition-all   text-sm font-bold mb-2" htmlFor="email">
                                 Confirm Password
                             </label>
                         </div>
