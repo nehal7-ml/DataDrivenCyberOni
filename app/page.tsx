@@ -12,7 +12,7 @@ import Link from "next/link";
 export default async function Home() {
   return (
     <>
-      <div className="z-30 w-full dark:text-white ">
+      <div className="z-30 w-full dark:text-white lg:px-10">
         <section className="container mx-auto flex flex-col text-center lg:text-left">
           <div className="flex flex-col-reverse items-center justify-center lg:flex-row">
             <div className="flex flex-col items-center justify-center lg:items-start lg:justify-start ">
