@@ -84,7 +84,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
                 <div className="relative mx-auto flex flex-col  items-center my-10 xl:py-10  xl:px-10 px-1 py-5 min-h-screen container">
                     <div className="max-w-full flex justify-center items-center">{blog.images[0] ? <Image priority={true} className="object-contain m-2 w-full h-[40vh] rounded-lg" src={blog.images[0].src} alt={ stripFileExtension(blog.images[0].name || 'blog_image')} width={500} height={300}></Image> : <></>}</div>
                     {<BlogContent href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`} content={blog.content} theme={theme} />}
-                    <BlogContainer liked={blog.Likes.length>0} blog={blog}  session={session}/>
+                    <BlogContainer href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`}liked={blog.Likes.length>0} blog={blog}  session={session}/>
 
                 </div>
 
