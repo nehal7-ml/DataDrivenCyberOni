@@ -14,14 +14,14 @@ import { NextRequest } from "next/server";
 
 describe('Testing events Api', () => {
     const mockEvent: CreateEventDTO = {
-        name: 'TEst Tilte',
+        name: 'Test Event',
         date: new Date(),
         description: 'test description',
         eventLink: 'http://event.com/',
         isVirtual: false,
         location: 'SF, CA',
         status:"UPCOMING",
-        image: {src: 'example.image.com',name:'test image'},
+        image: {src: 'https://picsum.photos/200',name:'test image'},
        
     };
 

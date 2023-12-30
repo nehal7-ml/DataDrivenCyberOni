@@ -29,8 +29,8 @@ describe('Testing blogs Api', () => {
             { name: 'Mobile' },
         ] as CreateTagDTO[],
         images: [
-            { name: 'Image 1', src: 'image1.jpg' } as CreateImageDTO,
-            { name: 'Image 2', src: 'image2.jpg' } as CreateImageDTO,
+            { name: 'Image 1', src: 'https://picsum.photos/200' } as CreateImageDTO,
+            { name: 'Image 2', src: 'https://picsum.photos/200' } as CreateImageDTO,
         ],
     };
 

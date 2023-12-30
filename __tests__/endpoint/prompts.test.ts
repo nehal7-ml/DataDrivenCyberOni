@@ -6,8 +6,7 @@ import {GET, DELETE, PUT} from '@/app/api/prompts/[id]/route'
 import {POST as addPromptHandler} from '@/app/api/prompts/add/route'
 import { createMocks } from 'node-mocks-http'
 import { describe, expect, test, it, beforeAll } from '@jest/globals';
-import { CreateTagDTO } from "@/crud/tags";
-import { CreateImageDTO } from "@/crud/DTOs";
+import { CreateImageDTO, CreateTagDTO } from "@/crud/DTOs";
 import { createGptPromptDTO } from "@/crud/prompt";
 import { GptPrompt } from "@prisma/client";
 import { NextRequest } from "next/server";
@@ -28,7 +27,7 @@ describe('Testing Prompts Api', () => {
         timesIntegrated: 2,
         costPerToken: 0.01,
         profitMargin: 0.2, // 20%
-        image: { name: 'Prompt Image', src: 'prompt-image.jpg' } as CreateImageDTO,
+        image: { name: 'Prompt Image', src: 'https://picsum.photos/200' } as CreateImageDTO,
         tags: [
             { name: 'Tech' },
             { name: 'Mobile' },

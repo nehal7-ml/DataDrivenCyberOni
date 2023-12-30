@@ -108,7 +108,7 @@ async function Services({ params }: { params: { id: string } }) {
         />
       </section>
 
-      {service.SubServices && (
+      {service.SubServices && service.SubServices.length > 0 && (
         <section className="my-5 font-nunito">
           <SubServiceCarousel
             subservices={service.SubServices.map((subservice) => ({
@@ -160,8 +160,8 @@ async function Services({ params }: { params: { id: string } }) {
 
         <Faqs faqs={faqs} />
       </section>
-      <section className="container mx-auto my-10 font-nunito lg:h-[300px]">
-        <EmailLetter />
+      <section className="container mx-auto my-10 px-10">
+        <EmailLetter></EmailLetter>
       </section>
       <section className="flex items-center justify-center">
         <PayLater value={service.valueBrought as string[]} />

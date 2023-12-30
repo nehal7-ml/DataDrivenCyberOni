@@ -7,8 +7,7 @@ import { POST as addServiceHandler } from '@/app/api/services/add/route'
 import * as getAllServiceHandler from '@/app/api/services/[id]/route'
 import { createMocks } from 'node-mocks-http'
 import { describe, expect, test, it, beforeAll } from '@jest/globals';
-import { CreateTagDTO } from "@/crud/tags";
-import { CreateFaqDTO, CreateImageDTO, CreateServiceDTO, CreateServiceDescription, CreateSubServiceDTO } from "@/crud/DTOs";
+import { CreateFaqDTO, CreateImageDTO, CreateServiceDTO, CreateServiceDescription, CreateSubServiceDTO, CreateTagDTO } from "@/crud/DTOs";
 import { } from "@/crud/service";
 import { Service } from "@prisma/client";
 import { NextRequest } from "next/server";
@@ -31,7 +30,7 @@ describe('Testing Services Api', () => {
         valueBrought: ['Responsive Design', 'User-Friendly Interfaces'],
         skillsUsed: ['HTML', 'CSS', 'JavaScript', 'React'],
         htmlEmbed: '<iframe src="https://example.com"></iframe>',
-        image: { name: 'Service Cover Image', src: 'service-cover.jpg' } as CreateImageDTO,
+        image: { name: 'Service Cover Image', src: 'https://picsum.photos/200' } as CreateImageDTO,
         SubServices: [
             {
                 id: '1',
@@ -47,7 +46,7 @@ describe('Testing Services Api', () => {
                 overheadCost: 1000,
                 complexity: 3,
                 skillLevel: 'Advanced',
-                image: { name: 'Subservice Image', src: 'subservice-image.jpg' } as CreateImageDTO,
+                image: { name: 'Subservice Image', src: 'https://picsum.photos/200' } as CreateImageDTO,
                 tags: [{ name: 'Custom Development' }] as CreateTagDTO[],
             } as CreateSubServiceDTO,
         ],

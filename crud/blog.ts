@@ -1,13 +1,9 @@
-import { Blog, PrismaClient, Tag, User, Image, BlogComment, BlogLike } from "@prisma/client";
+import {  PrismaClient } from "@prisma/client";
 import { connectOrCreateObject as connectTags } from "./tags";
 import { connectOrCreateObject as connectImages } from "./images";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { cleanHtmlString } from "@/lib/utils";
 import { CommentDTO, CreateBlogDTO } from "./DTOs";
 import { getUserByEmail } from "./user";
-
-
-
 
 async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
@@ -143,7 +139,11 @@ export async function addView({ id, userEmail }: { id: string, userEmail?: strin
                     Likes: true
                 }
             },
-            Comments: true,
+            Comments: {
+                include: {
+                    User:true
+                }
+            },
         }
     })
 
@@ -243,11 +243,19 @@ async function getAuthor(id: string, page: number, prisma: PrismaClient) {
 
 async function addComment(comment: CommentDTO, prisma: PrismaClient) {
     const comments = prisma.blogComment;
+    console.log(comment);
     const newComment = await comments.create({
         data: {
-            ...comment,
-            blogId: undefined,
-            Blog: { connect: { id: comment.blogId } }
+            comment: comment.comment,
+            User: {
+                connect: {
+                    email: comment.email
+                }
+            },
+            Blog: { connect: { id: comment.blogId } },
+        },
+        include: {
+            User:true
         }
     })
 

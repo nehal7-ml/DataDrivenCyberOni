@@ -18,7 +18,7 @@ export type DisplayBlogDTO = Blog & {
     {image: Image}; 
     tags: Tag[], 
     images:Image[], 
-    Comments: BlogComment[], 
+    Comments: DisplayCommentDTO[], 
     Likes: BlogLike[],
     _count: {
         Likes: number
@@ -87,12 +87,14 @@ export type Discount = {
     value: string;
 };
 export type CommentDTO = {
-    name: string;
-    email: string;
     comment: string;
     blogId: string;
+    email:string;
 };
 
+export type DisplayCommentDTO = BlogComment &{
+    User:  User
+}
 
 export type CreateUserDTO = {
     id?: string;

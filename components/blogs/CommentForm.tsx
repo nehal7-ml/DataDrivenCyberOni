@@ -1,32 +1,52 @@
 'use client'
 import React, { FormEvent, useState } from 'react';
 import ClientInput from "../layout/ClientInput";
-import { BlogComment } from "@prisma/client";
 import Link from "next/link";
+import { CommentDTO, DisplayCommentDTO } from "@/crud/DTOs";
+import { submitComment } from "@/app/blogs/post/[id]/submitComment";
+import GoogleCaptchaWrapper from "../GoogleCaptchaWrapper";
+import { useReCaptcha } from "next-recaptcha-v3";
 
-const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string }) => {
+type CommentFormProps = {
+    comments?: (DisplayCommentDTO)[];
+    id: string;
+    email?: string;
+    href: string
+}
+function CommentForm(props: CommentFormProps) {
+    return <GoogleCaptchaWrapper >
+        <CommentFormLOC  {...props} />
+    </GoogleCaptchaWrapper>
+}
+const CommentFormLOC = ({ comments, id, email, href }: CommentFormProps) => {
 
-    const [displayComments, setDisplayComments] = useState<BlogComment[]>(comments || []);
+    const [displayComments, setDisplayComments] = useState<DisplayCommentDTO[]>(comments || []);
     const [comment, setComment] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
     const [agree, setAgree] = useState(false);
-
+    const { executeRecaptcha, loaded } = useReCaptcha()
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         // Handle form submission
 
         const formData = new FormData(e.target as HTMLFormElement)
-
-        let newComment = {
-            name,
-            email,
+        const token = await executeRecaptcha('comment_submit')
+        let newComment: CommentDTO = {
+            email: email as string,
             comment,
+            blogId: id
         }
 
-        const res = await fetch(`/api/blogs/comments/${id}`, { method: 'POST', body: JSON.stringify(newComment) })
-        const added = await res.json();
-        setDisplayComments(prev => [...prev, added.comment])
+        const state = await submitComment({
+            blogId: id,
+            comment: comment,
+            email: email as string,
+            token: token
+        })
+        if (state.result) {
+            setDisplayComments(prev => [...prev, state.result as DisplayCommentDTO])
+            setComment("")
+        
+        }
     };
 
     return (
@@ -43,16 +63,16 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
                 <div className="my-5">
                     {
                         (displayComments).map((comment, index) => {
-                            return <div className="border-b-2 border-gray-500 py-5" key={index}>
-                                <div className="flex flex-wrap gap-10 justify-start    items-center">
-                                    <div className="w-10 h-10 rounded-full overflow-hidden">
-                                        <div className="w-full h-full bg-orange-500 flex items-center justify-center text-center text-lg">{comment.name[0].toUpperCase()}</div>
+                            return <div className="border-b-[1px] border-gray-500 py-5" key={index}>
+                                <div className="flex flex-wrap gap-3 justify-start    items-center">
+                                    <div className="w-9 h-9 rounded-full overflow-hidden">
+                                        <div className="w-full h-full bg-orange-500 flex items-center justify-center text-center text-lg">{comment.User.firstName ? comment.User.firstName[0].toUpperCase() : comment.User.email[0].toUpperCase()}</div>
                                     </div>
 
-                                    <div className="w-1/2 text-xl">{comment.name}</div>
-                                    <div className="text-gray-300 w-1/3">{(new Date(comment.createdAt)).toDateString()}</div>
+                                    <div className="w-1/2 text-xl">{comment.User.firstName || 'anonymous'}</div>
+                                    <div className="text-gray-700 dark:text-gray-300 w-1/3">{(new Date(comment.createdAt)).toDateString()}</div>
                                 </div>
-                                <div className="flex justify-center text-left mx-10">
+                                <div className="flex justify-center text-left mx-10 my-5">
                                     <div className="w-full font-light">{comment.comment}</div>
                                 </div>
                             </div>
@@ -64,7 +84,7 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
                 </div>
             </div>
 
-            <form id="commentForm" onSubmit={handleSubmit} className=" container rounded-lg lg:p-24 p-5 mx-auto my-10 bg-gray-50 dark:bg-zinc-700 shadow-xl">
+            <form id="commentForm" onSubmit={handleSubmit} className="relative container rounded-lg lg:p-24 p-5 mx-auto my-10 bg-gray-50 dark:bg-zinc-700 shadow-xl">
                 <div className="relative mb-4">
 
                     <textarea
@@ -81,21 +101,7 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
                         Comment
                     </label>
                 </div>
-                <div className="relative my-10">
 
-                    <input
-                        className=" peer shadow-lg appearance-none border rounded w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                        id="name"
-                        type="text"
-                        placeholder=""
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                    <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-zinc-700 px-1 text-gray-500 transition-all  dark:text-white text-sm font-bold mb-2" htmlFor="comment">
-                        Name
-                    </label>
-                </div>
                 <div className="relative my-10">
 
                     <ClientInput
@@ -103,13 +109,10 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
                         id="email"
                         type="email"
                         placeholder=""
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        defaultValue={email}
                         required
+                        hidden
                     />
-                    <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-zinc-700 px-1 text-gray-500 transition-all  dark:text-white text-sm font-bold mb-2" htmlFor="email">
-                        Email
-                    </label>
                 </div>
                 <div className="mb-6">
                     <label className="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" htmlFor="agree">
@@ -134,6 +137,9 @@ const CommentForm = ({ comments, id }: { comments?: BlogComment[], id: string })
                         Post Comment
                     </button>
                 </div>
+                {!email && <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-30 bg-gradient-to-b from-gray-300/40 via-gray-400/85 to-gray-600/100 to dark:from-gray-500/30 dark:via-gray-600/80 dark:to-gray-600/100 bacdrop-blur-sm hover:shadow-md">
+                    <Link href={{ query: { callback: href }, pathname: '/api/auth/signin' }} className=" py-4 px-2 bg-rose-600 text-white rounded-full">Login to post comment</Link>
+                </div>}
             </form>
         </>
     );
