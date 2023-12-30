@@ -31,7 +31,8 @@ function LikeButtonLOC({ email, blogId, likes, liked }: { email?: string, blogId
         if (!email) {
             setShowSignin(true);
             const searchParams = new URLSearchParams();
-            if (typeof window !== 'undefined') searchParams.set('callback', window.origin)
+            if (typeof window !== 'undefined') searchParams.set('callbackUrl', window.location.href+'/')
+            console.log(searchParams.toString());
             router.push(`/api/auth/signin?${searchParams.toString()}`)
             return;
         }
@@ -52,7 +53,7 @@ function LikeButtonLOC({ email, blogId, likes, liked }: { email?: string, blogId
         if (!email) {
             setShowSignin(true);
             const searchParams = new URLSearchParams();
-            if (typeof window !== 'undefined') searchParams.set('callback', window.location.href)
+            if (typeof window !== 'undefined') searchParams.set('callbackUrl', window.location.href)
             router.push(`/api/auth/signin?${searchParams.toString()}`)
             return;
         }

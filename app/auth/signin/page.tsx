@@ -14,7 +14,7 @@ import { DisplayUserDTO } from "@/crud/DTOs"
 
 export const dynamic = 'force-dynamic'
 
-export default async function SignIn() {
+export default async function SignIn({searchParams}: {searchParams:{callbackUrl:string}}) {
 
     const session = await getServerSession(authOptions)
 
@@ -26,7 +26,7 @@ export default async function SignIn() {
 
     if (session) {
         const user = session.user as unknown as DisplayUserDTO;
-        if (user) redirect('/')
+        if (user)             redirect(searchParams.callbackUrl || '/')
     }
 
     return (

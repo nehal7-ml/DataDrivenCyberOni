@@ -133,7 +133,7 @@ export async function addView({ id, userEmail }: { id: string, userEmail?: strin
                         email: userEmail
                     }
                 }
-            } : {},
+            } : false,
             _count: {
                 select: {
                     Likes: true

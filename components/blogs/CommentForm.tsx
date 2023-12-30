@@ -138,7 +138,7 @@ const CommentFormLOC = ({ comments, id, email, href }: CommentFormProps) => {
                     </button>
                 </div>
                 {!email && <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-30 bg-gradient-to-b from-gray-300/40 via-gray-400/85 to-gray-600/100 to dark:from-gray-500/30 dark:via-gray-600/80 dark:to-gray-600/100 bacdrop-blur-sm hover:shadow-md">
-                    <Link href={{ query: { callback: href }, pathname: '/api/auth/signin' }} className=" py-4 px-2 bg-rose-600 text-white rounded-full">Login to post comment</Link>
+                    <Link href={{ query: { callbackUrl: href }, pathname: '/api/auth/signin' }} className=" py-4 px-2 bg-rose-600 text-white rounded-full">Login to post comment</Link>
                 </div>}
             </form>
         </>

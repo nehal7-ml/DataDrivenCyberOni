@@ -73,6 +73,10 @@ export const authOptions: NextAuthOptions = {
             //console.log("session callback",session, token);
             return session
         },
+        redirect:async ({url, baseUrl}) => {
+            return url || baseUrl
+            
+        }
 
 
 
