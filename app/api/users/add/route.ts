@@ -1,4 +1,4 @@
-import { create } from "@/crud/user";
+import { createWithPassword } from "@/crud/user";
 import { CreateUserDTO } from "@/crud/DTOs";
 import apiHandler from "@/errorHandler";
 import { prisma } from "@/prisma/prismaClient";
@@ -13,7 +13,7 @@ async function post(req: Request) {
 
     if (req.method === "POST") {
         const user = await req.json() as CreateUserDTO;
-        const newUser = await create(user, prisma);
+        const newUser = await createWithPassword(user, prisma);
         return NextResponse.json({ message: "Add success", data: newUser }, { status: 200 });
     }
 
