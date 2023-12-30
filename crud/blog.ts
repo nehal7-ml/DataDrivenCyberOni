@@ -1,53 +1,16 @@
-import { Blog, PrismaClient, Tag, User, Image, BlogComment, BlogLike } from "@prisma/client";
-import { connectOrCreateObject as connectTags, CreateTagDTO } from "./tags";
-import { connectOrCreateObject as connectImages, CreateImageDTO } from "./images";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-
-
-export type CreateBlogDTO = {
-    title: string;
-    subTitle: string;
-    description: string;
-    featured: boolean;
-    date: Date;
-    content: string;
-    author: { id?: string, email: string },
-    images: CreateImageDTO[],
-    tags: CreateTagDTO[]
-}
-
-export type DisplayBlogDTO = {
-    id: string;
-    title: string;
-    subTitle: string;
-    description: string;
-    featured: boolean;
-    date: Date;
-    content: string;
-    author: User & {
-
-        image: Image
-    };
-    tags: Tag[]
-    images: Image[],
-    Comments?: BlogComment[],
-    Likes?: BlogLike[],
-    Views?: number
-}
-
-export type CommentDTO = {
-    name: string,
-    email: string,
-    comment: string,
-    blogId: string,
-}
+import {  PrismaClient } from "@prisma/client";
+import { connectOrCreateObject as connectTags } from "./tags";
+import { connectOrCreateObject as connectImages } from "./images";
+import { cleanHtmlString } from "@/lib/utils";
+import { CommentDTO, CreateBlogDTO } from "./DTOs";
+import { getUserByEmail } from "./user";
 
 async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
     let createdblog = await blogs.create({
         data: {
             ...blog,
-            images: { connect: blog.images.map(image => { return { id: image.id as string } }) },
+            images: await connectImages(blog.images, []),
             tags: { connectOrCreate: connectTags(blog.tags) },
             author: { connect: { email: blog.author.email } }
         }
@@ -57,13 +20,15 @@ async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
 
 }
 
+
 async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
+    const oldBlog = await blogs.findUnique({ where: { id: blogId }, include: { images: true, tags: true } })
     const updatedBlog = await blogs.update({
         where: { id: blogId },
         data: {
             ...blog,
-            images:  connectImages(blog.images) ,
+            images: await connectImages(blog.images, oldBlog!.images),
             tags: { connectOrCreate: connectTags(blog.tags) },
             author: { connect: { email: blog.author.email } }
         }
@@ -73,7 +38,6 @@ async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaC
 }
 
 
-
 async function remove(blogId: string, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
     const existingblog = await blogs.findUnique({ where: { id: blogId } })
@@ -81,8 +45,6 @@ async function remove(blogId: string, prismaClient: PrismaClient) {
         await blogs.delete({ where: { id: blogId } })
     }
 }
-
-
 async function read(blogId: string, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
     const existingblog = await blogs.findUnique({
@@ -97,31 +59,27 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             title: true,
             subTitle: true,
             author: {
-                include: {
-                    image: true,
+                select: {
+                    id: true,
+                    email: true
                 }
             },
             tags: true,
             images: true,
-            Likes: true,
-            Views: true,
-            Comments: {
-                take: 10, skip: 0
-            }
-
+            Comments: true
         }
     })
-    if (existingblog) return existingblog as DisplayBlogDTO;
+    if (existingblog) return existingblog;
 
 }
 
 async function getAll(page: number, pageSize: number, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
 
-    if (pageSize !== 10 && pageSize != 30 && pageSize !== 50 &&pageSize!==0) throw new Error('page size must be 10, 30 or 50')
+    if (pageSize !== 10 && pageSize != 30 && pageSize !== 50 && pageSize !== 0) throw new Error('page size must be 10, 30 or 50')
 
     let allBlogs = await blogs.findMany({
-        skip:page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
+        skip: page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
         where: {
         },
         include: {
@@ -154,12 +112,12 @@ export function getFeatured(prisma: PrismaClient) {
     return featured;
 
 }
-export async function addView(id:string, prisma:PrismaClient) {
-    const blogs= prisma.blog;
+export async function addView({ id, userEmail }: { id: string, userEmail?: string }, prisma: PrismaClient) {
+    const blogs = prisma.blog;
     const update = await blogs.update({
-        where: {id},
+        where: { id },
         data: {
-            Views: {increment: 1}
+            Views: { increment: 1 }
         },
         include: {
             tags: true,
@@ -169,7 +127,23 @@ export async function addView(id:string, prisma:PrismaClient) {
                 }
             },
             images: true,
-            Likes: true
+            Likes: userEmail ? {
+                where: {
+                    user: {
+                        email: userEmail
+                    }
+                }
+            } : false,
+            _count: {
+                select: {
+                    Likes: true
+                }
+            },
+            Comments: {
+                include: {
+                    User:true
+                }
+            },
         }
     })
 
@@ -187,6 +161,9 @@ export function getRecent(prisma: PrismaClient) {
                     image: true,
                 }
             }, images: true
+        },
+        orderBy: {
+            date: 'desc'
         }
     });
     return recent;
@@ -266,11 +243,19 @@ async function getAuthor(id: string, page: number, prisma: PrismaClient) {
 
 async function addComment(comment: CommentDTO, prisma: PrismaClient) {
     const comments = prisma.blogComment;
+    console.log(comment);
     const newComment = await comments.create({
         data: {
-            ...comment,
-            blogId: undefined,
-            Blog: { connect: { id: comment.blogId } }
+            comment: comment.comment,
+            User: {
+                connect: {
+                    email: comment.email
+                }
+            },
+            Blog: { connect: { id: comment.blogId } },
+        },
+        include: {
+            User:true
         }
     })
 
@@ -288,6 +273,72 @@ async function getComments(id: string, page: number, prisma: PrismaClient) {
     })
 
     return readComments
+}
+
+export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
+    const blogs = prisma.blog;
+    const records = await blogs.findMany({
+        where: {
+            OR: [
+                {
+                    title: {
+                        contains: search,
+                    },
+
+                },
+                {
+                    description: {
+                        contains: search,
+                    }
+                },
+                {
+                    subTitle: {
+                        contains: search
+                    }
+                },
+                {
+                    content: {
+                        contains: cleanHtmlString(search),
+                    }
+                }
+            ]
+        }
+    })
+    return records
+
+}
+
+export async function addLike(blogId: string, userEmail: string, prisma: PrismaClient) {
+    const BlogLike = prisma.blogLike;
+    const Like = await BlogLike.create({
+        data: {
+            blog: {
+                connect: { id: blogId }
+            },
+            user: {
+                connect: { email: userEmail }
+            }
+        }
+    })
+    return true
+
+}
+
+export async function removeLike(blogId: string, userEmail: string, prisma: PrismaClient) {
+    const BlogLike = prisma.blogLike;
+    const user = await getUserByEmail(userEmail, prisma);
+    if (!user) return true;
+    const Like = await BlogLike.delete({
+        where: {
+            userId_blogId: {
+                blogId,
+                userId: user.id
+            }
+        }
+    })
+
+    return false
+
 }
 
 export { create, update, remove, read, getAll, getAuthor, addComment, getComments }

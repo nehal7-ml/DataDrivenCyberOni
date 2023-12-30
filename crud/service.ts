@@ -1,7 +1,8 @@
 import { Service, PrismaClient, Prisma, Image, Tag, SubService, ServiceDescription, FAQ, CaseStudy } from "@prisma/client";
-import { CreateTagDTO, create as createTag, connectOrCreateObject as connectTags, TagSchema } from "./tags";
-import { CreateImageDTO, create as createImage, connectOrCreateObject as connectImage, ImageSchema } from "./images";
-import { CreateSubServiceDTO, SubserviceSchema, create as createSubService, update as updateSubService } from "./subService";
+import { create as createTag, connectOrCreateObject as connectTags } from "./tags";
+import { CreateImageDTO, CreateTagDTO } from "./DTOs";
+import {  create as createImage, connectOrCreateObject as connectImage } from "./images";
+import { CreateSubServiceDTO, create as createSubService, update as updateSubService } from "./subService";
 import { prisma } from "@/prisma/prismaClient";
 
 
@@ -40,75 +41,6 @@ export type DisplayServiceDTO = Service & {
     ServiceDescription?: (ServiceDescription & { image: Image })[],
     CaseStudies?: CaseStudy[]
 
-}
-
-export const ServiceSchema = {
-    "type": "object",
-    "properties": {
-        "title": { "type": "string" },
-        "previewContent": { "type": "string" },
-        "ServiceDescription": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/CreateServiceDescription"
-            }
-        },
-        "hourlyRate": { "type": "number" },
-        "valueBrought": {
-            "type": "array",
-            "items": { "type": "string" }
-        },
-        "skillsUsed": {
-            "type": "array",
-            "items": { "type": "string" }
-        },
-        "htmlEmbed": { "type": ["string"] },
-        "image": { "$ref": "#/definitions/CreateImageDTO" },
-        "SubServices": {
-            "type": "array",
-            "items": { "$ref": "#/definitions/CreateSubServiceDTO" }
-        },
-        "tags": {
-            "type": "array",
-            "items": { "$ref": "#/definitions/CreateTagDTO" }
-        },
-        "faqs": {
-            "type": "array",
-            "items": { "$ref": "#/definitions/CreateFaqDTO" }
-        }
-    },
-    "required": ["title", "previewContent", "ServiceDescription", "hourlyRate", "valueBrought", "skillsUsed"],
-    "definitions": {
-        "CreateServiceDescription": {
-            "type": "object",
-            "properties": {
-                "id": { "type": ["string"] },
-                "title": { "type": "string" },
-                "content": { "type": "string" },
-                "imageOnLeft": { "type": "boolean" },
-                "image": { "$ref": "#/definitions/CreateImageDTO" }
-            },
-            "required": ["title", "content", "imageOnLeft", "image"],
-            "definitions": {
-                "CreateImageDTO": {
-                    // Include the JSON schema for CreateImageDTO here
-                }
-            }
-        }
-        ,
-        "CreateImageDTO": ImageSchema,
-        "CreateTagDTO": TagSchema,
-        "CreateSubServiceDTO": SubserviceSchema,
-        "CreateFaqDTO": {
-            "type": "object",
-            "properties": {
-                "question": { "type": "string" },
-                "answer": { "type": "string" }
-            },
-            "required": ["question", "answer"]
-        }
-
-    }
 }
 
 async function create(service: CreateServiceDTO, prismaClient: PrismaClient) {
@@ -319,6 +251,82 @@ export async function getFeatured(prisma: PrismaClient) {
     })
     return records
 
+}
+
+
+export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
+    const services = prisma.service;
+
+
+    const records = await services.findMany({
+        skip: page === 0 ? 0 : (page - 1) * 5, 
+        take: page === 0 ? 9999 : 5,
+        where: {
+            OR: [
+                {
+                    title: {
+                        contains: search
+                    }
+                },
+
+                {
+                    ServiceDescription: {
+                        some: {
+                            content: {
+                                contains: search
+                            }
+                        }
+                    }
+                },
+
+                {
+                    SubServices: {
+                        some: {
+                            OR: [
+                                {
+                                    description: {
+                                        contains: search
+                                    }
+                                },
+                                {
+                                    title: {
+                                        contains: search
+                                    }
+                                },
+                                {
+                                    serviceDeliverables: {
+                                        array_contains: search
+                                    }
+                                },
+                                {
+                                    tags: {
+                                        some: {
+                                            name: {
+                                                contains: search
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+
+                        }
+                    }
+                },
+                {
+                    tags: {
+                        some: {
+                            name: {
+                                contains: search,
+
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    })
+
+    return records;
 }
 
 export { create, update, remove, read, getAll }

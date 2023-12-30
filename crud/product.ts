@@ -1,6 +1,8 @@
 import { Product, PrismaClient, Supplier, ProductStatus } from "@prisma/client";
-import { connectOrCreateObject as connectTag, CreateTagDTO } from "./tags";
-import { connectOrCreateObject as connectImage, CreateImageDTO } from "./images";
+import { connectOrCreateObject as connectTag } from "./tags";
+import { CreateTagDTO } from "./DTOs";
+import { connectOrCreateObject as connectImage } from "./images";
+import { CreateImageDTO } from "./DTOs";
 import { CreateSupplierDTO } from "./supplier";
 
 export type CreateProductDTO = {
@@ -49,7 +51,7 @@ async function create(product: CreateProductDTO, prismaClient: PrismaClient) {
         data: {
             ...product,
             tags: { connectOrCreate: connectTag(product.tags) },
-            images: connectImage(product.images) ,
+            images: await connectImage(product.images, []),
             suppliers: {
                 create: [
                     ...product.suppliers as CreateSupplierDTO[]
@@ -63,6 +65,8 @@ async function create(product: CreateProductDTO, prismaClient: PrismaClient) {
 
 async function update(productId: string, product: CreateProductDTO, prismaClient: PrismaClient) {
     const products = prismaClient.product;
+    const oldProduct = await products.findUnique({ where: { id: productId }, include: { images: true, tags: true } })
+
     const suplierUpdate = {
         create: [],
         update: []
@@ -91,7 +95,7 @@ async function update(productId: string, product: CreateProductDTO, prismaClient
         data: {
             ...product,
             tags: { connectOrCreate: connectTag(product.tags) },
-            images:connectImage(product.images) ,
+            images: await connectImage(product.images, oldProduct!.images),
             suppliers: suplierUpdate
         }
     });

@@ -85,6 +85,7 @@ async function BlogAuthor({
             image: author?.image as UserImage,
             id: author?.id as string,
             lastName: author?.lastName as string,
+            email: author?.email as string
           }}
         />
       </div>

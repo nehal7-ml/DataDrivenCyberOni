@@ -1,5 +1,5 @@
 import { NextRequestWithAuth, withAuth } from "next-auth/middleware"
-import { DisplayUserDTO } from "./crud/user"
+import { DisplayUserDTO } from "./crud/DTOs";
 import { JWT } from "next-auth/jwt";
 import { Role, User } from "@prisma/client";
 import { ApiError } from "next/dist/server/api-utils";

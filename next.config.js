@@ -2,8 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  
   images: {
-    domains: ["lh3.googleusercontent.com", "vercel.com","placehold.co","images.unsplash.com", "res.cloudinary.com", "picsum.photos"],
+    dangerouslyAllowSVG:true,
+    domains: [
+      "lh3.googleusercontent.com", 
+    "vercel.com",
+    "placehold.co",
+    "images.unsplash.com", 
+    "res.cloudinary.com", 
+    "picsum.photos",
+    "api.dicebear.com",
+  "avatars.githubusercontent.com"],
   },
   async redirects() {
     return [

@@ -1,5 +1,5 @@
 'use client'
-import { AlertCircle, Mail, PlaneIcon, Send } from "lucide-react";
+import { AlertCircle, Mail, PlaneIcon, Send, X } from "lucide-react";
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { LoadingCircle } from "../shared/icons";
 import Balancer from "react-wrap-balancer";
@@ -44,7 +44,7 @@ function ContactFormLOC(props: { onModal?: boolean, showModal?: boolean, setShow
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Here, you can handle form submission, e.g., sending data to a server.
-    console.log('Form submitted:', { selectedInterest, name, email, message });
+    // console.log('Form submitted:', { selectedInterest, name, email, message });
 
     if (name && email && message) {
       const token = await executeRecaptcha('Contact_Submit_Modal')
@@ -75,7 +75,8 @@ function ContactFormLOC(props: { onModal?: boolean, showModal?: boolean, setShow
   }
 
   return (
-    <div className="mx-auto h-full min-h-fit w-full rounded-lg bg-[#5001EAAD] p-6 shadow-lg">
+    <div className="relative mx-auto h-full min-h-fit w-full rounded-lg bg-[#5001EAAD] p-6 shadow-lg">
+      {props.setShowModal && <button className="absolute top-4 right-4 hover:text-red-500 cursor-pointer" onClick={()=>props.setShowModal? props.setShowModal(false):{}}><X /></button>}
       {showForm && (
         <form className="h-full w-full lg:p-6 " onSubmit={handleSubmit}>
           <h1 className="my-2 text-4xl">Contact us</h1>
