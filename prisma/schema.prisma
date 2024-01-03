@@ -67,7 +67,7 @@ model User {
   reviews        Review[]
   imageId        String?
   CartItem       CartItem[]
-  ApiCredentials ApiCredentials[]
+  ApiCredentials ApiCredential[]
   BlogLike       BlogLike[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @default(now()) @updatedAt
@@ -114,12 +114,14 @@ model CartItem {
   @@index([userId])
 }
 
-model ApiCredentials {
-  id      String   @id @default(uuid())
-  token   String   @db.Text
-  expires DateTime
-  user    User     @relation(fields: [userId], references: [id])
-  userId  String
+model ApiCredential {
+  id                 String   @id @default(uuid())
+  token              String   @db.Text
+  tokenExpiry        DateTime
+  refreshToken       String   @db.Text
+  refreshTokenExpiry DateTime
+  user               User     @relation(fields: [userId], references: [id])
+  userId             String
 
   @@index([userId])
 }
@@ -389,6 +391,7 @@ model GptPrompt {
   id                String   @id @default(uuid())
   description       String   @db.Text
   prompt            String   @db.Text
+  model             String   @default("gpt-3.5-turbo")
   temperature       Int      @default(0)
   max_tokens        Int      @default(0)
   top_p             Int      @default(0)
@@ -396,6 +399,7 @@ model GptPrompt {
   frequency_penalty Int      @default(0)
   presence_penalty  Int      @default(0)
   botUrl            String?  @db.Text
+  completions       Int      @default(1)
   stop              Json?
   timesUsed         Int      @default(0)
   timesIntegrated   Int      @default(0)
@@ -405,7 +409,8 @@ model GptPrompt {
   image             Image?   @relation(fields: [imageId], references: [id])
   reviews           Review[]
   imageId           String?
-
+  pricing           GptPricing @default(LOW)
+  
   @@index([imageId])
 }
 
@@ -575,4 +580,10 @@ enum ReferralPriority {
   LOW
   MEDIUM
   HIGH
+}
+
+enum GptPricing {
+  LOW
+  MODERATE 
+  AGGRESSIVE
 }
