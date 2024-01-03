@@ -22,17 +22,17 @@ import { useReCaptcha } from "next-recaptcha-v3";
 //import CalendlyPopup from "@/components/Calendly";
 // import CalendlyModal from "@/components/Calendly/CalendlyModal";
 
-function HocWrapper() {
+function HocWrapper({ searchParams }: { searchParams: { name: string, email: string, message: string } }) {
   return (
     <>
       <GoogleCaptchaWrapper>
-        <ContactUs />
+        <ContactUs searchParams={searchParams} />
       </GoogleCaptchaWrapper>
     </>
   );
 }
 
-function ContactUs() {
+function ContactUs({ searchParams }: { searchParams: { name: string, email: string, message: string } }) {
   const [showForm, setShowForm] = useState(true);
   const [showThanks, setShowThanks] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -57,12 +57,12 @@ function ContactUs() {
     timeline: "",
     budget: "",
     challenges: "",
-    firstName: "",
+    firstName: searchParams.name || '',
     lastName: "",
-    email: "",
+    email: searchParams.email || '',
     phone: "",
     source: "",
-    message: "",
+    message: searchParams.message || '',
     terms: false,
   });
 
@@ -245,7 +245,7 @@ function ContactUs() {
                     pattern="\d{1,}"
                     placeholder="Number of Employees"
                     title="only numbers"
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
                   />
@@ -257,7 +257,7 @@ function ContactUs() {
                     pattern="^[a-zA-Z\-0-9 ]{1,50}$"
                     placeholder="Company Name"
                     title="only letters, numbers, spaces, -"
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
                   />
@@ -269,7 +269,7 @@ function ContactUs() {
                     pattern="^.{1,250}$"
                     disabled={true}
                     placeholder="Tell us about your Requirements"
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     required
                   />
                   <div className="flex max-w-full flex-wrap">
@@ -322,7 +322,7 @@ function ContactUs() {
                     name="timeline"
                     title="Project Time Line"
                     placeholder="Project Time Line"
-                    className="bg-contact-input rounded-md border-0 text-gray-700 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 text-gray-700 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
                     defaultValue={""}
@@ -352,7 +352,7 @@ function ContactUs() {
                     pattern="[0-9,]{1,}"
                     title="only numbers and `,` allowed"
                     placeholder="Your Max budget"
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
                   />
@@ -365,7 +365,7 @@ function ContactUs() {
                     pattern="^[a-zA-Z\- ]{1,50}$"
                     title="only alphabets, - and spaces are allowed"
                     required
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -376,8 +376,9 @@ function ContactUs() {
                     placeholder="First name"
                     pattern="^[a-zA-Z\- ]{1,50}$"
                     title="only alphabets, - and spaces are allowed"
+                    defaultValue={formData.firstName}
                     required
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -389,7 +390,7 @@ function ContactUs() {
                     pattern="^[a-zA-Z\- ]{1,50}$"
                     title="only alphabets, - and spaces are allowed"
                     required
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     onChange={handleInputChange}
                   />
                 </div>
@@ -398,9 +399,11 @@ function ContactUs() {
                     type="email"
                     name="email"
                     placeholder="Email Address"
+                    defaultValue={formData.email}
+
                     onChange={handleInputChange}
                     required
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                   ></ClientInput>
                 </div>
                 <div className="my-7 flex flex-col ">
@@ -410,7 +413,7 @@ function ContactUs() {
                     placeholder="Phone number"
                     title="enter valid phone number eg: +1 (123) 456-7890 , 1234567890, 123-456-7890"
                     pattern="^(\+\d{1,2}\s?)?(\(\d{3}\)|\d{3})([\s.\-]?)\d{3}([\s.\-]?)\d{4}$"
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     required
                     onChange={handleInputChange}
                   />
@@ -424,7 +427,7 @@ function ContactUs() {
                     title="only alphabets, - and spaces are allowed"
                     onChange={handleInputChange}
                     required
-                    className="bg-contact-input rounded-md border-0 outline-none ring-0 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                   />
                 </div>
 
@@ -439,10 +442,12 @@ function ContactUs() {
                     id="message"
                     name="message"
                     rows={4}
-                    className="bg-contact-input w-full rounded-md  border-0 border-b-2 placeholder-gray-500 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    className="bg-contact-input w-full rounded-md  border-2 border-b-2 placeholder-gray-500 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                     placeholder="Your Message"
                     required
                     onChange={handleInputChange}
+                    defaultValue={formData.message}
+
                   ></textarea>
                 </div>
 
@@ -451,9 +456,11 @@ function ContactUs() {
                     type="checkbox"
                     name="terms"
                     required
-                    className="border-0 bg-gray-300"
+                    className="border-2 bg-gray-300"
                     //checked= {formData.terms}
                     onChange={handleInputChange}
+                    defaultValue={formData.message}
+
                   />
                   <p>
                     By submitting this, I authorize Cyber Tech shop to contact
