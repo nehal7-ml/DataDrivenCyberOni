@@ -12,7 +12,7 @@ export type SubServiceProps = {
     image: string;
 }
 
-const imageArray =['/subservice-1.svg', '/subservice-2.svg','/subservice-3.svg']
+const imageArray =['/images/subservice-1.svg', '/images/subservice-2.svg','/images/subservice-3.svg']
 function SubServiceCarousel({ subservices }: { subservices: SubServiceProps[] }) {
 
     const [currentIndex, setCurrentIndex] = useState(0);
