@@ -8,10 +8,10 @@ import { MetadataRoute } from "next";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogs = await allBlogs(0, 0, prisma)
   const services = await allServices(0, 0, prisma)
-  const baseUrl = "https://cybershoptech.com"
+  const baseUrl = "https://www.cybershoptech.com"
   return [
     {
-      url: "https://cybershoptech.com",
+      url: "https://www.cybershoptech.com",
       lastModified: new Date(),
     },
     ...blogs.records.map(blog => ({
