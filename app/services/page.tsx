@@ -13,7 +13,7 @@ async function ServiceList() {
           Services
         </div>
       </div>
-      <div className="w-full bg-gray-50 dark:bg-zinc-900">
+      <div className="w-full">
         <div className="container mx-auto ">
           <div className="conatiner mx-10 my-10 flex flex-wrap">
             {data.records.map((service, index) => {
