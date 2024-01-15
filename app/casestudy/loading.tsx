@@ -1,7 +1,7 @@
 import CaseStudyCardSkeleton from "@/components/casestudies/CaseStudyCardSkeleton";
 import ServiceCardSkeleton from "@/components/services/ServiceCardSkeleton";
 
-async function BlogListLoader() {
+async function CaseStudyListLoader() {
   return (
     <div className="h-fit w-full">
       <div className="container mx-auto ">
@@ -28,4 +28,4 @@ async function getData(list: string) {
   return [];
 }
 
-export default BlogListLoader;
+export default CaseStudyListLoader;
