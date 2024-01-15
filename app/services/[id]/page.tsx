@@ -51,7 +51,9 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
   return metadata
 }
 async function Services({ params }: { params: { id: string } }) {
-  const service = await read(params.id, prisma) as DisplayServiceDTO
+  const seoTitle = params.id
+  const id = extractUUID(seoTitle)
+  const service = await read(id, prisma) as DisplayServiceDTO
   const services = await getAll(1, 10, prisma);
 
   if (!service) redirect('/404');
