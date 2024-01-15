@@ -5,6 +5,7 @@ import { seoUrl } from "@/lib/utils";
 import { url } from "inspector";
 import { MetadataRoute } from "next";
 
+export const dynamic = 'force-dynamic'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogs = await allBlogs(0, 0, prisma)
   const services = await allServices(0, 0, prisma)
