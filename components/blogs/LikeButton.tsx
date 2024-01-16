@@ -1,5 +1,5 @@
 'use client'
-import { LikeFormState, submitLike, submitUnlike } from "@/app/blogs/post/[id]/addlike";
+import { LikeFormState, submitLike } from "@/app/blogs/post/[id]/addlike";
 import { Heart } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
 import React, { useEffect, useState } from 'react'
@@ -18,12 +18,15 @@ function LikeButtonLOC({ email, blogId, likes, liked }: { email?: string, blogId
     const [current, setCurrent] = useState(likes);
     const router = useRouter();
     const { executeRecaptcha, loaded } = useReCaptcha();
+    const [submitting, setSubmitting] = useState(false);
     const [state, setState] = useState<LikeFormState>({
         blogId,
         email: email || '',
         token: '',
+        liked:liked,
+        likes: likes,
         error: undefined,
-        success: liked
+        success: true,
     });
     async function like() {
         if (state.success) return;
@@ -37,47 +40,27 @@ function LikeButtonLOC({ email, blogId, likes, liked }: { email?: string, blogId
             return;
         }
         else {
-            setState(prev => ({ ...prev, success: true }));
-            setCurrent(prev => prev + 1)
-            const state = await submitLike({ blogId: blogId, email: email, token: token });
-            setState(state)
-            if (!state.success) setCurrent(prev => prev - 1)
-
-        }
-    }
-
-
-    async function unlike() {
-        if (!(state.success)) return;
-        let token = await executeRecaptcha('blog_like_remove')
-        if (!email) {
-            setShowSignin(true);
-            const searchParams = new URLSearchParams();
-            if (typeof window !== 'undefined') searchParams.set('callbackUrl', window.location.href)
-            router.push(`/api/auth/signin?${searchParams.toString()}`)
-            return;
-        }
-        else {
             setState(prev => ({ ...prev, success: false }));
-            setCurrent(prev => prev - 1)
+            setCurrent(prev => prev + 1)
+            const newState = await submitLike({ blogId: blogId, email: email, token: token ,liked: state.liked , likes: state.likes});
+            console.log(newState);
+            setState(newState)
+            if (!newState.success) setCurrent(prev => prev - 1)
 
-            const state = await submitUnlike({ blogId: blogId, email: email, token: token });
-            setState(state)
-            if (state.success) setCurrent(prev => prev + 1)
         }
     }
+
+
 
     return (
-        <form action={(state.success) ? unlike : like} className="flex lg:flex-col gap-1 justify-center items-center " >
+        <form  action={like} className="flex lg:flex-col gap-1 justify-center items-center " >
             <div>
                 <input name="blogId" defaultValue={blogId} hidden />
                 <input name="email" defaultValue={email} hidden />
             </div>
-            <Tooltip type="submit" content={`${state.success ? 'remove like' : 'like'}`} >
-
+            <Tooltip disbaled={submitting} type="submit" content={`${state.success ? 'remove like' : 'like'}`} >
                 <Heart className={`${state.success ? 'fill-rose-500 text-rose-500' : ''} cursor-pointer`} />
             </Tooltip>
-
             {current}
         </form>
     )

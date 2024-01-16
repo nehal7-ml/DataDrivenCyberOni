@@ -10,7 +10,7 @@ import { Session } from "next-auth";
 function BlogContainer({ blog , session, liked, href}: { blog: DisplayBlogDTO , session: Session | null, liked?:boolean, href:string}) {
     const blogContainer = useRef<HTMLDivElement>(null)
     const userEmail=  session? session.user?.email : undefined
-    console.log(liked);
+    console.log("post liked: ",liked);
     return (
 
         <>
