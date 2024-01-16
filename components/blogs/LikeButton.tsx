@@ -58,7 +58,7 @@ function LikeButtonLOC({ email, blogId, likes, liked }: { email?: string, blogId
                 <input name="blogId" defaultValue={blogId} hidden />
                 <input name="email" defaultValue={email} hidden />
             </div>
-            <Tooltip disbaled={submitting} type="submit" content={`${state.success ? 'remove like' : 'like'}`} >
+            <Tooltip disbaled={!state.success} type="submit" content={`${state.success ? 'remove like' : 'like'}`} >
                 <Heart className={`${state.success ? 'fill-rose-500 text-rose-500' : ''} cursor-pointer`} />
             </Tooltip>
             {current}
