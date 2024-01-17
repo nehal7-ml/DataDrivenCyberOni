@@ -144,4 +144,41 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
 
 }
 
+export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
+    const products = prisma.product;
+
+    const records = await products.findMany({
+        skip: page === 0 ? 0 : (page - 1) * 5, 
+        take: page === 0 ? 9999 : 5,
+        where: {
+            OR: [
+                {
+                    name: {
+                        contains: search
+                    }
+                },
+
+                {
+                    description: {
+                        contains:search
+                    }
+                },
+
+               {
+                    tags: {
+                        some: {
+                            name: {
+                                contains: search,
+
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    })
+
+    return records;
+
+}
 export { create, update, remove, read, getAll }
