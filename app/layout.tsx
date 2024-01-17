@@ -44,9 +44,6 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1
   },
-  alternates: {
-    canonical: "https://www.cybershoptech.com"
-  }
 
 };
 
