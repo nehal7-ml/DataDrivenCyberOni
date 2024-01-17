@@ -12,18 +12,18 @@ export type SubServiceProps = {
     image: string;
 }
 
-const imageArray =['/images/subservice-1.svg', '/images/subservice-2.svg','/images/subservice-3.svg']
+const imageArray = ['/images/subservice-1.svg', '/images/subservice-2.svg', '/images/subservice-3.svg']
 function SubServiceCarousel({ subservices }: { subservices: SubServiceProps[] }) {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [currentDisplay, setCurrentDisplay] = useState<SubServiceProps[]>([]);
     const nextSlide = () => {
-        setCurrentIndex((currentIndex + 1) % subservices.length);
+        setCurrentIndex(Math.floor((currentIndex + 1) % subservices.length));
     };
 
     const { isMobile, isDesktop } = useWindowSize()
     const prevSlide = () => {
-        setCurrentIndex((currentIndex - 1 + subservices.length) % subservices.length);
+        setCurrentIndex(Math.floor((currentIndex - 1 + subservices.length) % subservices.length));
     };
 
     const swipehandlers = useSwipe({ onSwipedLeft: prevSlide, onSwipedRight: nextSlide })
@@ -34,7 +34,7 @@ function SubServiceCarousel({ subservices }: { subservices: SubServiceProps[] })
             <div className="font-bold text-4xl text-center my-10">Service Add-ons</div>
             <div className="bg-purple-200 dark:bg-purple-900 pb-10">
                 <div className="relative flex flex-col lg:flex-row gap-10 p-5 lg:px-10 justify-center">
-                    {wrappedSlice(subservices, currentIndex,isMobile? currentIndex + 2: 0).map((subservice, index) =>
+                    {wrappedSlice(subservices, currentIndex, isMobile ? currentIndex : currentIndex + 2).map((subservice, index) =>
                         <div key={index} className="flex flex-col lg:w-1/3 p-8 gap-3 rounded-xl bg-gray-100 dark:bg-gray-800 border-4 border-[#AAC3F5] relative text-center justify-center mt-10 lg:px-10 pb-10 ">
                             <div className=" w-full text-left h-fit">
                                 <h3 className="text-lg font-semibold">{subservice.title}</h3>
@@ -43,7 +43,7 @@ function SubServiceCarousel({ subservices }: { subservices: SubServiceProps[] })
                                 {subservice.content}
                             </div>
                             <Image
-                                src={imageArray[Math.floor(Math.random()*3)]} // Replace with the actual profile image URL
+                                src={imageArray[Math.floor(Math.random() * 3)]} // Replace with the actual profile image URL
                                 alt={`${subservice.name}-image`}
                                 className=" object-cover lg:col-span-1 col-span-2"
                                 height={300}
