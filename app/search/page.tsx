@@ -1,5 +1,7 @@
 import { getBySearchTerm as searchBlogs } from "@/crud/blog"
 import { getBySearchTerm as searchServices } from "@/crud/service";
+import { getBySearchTerm as searchProducts } from "@/crud/service";
+
 import React from 'react'
 import prisma from "@/lib/prisma";
 import Link from "next/link";
