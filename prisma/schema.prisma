@@ -52,25 +52,25 @@ model VerificationToken {
 }
 
 model User {
-  id             String           @id @default(cuid())
+  id             String          @id @default(cuid())
   firstName      String?
   lastName       String?
-  email          String           @unique
+  email          String          @unique
   emailVerified  DateTime?
-  password       String           @default("")
-  image          Image?           @relation(fields: [imageId], references: [id])
+  password       String          @default("")
+  image          Image?          @relation(fields: [imageId], references: [id])
   addressId      String?
-  role           Role             @default(USER)
-  address        Address?         @relation(fields: [addressId], references: [id])
+  role           Role            @default(USER)
+  address        Address?        @relation(fields: [addressId], references: [id])
   accounts       Account[]
   blogs          Blog[]
   reviews        Review[]
   imageId        String?
   CartItem       CartItem[]
-  ApiCredentials ApiCredentials[]
+  ApiCredentials ApiCredential[]
   BlogLike       BlogLike[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @default(now()) @updatedAt
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @default(now()) @updatedAt
   Session        Session[]
   Payment        Payment[]
   BlogComment    BlogComment[]
@@ -116,12 +116,14 @@ model CartItem {
   @@index([userId])
 }
 
-model ApiCredentials {
-  id      String   @id @default(uuid())
-  token   String   @db.Text
-  expires DateTime
-  user    User     @relation(fields: [userId], references: [id])
-  userId  String
+model ApiCredential {
+  id                 String   @id @default(uuid())
+  token              String   @db.Text
+  tokenExpiry        DateTime
+  refreshToken       String   @db.Text
+  refreshTokenExpiry DateTime
+  user               User     @relation(fields: [userId], references: [id])
+  userId             String
 
   @@index([userId])
 }
@@ -163,14 +165,14 @@ model CjShipping {
 }
 
 model Order {
-  id        String  @id @default(uuid())
-  user      User    @relation(fields: [userId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
-  address   Address @relation(fields: [addressId], references: [id])
+  id        String      @id @default(uuid())
+  user      User        @relation(fields: [userId], references: [id])
+  product   Product     @relation(fields: [productId], references: [id])
+  address   Address     @relation(fields: [addressId], references: [id])
   userId    String
   productId String
   addressId String
-  status     OrderStatus @default(CREATED)
+  status    OrderStatus @default(CREATED)
 
   @@index([productId])
   @@index([userId])
@@ -358,7 +360,7 @@ model SubService {
   complexity                                Int
   overheadCost                              Int
   service                                   Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  imageId                                   String
+  imageId                                   String?
   serviceId                                 String
 
   @@index([imageId])
@@ -400,25 +402,29 @@ model CaseStudy {
 }
 
 model GptPrompt {
-  id                String   @id @default(uuid())
-  description       String   @db.Text
-  prompt            String   @db.Text
-  temperature       Int      @default(0)
-  max_tokens        Int      @default(0)
-  top_p             Int      @default(0)
-  best_of           Int      @default(0)
-  frequency_penalty Int      @default(0)
-  presence_penalty  Int      @default(0)
-  botUrl            String?  @db.Text
+  id                String     @id @default(uuid())
+  description       String     @db.Text
+  title             String     @default("")
+  prompt            String?    @db.Text
+  model             String?    @default("gpt-3.5-turbo")
+  temperature       Int?       @default(0)
+  max_tokens        Int?       @default(0)
+  top_p             Int?       @default(0)
+  best_of           Int?       @default(0)
+  frequency_penalty Int?       @default(0)
+  presence_penalty  Int?       @default(0)
+  botUrl            String?    @db.Text
+  completions       Int?       @default(1)
   stop              Json?
-  timesUsed         Int      @default(0)
-  timesIntegrated   Int      @default(0)
-  costPerToken      Int      @default(0)
-  profitMargin      Int      @default(0)
+  timesUsed         Int?       @default(0)
+  timesIntegrated   Int?       @default(0)
+  costPerToken      Int?       @default(0)
+  profitMargin      Int?       @default(0)
   tags              Tag[]
-  image             Image?   @relation(fields: [imageId], references: [id])
+  image             Image?     @relation(fields: [imageId], references: [id])
   reviews           Review[]
   imageId           String?
+  pricing           GptPricing @default(LOW)
 
   @@index([imageId])
 }
@@ -589,6 +595,12 @@ enum ReferralPriority {
   LOW
   MEDIUM
   HIGH
+}
+
+enum GptPricing {
+  LOW
+  MODERATE
+  AGGRESSIVE
 }
 
 enum OrderStatus {
