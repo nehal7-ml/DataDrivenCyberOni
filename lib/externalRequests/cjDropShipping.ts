@@ -1,3 +1,4 @@
+'server-only'
 import { objectToSearchParams } from "../utils";
 
 
@@ -6,12 +7,10 @@ const password = process.env.CJSHIPPING_PASSWORD as string;
 const apiKey = process.env.CJSHIPPING_API_KEY as string;
 const apiUrl = 'https://developers.cjdropshipping.com/api2.0/v1';
 
-const authHeader = {
-    "CJ-Access-Token": apiKey as string
-}
+
 let refreshToken: string | null = null;
 
-console.log("headers: ", authHeader);
+// console.log("headers: ", authHeader);
 type AccessTokenResponse = {
     code: number;
     result: boolean;
@@ -82,6 +81,69 @@ interface InquiryCriteria {
     maxPrice?: number;            // eg: 2.5
 }
 
+interface CreateOrder {
+    orderNumber: string;               // A unique identifier for the order from CJ partner
+    shippingCountryCode: string;       // Country code
+    shippingCountry: string;           // Country
+    shippingProvince: string;          // Province
+    shippingCity: string;              // City
+    shippingAddress: string;           // Shipping address
+    shippingCustomerName: string;      // Shipping name
+    shippingZip: string;               // Zip code
+    shippingPhone: string;             // Phone number
+    remark?: string;                   // Order remark
+    logisticName: string;              // Logistic name
+    fromCountryCode: string;           // Warehouse country code
+    houseNumber?: string;              // House number
+    email?: string;                    // Email
+    products: OrderProduct[];               // List of products
+}
+
+interface Order {
+    orderId: string;                   // Order id
+    orderNum: string;                  // Order name
+    cjOrderId: string;                 // CJ order id
+    shippingCountryCode: string;       // Country code
+    shippingProvince: string;          // Province
+    shippingCity: string;              // City
+    shippingAddress: string;           // Shipping address
+    shippingCustomerName: string;      // Shipping name
+    shippingPhone: string;             // Phone number
+    remark: string;                    // Order remark
+    logisticName: string;              // Logistic name
+    trackNumber: string;               // Track number
+    orderWeight: number;               // Order weight
+    orderAmount: number;               // Order amount (BigDecimal in (18,2))
+    orderStatus: OrderStatus;          // Order status
+    createDate: string;                // Create time
+    paymentDate: string;                // Payment time
+    productAmount: number;              // Product amount (BigDecimal in (18,2))
+    postageAmount: number;              // Postage amount (BigDecimal in (18,2))
+}
+
+enum OrderStatus {
+    CREATED = 'CREATED',               // Order create, wait confirm
+    IN_CART = 'IN_CART',               // In cart, wait confirm, API merges this state
+    UNPAID = 'UNPAID',                 // Unpaid, confirm order, CJ order number created
+    UNSHIPPED = 'UNSHIPPED',           // Unshipped, paid, wait for sending
+    SHIPPED = 'SHIPPED',               // Shipped, in transit, get tracking number
+    DELIVERED = 'DELIVERED',           // Delivered, clients receiving
+    CANCELLED = 'CANCELLED',           // Cancelled
+}
+
+interface OrderProduct {
+    vid: string;                       // Variant id
+    quantity: string;                  // Quantity
+}
+
+type CjResponse = {
+    code: number;
+    result: boolean;
+    message: string;
+    data: Product | Product[] | Order | Order[] | string;
+    requestId: string;
+}
+
 
 export async function getAccessToken(email: string, password: string) {
 
@@ -96,7 +158,6 @@ export async function getAccessToken(email: string, password: string) {
 
     const response: AccessTokenResponse = await res.json();
     console.log(response);
-    authHeader["CJ-Access-Token"] = response.data?.accessToken as string;
     refreshToken = response.data?.refreshToken as string;
     return response.data;
 
@@ -105,7 +166,6 @@ export async function getAccessToken(email: string, password: string) {
 export async function getNewToken(refreshToken: string) {
 
     const res = await fetch(`${apiUrl}/authentication/getAccessToken`, {
-
         method: 'POST',
         body: JSON.stringify({
             refreshToken,
@@ -113,7 +173,6 @@ export async function getNewToken(refreshToken: string) {
     })
 
     const { data }: AccessTokenResponse = await res.json();
-    authHeader["CJ-Access-Token"] = data?.accessToken as string;
     return data;
 
 }
@@ -154,17 +213,58 @@ export async function getProduct(sku: string, token: string) {
 
 
 
-export async function createOrder(sku: string, token: string) {
-    const res = await fetch(`${apiUrl}/product/query?productSku=${sku}`, {
 
-        method: 'GET',
+
+export async function createOrder(order: CreateOrder, token: string) {
+    const res = await fetch(`${apiUrl}/shopping/order/createOrder`, {
+
+        method: 'POST',
         headers: {
             "CJ-Access-Token": token
 
-        }
+        },
+        body: JSON.stringify(order)
     })
-    const response: ProductResponse = await res.json();
+    const response: CjResponse = await res.json();
     // console.log(response);
-    return response.data
+    return response.data as string
+
+}
+
+export async function getOrderbyId(orderId: string, token: string) {
+    const res = await fetch(`${apiUrl}/shopping/order/getOrderDetail?orderId=${orderId}`, {
+
+        method: 'PATCH',
+        headers: {
+            "CJ-Access-Token": token
+
+        },
+        body: JSON.stringify({
+
+            "orderId": orderId
+        })
+    })
+    const response: CjResponse = await res.json();
+    // console.log(response);
+    return response.data as string
+
+}
+
+export async function confirmOrder(orderId: string, token: string) {
+    const res = await fetch(`${apiUrl}/shopping/order/confirmOrder`, {
+
+        method: 'PATCH',
+        headers: {
+            "CJ-Access-Token": token
+
+        },
+        body: JSON.stringify({
+
+            "orderId": orderId
+        })
+    })
+    const response: CjResponse = await res.json();
+    // console.log(response);
+    return response.data as Order
 
 }

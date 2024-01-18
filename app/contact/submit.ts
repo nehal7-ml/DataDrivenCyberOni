@@ -30,6 +30,8 @@ const template = `<div>
         <p>phone: {{phone}}</p>
     </div>
 </div>
+<p>How this helps their buisness: {{reason}}</p>
+
 <p>Special request: {{message}}</p>
 </div>`
 
@@ -59,7 +61,8 @@ export async function submitContact(formData: FormData, token: string) {
             'message': formData.get('message') as string,
             'terms': 'on',
             'requirement': requirementString,
-            "timeline": formData.get('timeline') as string
+            "timeline": formData.get('timeline') as string,
+            "reason": formData.get('reason') as string
         }
         
         await addToSendGrid({ email: data.email, firstName: data.firstName, lastName: data.lastName })
