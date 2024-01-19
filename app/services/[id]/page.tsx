@@ -16,6 +16,7 @@ import AccordionItem from "@/components/services/AccordianItem";
 import ServiceFeatures from "@/components/services/ServiceFeatures";
 import { redirect } from "next/navigation";
 import { extractUUID, seoUrl } from "@/lib/utils";
+import { Service, WithContext } from "schema-dts";
 type Props = {
   params: { id: string }
   searchParams: { [key: string]: string | string[] | undefined }
@@ -58,8 +59,25 @@ async function Services({ params }: { params: { id: string } }) {
 
   if (!service) redirect('/404');
   //console.log(service);
+
+  const jsonLd: WithContext<Service> = {
+    "@context": 'https://schema.org',
+    "@type": 'Service',
+    "@id": id,
+    description: service.previewContent,
+    name: service.title,
+    image: {
+      "@type": 'ImageObject',
+      url: service.image?.src
+
+    }
+  }
   return (
     <div className="">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="flex flex-wrap">
         {services.records.slice(0, 4).map((service, index) => (
           <div key={index} className="p-5 lg:w-1/4 flex-1">

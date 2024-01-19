@@ -14,6 +14,7 @@ import { extractUUID, seoUrl, stripFileExtension } from "@/lib/utils";
 import { DisplayBlogDTO } from "@/crud/DTOs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/nextAuthAdapter";
+import { Blog, WithContext } from "schema-dts";
 
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +44,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
     metadata.twitter = {
         title: blog.title,
         images: [blog.images.length > 0 ? blog.images[0].src : ""],
-        description: blog.description,      
+        description: blog.description,
 
     }
     metadata.category = blog.tags.join(" ")
@@ -68,8 +69,29 @@ async function BlogPost({ params }: { params: { id: string } }) {
     const cookieStore = cookies();
     const theme = cookieStore.get("theme")?.value as string === 'dark' ? 'dark' : "light";
 
+    const jsonLd: WithContext<Blog> = {
+        "@context": 'https://schema.org',
+        "@type": 'Blog',
+        "@id": id,
+        abstract: blog.description,
+        author: {
+            "@type": 'Person',
+            "@id": '',
+            name: blog.author.firstName ?? ''
+        },
+        name: blog.title,
+        image: {
+            "@type": 'ImageObject',
+            url: blog.images[0].src
+
+        }
+    }
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="w-full ">
                 <div className="w-full bg-white dark:bg-gray-900 py-5">
                     <div className="container mx-auto whitespace-pre-line break-words">
@@ -82,9 +104,9 @@ async function BlogPost({ params }: { params: { id: string } }) {
                     </div>
                 </div>
                 <div className="relative mx-auto flex flex-col  items-center my-10 xl:py-10  xl:px-10 px-1 py-5 min-h-screen container">
-                    <div className="max-w-full flex justify-center items-center">{blog.images[0] ? <Image priority={true} className="object-contain m-2 w-full h-[40vh] rounded-lg" src={blog.images[0].src} alt={ stripFileExtension(blog.images[0].name || 'blog_image')} width={500} height={300}></Image> : <></>}</div>
+                    <div className="max-w-full flex justify-center items-center">{blog.images[0] ? <Image priority={true} className="object-contain m-2 w-full h-[40vh] rounded-lg" src={blog.images[0].src} alt={stripFileExtension(blog.images[0].name || 'blog_image')} width={500} height={300}></Image> : <></>}</div>
                     {<BlogContent href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`} content={blog.content} theme={theme} />}
-                    <BlogContainer href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`} liked={blog.Likes? blog.Likes.length>0 : false} blog={blog}  session={session}/>
+                    <BlogContainer href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`} liked={blog.Likes ? blog.Likes.length > 0 : false} blog={blog} session={session} />
 
                 </div>
 
@@ -102,7 +124,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
                         {blog.author.firstName || blog.author.email}
                     </div>
                 </div>
-                <CommentForm email={session?.user?.email as string} href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`}  id={id} comments={blog.Comments} />
+                <CommentForm email={session?.user?.email as string} href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`} id={id} comments={blog.Comments} />
             </div>
         </div>
 
@@ -110,8 +132,8 @@ async function BlogPost({ params }: { params: { id: string } }) {
 }
 
 
-async function getData(id: string, userEmail?:string ) {
-    const blog = await addView({id,userEmail }, prisma)
+async function getData(id: string, userEmail?: string) {
+    const blog = await addView({ id, userEmail }, prisma)
     // console.log(blog.title);
     if (blog) return blog as DisplayBlogDTO
     else redirect('/404')
