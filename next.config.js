@@ -54,9 +54,6 @@ const nextConfig = {
       },
     ];
   },
-  rewrites:async ()=> {
-
-  },
   experimental: {
     serverActions: true,
 
