@@ -7,11 +7,11 @@ import { Site } from "@/data/ownerData";
 import TermsAndConditions from "../LongFormText/terms";
 import PrivacyPolicy from "../LongFormText/privacy";
 export default function Footer() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   let testModal = () => {
     setIsModalOpen(true);
     alert('pressed')
- }
+  }
   return (
     <div className="text container relative  z-10 mx-auto h-fit w-full py-5  text-center dark:text-white">
       <div className="h-[1px]  bg-gradient-purple"></div>
@@ -56,24 +56,25 @@ export default function Footer() {
           <div>Denver, Co </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center lg:flex-row lg:justify-between ">
-        <div className="m-2">
-          Copyright © 2023 CyberOni. All rights reserved.
-        </div>
+      <div className="flex flex-col justify-center lg:justify-between ">
+
         <TermsModal
-          text={<TermsAndConditions/>}
+          text={<TermsAndConditions />}
           title="Terms & Conditions"
           triggerTitle="Terms & Conditions"
           isButton={false}
-          className=""
+          className="hover:underline h-12 lg:h-auto"
         />
         <TermsModal
           text={<PrivacyPolicy />}
           title="Privacy Policy"
           triggerTitle="Privacy Policy"
           isButton={false}
-          className=""
+          className="hover:underline h-12 lg:h-auto"
         />
+        <div className="m-2">
+          Copyright © 2023 CyberOni. All rights reserved.
+        </div>
       </div>
     </div>
   );
