@@ -30,7 +30,7 @@ export default async function SignUp() {
     }
 
     return (
-        <div className="relative flex gap-2 lg:gap-5 flex-col lg:flex-row justify-between items-center py-5 min-h-screen">
+        <div className="relative flex gap-2 lg:gap-5 flex-col lg:flex-row lg:justify-between items-center py-5 min-h-screen">
             <Image src={'/images/signup-bg.png'} width={700} height={900} alt="login_bg" className="absolute object-contain h-full right-10 w-fit " />
             <div className="flex flex-col p-5 justify-center items-center">
                 <h1 className="text-4xl text-center lg:text-[96px] ">Roll the Carpet !</h1>

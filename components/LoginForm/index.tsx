@@ -33,7 +33,7 @@ function LoginForm() {
 
     return (
         <>
-            <div className="container mx-auto max-w-md border rounded-xl backdrop-blur-sm bg-gray-50/10 dark:bg-black/5 py-5">
+            <div className="container mx-auto max-w-md border rounded-xl backdrop-blur-lg bg-white/30 dark:bg-black/5 py-5">
 
                 <form method="POST" action={'/api/auth/callback/credentials'} className="flex flex-col px-5 pt-5 pb-1 bg-transparent rounded-2xl text-gray-950 dark:text-gray-50">
                     <h1 className="text-bold text-2xl dark:text-gray-50 my-1">Login</h1>
@@ -46,27 +46,27 @@ function LoginForm() {
                     <div className="relative my-4">
 
                         <ClientInput
-                            className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+                            className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
                             name="username"
                             id="username"
                             type="email"
                             placeholder=""
                             required
                         />
-                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-slate-900 backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-500 transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
+                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/10  peer-focus:backdrop-blur-lg peer-placeholder-shown:dark:bg-slate-900 dark:bg-slate-900 dark:backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-700 transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
                             Email
                         </label>
                     </div>
                     <div className="relative my-4">
 
                         <ClientInput
-                            className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+                            className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100   leading-tight focus:outline-none focus:shadow-outline"
                             name="password"
                             type="password"
                             placeholder=""
                             required
                         />
-                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 bg-gray-50 dark:bg-slate-900 backdrop-blur-sm px-1 text-gray-500 dark:text-gray-50  transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="password">
+                        <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/50  backdrop-blur-sm peer-placeholder-shown:dark:bg-slate-900  dark:bg-slate-900 dark:backdrop-blur-sm px-1 text-gray-500 dark:text-gray-50  transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="password">
                             Password
                         </label>
                     </div>
