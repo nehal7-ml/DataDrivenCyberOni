@@ -55,7 +55,7 @@ async function read(blogId: string, prismaClient: PrismaClient) {
                 lte: new Date()
             }
         },
-        select: {   
+        select: {
             userId: false,
             content: true,
             date: true,
@@ -129,46 +129,51 @@ export function getFeatured(prisma: PrismaClient) {
 }
 export async function addView({ id, userEmail }: { id: string, userEmail?: string }, prisma: PrismaClient) {
     const blogs = prisma.blog;
-    const update = await blogs.update({
-        where: {
-            id,
-
-            publishDate: {
-                lte: new Date()
-            }
-        },
-        data: {
-            Views: { increment: 1 }
-        },
-        include: {
-            tags: true,
-            author: {
-                include: {
-                    image: true,
+    try {
+        const update = await blogs.update({
+            where: {
+                id,
+                publishDate: {
+                    lte: new Date()
                 }
             },
-            images: true,
-            Likes: userEmail ? {
-                where: {
-                    user: {
-                        email: userEmail
+            data: {
+                Views: { increment: 1 }
+            },
+            include: {
+                tags: true,
+                author: {
+                    include: {
+                        image: true,
                     }
-                }
-            } : false,
-            _count: {
-                select: {
-                    Likes: true
-                }
-            },
-            Comments: {
-                include: {
-                    User: true
-                }
-            },
-        }
-    })
-
-    return update
+                },
+                images: true,
+                Likes: userEmail ? {
+                    where: {
+                        user: {
+                            email: userEmail
+                        }
+                    }
+                } : false,
+                _count: {
+                    select: {
+                        Likes: true
+                    }
+                },
+                Comments: {
+                    include: {
+                        User: true
+                    }
+                },
+            }
+        })
+    
+        return update
+    } catch (error) {
+        console.log(error);
+        return 
+        
+    }
 }
 export function getRecent(prisma: PrismaClient) {
     const recentDate = new Date(Date.now() - 90 * (24 * 60 * 60 * 1000)) // 90 days
