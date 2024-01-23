@@ -14,7 +14,7 @@ import { extractUUID, seoUrl, stripFileExtension } from "@/lib/utils";
 import { DisplayBlogDTO } from "@/crud/DTOs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/nextAuthAdapter";
-import { Blog, WithContext } from "schema-dts";
+import { Blog, BlogPosting, WithContext } from "schema-dts";
 
 export const dynamic = 'force-dynamic';
 
@@ -69,11 +69,11 @@ async function BlogPost({ params }: { params: { id: string } }) {
     const cookieStore = cookies();
     const theme = cookieStore.get("theme")?.value as string === 'dark' ? 'dark' : "light";
 
-    const jsonLd: WithContext<Blog> = {
+    const jsonLd: WithContext<BlogPosting> = {
         "@context": 'https://schema.org',
-        "@type": 'Blog',
+        "@type": 'BlogPosting',
         "@id": id,
-        abstract: blog.description,
+        description: blog.description,
         author: {
             "@type": 'Person',
             "@id": '',
