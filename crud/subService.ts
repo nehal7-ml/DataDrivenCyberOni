@@ -1,12 +1,13 @@
 import { PricingModel, PrismaClient, SubService } from "@prisma/client"
-import { CreateImageDTO } from "./images";
-import { connectOrCreateObject, CreateTagDTO } from "./tags";
+import { connectOrCreateObject } from "./tags";
+import { CreateImageDTO, CreateTagDTO } from "./DTOs";
+import { ImageSchema, TagSchema } from "./jsonSchemas";
 export type CreateSubServiceDTO = {
     id?: string;
     title: string;
     pricingModel: PricingModel;
-    discounts: string;
-    serviceDeliverables: string;
+    discounts: Discount[];
+    serviceDeliverables: string[];
     serviceUsageScore: number;
     description: string;
     department: string;
@@ -17,6 +18,11 @@ export type CreateSubServiceDTO = {
     skillLevel: string,
     image?: CreateImageDTO,
     tags?: CreateTagDTO[],
+}
+
+export type Discount = {
+    name: string;
+    value: string;
 }
 
 export async function create(newSubService: CreateSubServiceDTO, serviceId: string, prismaClient: PrismaClient) {
@@ -36,7 +42,7 @@ export async function create(newSubService: CreateSubServiceDTO, serviceId: stri
             serviceUsageScore: newSubService.serviceUsageScore,
             skillLevel: newSubService.skillLevel,
             image: { create: newSubService.image },
-            tags: { create: newSubService.tags },
+            tags: { connectOrCreate: connectOrCreateObject(newSubService.tags || []) },
             service: { connect: { id: serviceId } }
         }
     })

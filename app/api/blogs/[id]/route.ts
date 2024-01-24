@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/prisma/prismaClient";
-import { CreateBlogDTO, read, remove as removeBlog, update } from "@/crud/blog";
+import {  read, remove as removeBlog, update } from "@/crud/blog";
 import { NextRequest, NextResponse } from 'next/server'
 import apiHandler from "@/errorHandler";
+import { CreateBlogDTO } from "@/crud/DTOs";
 
 
 export const { POST, DELETE, GET, PATCH, PUT } = apiHandler({ GET: get, PUT: put, DELETE: remove });

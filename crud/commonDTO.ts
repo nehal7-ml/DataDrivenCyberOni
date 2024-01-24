@@ -1,15 +1,14 @@
 import { Event, GptPrompt, Service } from "@prisma/client";
-import { DisplayBlogDTO } from "./blog";
 import { displayProductDTO } from "./product";
-import { displayUserDTO } from "./user";
+import { DisplayBlogDTO, DisplayUserDTO } from "./DTOs";
 
 export type GetAllRecordsDTO = {
-    records:  displayUserDTO[] |  displayProductDTO[] | DisplayBlogDTO[] | Service[] | Event[] | GptPrompt[]  ;
+    records: DisplayUserDTO[] | displayProductDTO[] | DisplayBlogDTO[] | Service[] | Event[] | GptPrompt[];
     currentPage: number,
     totalPages: number;
     pageSize: number;
 }
 
 export type RecordDTO = {
-    record: displayUserDTO |  displayProductDTO | DisplayBlogDTO | Service | Event | GptPrompt;
+    record: DisplayUserDTO | displayProductDTO | DisplayBlogDTO | Service | Event | GptPrompt;
 }
