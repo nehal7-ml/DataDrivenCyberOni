@@ -32,7 +32,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
     // optionally access and extend (rather than replace) parent metadata
     let metadata: Metadata = {};
-    console.log(blog);
+    //console.log(blog);
     if (blog) {
         metadata.title = blog.title as string
         metadata.description = blog.description

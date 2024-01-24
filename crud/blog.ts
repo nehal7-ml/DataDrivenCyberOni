@@ -288,7 +288,7 @@ async function getAuthor(id: string, page: number, prisma: PrismaClient) {
 
 async function addComment(comment: CommentDTO, prisma: PrismaClient) {
     const comments = prisma.blogComment;
-    console.log(comment);
+    // console.log(comment);
     const newComment = await comments.create({
         data: {
             comment: comment.comment,
