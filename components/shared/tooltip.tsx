@@ -9,12 +9,14 @@ export default function Tooltip({
   children,
   content,
   fullWidth,
-  type
+  type,
+  disbaled,
 }: {
   children: ReactNode;
   content: ReactNode | string;
   fullWidth?: boolean;
-  type?: 'button' | 'submit'
+  type?: 'button' | 'submit',
+  disbaled?: boolean;
 }) {
   const [openTooltip, setOpenTooltip] = useState(false);
 
@@ -27,6 +29,7 @@ export default function Tooltip({
           type={type}
           className={`${fullWidth ? "w-full" : "inline-flex"}`}
           onClick={() => setOpenTooltip(true)}
+          disabled={disbaled ?? false}
 
         >
           {children}
@@ -50,6 +53,8 @@ export default function Tooltip({
               <button
                 type={type}
                 className={`${fullWidth ? "w-full" : "inline-flex"}`}
+                disabled={disbaled??false}
+
               >
                 {children}
               </button>

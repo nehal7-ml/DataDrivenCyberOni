@@ -58,7 +58,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
     const seoTitle = params.id
     const id = extractUUID(seoTitle)
-    const blog = await getData(id);
+    const blog = await getData(id, session?.user?.email?? "");
 
     // console.log("Currect url", seoTitle, encodeURIComponent(seoUrl(blog.title, blog.id)));
     if (!blog) redirect('/404');
