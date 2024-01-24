@@ -1,4 +1,5 @@
-import { create, CreateBlogDTO } from "@/crud/blog";
+import { CreateBlogDTO } from "@/crud/DTOs";
+import { create } from "@/crud/blog";
 import { prisma } from "@/prisma/prismaClient";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";

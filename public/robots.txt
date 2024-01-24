@@ -1,4 +1,6 @@
 # robots.txt for cybershoptech.com
+#sitemap
+Sitemap: https://www.cybershoptech.com/sitemap.xml
 
 # Block sensitive directories
 User-agent: *

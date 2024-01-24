@@ -22,7 +22,6 @@ async function post(req: NextRequest, { params }: { params: { id: string } }) {
     const newComment = await addComment({
         comment,
         email,
-        name,
         blogId: id,
     }, prisma);
 
