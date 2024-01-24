@@ -16,11 +16,11 @@ function PayLater({ value }: { value?: string[] }) {
                     <p className="text-rose-700 whitespace-pre-wrap font-bold m-2 text-xs lg:text-base line-clamp-3">{value? (value[2] || 'Custom AI Integration') :'Custom AI Integration'} </p>
                 </div>
             </div>
-            <Image src={'/pay-later.png'} alt="pay-later" height={500} width={500} />
+            <Image src={'/images/pay-later.png'} alt="pay-later" height={500} width={500} />
 
             <div className="text-center font-bold mb-5 font-nunito text-2xl">Build Now Pay later</div>
             <div>
-                <Link href={'#'} className="rounded-full flex gap-3 bg-[#33D460] shadow-[0_10px_25px_0_#33D3D454] p-3 w-fit text-white text-center justify-center items-center">Apply Now <MoveRight /></Link>
+                <Link href={'https://buy.stripe.com/00g8wVdnCdMt0Y88wx'} className="rounded-full flex gap-3 bg-[#33D460] shadow-[0_10px_25px_0_#33D3D454] p-3 w-fit text-white text-center justify-center items-center">Apply Now <MoveRight /></Link>
             </div>
         </div>);
 }

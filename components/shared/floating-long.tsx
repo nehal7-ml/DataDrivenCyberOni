@@ -31,6 +31,7 @@ const FloatingImageSection: React.FC<FloatingImageSectionProps> = ({
       <div className="flex flex-1 items-center justify-center lg:w-1/3">
         <div className="animate-float">
           <Image
+          className="rounded-lg"
             src={section.image.src}
             alt={`${section.index}-section`}
             height={500}

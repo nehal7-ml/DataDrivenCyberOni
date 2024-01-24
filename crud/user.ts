@@ -1,39 +1,30 @@
-import { User, PrismaClient, Role } from "@prisma/client";
-import { connectOrCreateObject, CreateImageDTO } from "./images";
-import { createAddressDTO } from "./address";
+import { User, PrismaClient } from "@prisma/client";
+import { connectOrCreateObject } from "./images";
 import { GetAllRecordsDTO } from "./commonDTO";
+import { CreateImageDTO } from "./DTOs";
+import { CreateUserDTO, CredentialAuthDTO } from "./DTOs";
+import bcrypt from "bcrypt"
+import { AdapterAccount } from "next-auth/adapters";
+import { randomUUID } from "crypto";
+import {verify} from 'jsonwebtoken';
+import { sendPasswordEmail } from "@/lib/externalRequests/sendgrid";
 
-
-export type createUserDTO = {
-    id?: string;
-    firstName?: string;
-    lastName?: string;
-    email: string;
-    image?: CreateImageDTO;
-    address?: createAddressDTO;
-    role: Role;
-}
-
-export type displayUserDTO = {
-    id: string;
-    firstName?: string;
-    lastName?: string;
-    email: string;
-    emailVerified: Date;
-    role: Role
-}
-async function create(user: createUserDTO, prismaClient: PrismaClient) {
+async function createWithPassword(user: CreateUserDTO, prismaClient: PrismaClient) {
     const users = prismaClient.user;
-    const existingUser = await users.findUnique({ where: { email: user.email } })
-    if (existingUser) throw {status:400 ,message: `User ${user.email} already exists`};
+    const existingUser = await users.findUnique({ where: { email: user.email } });
+    if (existingUser) throw { status: 400, message: `User ${user.email} already exists` };
     else {
+        if(!user.password) user.password = randomUUID()
+        const hashedPassword = await bcrypt.hash(user.password as string, 10)
+
         let createdUser = await users.create({
             data: {
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 image: { create: user.image },
-                address: { create: user.address }
+                address: { create: user.address },
+                password: hashedPassword
             }
         });
         return createdUser
@@ -41,11 +32,43 @@ async function create(user: createUserDTO, prismaClient: PrismaClient) {
 
 }
 
-async function update(userId: string, user: createUserDTO, prismaClient: PrismaClient) {
+export async function getUserByAccount({ providerAccountId, provider }: { providerAccountId: string, provider: string }, prisma: PrismaClient) {
+    const users = prisma.user;
+    const accounts = prisma.account;
+    const account = await accounts.findUnique({
+        where: { provider_providerAccountId: { provider, providerAccountId } }, 
+        
+        include: {
+            user: true
+        }
+    });
+    return account?.user
+}
+
+export async function link(accountToLink: AdapterAccount, prisma: PrismaClient) {
+    const accounts = prisma.account;
+    const account = await accounts.create({
+        data: accountToLink
+    })
+    return account
+
+}
+export async function unLink({ providerAccountId, provider }: { providerAccountId: string, provider: string }, prisma: PrismaClient) {
+    const accounts = prisma.account;
+    const account = await accounts.delete({
+        where: {
+            provider_providerAccountId: { provider, providerAccountId }
+        },
+
+    })
+    return account
+}
+
+async function update(userId: string, user: CreateUserDTO, prismaClient: PrismaClient) {
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { id: userId } })
 
-    if (!existingUser) throw {status:400 ,message: `User ${user.email} doesn't exists`};
+    if (!existingUser) throw { status: 400, message: `User ${user.email} doesn't exists` };
     else {
         let updatedUser = await users.update({
             where: { id: userId }, data: {
@@ -60,10 +83,28 @@ async function update(userId: string, user: createUserDTO, prismaClient: PrismaC
     }
 
 }
+
+
+export async function reset(token: string, password: string, prismaClient: PrismaClient) {
+    const users = prismaClient.user;
+    const { email } = verify(token as string, process.env.NEXTAUTH_SECRET as string) as { email: string };
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const updated = await users.update({
+        where: { email }, data: {
+
+            password: hashedPassword
+        }
+    });
+    await sendPasswordEmail({ email, password, subject: "New Cyberoni credentials" })
+    return true;
+
+
+}
 async function remove(userId: string, prismaClient: PrismaClient) {
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { id: userId } })
-    if (existingUser) throw {status:400 ,message: `User ${userId} doesn't exists`};
+    if (existingUser) throw { status: 400, message: `User ${userId} doesn't exists` };
     else {
         await users.delete({ where: { id: userId } });
         return true;
@@ -73,7 +114,7 @@ async function read(userId: string, prismaClient: PrismaClient) {
     const users = prismaClient.user;
     const existingUser = await users.findUnique({ where: { id: userId } })
     if (existingUser) return existingUser
-    else throw{status:400 ,message: `User ${userId} doesn't exists`};
+    else throw { status: 400, message: `User ${userId} doesn't exists` };
 }
 
 async function getAll(page: number, pageSize: number, prismaClient: PrismaClient) {
@@ -102,5 +143,23 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
 
 }
 
+export async function authorizeWithPassword({ email, password }: CredentialAuthDTO, prisma: PrismaClient) {
+    const users = prisma.user
+    const user = await users.findUnique({ where: { email: email.toLowerCase() } })
+    if (!user) throw { message: `Invalid credentials account doesn't exist or insufucient permissions`, status: 400 };
 
-export { create, update, remove, read, getAll }
+    else {
+        const authorized = await bcrypt.compare(password, user.password as string)
+        if (!authorized) throw { message: `Invalid credentials account didn't match`, status: 401 };
+        return user
+    }
+
+}
+export async function getUserByEmail(email: string, prismaClient: PrismaClient) {
+    const users = prismaClient.user;
+    const existingUsers = await users.findUnique({ where: { email: email } })
+    if (existingUsers) return existingUsers
+    else throw { status: 400, message: `User ${email} doesn't exists` };
+}
+
+export { createWithPassword, update, remove, read, getAll }
