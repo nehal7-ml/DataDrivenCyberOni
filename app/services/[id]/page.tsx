@@ -7,7 +7,7 @@ import Image from "next/image";
 import FloatingImageSection from "@/components/shared/floating-long";
 import Faqs from "@/components/Faqs";
 import PayLater from "@/components/shared/Paylater";
-import { Image as CaseImage, Image as ServiceImage } from "@prisma/client";
+import { Image as CaseImage, Image as ServiceImage, SubService } from "@prisma/client";
 import Link from "next/link";
 import EmailLetter from "@/components/home/EmailLetter";
 import SubServiceCarousel from "@/components/services/SubServiceCarousel";
@@ -115,11 +115,7 @@ async function Services({ params }: { params: { id: string } }) {
       {service.SubServices && service.SubServices.length > 0 && (
         <section className="my-5 font-nunito">
           <SubServiceCarousel
-            subservices={service.SubServices.map((subservice) => ({
-              content: subservice.description,
-              title: subservice.title,
-              image: subservice.image ? subservice.image.src : "",
-            }))}
+            subservices={service.SubServices as SubService[]}
           />
         </section>
       )}
