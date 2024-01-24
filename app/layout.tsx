@@ -11,9 +11,9 @@ import Head from "next/head";
 import { cookies } from "next/headers";
 import Script from "next/script";
 import { Suspense } from "react";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
+import { authOptions } from "@/lib/nextAuthAdapter";
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,
@@ -42,8 +42,9 @@ export const metadata: Metadata = {
   viewport: {
     width: "device-width",
     initialScale: 1,
-    maximumScale: 1,
+    maximumScale: 1
   },
+
 };
 
 export default async function RootLayout({
@@ -57,9 +58,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
-        <link rel="canonical" href="https://www.cybershoptech.com" />
-      </Head>
+
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}`}
@@ -106,8 +105,16 @@ export default async function RootLayout({
             darkMode={theme?.value === "dark" ? true : false}
           />
         </Suspense>
-        <main className="relative min-h-screen w-full  overflow-x-hidden pt-24 dark:bg-gray-900 dark:text-white">
+        <main className="relative min-h-screen w-full  overflow-x-hidden pt-16 xl:pt-24 dark:bg-gray-900 dark:text-white">
           {children}
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=G-55E14FBFE1"
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            ></iframe>
+          </noscript>
         </main>
         {
           <Suspense>

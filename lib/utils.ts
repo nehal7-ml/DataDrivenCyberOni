@@ -1,5 +1,6 @@
 import ms from "ms";
-
+import slugify from "slugify";
+import seedRandom from 'seedrandom'
 export interface HttpError extends Error {
   status: number;
   message: string;
@@ -12,9 +13,8 @@ export function HttpError(status: number, message: string) {
 }
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
   if (!timestamp) return "never";
-  return `${ms(Date.now() - new Date(timestamp).getTime())}${
-    timeOnly ? "" : " ago"
-  }`;
+  return `${ms(Date.now() - new Date(timestamp).getTime())}${timeOnly ? "" : " ago"
+    }`;
 };
 
 export async function fetcher<JSON = any>(
@@ -72,7 +72,7 @@ export const truncate = (str: string, length: number) => {
   return `${str.slice(0, length)}...`;
 };
 
-export function getRandomFromArray(arr: Array<any>) :any{
+export function getRandomFromArray(arr: Array<any>): any {
   const randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex];
 }
@@ -80,25 +80,25 @@ export function getRandomFromArray(arr: Array<any>) :any{
 
 export function createBackgroundTemplate(formData: FormData) {
   const backgroundData: { [key: string]: string } = {
-      "Cutting-edge Machine Learning Models": formData.get('mlModels') as string,
-      "Innovative Data Analysis": formData.get('dataAnalysis') as string,
-      "Real-time Data Processi": formData.get('relatimeData') as string,
-      "Web development": formData.get('webDev') as string,
-      "App developement": formData.get('appDev') as string,
+    "Cutting-edge Machine Learning Models": formData.get('mlModels') as string,
+    "Innovative Data Analysis": formData.get('dataAnalysis') as string,
+    "Real-time Data Processi": formData.get('relatimeData') as string,
+    "Web development": formData.get('webDev') as string,
+    "App developement": formData.get('appDev') as string,
   }
   let backgroundString = ``
 
   for (let key of Object.keys(backgroundData)) {
-      if (backgroundData[key]) {
-          backgroundString=backgroundString.concat(`<p>${backgroundData[key]}</p>`)
-      }
+    if (backgroundData[key]) {
+      backgroundString = backgroundString.concat(`<p>${backgroundData[key]}</p>`)
+    }
   }
 
   // console.log(backgroundData, backgroundString);
   if (backgroundString === '') {
-      backgroundString= backgroundString.concat(`<p>None</p>`)
+    backgroundString = backgroundString.concat(`<p>None</p>`)
   }
-  return  {requirementString:backgroundString, requirement: backgroundData}
+  return { requirementString: backgroundString, requirement: backgroundData }
 }
 
 
@@ -135,3 +135,58 @@ export function bufferToB64(buffer: any, mimetype: string) {
 }
 
 
+export function extractUUID(dataURI: string) {
+  const sections = dataURI.split('-');
+  const lastFiveSections = sections.slice(-5);
+  // fetch data
+  const uuid = lastFiveSections.join('-')
+  return uuid
+}
+
+
+export function seoUrl(title: string, id: string) {
+  return encodeURIComponent(slugify(`${title} ${id}`, {
+    replacement: '-'
+  }))
+
+
+}
+
+export function stripFileExtension(fileName: string): string {
+  // Find the last occurrence of the dot (.) character
+  const lastDotIndex = fileName.lastIndexOf('.');
+
+  // Check if a dot was found and it is not the first character
+  if (lastDotIndex !== -1 && lastDotIndex > 0) {
+    // Extract the substring without the file extension
+    return fileName.slice(0, lastDotIndex);
+  }
+
+  // If there is no dot or it's the first character, return the original file name
+  return fileName;
+}
+
+export function generateRandomArray(originalArray: string[] | number[], n: number, seed: string) {
+  const randomArray = [];
+  const originalArrayLength = originalArray.length;
+
+  const rng = seedRandom(seed);
+
+  for (let i = 0; i < n; i++) {
+    const randomIndex = Math.floor(rng() * originalArrayLength);
+    randomArray.push(originalArray[randomIndex]);
+  }
+
+  return randomArray;
+}
+
+
+export function cleanHtmlString(inputString: string) {
+  // Remove HTML tags (including partial tags)
+  const withoutTags = inputString.replace(/<[^>]*>?/g, '');
+
+  // Remove HTML keywords (you can customize this list)
+  const withoutKeywords = withoutTags.replace(/\b(?:html|head|body|div|span|p|h[1-6])\b/gi, '');
+
+  return withoutKeywords;
+}
