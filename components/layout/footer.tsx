@@ -13,7 +13,7 @@ export default function Footer() {
     alert('pressed')
  }
   return (
-    <div className="text container relative  z-20 mx-auto h-fit w-full py-5  text-center dark:text-white">
+    <div className="text container relative  z-10 mx-auto h-fit w-full py-5  text-center dark:text-white">
       <div className="h-[1px]  bg-gradient-purple"></div>
       <div className="grid grid-cols-1 grid-rows-2 gap-3 p-4  lg:grid-cols-2 lg:grid-rows-1">
         <div className="flex flex-col">
@@ -65,14 +65,14 @@ export default function Footer() {
           title="Terms & Conditions"
           triggerTitle="Terms & Conditions"
           isButton={false}
-          className="text-black"
+          className=""
         />
         <TermsModal
           text={<PrivacyPolicy />}
           title="Privacy Policy"
           triggerTitle="Privacy Policy"
           isButton={false}
-          className="text-black"
+          className=""
         />
       </div>
     </div>

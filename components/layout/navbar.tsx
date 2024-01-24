@@ -7,7 +7,7 @@ import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
 import { ReactNode, useEffect, useState } from "react";
-import { ActivitySquare, AppWindow, BarChart, Book, BookCheck, Briefcase, CheckCircle, ChevronDown, Cog, Cpu, FileStack, Fullscreen, Group, HeartHandshake, HelpCircle, Info, Layers3, LifeBuoy, Lightbulb, LineChart, Lock, MailQuestion, MapPin, Megaphone, Menu, Moon, MoveRight, Newspaper, Phone, PieChart, PlusCircle, Repeat2, Sun, Terminal, TerminalSquare, ThumbsUp, Users } from "lucide-react";
+import { ActivitySquare, AppWindow, BarChart, Book, BookCheck, Briefcase, CheckCircle, ChevronDown, Cog, Cpu, FileStack, Fullscreen, Group, HeartHandshake, HelpCircle, Info, Layers3, LifeBuoy, Lightbulb, LineChart, Lock, MailQuestion, MapPin, Megaphone, Menu, Moon, MoveRight, Newspaper, Phone, PieChart, PlusCircle, Repeat2, Search, Sun, Terminal, TerminalSquare, ThumbsUp, Users } from "lucide-react";
 import { setCookie } from 'cookies-next';
 import MegaMenu, { MegamenuProps } from "../MegaMenu";
 
@@ -28,7 +28,6 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
   const toggleExploreDropdown = () => {
     setExploreDropdownOpen(!exploreDropdownOpen);
   };
-
 
 
   return (
@@ -67,7 +66,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                   disabled={!mobileMenuOpen}
                 >
                 </input>
-                <div className="self-center hover:text-blue-500 hover:cursor-pointer">
+                <div className=" hover:text-blue-500 hover:cursor-pointer">
                   Products
                   <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </div>
@@ -84,7 +83,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                   className=" peer/solution hidden absolute h-full"
                   disabled={!mobileMenuOpen}
                 />
-                <div className="self-center hover:text-blue-500 hover:cursor-pointer">
+                <div className=" hover:text-blue-500 hover:cursor-pointer">
                   Solutions
                   <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </div>
@@ -102,7 +101,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                   disabled={!mobileMenuOpen}
 
                 />
-                <div className="hover:text-blue-500 hover:cursor-pointer">
+                <div className="hover:text-blue-500 hover:cursor-pointer ">
                   Enterprise
                   <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </div>
@@ -114,23 +113,34 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 
             <div className="relative xl:h-full">
               <button
-                className=" peer/explore md:focus:outline-none hover:text-blue-500 xl:h-full"
+                className=" peer/explore md:focus:outline-none hover:text-blue-500 xl:h-full "
               >
                 Explore
                 <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
               </button>
 
             </div>
-            <div className="relative xl:h-full">
-              <button className="hover:text-blue-500 peer/market xl:h-full">
-                Marketplace
-              </button>
+            <div className="relative xl:flex justify-center items-center xl:h-full">
+              <div className="xl:h-full flex flex-col justify-center items-center">
+                <Link href={'/market'} className="hover:text-blue-500 peer/market">
+                  <div>
+                    Marketplace
+                    <ChevronDown className="text-blue-400 inline-block invisible w-0"></ChevronDown>
+
+                  </div>
+                </Link>
+              </div>
 
             </div>
-            <div className="relative xl:h-full">
-              <button className="hover:text-blue-500 peer/pricing xl:h-full">
-                Pricing
-              </button>
+            <div className="relative xl:flex justify-center items-center xl:h-full">
+              <div className=" xl:h-full flex flex-col justify-center items-center">
+                <Link href={'/pricing'} className="hover:text-blue-500 peer/pricing">
+                  <div>
+                    Pricing
+                    <ChevronDown className="text-blue-400 inline-block invisible w-0"></ChevronDown>
+                  </div>
+                </Link>
+              </div>
 
             </div>
             <div className="relative xl:flex justify-center items-center xl:h-full">
@@ -138,11 +148,11 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                 <input
                   id="about"
                   type="checkbox"
-                  className="peer/about hidden absolute h-full cursor-pointer"
+                  className="peer/about md:focus:outline-none hidden absolute h-full cursor-pointer"
                   disabled={!mobileMenuOpen}
 
                 />
-                <div className="hover:text-blue-500 hover:cursor-pointer">
+                <div className=" hover:text-blue-500 hover:cursor-pointer">
                   About
                   <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </div>
@@ -152,24 +162,35 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
               </label>
             </div>
 
-
             <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  xl:hidden">Sign In</Link>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex xl:hidden">Sign Up</Link>
+            <Link href={'/auth/signup'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex xl:hidden">Sign Up</Link>
             <ToggleDarkMode enabled={darkMode} className={'flex xl:hidden justify-center items-center'} />
 
           </div>
           <div className=" items-center justify-center flex gap-3 p-3">
             <div className="relative block">
-              <input
-                type="text"
-                placeholder="Search"
-                className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 xl:w-38"
-              />
-              <button className="absolute right-2 top-1/2 transform -translate-y-1/2">
-              </button>
+              <form action="/search" method="GET">
+                <input
+                  type="number"
+                  name='page'
+                  defaultValue={1}
+                  hidden
+                  className="dark:bg-[#272F43] text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 xl:w-38"
+                />
+                <input
+                  type="text"
+                  name='q'
+                  placeholder="Search"
+                  className="dark:bg-[#272F43] text-gray-950 dark:text-white rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 xl:w-38"
+                />
+                <button type="submit" className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <Search />
+                </button>
+              </form>
             </div>
-            <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex  min-w-fit">Sign In</Link>
-            <Link href={'/api/auth/signout'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex min-w-fit">Sign Up</Link>
+            {session ? <><UserDropdown session={session} /></> :
+              <><Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex  min-w-fit">Sign In</Link>
+                <Link href={'/auth/signup'} className="ring-[#9E9C9C] ring-2 hover:ring-blue-400 hover:text-blue-500 dark:text-white px-4 py-1 rounded-lg hover:shadow-md hidden xl:flex min-w-fit">Sign Up</Link></>}
             <ToggleDarkMode enabled={darkMode} className={'hidden xl:flex'} />
           </div>
 

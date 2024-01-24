@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import errorHandler from "./errorHandler";
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTION';
 
-export default function apiHandler(handler: any) {
-    const wrappedHandler: { 'GET'?: any, 'POST'?: any, 'PUT'?: any, 'PATCH'?: any, 'DELETE'?: any } = {};
-    const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+export default function apiHandler(handler: {
+    'GET'?: any, 'POST'?:any, 'PUT'?:any, 'PATCH'?:any, 'DELETE'?:any, 'OPTION'?:any
+
+}) {
+    const wrappedHandler: { 'GET'?: any, 'POST'?: any, 'PUT'?: any, 'PATCH'?: any, 'DELETE'?: any, 'OPTION'?:any } = {};
+    const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTION'];
 
     // wrap handler methods to add middleware and global error handler
     httpMethods.forEach(method => {

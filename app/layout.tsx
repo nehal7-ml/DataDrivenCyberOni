@@ -11,9 +11,9 @@ import Head from "next/head";
 import { cookies } from "next/headers";
 import Script from "next/script";
 import { Suspense } from "react";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
+import { authOptions } from "@/lib/nextAuthAdapter";
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,
@@ -44,10 +44,7 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1
   },
-  alternates: {
-    canonical: "https://www.cybershoptech.com"
-  }
-  
+
 };
 
 export default async function RootLayout({
@@ -99,7 +96,7 @@ export default async function RootLayout({
           abel.variable,
           nunito.variable,
         )} 
-        ${theme?.value} overflow-x-hidden antialiased`}
+                        ${theme?.value} overflow-x-hidden antialiased`}
       >
         <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white " />
         <Suspense fallback="...">
@@ -108,7 +105,7 @@ export default async function RootLayout({
             darkMode={theme?.value === "dark" ? true : false}
           />
         </Suspense>
-        <main className="relative min-h-screen w-full  overflow-x-hidden pt-24 dark:bg-gray-900 dark:text-white">
+        <main className="relative min-h-screen w-full  overflow-x-hidden pt-16 xl:pt-24 dark:bg-gray-900 dark:text-white">
           {children}
           <noscript>
             <iframe

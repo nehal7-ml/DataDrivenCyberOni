@@ -1,6 +1,6 @@
 import { Review, PrismaClient, ReviewType } from "@prisma/client";
-import { CreateImageDTO } from "./images";
-import { connectOrCreateObject, CreateTagDTO } from "./tags";
+import { connectOrCreateObject } from "./tags";
+import { CreateImageDTO, CreateTagDTO } from "./DTOs";
 
 
 export type createReviewDTO = {

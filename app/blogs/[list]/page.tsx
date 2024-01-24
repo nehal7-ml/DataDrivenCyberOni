@@ -1,12 +1,13 @@
 import React from 'react'
 import BlogListLoader from "./loading"
-import { DisplayBlogDTO, getEssential, getFeatured, getPopular, getRecent } from "@/crud/blog";
+import { getEssential, getFeatured, getPopular, getRecent } from "@/crud/blog";
 import { get } from "http";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { seoUrl } from "@/lib/utils";
+import { DisplayBlogDTO } from "@/crud/DTOs";
 
 async function BlogList({ params }: { params: { list: string } }) {
     const data = await getData(params.list);
@@ -34,8 +35,8 @@ async function BlogList({ params }: { params: { list: string } }) {
                                                     className="w-full h-full object-cover"
                                                     src={blog.images[0] ? blog.images[0].src : 'https://placehold.co/600x400'}
                                                     alt={blog.title}
-                                                    height={200}
-                                                    width={200} />
+                                                    height={450}
+                                                    width={500} />
                                             </div>
                                             <div className="px-6 py-1">
                                                 <div className="mb-2">by {blog.author.firstName} </div>

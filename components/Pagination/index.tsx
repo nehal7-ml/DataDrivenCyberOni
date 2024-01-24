@@ -3,13 +3,13 @@ import React from 'react';
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, ChevronsLeft } from "lucide-react";
 
-const Pagination = ({ currentPage, totalPages, pathname }: { currentPage: number, totalPages: number, pathname: string }) => {
+const Pagination = ({ currentPage, totalPages, pathname, query }: { currentPage: number, totalPages: number, pathname: string, query?: { [key: string]: string | number } }) => {
     const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
     return (
         <div className="flex justify-center space-x-2 container flex-wrap ">
             {currentPage > 1 && (
                 <Link
-                    href={{ query: { page: currentPage - 1 }, pathname }}
+                    href={{ query: { ...query ,page: currentPage - 1 }, pathname }}
 
                     className="  dark:text-white hover:text-blue-500 font-semibold py-1 px-2 rounded"
                 >
@@ -19,7 +19,7 @@ const Pagination = ({ currentPage, totalPages, pathname }: { currentPage: number
 
             {pageNumbers.map((pageNumber) => (
                 <Link
-                    href={{ query: { page: pageNumber }, pathname }}
+                    href={{ query: { ...query ,page: pageNumber }, pathname }}
                     key={pageNumber}
                     className={`${currentPage === pageNumber
                         ? 'bg-rose-600 text-white'
@@ -32,7 +32,7 @@ const Pagination = ({ currentPage, totalPages, pathname }: { currentPage: number
 
             {currentPage < totalPages && (
                 <Link
-                    href={{ query: { page: currentPage + 1 }, pathname }}
+                    href={{ query: { ...query ,page: currentPage + 1 }, pathname }}
 
                     className=" dark:text-white hover:text-blue-500 font-semibold py-1 px-2 rounded"
                 >

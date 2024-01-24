@@ -2,7 +2,6 @@ import UserPersonaCard from "@/components/casestudies/UserPersonaCard";
 import { read } from "@/crud/casestudy";
 import Image from "next/image";
 import prisma from "@/lib/prisma";
-import { CreateImageDTO } from "@/crud/images";
 import { Image as UserImage } from "@prisma/client";
 import { Metadata, ResolvingMetadata } from "next";
 import { extractUUID, stripFileExtension } from "@/lib/utils";
