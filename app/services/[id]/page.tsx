@@ -7,7 +7,7 @@ import Image from "next/image";
 import FloatingImageSection from "@/components/shared/floating-long";
 import Faqs from "@/components/Faqs";
 import PayLater from "@/components/shared/Paylater";
-import { Image as CaseImage, Image as ServiceImage } from "@prisma/client";
+import { Image as CaseImage, Image as ServiceImage, SubService } from "@prisma/client";
 import Link from "next/link";
 import EmailLetter from "@/components/home/EmailLetter";
 import SubServiceCarousel from "@/components/services/SubServiceCarousel";
@@ -51,7 +51,9 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
   return metadata
 }
 async function Services({ params }: { params: { id: string } }) {
-  const service = await read(params.id, prisma) as DisplayServiceDTO
+  const seoTitle = params.id
+  const id = extractUUID(seoTitle)
+  const service = await read(id, prisma) as DisplayServiceDTO
   const services = await getAll(1, 10, prisma);
 
   if (!service) redirect('/404');
@@ -111,11 +113,7 @@ async function Services({ params }: { params: { id: string } }) {
       {service.SubServices && service.SubServices.length > 0 && (
         <section className="my-5 font-nunito">
           <SubServiceCarousel
-            subservices={service.SubServices.map((subservice) => ({
-              content: subservice.description,
-              title: subservice.title,
-              image: subservice.image ? subservice.image.src : "",
-            }))}
+            subservices={service.SubServices as SubService[]}
           />
         </section>
       )}

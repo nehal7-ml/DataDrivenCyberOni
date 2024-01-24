@@ -1,29 +1,30 @@
+import CaseStudyCard from "@/components/casestudies/CaseStudyCard";
 import ServiceCard from "@/components/services/ServiceCard";
-import { getAll } from "@/crud/service";
+import { getAll } from "@/crud/casestudy";
 import prisma from "@/lib/prisma";
 import { Image } from "@prisma/client";
 
-async function ServiceList() {
+async function CasestudyList() {
   const data = await getData();
 
   return (
     <div className="">
       <div className="container mx-auto">
         <div className="sm:text-3l mx-10 my-5 text-5xl capitalize">
-          Services
+          Case Studies
         </div>
       </div>
       <div className="w-full">
         <div className="container mx-auto ">
           <div className="conatiner mx-10 my-10 flex flex-wrap">
-            {data.records.map((service, index) => {
+            {data.records.map((casestudy, index) => {
               return (
                 <div key={index} className={`w-full p-5 lg:h-96  lg:w-1/2`}>
-                  <ServiceCard
-                    id={service.id}
-                    image={service.image as Image}
-                    previewContent={service.previewContent}
-                    title={service.title}
+                  <CaseStudyCard
+                    id={casestudy.id}
+                    image={casestudy.images ? (casestudy.images as Image[])[0] : null}
+                    previewContent={casestudy.preview}
+                    title={casestudy.title}
                   />
                 </div>
               );
@@ -36,9 +37,9 @@ async function ServiceList() {
 }
 
 async function getData() {
-  const services = await getAll(0, 0, prisma);
+  const cases = await getAll(0, 0, prisma);
 
-  return services;
+  return cases;
 }
 
-export default ServiceList;
+export default CasestudyList;
