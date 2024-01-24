@@ -1,8 +1,8 @@
 'use client'
-import { LikeFormState, submitLike, submitUnlike } from "@/app/blogs/post/[id]/addlike";
+import { LikeFormState, submitLike } from "@/app/blogs/post/[id]/addlike";
 import { Heart } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import GoogleCaptchaWrapper from "../GoogleCaptchaWrapper";
 import { useReCaptcha } from "next-recaptcha-v3";
 import Tooltip from "../shared/tooltip";
@@ -22,63 +22,50 @@ function LikeButtonLOC({ email, blogId, likes, liked }: { email?: string, blogId
         blogId,
         email: email || '',
         token: '',
+        liked: liked,
+        likes: likes,
         error: undefined,
-        success: liked
+        success: true,
     });
     async function like() {
-        if (state.success) return;
+        if (!state.success) return;
         let token = await executeRecaptcha('blog_like_submit')
         if (!email) {
             setShowSignin(true);
             const searchParams = new URLSearchParams();
-            if (typeof window !== 'undefined') searchParams.set('callbackUrl', window.location.href+'/')
+            if (typeof window !== 'undefined') searchParams.set('callbackUrl', window.location.href + '/')
             console.log(searchParams.toString());
             router.push(`/api/auth/signin?${searchParams.toString()}`)
             return;
         }
         else {
-            setState(prev => ({ ...prev, success: true }));
-            setCurrent(prev => prev + 1)
-            const state = await submitLike({ blogId: blogId, email: email, token: token });
-            setState(state)
-            if (!state.success) setCurrent(prev => prev - 1)
+            setState(prev => ({
+                ...prev,
+                success: false,
+                likes: (state.liked ? prev.likes - 1 : prev.likes + 1),
+                liked: !prev.liked
+            }
+
+            ));
+            const newState = await submitLike({ blogId: blogId, email: email, token: token, liked: state.liked, likes: state.likes });
+            console.log(newState);
+            setState(newState)
 
         }
     }
 
 
-    async function unlike() {
-        if (!(state.success)) return;
-        let token = await executeRecaptcha('blog_like_remove')
-        if (!email) {
-            setShowSignin(true);
-            const searchParams = new URLSearchParams();
-            if (typeof window !== 'undefined') searchParams.set('callbackUrl', window.location.href)
-            router.push(`/api/auth/signin?${searchParams.toString()}`)
-            return;
-        }
-        else {
-            setState(prev => ({ ...prev, success: false }));
-            setCurrent(prev => prev - 1)
-
-            const state = await submitUnlike({ blogId: blogId, email: email, token: token });
-            setState(state)
-            if (state.success) setCurrent(prev => prev + 1)
-        }
-    }
 
     return (
-        <form action={(state.success) ? unlike : like} className="flex lg:flex-col gap-1 justify-center items-center " >
+        <form action={() => like()} className="flex lg:flex-col gap-1 justify-center items-center " >
             <div>
                 <input name="blogId" defaultValue={blogId} hidden />
                 <input name="email" defaultValue={email} hidden />
             </div>
-            <Tooltip type="submit" content={`${state.success ? 'remove like' : 'like'}`} >
-
-                <Heart className={`${state.success ? 'fill-rose-500 text-rose-500' : ''} cursor-pointer`} />
+            <Tooltip type="submit" content={`${state.liked ? 'remove like' : 'like'}`} >
+                <Heart className={`${state.liked ? 'fill-rose-500 text-rose-500' : ''} cursor-pointer`} />
             </Tooltip>
-
-            {current}
+            {state.likes}
         </form>
     )
 }

@@ -57,7 +57,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
     const seoTitle = params.id
     const id = extractUUID(seoTitle)
-    const blog = await getData(id);
+    const blog = await getData(id, session?.user?.email?? "");
 
     // console.log("Currect url", seoTitle, encodeURIComponent(seoUrl(blog.title, blog.id)));
     if (!blog) redirect('/404');
@@ -67,7 +67,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
     const cookieStore = cookies();
     const theme = cookieStore.get("theme")?.value as string === 'dark' ? 'dark' : "light";
-
+    // console.log("user like ",session?.user);
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
             <div className="w-full ">
@@ -112,7 +112,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
 async function getData(id: string, userEmail?:string ) {
     const blog = await addView({id,userEmail }, prisma)
-    // console.log(blog.title);
+    // console.log(blog.title, userEmail);
     if (blog) return blog as DisplayBlogDTO
     else redirect('/404')
 
