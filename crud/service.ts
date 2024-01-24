@@ -1,6 +1,7 @@
 import { Service, PrismaClient, Prisma, Image, Tag, SubService, ServiceDescription, FAQ, CaseStudy } from "@prisma/client";
-import { CreateTagDTO, create as createTag, connectOrCreateObject as connectTags } from "./tags";
-import { CreateImageDTO, create as createImage, connectOrCreateObject } from "./images";
+import { create as createTag, connectOrCreateObject as connectTags } from "./tags";
+import { CreateImageDTO, CreateTagDTO } from "./DTOs";
+import {  create as createImage, connectOrCreateObject as connectImage } from "./images";
 import { CreateSubServiceDTO, create as createSubService, update as updateSubService } from "./subService";
 import { prisma } from "@/prisma/prismaClient";
 
@@ -8,14 +9,16 @@ import { prisma } from "@/prisma/prismaClient";
 export type CreateServiceDTO = {
     title: string;
     previewContent: string;
+    featured: boolean;
     ServiceDescription: CreateServiceDescription[];
     hourlyRate: number;
     valueBrought: string[];
-    skillsUsed: string;
+    skillsUsed: string[];
     htmlEmbed?: string;
     image?: CreateImageDTO;
     SubServices?: CreateSubServiceDTO[];
     tags?: CreateTagDTO[];
+    faqs?: CreateFaqDTO[]
 }
 
 export type CreateServiceDescription = {
@@ -26,17 +29,19 @@ export type CreateServiceDescription = {
     image: CreateImageDTO
 
 }
+export type CreateFaqDTO = {
+    question: string;
+    answer: string;
+}
 
 export type DisplayServiceDTO = Service & {
     image?: Image,
     tags?: Tag[],
     SubServices?: (SubService & { image: Image })[],
     ServiceDescription?: (ServiceDescription & { image: Image })[],
-    faqs: FAQ[],
-    CaseStudies: CaseStudy[]
+    CaseStudies?: CaseStudy[]
 
 }
-
 
 async function create(service: CreateServiceDTO, prismaClient: PrismaClient) {
     const services = prismaClient.service;
@@ -44,13 +49,17 @@ async function create(service: CreateServiceDTO, prismaClient: PrismaClient) {
     let createdservice = await services.create({
         data: {
             title: service.title,
+            featured: service.featured,
             previewContent: service.previewContent,
             hourlyRate: service.hourlyRate,
             valueBrought: service.valueBrought,
             skillsUsed: service.skillsUsed,
             htmlEmbed: service.htmlEmbed,
-            image: service.image ? { connect: { id: service.image?.id } } : {},
+            image: service.image ? (service.image.id ? { connect: { id: service.image.id } } : { create: service.image }) : {},
             tags: { connectOrCreate: connectTags(service.tags || []) },
+            faqs: {
+                create: service.faqs ? service.faqs : []
+            }
         },
         include: {
             SubServices: true,
@@ -79,7 +88,7 @@ async function create(service: CreateServiceDTO, prismaClient: PrismaClient) {
                 {
                     data: {
                         ...description,
-                        image: { connect: { id: description.image.id } },
+                        image: description.image.id ? { connect: { id: description.image.id } } : { create: description.image },
                         service: { connect: { id: createdservice.id } }
                     },
 
@@ -103,6 +112,7 @@ async function update(serviceId: string, service: CreateServiceDTO, prismaClient
             where: { id: serviceId },
             data: {
                 title: service.title,
+                featured: service.featured,
                 previewContent: service.previewContent,
                 hourlyRate: service.hourlyRate,
                 valueBrought: service.valueBrought,
@@ -114,10 +124,13 @@ async function update(serviceId: string, service: CreateServiceDTO, prismaClient
 
             },
             include: {
-                SubServices: true,
+                SubServices: {
+                    include: {
+                        image: true
+                    }
+                },
                 image: true,
                 tags: true,
-                ServiceDescription: true,
             }
         });
     if (service.SubServices && service.SubServices?.length > 0) {
@@ -177,16 +190,19 @@ async function read(serviceId: string, prismaClient: PrismaClient) {
     const existingservice = await services.findUnique({
         where: { id: serviceId },
         include: {
-            SubServices: true,
+            SubServices: {
+                include: {
+                    image: true,
+                }
+            },
             ServiceDescription: {
                 include: {
                     image: true
                 }
             },
-            faqs: true,
-            CaseStudies: true,
             image: true,
             tags: true,
+            CaseStudies: true,
         }
     })
     if (existingservice) return existingservice;
@@ -211,16 +227,8 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
         where: {
         },
         include: {
-            SubServices: true,
-            ServiceDescription: {
-                include: {
-                    image: true
-                }
-            },
-            CaseStudies: true,
             image: true,
             tags: true,
-
         }
     })
 
@@ -229,6 +237,96 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
 
     return { records: allServices, currentPage: page, totalPages, pageSize }
 
+}
+
+
+export async function getFeatured(prisma: PrismaClient) {
+    const services = prisma.service;
+    const records = await services.findMany({
+        where: { featured: true }, take: 5, orderBy: { hourlyRate: 'desc' }, include: {
+            tags: true,
+            image: true,
+            CaseStudies: true
+        }
+    })
+    return records
+
+}
+
+
+export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
+    const services = prisma.service;
+
+
+    const records = await services.findMany({
+        skip: page === 0 ? 0 : (page - 1) * 5, 
+        take: page === 0 ? 9999 : 5,
+        where: {
+            OR: [
+                {
+                    title: {
+                        contains: search
+                    }
+                },
+
+                {
+                    ServiceDescription: {
+                        some: {
+                            content: {
+                                contains: search
+                            }
+                        }
+                    }
+                },
+
+                {
+                    SubServices: {
+                        some: {
+                            OR: [
+                                {
+                                    description: {
+                                        contains: search
+                                    }
+                                },
+                                {
+                                    title: {
+                                        contains: search
+                                    }
+                                },
+                                {
+                                    serviceDeliverables: {
+                                        array_contains: search
+                                    }
+                                },
+                                {
+                                    tags: {
+                                        some: {
+                                            name: {
+                                                contains: search
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+
+                        }
+                    }
+                },
+                {
+                    tags: {
+                        some: {
+                            name: {
+                                contains: search,
+
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    })
+
+    return records;
 }
 
 export { create, update, remove, read, getAll }
