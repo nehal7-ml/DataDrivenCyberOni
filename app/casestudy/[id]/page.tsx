@@ -23,21 +23,23 @@ type Props = {
   
     // optionally access and extend (rather than replace) parent metadata
     let metadata: Metadata = {};
-    metadata.title = caseStudy?.title as string
-    metadata.description = caseStudy?.preview
-    metadata.openGraph = {
-      type: 'article',
-      title: caseStudy?.title,
-      description: caseStudy?.preview,
-      images: [caseStudy?.images ? caseStudy.images[0].src : ""]
-    }
-    metadata.twitter = {
-      title: caseStudy?.title,
-      images: [caseStudy?.images ? caseStudy.images[0].src : ""],
-      description: caseStudy?.preview,
-  
-    }
-    metadata.keywords = caseStudy?.title.split('')
+   if (caseStudy) {
+     metadata.title = caseStudy?.title as string
+     metadata.description = caseStudy?.preview
+     metadata.openGraph = {
+       type: 'article',
+       title: caseStudy?.title,
+       description: caseStudy?.preview,
+       images: [caseStudy?.images ? caseStudy.images[0].src : ""]
+     }
+     metadata.twitter = {
+       title: caseStudy?.title,
+       images: [caseStudy?.images ? caseStudy.images[0].src : ""],
+       description: caseStudy?.preview,
+   
+     }
+     metadata.keywords = caseStudy?.title.split('')
+   }
     return metadata
   }
 async function CaseStudy({ params }: { params: { id: string } }) {
