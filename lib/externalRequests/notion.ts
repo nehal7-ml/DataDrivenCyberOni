@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client';
-import { CreatePageParameters, UpdatePageParameters } from "@notionhq/client/build/src/api-endpoints";
+import { CreatePageParameters, CreatePageResponse, UpdatePageParameters, UpdatePageResponse } from "@notionhq/client/build/src/api-endpoints";
 
 const notionApiKey = process.env.NOTION_KEY;
 const notion = new Client({ auth: notionApiKey });
@@ -50,7 +50,7 @@ export async function addToMarketingCrm(record: CreatePageParams) {
         properties,
     } as CreatePageParameters)
     // console.log("repsonse", respJson);
-    return response.object;
+    return response;
 }
 
 export async function getRecord(email: string) {
@@ -94,7 +94,7 @@ export async function updateRecord(id: string, record: CreatePageParams) {
     return response;
 }
 
-export async function upsertRecord(record: CreatePageParams) {
+export async function upsertRecord(record: CreatePageParams): Promise<CreatePageResponse | UpdatePageResponse> {
     const existingRecord = await getRecord(record.email);
 
     if (existingRecord) {
