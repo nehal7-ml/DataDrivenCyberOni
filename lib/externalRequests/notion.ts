@@ -25,24 +25,13 @@ export interface CreatePageParams {
     challenges?: string,
     message?: string,
     refToken?: string
+    howHelp?: string
 
 
 }
 export async function addToMarketingCrm(record: CreatePageParams) {
 
-    const properties = {
-        "Email Address": { email: record.email },
-        "Name": { title: [{ text: { content: record.name } }] },
-        "Phone": record.phone ? { phone_number: record.phone } : undefined,
-        "Message": record.message ? { rich_text: [{ text: { content: record.message } }] } : undefined,
-        "Company": record.company ? { rich_text: [{ text: { content: record.company } }] } : undefined,
-        "Referral": record.referral ? { rich_text: [{ text: { content: record.referral } }] } : undefined,
-        "Time Line": record.timeline ? { rich_text: [{ text: { content: record.timeline } }] } : undefined,
-        "Current Challenges": record.challenges ? { rich_text: [{ text: { content: record.challenges } }] } : undefined,
-        "Number of Employees": record.employess ? { number: Number(record.employess) } : undefined,
-        "Requirements": record.requirements ? { multi_select: record.requirements?.map(requirement => ({ name: requirement })) } : undefined,
-        "ReferralToken": record.refToken ? { rich_text: [{ text: { content: record.refToken } }] } : undefined
-    }
+    const properties = generateRecord(record);
     const response = await notion.pages.create({
         parent: {
             database_id: marketing_crm_contacts_database_id as string,
@@ -72,19 +61,7 @@ export async function updateRecord(id: string, record: CreatePageParams) {
         throw new Error(`Record with email ${record.email} not found.`);
     }
 
-    const properties = {
-        "Email Address": { email: record.email as string, type: 'email' },
-        "Name": { title: [{ text: { content: record.name } }] },
-        "Phone": record.phone ? { phone_number: record.phone } : undefined,
-        "Message": record.message ? { rich_text: [{ text: { content: record.message } }] } : undefined,
-        "Company": record.company ? { rich_text: [{ text: { content: record.company } }] } : undefined,
-        "Referral": record.referral ? { rich_text: [{ text: { content: record.referral } }] } : undefined,
-        "Time Line": record.timeline ? { rich_text: [{ text: { content: record.timeline } }] } : undefined,
-        "Current Challenges": record.challenges ? { rich_text: [{ text: { content: record.challenges } }] } : undefined,
-        "Number of Employees": record.employess ? { number: Number(record.employess) } : undefined,
-        "Requirements": record.requirements ? { multi_select: record.requirements?.map(requirement => ({ name: requirement })) } : undefined,
-        "ReferralToken": record.refToken ? { rich_text: [{ text: { content: record.refToken } }] } : undefined
-    };
+    const properties = generateRecord(record)
 
     const response = await notion.pages.update({
         page_id: id,
@@ -128,4 +105,23 @@ export async function getDatabase({
 }): Promise<any> {
     const response = await notion.databases.retrieve({ database_id: databaseId })
     return response
+}
+
+
+export function generateRecord(record: CreatePageParams) {
+    return {
+        "Email Address": { email: record.email },
+        "Name": { title: [{ text: { content: record.name } }] },
+        "Phone": record.phone ? { phone_number: record.phone } : undefined,
+        "Message": record.message ? { rich_text: [{ text: { content: record.message } }] } : undefined,
+        "Company": record.company ? { rich_text: [{ text: { content: record.company } }] } : undefined,
+        "Referral": record.referral ? { rich_text: [{ text: { content: record.referral } }] } : undefined,
+        "Time Line": record.timeline ? { rich_text: [{ text: { content: record.timeline } }] } : undefined,
+        "Current Challenges": record.challenges ? { rich_text: [{ text: { content: record.challenges } }] } : undefined,
+        "Number of Employees": record.employess ? { number: Number(record.employess) } : undefined,
+        "Requirements": record.requirements ? { multi_select: record.requirements?.map(requirement => ({ name: requirement })) } : undefined,
+        "ReferralToken": record.refToken ? { rich_text: [{ text: { content: record.refToken } }] } : undefined,
+        "How_we_help": record.howHelp ? { rich_text: [{ text: { content: record.howHelp } }] } : undefined
+    }
+
 }

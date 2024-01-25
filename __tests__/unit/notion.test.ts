@@ -20,15 +20,18 @@ describe("test notion functions", () => {
         referral: "facebook",
         requirements: ["App Development"],
         timeline: '3 mohtnos',
-        refToken: "jhsdalkshdlkajsdklasjd"
+        refToken: "jhsdalkshdlkajsdklasjd",
+        howHelp: 'PRovide guidance to deploy online store'
+
     }
 
     it('should add contact to marketing', async () => {
 
-        const resp = await addToMarketingCrm(record)
+        const resp = await addToMarketingCrm(record) as PageObjectResponse
 
-        //console.log(resp);
+        console.log(resp.properties['How_we_help']);
         expect(resp.object).toBe('page')
+        expect((resp.properties['How_we_help']  as {type: 'rich_text', rich_text:  Array<RichTextItemResponse>} ).rich_text[0].plain_text).toBe(record.howHelp)
 
     })
 
