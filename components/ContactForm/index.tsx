@@ -7,6 +7,7 @@ import ClientInput from "../layout/ClientInput";
 import GoogleCaptchaWrapper from "../GoogleCaptchaWrapper";
 import { useReCaptcha } from "next-recaptcha-v3";
 import Link from "next/link";
+import xss from "xss";
 
 function ContactForm(props: { onModal?: boolean, showModal?: boolean, setShowModal?: Dispatch<SetStateAction<boolean>> }) {
   return <>
@@ -151,7 +152,7 @@ function ContactFormLOC(props: { onModal?: boolean, showModal?: boolean, setShow
               <Send color="white" className="mx-2" />
               <span className="mx-2">Send Message</span>
             </button>
-            <Link onClick={hideModal} href={`/contact?name=${name}&email=${email}&message=${message}`} className="bg-gradient-to-b from-orange-400 to-orange-500 text-center text-white p-4 rounded-lg">
+            <Link onClick={hideModal} href={`/contact?name=${xss(name)}&email=${xss(email)}&message=${xss(message)}`} className="bg-gradient-to-b from-orange-400 to-orange-500 text-center text-white p-4 rounded-lg">
               Enterprise Contact
             </Link>
           </div>

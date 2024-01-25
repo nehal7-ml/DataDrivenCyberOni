@@ -69,7 +69,7 @@ const CommentFormLOC = ({ comments, id, email, href }: CommentFormProps) => {
                                         <div className="w-full h-full bg-orange-500 flex items-center justify-center text-center text-lg">{comment.User.firstName ? comment.User.firstName[0].toUpperCase() : comment.User.email[0].toUpperCase()}</div>
                                     </div>
 
-                                    <div className="w-1/2 text-xl">{comment.User.firstName || 'anonymous'}</div>
+                                    <div className="w-1/2 text-xl">{comment.User.firstName || comment.User.email.slice(0,2)}</div>
                                     <div className="text-gray-700 dark:text-gray-300 w-1/3">{(new Date(comment.createdAt)).toDateString()}</div>
                                 </div>
                                 <div className="flex justify-center text-left mx-10 my-5">

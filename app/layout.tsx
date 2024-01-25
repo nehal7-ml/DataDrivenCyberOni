@@ -14,6 +14,8 @@ import { Suspense } from "react";
 import { abel, inter, nunito, sfPro } from "./fonts";
 import "./globals.css";
 import { authOptions } from "@/lib/nextAuthAdapter";
+import { WebVitals } from "@/components/WebVitals";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,
@@ -42,11 +44,8 @@ export const metadata: Metadata = {
   viewport: {
     width: "device-width",
     initialScale: 1,
-    maximumScale: 1
+    maximumScale: 5
   },
-  alternates: {
-    canonical: "https://www.cybershoptech.com"
-  }
 
 };
 
@@ -126,7 +125,9 @@ export default async function RootLayout({
         }
         <ContactButton />
         <Footer />
-        <Analytics />
+        <Analytics  />
+        <SpeedInsights />
+        {/* <WebVitals /> */}
       </body>
     </html>
   );
