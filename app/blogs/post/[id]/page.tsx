@@ -33,22 +33,27 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
     // optionally access and extend (rather than replace) parent metadata
     let metadata: Metadata = {};
-    metadata.title = blog.title as string
-    metadata.description = blog.description
-    metadata.openGraph = {
-        type: 'article',
-        title: blog.title,
-        description: blog.description,
-        images: [blog.images.length > 0 ? blog.images[0].src : ""]
-    }
-    metadata.twitter = {
-        title: blog.title,
-        images: [blog.images.length > 0 ? blog.images[0].src : ""],
-        description: blog.description,
+    //console.log(blog);
+    if (blog) {
+        metadata.title = blog.title as string
+        metadata.description = blog.description
+        metadata.openGraph = {
+            type: 'article',
+            title: blog.title,
+            description: blog.description,
+            images: [blog.images.length > 0 ? blog.images[0].src : ""]
+        }
+        metadata.twitter = {
+            title: blog.title,
+            images: [blog.images.length > 0 ? blog.images[0].src : ""],
+            description: blog.description,
+
+        }
+        metadata.category = blog.tags.join(" ")
+        metadata.keywords = blog.tags?.map(tag => tag.name)
 
     }
-    metadata.category = blog.tags.join(" ")
-    metadata.keywords = blog.tags?.map(tag => tag.name)
+
     return metadata
 }
 

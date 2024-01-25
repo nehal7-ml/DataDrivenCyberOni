@@ -33,22 +33,24 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
   // optionally access and extend (rather than replace) parent metadata
   let metadata: Metadata = {};
-  metadata.title = service?.title as string
-  metadata.description = service?.previewContent
-  metadata.openGraph = {
-    type: 'article',
-    title: service?.title,
-    description: service?.previewContent,
-    images: [service?.image ? service.image.src : ""]
+  if (service) {
+    metadata.title = service?.title as string
+    metadata.description = service?.previewContent
+    metadata.openGraph = {
+      type: 'article',
+      title: service?.title,
+      description: service?.previewContent,
+      images: [service?.image ? service.image.src : ""]
+    }
+    metadata.twitter = {
+      title: service?.title,
+      images: [service?.image ? service.image.src : ""],
+      description: service?.previewContent,
+  
+    }
+    metadata.category = service?.tags.join(" ")
+    metadata.keywords = service?.tags?.map(tag => tag.name)
   }
-  metadata.twitter = {
-    title: service?.title,
-    images: [service?.image ? service.image.src : ""],
-    description: service?.previewContent,
-
-  }
-  metadata.category = service?.tags.join(" ")
-  metadata.keywords = service?.tags?.map(tag => tag.name)
   return metadata
 }
 async function Services({ params }: { params: { id: string } }) {
