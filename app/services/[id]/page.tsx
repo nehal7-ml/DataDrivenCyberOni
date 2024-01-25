@@ -40,11 +40,12 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
       type: 'article',
       title: service?.title,
       description: service?.previewContent,
-      images: [service?.image ? service.image.src : ""]
+      images:  [service.image?.src as string, '/images/monster_5.jpg']
+
     }
     metadata.twitter = {
       title: service?.title,
-      images: [service?.image ? service.image.src : ""],
+      images: [service.image?.src as string, '/images/monster_5.jpg'],
       description: service?.previewContent,
   
     }
