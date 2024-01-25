@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client';
-import { CreatePageParameters } from "@notionhq/client/build/src/api-endpoints";
+import { CreatePageParameters, UpdatePageParameters } from "@notionhq/client/build/src/api-endpoints";
 
 const notionApiKey = process.env.NOTION_KEY;
 const notion = new Client({ auth: notionApiKey });
@@ -29,14 +29,7 @@ export interface CreatePageParams {
 
 }
 export async function addToMarketingCrm(record: CreatePageParams) {
-    const headers = {
-        "Notion-Version": "2021-08-16",
-        Authorization: `Bearer ${notionApiKey}`,
-        "Content-Type": "application/json",
-    };
-    const config = {
-        headers,
-    };
+
     const properties = {
         "Email Address": { email: record.email },
         "Name": { title: [{ text: { content: record.name } }] },
@@ -60,15 +53,79 @@ export async function addToMarketingCrm(record: CreatePageParams) {
     return response.object;
 }
 
+export async function getRecord(email: string) {
+    const response = await notion.databases.query({
+        database_id: marketing_crm_contacts_database_id as string,
+        filter: {
+            property: 'Email Address',
+            email: {
+                equals: email,
+            },
+        },
+    });
 
+    return response.results.length > 0 ? response.results[0] : null;
+}
 
+export async function updateRecord(id: string, record: CreatePageParams) {
+    if (!id) {
+        throw new Error(`Record with email ${record.email} not found.`);
+    }
+
+    const properties = {
+        "Email Address": { email: record.email as string, type: 'email' },
+        "Name": { title: [{ text: { content: record.name } }] },
+        "Phone": record.phone ? { phone_number: record.phone } : undefined,
+        "Message": record.message ? { rich_text: [{ text: { content: record.message } }] } : undefined,
+        "Company": record.company ? { rich_text: [{ text: { content: record.company } }] } : undefined,
+        "Referral": record.referral ? { rich_text: [{ text: { content: record.referral } }] } : undefined,
+        "Time Line": record.timeline ? { rich_text: [{ text: { content: record.timeline } }] } : undefined,
+        "Current Challenges": record.challenges ? { rich_text: [{ text: { content: record.challenges } }] } : undefined,
+        "Number of Employees": record.employess ? { number: Number(record.employess) } : undefined,
+        "Requirements": record.requirements ? { multi_select: record.requirements?.map(requirement => ({ name: requirement })) } : undefined,
+        "ReferralToken": record.refToken ? { rich_text: [{ text: { content: record.refToken } }] } : undefined
+    };
+
+    const response = await notion.pages.update({
+        page_id: id,
+        properties
+    } as UpdatePageParameters);
+
+    return response;
+}
+
+export async function upsertRecord(record: CreatePageParams) {
+    const existingRecord = await getRecord(record.email);
+
+    if (existingRecord) {
+        // If the record exists, update it
+        return updateRecord(existingRecord.id, record);
+    } else {
+        // If the record doesn't exist, create a new one
+        return addToMarketingCrm(record);
+    }
+
+}
+export async function deleteRecord(email: string) {
+    const existingRecord = await getRecord(email);
+
+    if (!existingRecord) {
+        throw new Error(`Record with email ${email} not found.`);
+    }
+
+    // Archive the existing record (simulate delete)
+    const response = await notion.pages.update({
+        page_id: existingRecord.id,
+        archived: true,
+    });
+
+    return response;
+}
 export async function getDatabase({
     databaseId,
 }: {
     databaseId: string;
 }): Promise<any> {
-
-
     const response = await notion.databases.retrieve({ database_id: databaseId })
     return response
 }
