@@ -4,7 +4,7 @@ import { verifyCaptcha } from "@/lib/externalRequests/google";
 import { addToSendGrid, sendMailHtml } from "@/lib/externalRequests/sendgrid";
 import { createBackgroundTemplate } from "@/lib/utils";
 import { redirect } from "next/navigation";
-import { addToMarketingCrm } from "../../lib/externalRequests/notion";
+import { addToMarketingCrm, upsertRecord } from "../../lib/externalRequests/notion";
 const template = `<div>
 <p>Contact filled by {{firstName}} {{lastName}} </p>
 
@@ -30,6 +30,8 @@ const template = `<div>
         <p>phone: {{phone}}</p>
     </div>
 </div>
+<p>How this helps their buisness: {{reason}}</p>
+
 <p>Special request: {{message}}</p>
 </div>`
 
@@ -59,11 +61,12 @@ export async function submitContact(formData: FormData, token: string) {
             'message': formData.get('message') as string,
             'terms': 'on',
             'requirement': requirementString,
-            "timeline": formData.get('timeline') as string
+            "timeline": formData.get('timeline') as string,
+            "reason": formData.get('reason') as string
         }
-        
+
         await addToSendGrid({ email: data.email, firstName: data.firstName, lastName: data.lastName })
-        await addToMarketingCrm({
+        await upsertRecord({
             email: data.email,
             name: `${data.firstName} ${data.lastName}`,
             message: data.message,
@@ -74,8 +77,8 @@ export async function submitContact(formData: FormData, token: string) {
             phone: data.phone,
             referral: data.source,
             requirements: Object.keys(requirement).map((key) => requirement[key]).filter((value) => value),
-            timeline: data.timeline
-
+            timeline: data.timeline,
+            howHelp: data.reason as string
 
         })
         const response = await sendMailHtml(formData.get('email') as string,
