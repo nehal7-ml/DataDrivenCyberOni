@@ -6,7 +6,7 @@ export const alt = Owner.company;
 export const contentType = "image/png";
 
 export default async function OG() {
-  console.log("Og Url", import.meta.url);
+  // console.log("Og Url", import.meta.url);
   const sfPro = await fetch(
     new URL("./fonts/SF-Pro-Display-Medium.otf", import.meta.url),
   ).then((res) => res.arrayBuffer());

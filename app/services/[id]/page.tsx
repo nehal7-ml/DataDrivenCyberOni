@@ -7,7 +7,7 @@ import Image from "next/image";
 import FloatingImageSection from "@/components/shared/floating-long";
 import Faqs from "@/components/Faqs";
 import PayLater from "@/components/shared/Paylater";
-import { Image as CaseImage, Image as ServiceImage } from "@prisma/client";
+import { Image as CaseImage, Image as ServiceImage, SubService } from "@prisma/client";
 import Link from "next/link";
 import EmailLetter from "@/components/home/EmailLetter";
 import SubServiceCarousel from "@/components/services/SubServiceCarousel";
@@ -16,6 +16,7 @@ import AccordionItem from "@/components/services/AccordianItem";
 import ServiceFeatures from "@/components/services/ServiceFeatures";
 import { redirect } from "next/navigation";
 import { extractUUID, seoUrl } from "@/lib/utils";
+import { Service, WithContext } from "schema-dts";
 type Props = {
   params: { id: string }
   searchParams: { [key: string]: string | string[] | undefined }
@@ -32,22 +33,25 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
   // optionally access and extend (rather than replace) parent metadata
   let metadata: Metadata = {};
-  metadata.title = service?.title as string
-  metadata.description = service?.previewContent
-  metadata.openGraph = {
-    type: 'article',
-    title: service?.title,
-    description: service?.previewContent,
-    images: [service?.image ? service.image.src : ""]
-  }
-  metadata.twitter = {
-    title: service?.title,
-    images: [service?.image ? service.image.src : ""],
-    description: service?.previewContent,
+  if (service) {
+    metadata.title = service?.title as string
+    metadata.description = service?.previewContent
+    metadata.openGraph = {
+      type: 'article',
+      title: service?.title,
+      description: service?.previewContent,
+      images:  [service.image?.src as string, '/images/monster_5.jpg']
 
+    }
+    metadata.twitter = {
+      title: service?.title,
+      images: [service.image?.src as string, '/images/monster_5.jpg'],
+      description: service?.previewContent,
+  
+    }
+    metadata.category = service?.tags.join(" ")
+    metadata.keywords = service?.tags?.map(tag => tag.name)
   }
-  metadata.category = service?.tags.join(" ")
-  metadata.keywords = service?.tags?.map(tag => tag.name)
   return metadata
 }
 async function Services({ params }: { params: { id: string } }) {
@@ -58,8 +62,25 @@ async function Services({ params }: { params: { id: string } }) {
 
   if (!service) redirect('/404');
   //console.log(service);
+
+  const jsonLd: WithContext<Service> = {
+    "@context": 'https://schema.org',
+    "@type": 'Service',
+    "@id": id,
+    description: service.previewContent,
+    name: service.title,
+    image: {
+      "@type": 'ImageObject',
+      url: service.image?.src
+
+    }
+  }
   return (
     <div className="">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="flex flex-wrap">
         {services.records.slice(0, 4).map((service, index) => (
           <div key={index} className="p-5 lg:w-1/4 flex-1">
@@ -113,11 +134,7 @@ async function Services({ params }: { params: { id: string } }) {
       {service.SubServices && service.SubServices.length > 0 && (
         <section className="my-5 font-nunito">
           <SubServiceCarousel
-            subservices={service.SubServices.map((subservice) => ({
-              content: subservice.description,
-              title: subservice.title,
-              image: subservice.image ? subservice.image.src : "",
-            }))}
+            subservices={service.SubServices as SubService[]}
           />
         </section>
       )}

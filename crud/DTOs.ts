@@ -6,6 +6,7 @@ export type CreateBlogDTO = {
     description: string;
     featured: boolean;
     date: Date;
+    publishDate: Date;
     content: string;
     templateId?: string;
     author: { id?: string; email: string; };
@@ -13,16 +14,17 @@ export type CreateBlogDTO = {
     tags: CreateTagDTO[];
 };
 
-export type DisplayBlogDTO = Blog & { 
-    author: User & 
-    {image: Image}; 
-    tags: Tag[], 
-    images:Image[], 
-    Comments: DisplayCommentDTO[], 
+export type DisplayBlogDTO = Blog & {
+    author: User &
+    { image: Image };
+    tags: Tag[],
+    images: Image[],
+    Comments: DisplayCommentDTO[],
     Likes: BlogLike[],
     _count: {
         Likes: number
-    }}; 
+    }
+};
 
 export type CreateImageDTO = {
     id?: string | undefined;
@@ -89,11 +91,11 @@ export type Discount = {
 export type CommentDTO = {
     comment: string;
     blogId: string;
-    email:string;
+    email: string;
 };
 
-export type DisplayCommentDTO = BlogComment &{
-    User:  User
+export type DisplayCommentDTO = BlogComment & {
+    User: User
 }
 
 export type CreateUserDTO = {
@@ -114,7 +116,7 @@ export type DisplayUserDTO = {
     email: string;
     emailVerified?: Date;
     role: Role;
-    image?:Image |null
+    image?: Image | null
 };
 export type CreateAddressDTO = {
     id?: string;
@@ -139,8 +141,16 @@ export type CreateEventDTO = {
     eventLink: string;
     status: EventStatus;
     isVirtual: boolean;
-}; export type CreateTagDTO = {
+};
+
+export type CreateTagDTO = {
     id?: string;
     name: string;
 };
 
+export type CreateOrderDTO = {
+
+    productId: string;
+    userEmail: string;
+    address : CreateAddressDTO | string
+}

@@ -1,4 +1,4 @@
-import {  PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { connectOrCreateObject as connectTags } from "./tags";
 import { connectOrCreateObject as connectImages } from "./images";
 import { cleanHtmlString } from "@/lib/utils";
@@ -48,7 +48,13 @@ async function remove(blogId: string, prismaClient: PrismaClient) {
 async function read(blogId: string, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
     const existingblog = await blogs.findUnique({
-        where: { id: blogId },
+        where: {
+            id: blogId,
+
+            publishDate: {
+                lte: new Date()
+            }
+        },
         select: {
             userId: false,
             content: true,
@@ -58,6 +64,7 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             id: true,
             title: true,
             subTitle: true,
+            publishDate: true,
             author: {
                 select: {
                     id: true,
@@ -81,6 +88,9 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
     let allBlogs = await blogs.findMany({
         skip: page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
         where: {
+            publishDate: {
+                lte: new Date()
+            }
         },
         include: {
             // reviews: true,
@@ -98,7 +108,12 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
 
 export function getFeatured(prisma: PrismaClient) {
     const featured = prisma.blog.findFirst({
-        where: { featured: true },
+        where: {
+            featured: true,
+            publishDate: {
+                lte: new Date()
+            }
+        },
         include: {
             tags: true,
             author: {
@@ -114,45 +129,70 @@ export function getFeatured(prisma: PrismaClient) {
 }
 export async function addView({ id, userEmail }: { id: string, userEmail?: string }, prisma: PrismaClient) {
     const blogs = prisma.blog;
-    const update = await blogs.update({
-        where: { id },
-        data: {
-            Views: { increment: 1 }
-        },
-        include: {
-            tags: true,
-            author: {
-                include: {
-                    image: true,
+    try {
+        const update = await blogs.update({
+            where: {
+                id,
+                publishDate: {
+                    lte: new Date()
                 }
             },
-            images: true,
-            Likes: userEmail ? {
-                where: {
-                    user: {
-                        email: userEmail
+            data: {
+                Views: { increment: 1 }
+            },
+            include: {
+                tags: true,
+                author: {
+                    include: {
+                        image: true,
                     }
-                }
-            } : false,
-            _count: {
-                select: {
-                    Likes: true
-                }
-            },
-            Comments: {
-                include: {
-                    User:true
-                }
-            },
-        }
-    })
-
-    return update
+                },
+                images: true,
+                Likes: userEmail ? {
+                    where: {
+                        user: {
+                            email: userEmail
+                        }
+                    }
+                } : false,
+                _count: {
+                    select: {
+                        Likes: true
+                    }
+                },
+                Comments: {
+                    include: {
+                        User: true
+                    }
+                },
+            }
+        })
+    
+        return update
+    } catch (error) {
+        console.log(error);
+        return 
+        
+    }
 }
 export function getRecent(prisma: PrismaClient) {
     const recentDate = new Date(Date.now() - 90 * (24 * 60 * 60 * 1000)) // 90 days
     const recent = prisma.blog.findMany({
-        where: { date: { gte: recentDate } },
+        where: {
+            AND: [
+                {
+                    publishDate: {
+                        lte: new Date()
+                    }
+                },
+                {
+                    publishDate: {
+                        gte: recentDate
+                    }
+                },
+            ]
+
+        },
         include: {
             tags: true,
             author: {
@@ -173,7 +213,9 @@ export function getPopular(prisma: PrismaClient) {
     const popular = prisma.blog.findMany({
         skip: 0, take: 10,
         where: {
-
+            publishDate: {
+                lte: new Date()
+            }
         },
         include: {
             // reviews: true,
@@ -201,6 +243,9 @@ export function getEssential(prisma: PrismaClient) {
     const essential = prisma.blog.findMany({
         skip: 0, take: 10,
         where: {
+            publishDate: {
+                lte: new Date()
+            }
         },
         include: {
             // reviews: true,
@@ -243,7 +288,7 @@ async function getAuthor(id: string, page: number, prisma: PrismaClient) {
 
 async function addComment(comment: CommentDTO, prisma: PrismaClient) {
     const comments = prisma.blogComment;
-    console.log(comment);
+    // console.log(comment);
     const newComment = await comments.create({
         data: {
             comment: comment.comment,
@@ -255,7 +300,7 @@ async function addComment(comment: CommentDTO, prisma: PrismaClient) {
             Blog: { connect: { id: comment.blogId } },
         },
         include: {
-            User:true
+            User: true
         }
     })
 
@@ -301,7 +346,12 @@ export async function getBySearchTerm(search: string, page: number, prisma: Pris
                         contains: cleanHtmlString(search),
                     }
                 }
-            ]
+            ],
+            AND: [{
+                publishDate: {
+                    lte: new Date()
+                }
+            }]
         }
     })
     return records
@@ -320,24 +370,43 @@ export async function addLike(blogId: string, userEmail: string, prisma: PrismaC
             }
         }
     })
-    return true
+
+    const newLikes = await BlogLike.count({
+        where: {
+            blog: {
+                id: blogId
+            }
+        }
+    })
+    return { liked: true, likes: newLikes }
+
 
 }
 
 export async function removeLike(blogId: string, userEmail: string, prisma: PrismaClient) {
     const BlogLike = prisma.blogLike;
     const user = await getUserByEmail(userEmail, prisma);
-    if (!user) return true;
+    if (!user) return false
     const Like = await BlogLike.delete({
         where: {
             userId_blogId: {
                 blogId,
                 userId: user.id
+            },
+
+
+        }
+    })
+
+    const newLikes = await BlogLike.count({
+        where: {
+            blog: {
+                id: blogId
             }
         }
     })
 
-    return false
+    return { liked: false, likes: newLikes }
 
 }
 

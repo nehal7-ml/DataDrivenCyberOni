@@ -63,6 +63,7 @@ function ContactUs({ searchParams }: { searchParams: { name: string, email: stri
     phone: "",
     source: "",
     message: searchParams.message || '',
+    reason: "",
     terms: false,
   });
 
@@ -430,7 +431,23 @@ function ContactUs({ searchParams }: { searchParams: { name: string, email: stri
                     className="bg-contact-input rounded-md border-2 outline-none ring-0 invalid:border-transparent invalid:text-rose-600 invalid:outline-red-500"
                   />
                 </div>
-
+                <div className="my-7 flex flex-col items-start gap-4">
+                  <label
+                    htmlFor="message"
+                    className="mb-2 block text-left text-gray-400"
+                  >
+                    How does it help your business ?
+                  </label>
+                  <textarea
+                    id="reason"
+                    name="reason"
+                    rows={4}
+                    className="bg-contact-input w-full rounded-md  border-0 border-b-2 placeholder-gray-500 invalid:border-red-500 invalid:text-rose-600 invalid:outline-red-500"
+                    placeholder="Your answer"
+                    required
+                    onChange={handleInputChange}
+                  ></textarea>
+                </div>
                 <div className="my-7 flex flex-col items-start gap-4">
                   <label
                     htmlFor="message"

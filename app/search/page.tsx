@@ -1,5 +1,7 @@
 import { getBySearchTerm as searchBlogs } from "@/crud/blog"
 import { getBySearchTerm as searchServices } from "@/crud/service";
+import { getBySearchTerm as searchProducts } from "@/crud/service";
+
 import React from 'react'
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -10,6 +12,7 @@ async function SearchResults({ searchParams }: { searchParams: { q: string, page
     if (searchParams.q) {
         let blogs = searchParams.type === 'services' ? [] : await searchBlogs(searchParams.q, searchParams.page || 1, prisma)
         let services = searchParams.type === 'blogs' ? [] : await searchServices(searchParams.q, searchParams.page || 1, prisma)
+        let products = searchParams.type === 'blogs' ? [] : await searchProducts(searchParams.q, searchParams.page || 1, prisma)
 
         // console.log(allRecords);
         return (

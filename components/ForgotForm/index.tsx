@@ -28,7 +28,7 @@ function ForgotPassword() {
 
                     <div className="relative my-10">
                         <ClientInput
-                            className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
+                            className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
                             name="username"
                             id="username"
                             type="email"
