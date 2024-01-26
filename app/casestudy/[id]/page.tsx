@@ -31,11 +31,11 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
        type: 'article',
        title: caseStudy?.title,
        description: caseStudy?.preview,
-       images: [caseStudy?.images ? caseStudy.images[0].src : ""]
+       images: [... caseStudy.images.map(image =>image.src), '/images/monster_5.jpg']
      }
      metadata.twitter = {
        title: caseStudy?.title,
-       images: [caseStudy?.images ? caseStudy.images[0].src : ""],
+       images: [... caseStudy.images.map(image =>image.src), '/images/monster_5.jpg'],
        description: caseStudy?.preview,
    
      }

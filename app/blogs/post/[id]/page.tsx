@@ -15,6 +15,8 @@ import { DisplayBlogDTO } from "@/crud/DTOs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/nextAuthAdapter";
 import { Blog, BlogPosting, WithContext } from "schema-dts";
+import Script from "next/script";
+import { ImageResponse } from "next/server";
 
 export const dynamic = 'force-dynamic';
 
@@ -33,20 +35,22 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 
     // optionally access and extend (rather than replace) parent metadata
     let metadata: Metadata = {};
+    let description = blog.description.slice(0, 250)
     //console.log(blog);
     if (blog) {
         metadata.title = blog.title as string
-        metadata.description = blog.description
+        metadata.description = description
         metadata.openGraph = {
             type: 'article',
             title: blog.title,
-            description: blog.description,
-            images: [blog.images.length > 0 ? blog.images[0].src : ""]
+            description: description,
+            images: [... blog.images.map(image =>image.src), '/images/monster_5.jpg']
+
         }
         metadata.twitter = {
             title: blog.title,
-            images: [blog.images.length > 0 ? blog.images[0].src : ""],
-            description: blog.description,
+            description: description,
+            images: [... blog.images.map(image =>image.src), '/images/monster_5.jpg']
 
         }
         metadata.category = blog.tags.join(" ")
@@ -63,7 +67,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
     const seoTitle = params.id
     const id = extractUUID(seoTitle)
-    const blog = await getData(id, session?.user?.email?? "");
+    const blog = await getData(id, session?.user?.email ?? "");
 
     // console.log("Currect url", seoTitle, encodeURIComponent(seoUrl(blog.title, blog.id)));
     if (!blog) redirect('/404');
@@ -87,14 +91,15 @@ async function BlogPost({ params }: { params: { id: string } }) {
         name: blog.title,
         image: {
             "@type": 'ImageObject',
-            url: blog.images[0].src
+            url: blog.images.length > 0 ? blog.images[0].src : ""
 
         }
     }
     return (
         <div className="realtive w-full dark:text-white h-full pb-10">
-            <script
+            <Script
                 type="application/ld+json"
+                id='json-ld'
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             <div className="w-full ">
