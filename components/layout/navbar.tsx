@@ -400,46 +400,102 @@ const solutionMenu: MegamenuProps = [
 ];
 
 const productMenu: MegamenuProps = [
-
   {
-    type: 'Links',
+    type: "Links",
     title: "Powerful and Simple Analytics",
     links: [
-      { href: '/docs', name: 'Interactive Reports', subTitle: 'Learn about your users', icon: <BarChart className=" text-blue-700" /> },
-      { href: '/docs', name: 'Team Dashboard & Alerts', subTitle: 'Monitor your metricse', icon: <AppWindow className="text-blue-700" /> },
-      { href: '/docs', name: 'Behavioral Analytics', subTitle: 'Real-time analytics user trends', icon: <ActivitySquare className="text-blue-700" /> },
-      { href: '/docs', name: 'Audience Segmentation', subTitle: 'Segments with perfect target', icon: <PieChart className="text-blue-700" /> },
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Interactive%20Reports",
+        name: "Interactive Reports",
+        subTitle: "Learn about your users",
+        icon: <BarChart className=" text-blue-700" />,
+      },
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Interactive%20Reports",
+        name: "Team Dashboard & Alerts",
+        subTitle: "Monitor your metricse",
+        icon: <AppWindow className="text-blue-700" />,
+      },
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Behavioral%20Analytics",
+        name: "Behavioral Analytics",
+        subTitle: "Real-time analytics user trends",
+        icon: <ActivitySquare className="text-blue-700" />,
+      },
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Audience%20Segmentation",
+        name: "Audience Segmentation",
+        subTitle: "Segments with perfect target",
+        icon: <PieChart className="text-blue-700" />,
+      },
 
-      { href: '/docs', name: 'Group Analytics', subTitle: 'Measure B2B account health', icon: <Group className="text-blue-700" /> },
-      { href: '/docs', name: 'Limitless Segmentation', subTitle: 'Surface hidden trends', icon: <Layers3 className="text-blue-700" /> },
-
-
-    ]
-  }, {
-    type: 'Links',
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Group%20Analyticss",
+        name: "Group Analytics",
+        subTitle: "Measure B2B account health",
+        icon: <Group className="text-blue-700" />,
+      },
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Limitless%20Segmentation",
+        name: "Limitless Segmentation",
+        subTitle: "Surface hidden trends",
+        icon: <Layers3 className="text-blue-700" />,
+      },
+    ],
+  },
+  {
+    type: "Links",
     title: "Tools for Trusted Data",
     links: [
-      { href: '/docs', name: 'Data Integrations', subTitle: 'Connect to your warehouse', icon: <Cpu className=" text-blue-700" /> },
-      { href: '/docs', name: 'Data Management', subTitle: 'Keep data clean & usable', icon: <FileStack className="text-blue-700" /> },
-      { href: '/docs', name: 'Security & Privacy', subTitle: 'Protect customer data', icon: <Lock className="text-blue-700" /> },
-
-
-    ]
-
-  }, {
-    type: 'Node',
-    node: <>
-      <div>
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Data%20Integrations",
+        name: "Data Integrations",
+        subTitle: "Connect to your warehouse",
+        icon: <Cpu className=" text-blue-700" />,
+      },
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Data%20Management",
+        name: "Data Management",
+        subTitle: "Keep data clean & usable",
+        icon: <FileStack className="text-blue-700" />,
+      },
+      {
+        href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126#Security%20%26%20Privacy",
+        name: "Security & Privacy",
+        subTitle: "Protect customer data",
+        icon: <Lock className="text-blue-700" />,
+      },
+    ],
+  },
+  {
+    type: "Node",
+    node: (
+      <>
         <div>
-          <div className="text-gray-500 dark:gray-200">Always Improving</div>
-          <Image src={'/images/dash.png'} alt="dash" width={200} height={200} />
-          <div className="flex flex-col gap-5 py-2">
-            <div className="flex gap-3"><CheckCircle className="text-blue-700" />Debugging with product analytics</div>
-            <div className="flex gap-3"><CheckCircle className="text-blue-700" />Why it’s never too early to add product ana...</div>
+          <div>
+            <div className="dark:gray-200 text-gray-500">Always Improving</div>
+            <Image
+              src={"/images/dash.png"}
+              alt="dash"
+              width={200}
+              height={200}
+            />
+            <div className="flex flex-col gap-5 py-2">
+              <div className="flex gap-3">
+                <CheckCircle className="text-blue-700" />
+                Debugging with product analytics
+              </div>
+              <div className="flex gap-3">
+                <CheckCircle className="text-blue-700" />
+                Why it’s never too early to add product ana...
+              </div>
+            </div>
+            <Link className="flex  gap-4" href={"#"}>
+              See all <MoveRight />
+            </Link>
           </div>
-          <Link className="flex  gap-4" href={'#'}>See all <MoveRight /></Link>
         </div>
-      </div>
-    </>
-  }
-] 
+      </>
+    ),
+  },
+]; 
