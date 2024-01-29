@@ -60,7 +60,7 @@ export type CreateFaqDTO = {
 };
 
 export type DisplayServiceDTO = Service & {
-    image?: Image;
+    image?: Image | null;
     tags?: Tag[];
     SubServices?: SubService[];
     ServiceDescription?: (ServiceDescription & { image: Image; })[];

@@ -61,8 +61,8 @@ async function Services({ params }: { params: { id: string } }) {
   const services = await getAll(1, 10, prisma);
 
   if (!service) redirect('/404');
-  //console.log(service);
-
+  console.log(service.CaseStudies?.images);
+  
   const jsonLd: WithContext<Service> = {
     "@context": 'https://schema.org',
     "@type": 'Service',
@@ -148,7 +148,7 @@ async function Services({ params }: { params: { id: string } }) {
               className="container mx-auto my-5 flex flex-wrap gap-2 lg:gap-5"
             >
               <Link
-                href={`/casestudies/${caseStudy.id}`}
+                href={`/casestudy/${caseStudy.id}`}
                 className="relative w-1/2 flex-col items-center justify-center overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl lg:w-[170px]"
               >
                 <Image

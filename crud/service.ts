@@ -229,6 +229,7 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
         include: {
             image: true,
             tags: true,
+            SubServices:true
         }
     })
 
