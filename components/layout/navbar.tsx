@@ -335,25 +335,25 @@ const solutionMenu: MegamenuProps = [
     title: "Business Solutions",
     links: [
       {
-        href: "/docs",
+        href: "/services/Digital-Marketing-7f580f52-b972-46ad-b5f8-35c209044ac1#Convert",
         name: "Convert",
         subTitle: "Analyze conversation",
         icon: <Repeat2 className=" text-blue-700" />,
       },
       {
-        href: "/docs",
+        href: "/services/Digital-Marketing-7f580f52-b972-46ad-b5f8-35c209044ac1#Engage",
         name: "Enage",
         subTitle: "Measure active usage",
         icon: <PlusCircle className="text-blue-700" />,
       },
       {
-        href: "/docs",
+        href: "/services/Digital-Marketing-7f580f52-b972-46ad-b5f8-35c209044ac1#Retain",
         name: "Retain",
         subTitle: "Find retentation drivers",
         icon: <Fullscreen className="text-blue-700" />,
       },
       {
-        href: "/docs",
+        href: "/services/Digital-Marketing-7f580f52-b972-46ad-b5f8-35c209044ac1#Product Adoption",
         name: "Product Adoption",
         subTitle: "Maximize all customers",
         icon: <Users className="text-blue-700" />,
