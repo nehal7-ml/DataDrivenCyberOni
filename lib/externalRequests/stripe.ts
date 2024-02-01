@@ -1,6 +1,8 @@
 import stripe from "stripe";
 import prisma from "../prisma";
 import { HttpError } from "../utils";
+import { createServicePayment } from "@/crud/payments";
+import { updateServiceCartStatus } from "@/crud/cart";
 const client = new stripe(process.env.STRIPE_API_KEY as string)
 const endpointSecret = process.env.STRIPE_WEB_SECRET as string
 const startDate = new Date("2023-11-01"); // Start date of the trial
@@ -24,34 +26,33 @@ export async function verifyWebhook(signature: string, body: string | Buffer) {
 }
 
 export async function processStripeEvent(event: stripe.Event) {
-    if (event.type == "invoice.paid" &&
-        event.data.object.status === 'paid' &&
-        event.data.object.customer === process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_ID) {
-        // await createPaymentRecord({
-        //     email: event.data.object.customer_email as string,
-        //     price: event.data.object.total.toString(),
-        //     subscriptionId: event.data.object.subscription as string,
-        //     invoice: event.data.object.invoice_pdf as string
 
-        // },
-        //     prisma)
+    if (event.type === 'payment_intent.succeeded' && event.data.object['metadata']) {
+        console.log("stripe event: ", event.data.object['metadata']['type'] === 'service');
+        const cartId = event.data.object.metadata['cartId']
+        const cart = await updateServiceCartStatus(cartId, 'PAID', prisma)
+        const payment = await createServicePayment({
+            paymentId: event.data.object.id,
+            cartId: cartId
+        }, prisma)
     }
+
 }
 
 
-export async function createPaymentIntent({ price }: { price: number, description: string }) {
+export async function createPaymentIntent({ price, description, metadata }: { price: number, description: string, metadata?: Record<string, string> }) {
 
     const paymentIntent = await client.paymentIntents.create({
 
         amount: price!,
         currency: "usd",
-        description: 'Apparment guru hosting',
-        
+        description: description,
+        metadata: metadata,
         payment_method_types: [
             'card',
             'cashapp',
-            'affirm',
-            'afterpay_clearpay'
+            'afterpay_clearpay',
+            'klarna'
 
         ]
 
@@ -164,3 +165,7 @@ export async function isSubscritpionActive(id: string) {
     return subscription.status === 'active' || subscription.status === 'trialing'
 }
 
+export async function processServicepayment() {
+
+
+}

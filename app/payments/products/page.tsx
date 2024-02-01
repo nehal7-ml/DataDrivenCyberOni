@@ -4,11 +4,11 @@ import { getAll } from "@/crud/service"
 import React from 'react'
 import prisma from "@/lib/prisma"
 import { createPaymentIntent } from "@/lib/externalRequests/stripe"
-async function PaymentPage({ searchParams }: { searchParams: { price: number, currency: string, description: string, serviceId: string } }) {
+async function PaymentPage() {
 
-  const { price, currency, serviceId } = searchParams
+ 
 
-  const intent = await createPaymentIntent({ price: price ?? 6000, description: "Payment for folwwoing service" })
+  const intent = await createPaymentIntent({ price: 6000, description: "Payment for following services" })
   return (
     <div>
       {/* <CheckoutServices services={services.records} /> */}

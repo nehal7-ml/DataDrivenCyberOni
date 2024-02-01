@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { processSubscriptionRequest } from "./submit";
 import Loading from "../Loading";
-import { PaymentIntentResult, StripeElements } from "@stripe/stripe-js";
+import { PaymentIntent, PaymentIntentResult, StripeElements } from "@stripe/stripe-js";
 
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ clientSecret }: { clientSecret: string }) => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
@@ -31,9 +31,9 @@ const CheckoutForm = () => {
 
     const { error } = await stripe?.confirmPayment({
       elements: elements as StripeElements,
-      
+
       confirmParams: {
-        return_url: `${window.origin}/order/123/complete`,
+        return_url: `${window.origin}/orders`,
       },
     }) as PaymentIntentResult;
 
@@ -44,18 +44,23 @@ const CheckoutForm = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('/api/stripe/client-secret', {
-        method: 'POST',
-        body: JSON.stringify({})
-      })
-      const { email, price, description, name } = await response.json();
-      setEmail(email);
-      setProcuct({ name, description, price })
+      const { paymentIntent, error } = await stripe?.retrievePaymentIntent(clientSecret) as PaymentIntentResult
+
+      if (!error) {
+        setProcuct({
+          description: paymentIntent?.description as string,
+          price: paymentIntent?.amount ?? 0,
+          name: "Service Checkout"
+        })
+      }
 
     }
-    fetchData()
+    if (stripe) {
+      fetchData()
 
-  }, [])
+    }
+
+  }, [clientSecret, stripe])
 
 
 
@@ -84,7 +89,6 @@ const CheckoutForm = () => {
           <div className="z-30 my-10 flex flex-col items-center justify-center  gap-5 lg:flex-row container mx-auto dark:bg-slate-800">
             <div className="z-10 self-start p-4 flex flex-col justify-center items-center gap-2 text-center lg:justify-start lg:items-start lg:text-left lg:w-1/2">
               <h1 className="mb-4 text-4xl font-bold text-gray-800 ">
-                Hi T
               </h1>
               <p className="text-center text-base text-gray-600 lg:text-left">
 
@@ -96,7 +100,6 @@ const CheckoutForm = () => {
                   style: "currency",
                   currency: "USD",
                 })}{" "}
-                per month
               </h3>
               <h3>{procuct.description}</h3>
               <Image
@@ -112,17 +115,8 @@ const CheckoutForm = () => {
                 setLoading(true);
                 handlePayment();
               }}
-              className="w-fit rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-white p-3 px-6 shadow-lg "
-            >
+              className="w-fit rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-white p-3 px-6 shadow-lg ">
               <div className="max-h-[400px] min-h-[380px] w-fit overflow-y-auto p-2">
-                <div className="my-5 flex flex-col">
-                  <label htmlFor="">Email</label>
-                  <input
-                    type="email"
-                    className="rounded-md outline-none"
-                    value={email}
-                  />
-                </div>
                 {stripe ? (
                   <>
                     <PaymentElement
@@ -133,20 +127,26 @@ const CheckoutForm = () => {
                           applePay: "auto",
                           googlePay: "auto",
                         },
-                        defaultValues: {
-                          billingDetails: {
-                            email: "theapparmentguru@yahoo.com",
-                          },
-                        },
                         layout: "accordion",
+                        fields: {
+                          billingDetails: {
+                            address: {
+                              city: "auto",
+                              line1: "auto",
+                              postalCode: "auto",
+                              state: "auto",
+                              country: "auto",
+                            },
+                            email: 'auto',
+                            phone: 'auto',
+                            name: 'auto',
+                          },
+
+                        },
+
                       }}
                     />
-                    <AddressElement options={
-                      {
-                        mode: 'billing',
 
-                      }
-                    } />
                   </>
                 ) : (
                   <div className="flex h-96 w-96 items-center justify-center">

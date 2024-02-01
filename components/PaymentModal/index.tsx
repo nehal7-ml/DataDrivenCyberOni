@@ -13,7 +13,7 @@ function PaymentModal({clientSecret}: {clientSecret: string}) {
                 clientSecret: clientSecret,
                 
             }}>
-                <CheckoutForm />
+                <CheckoutForm clientSecret={clientSecret} />
             </Elements>
         </div>
 

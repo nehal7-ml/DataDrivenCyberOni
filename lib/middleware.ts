@@ -1,8 +1,6 @@
 
 import { DisplayUserDTO } from "@/crud/DTOs";
 import { Role } from "@prisma/client";
-import { HttpError } from "./utils";
-
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -27,12 +25,12 @@ export async function verifyAccess(user: DisplayUserDTO, path: string, method: H
             return false;
         }
 
-        if (path.match(/^\/api\/users\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/) && method === 'GET') {
+        if (path.match(/^\/api\/users\/[a-z0-9]{25,}$/) && method === 'GET') {
             const userId = path.split('/')[3];
             if (userId === user.id) return true
 
         }
-        if (path.match(/^\/api\/users\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/) && method === 'PUT') {
+        if (path.match(/^\/api\/users\/[a-z0-9]{25,}$/) && method === 'PUT') {
             const userId = path.split('/')[3];
             if (userId === user.id) return true
 
@@ -46,7 +44,7 @@ export async function verifyAccess(user: DisplayUserDTO, path: string, method: H
         if (path.match(/^\/api\/prompts\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/) && method === 'GET') {
             return true;
         }
-        if (path.match(/^\/api\/prompts\/all/)&& method === 'GET') {
+        if (path.match(/^\/api\/prompts\/all/) && method === 'GET') {
             return true;
         }
         if (path.match(/^\/api\/prompts\/add/)) {
@@ -54,6 +52,11 @@ export async function verifyAccess(user: DisplayUserDTO, path: string, method: H
         }
         if (path.match(/^\/api\/apicredentials\/create$/)) {
             return true;
+        }
+
+        if (path.match(/^\/api\/cart\/services\/[a-z0-9]{25,}$/)) {
+            const userId = path.split('/')[4];
+            return userId === user.id
         }
 
         if (path.match(/^\/api\/blogs\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/)) {

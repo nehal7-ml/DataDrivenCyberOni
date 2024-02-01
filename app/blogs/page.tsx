@@ -16,7 +16,9 @@ export type BlogHomeProps = {
 
 }
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
+
+
 async function Blogs() {
     const data = (await getData()) as BlogHomeProps
     const random = data.recent[Math.floor(Math.random() * (data.recent.length))]

@@ -1,4 +1,4 @@
-import { Blog, BlogComment, BlogLike, EventStatus, Image, PricingModel, Role, Service, ServiceDescription, SubService, Tag, User } from "@prisma/client";
+import { Blog, BlogComment, BlogLike, EventStatus, Image, PricingModel, Role, Service, ServiceCart, ServiceCartItem, ServiceDescription, SubService, Tag, User } from "@prisma/client";
 
 export type CreateBlogDTO = {
     title: string;
@@ -152,5 +152,51 @@ export type CreateOrderDTO = {
 
     productId: string;
     userEmail: string;
-    address : CreateAddressDTO | string
+    address: CreateAddressDTO | string
+}
+export type ProductCartItemDTO = {
+    quantity: number;
+    productId: string;
+    sessionId: string;
+    userId: string;
+};
+
+export type DisplayServiceCartDTO = ServiceCart & {
+    items: DisplayServiceCartItemDTO[]
+}
+export type CreateServicePaymentDTO = {
+    paymentId: string;
+    cartId: string;
+};
+export type CreateServiceCartItemDTO = {
+    userId: string;
+    serviceId: string;
+    description: string | null;
+    addons: {
+        id: string;
+
+    }[];
+
+
+};
+
+export type UpdateServiceCartItemDTO = {
+    cartItemId: string;
+    userId: string | null;
+    description: string | null;
+    addons: {
+        id: string;
+
+    }[];
+
+
+};
+export type RemoveServiceCartItem = {
+    cartItemId: string;
+};
+
+export type DisplayServiceCartItemDTO = ServiceCartItem & {
+    service?: Service & {
+    } | null,
+    addons: SubService[]
 }
