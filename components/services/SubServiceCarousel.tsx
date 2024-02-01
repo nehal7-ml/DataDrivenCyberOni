@@ -10,6 +10,7 @@ import { SubService } from "@prisma/client";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CreateServiceCartItemDTO, DisplayServiceCartDTO, DisplayServiceCartItemDTO, UpdateServiceCartItemDTO } from "@/crud/DTOs";
 import { Session } from "next-auth";
+import Loading from "../Loading";
 
 export type SubServiceProps = {
     title: string;
@@ -29,6 +30,8 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
     const [currentItems, setCurrentItems] = useState<SubService[]>([]);
     const [existing, setExisting] = useState(false);
     const [cartItemId, setCartItemId] = useState("");
+
+    const [loading, setLoading] = useState(true);
     const nextSlide = () => {
 
     };
@@ -48,7 +51,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
             if (!checkSubserviceAdded(subService)) {
                 current = [...currentItems, subService]
             } else {
-                current =currentItems.filter(item => item.id !== subService.id)
+                current = currentItems.filter(item => item.id !== subService.id)
 
 
             }
@@ -76,6 +79,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
 
 
     async function updateCart(items: SubService[]) {
+        setLoading(true);
         const body: UpdateServiceCartItemDTO = {
             userId: (session?.user as { id: string })?.id,
             description: `adding Service with addons ${''}`,
@@ -83,10 +87,13 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
             cartItemId: cartItemId
         }
         const res = await fetch(`/api/cart/services/${(session?.user as { id: string })?.id}`, { method: 'PUT', body: JSON.stringify(body) })
+        setLoading(false);
 
     }
 
     async function addItemtoCart(items: SubService[]) {
+        setLoading(true);
+
         const body = {
             serviceId,
             userId: (session?.user as { id: string })?.id,
@@ -94,6 +101,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
             addons: items.map(item => ({ id: item.id }))
         } as CreateServiceCartItemDTO
         const res = await fetch(`/api/cart/services/${(session?.user as { id: string })?.id}`, { method: 'POST', body: JSON.stringify(body) })
+        setLoading(false);
 
     }
 
@@ -112,6 +120,8 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
                     break
                 }
             }
+
+            setLoading(false);
         }
 
         fetchData()
@@ -134,7 +144,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
                             <div className=" w-full text-center  lg:text-left h-fit">
                                 <h3 className="text-lg font-semibold">{subService.title}</h3>
                             </div>
-                            <div className="z-20 text-center  lg:text-left line-clamp-5">
+                            <div className=" text-center  lg:text-left line-clamp-5">
                                 {subService.description}
                             </div>
                             {checkSubserviceAdded(subService) ?
@@ -192,6 +202,12 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
                         <div></div>
                     </div>
                 </Modal>
+            }
+
+            {loading &&
+                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur-md bg-gray-100/20 dark:bg-slate-600/20">
+                    <Loading />
+                </div>
             }
         </div>
 
