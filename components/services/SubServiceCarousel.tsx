@@ -101,6 +101,13 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
             addons: items.map(item => ({ id: item.id }))
         } as CreateServiceCartItemDTO
         const res = await fetch(`/api/cart/services/${(session?.user as { id: string })?.id}`, { method: 'POST', body: JSON.stringify(body) })
+        if (res.status === 200) {
+            const {data} = await res.json();
+            const cartItem =  data as DisplayServiceCartItemDTO   
+            setCartItemId(cartItem.id)
+            setExisting(true);
+        
+        }
         setLoading(false);
 
     }
@@ -124,8 +131,8 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
             setLoading(false);
         }
 
-        fetchData()
-    }, [serviceId, session?.user]);
+        if(session) fetchData()
+    }, [serviceId, session, session?.user]);
 
 
     function checkSubserviceAdded(subservice: SubService) {

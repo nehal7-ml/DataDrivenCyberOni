@@ -12,7 +12,7 @@ async function PaymentPage() {
   return (
     <div>
       {/* <CheckoutServices services={services.records} /> */}
-      <PaymentModal clientSecret={intent.client_secret as string}></PaymentModal>
+      <PaymentModal cartId="" clientSecret={intent.client_secret as string}></PaymentModal>
     </div>
   )
 }

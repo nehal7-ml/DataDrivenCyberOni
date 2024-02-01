@@ -93,6 +93,9 @@ export const addServiceCartItem = async (input: CreateServiceCartItemDTO, prisma
                 }
             }
         },
+        include: {
+            addons:true
+        }
     });
 
     return createdServiceCartItem;
@@ -169,6 +172,30 @@ export async function updateServiceCartStatus(cartId: string, status: ServiceCar
         }
     })
     if (existingcartItem) return existingcartItem;
+}
+
+export async function getServiceOrder(orderId: string, userId: string, prisma: PrismaClient) {
+    const cartItems = prisma.serviceCart;
+    const existingcartItem = await cartItems.findUnique({
+        where: {
+            id: orderId,
+            user: {
+                id: userId
+            },
+            status: 'PAID'
+        },
+        include: {
+            items: {
+                include: {
+                    service:true,
+                    addons: true
+                }
+            }
+        }
+    })
+
+    if (existingcartItem) return existingcartItem;
+
 }
 
 
