@@ -38,7 +38,6 @@ const CartPage: React.FC<CartProps> = async ({ searchParams }) => {
     return (
         <div className="container mx-auto flex flex-col justify-center items-center">
             <Cart session={session} cartItems={items} />
-            <Link href={{ pathname: '/payments/services', query: { cartId: searchParams.cartId } }} className="inline-block px-4 py-2 bg-blue-500 text-white rounded cursor-pointer">Complete Payment</Link>
         </div>
     );
 };
