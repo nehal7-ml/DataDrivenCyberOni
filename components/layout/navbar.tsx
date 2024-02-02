@@ -320,7 +320,7 @@ const enterpriseMenu: MegamenuProps = [
     title: "Best Practices",
     links: [
       { href: '/docs', name: 'FAQs', subTitle: 'Learn how to integrate', icon: <HelpCircle className="fill-blue-700 text-gray-50" /> },
-      { href: '/casestudy', name: 'Case Studies', subTitle: 'All about how to use ', icon: <BookCheck className="fill-blue-700 text-gray-50" /> },
+      { href: '/casestudies', name: 'Case Studies', subTitle: 'All about how to use ', icon: <BookCheck className="fill-blue-700 text-gray-50" /> },
       { href: '/blogs', name: 'Engineering Blog ', subTitle: 'All about how to use ', icon: <Cog className="fill-blue-700 text-gray-50" /> },
 
       { href: '/books', name: 'Books & Webinars', subTitle: 'All about how to use ', icon: <Book className="fill-blue-700 text-gray-50" /> },
@@ -365,7 +365,7 @@ const solutionMenu: MegamenuProps = [
     title: "Industry Solutions",
     links: [
       { href: "/docs", name: "eCommerce", subTitle: "", icon: <></> },
-      { href: "/casestudy", name: "SaaS", subTitle: "", icon: <></> },
+      { href: "/casestudies", name: "SaaS", subTitle: "", icon: <></> },
       { href: "/blogs", name: "Financial Services", subTitle: "", icon: <></> },
     ],
   },
