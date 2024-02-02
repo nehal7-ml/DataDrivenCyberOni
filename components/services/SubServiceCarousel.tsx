@@ -11,6 +11,7 @@ import { useParams, usePathname, useRouter, useSearchParams } from "next/navigat
 import { CreateServiceCartItemDTO, DisplayServiceCartDTO, DisplayServiceCartItemDTO, UpdateServiceCartItemDTO } from "@/crud/DTOs";
 import { Session } from "next-auth";
 import Loading from "../Loading";
+import Link from "next/link";
 
 export type SubServiceProps = {
     title: string;
@@ -193,7 +194,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
             </div>
             <div className="flex justify-center items-center my-10">
                 {currentItems.length > 0 &&
-                    <div className="rounded-full flex gap-3 bg-[#33D460] shadow-[0_10px_25px_0_#33D3D454] p-3 w-fit text-white text-center justify-center items-center">Buy now</div>}
+                    <Link href={'/cart/services'} className="rounded-full flex gap-3 bg-[#33D460] shadow-[0_10px_25px_0_#33D3D454] p-3 w-fit text-white text-center justify-center items-center">Buy now</Link>}
 
             </div>
 
