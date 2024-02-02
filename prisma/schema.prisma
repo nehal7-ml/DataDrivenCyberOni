@@ -124,6 +124,7 @@ model ServiceCart {
   items          ServiceCartItem[]
   status         ServiceCartStatus @default(PENDING)
   ServicePayment ServicePayment[]
+
   @@index([userId])
 }
 
@@ -418,6 +419,7 @@ model SubService {
   imageId                                   String?
   serviceId                                 String
   ServiceCartItem                           ServiceCartItem[]
+  CaseStudy                                 CaseStudy[]
 
   @@index([imageId])
   @@index([serviceId])
@@ -434,18 +436,19 @@ model FAQ {
 }
 
 model CaseStudy {
-  id                  String   @id @default(uuid())
+  id                  String      @id @default(uuid())
   title               String
-  type                Service? @relation(fields: [serviceId], references: [id])
-  preview             String   @db.Text
-  problemStatement    String   @db.Text
-  userResearch        String   @db.Text
+  type                Service?    @relation(fields: [serviceId], references: [id])
+  subService          SubService? @relation(fields: [subServiceId], references: [id])
+  preview             String      @db.Text
+  problemStatement    String      @db.Text
+  userResearch        String      @db.Text
   userProblems        Json
   possibleSolutions   Json
   goals               Json
   images              Json //image 
-  uniqueFeatures      String   @db.Text
-  keyLearning         String   @db.Text
+  uniqueFeatures      String      @db.Text
+  keyLearning         String      @db.Text
   userPersonas        Json
   competetiveAnalysis Json
   wireFrames          Json?
@@ -453,8 +456,10 @@ model CaseStudy {
   userFlow            Json?
   architecture        Json?
   serviceId           String?
+  subServiceId        String?
 
   @@index([serviceId])
+  @@index([subServiceId])
 }
 
 model GptPrompt {
@@ -506,7 +511,7 @@ model Referral {
   prefix      String?
   type        ReferralType     @default(REDIRECT)
   campaignId  String
-  expires     DateTime
+  expires     DateTime? 
   description String           @db.Text
   priority    ReferralPriority @default(LOW)
   redirect    String
