@@ -32,7 +32,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
     const [existing, setExisting] = useState(false);
     const [cartItemId, setCartItemId] = useState("");
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const nextSlide = () => {
 
     };
@@ -132,7 +132,9 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
             setLoading(false);
         }
 
-        if(session) fetchData()
+        if(session){
+            setLoading(true)
+            fetchData()}
     }, [serviceId, session, session?.user]);
 
 
