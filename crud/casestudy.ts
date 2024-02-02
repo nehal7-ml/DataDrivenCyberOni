@@ -1,27 +1,7 @@
 import { Image, PrismaClient } from "@prisma/client";
 import { CreateImageDTO } from "./DTOs";
+import { CreateCaseStudy } from "./DTOs";
 export type CaseStudyType = 'ECOMMERCE' | 'LANDING' | 'SOFTWARE' | 'GRAPHICS';
-export type CreateCaseStudy = {
-    id?: string;
-    title: string;
-    serviceId?: string;
-    preview: string;
-    problemStatement: string;
-    userProblems: string[]; //comma seaprated
-    possibleSolutions: string[];  //comma seaprated
-    goals: string[]; //comma seaprated
-    images: CreateImageDTO[];
-    uniqueFeatures: string;
-    userResearch: string;
-    keyLearning: string;
-    userPersonas: UserPersona[],
-    competetiveAnalysis: CreateImageDTO[],
-    wireFrames?: CreateImageDTO[];
-    hifiDesign?: CreateImageDTO[];
-    userFlow?: CreateImageDTO[];
-    architecture?: CreateImageDTO[];
-}
-
 export type UserPersona = {
     bio: string;
     name: string;
@@ -59,8 +39,8 @@ export async function create(caseStudy: CreateCaseStudy, prisma: PrismaClient) {
 
 export async function read(caseStudyId: string, prisma: PrismaClient) {
     const cases = prisma.caseStudy;
-    const caseStudy = await cases.findUnique({ where: { id: caseStudyId } })
-    return caseStudy as CreateCaseStudy
+    const caseStudy = await cases.findUnique({ where: { id: caseStudyId }, include: { subServices: { select: { id: true, title: true } } } })
+    if(caseStudy) return caseStudy
 
 
 }
@@ -105,7 +85,7 @@ export async function getAll(page: number, pageSize: number, prismaClient: Prism
     if (pageSize !== 10 && pageSize != 30 && pageSize !== 50 && pageSize !== 0) throw new Error('page size must be 10, 30 or 50')
 
     let allrecords = await caseStudys.findMany({
-        skip:page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
+        skip: page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
         where: {
         },
 

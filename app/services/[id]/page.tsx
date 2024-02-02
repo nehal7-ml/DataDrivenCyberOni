@@ -17,6 +17,9 @@ import ServiceFeatures from "@/components/services/ServiceFeatures";
 import { redirect } from "next/navigation";
 import { extractUUID, seoUrl } from "@/lib/utils";
 import { Service, WithContext } from "schema-dts";
+import { serviceReviews } from "@/data/testimonials";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/nextAuthAdapter";
 type Props = {
   params: { id: string }
   searchParams: { [key: string]: string | string[] | undefined }
@@ -61,8 +64,7 @@ async function Services({ params }: { params: { id: string } }) {
   const services = await getAll(1, 10, prisma);
 
   if (!service) redirect('/404');
-  //console.log(service);
-
+  
   const jsonLd: WithContext<Service> = {
     "@context": 'https://schema.org',
     "@type": 'Service',
@@ -75,6 +77,9 @@ async function Services({ params }: { params: { id: string } }) {
 
     }
   }
+
+  const session = await getServerSession(authOptions)
+
   return (
     <div className="">
       <script
@@ -112,22 +117,7 @@ async function Services({ params }: { params: { id: string } }) {
           overcome challenges and succeed.
         </div>
         <ReviewCarousel
-          reviews={[
-            {
-              content:
-                "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-              image: "/images/prof1.png",
-              name: "Charlie rose",
-              position: "Ceo",
-            },
-            {
-              content:
-                "Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.",
-              image: "/images/prof2.png",
-              name: "Charlie rose",
-              position: "Ceo",
-            },
-          ]}
+          reviews={serviceReviews}
         />
       </section>
 
@@ -135,6 +125,7 @@ async function Services({ params }: { params: { id: string } }) {
         <section className="my-5 font-nunito">
           <SubServiceCarousel
             subservices={service.SubServices as SubService[]}
+            session={session}
           />
         </section>
       )}
@@ -148,7 +139,7 @@ async function Services({ params }: { params: { id: string } }) {
               className="container mx-auto my-5 flex flex-wrap gap-2 lg:gap-5"
             >
               <Link
-                href={`/casestudies/${caseStudy.id}`}
+                href={`/casestudy/${caseStudy.id}`}
                 className="relative w-1/2 flex-col items-center justify-center overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl lg:w-[170px]"
               >
                 <Image
@@ -183,7 +174,7 @@ async function Services({ params }: { params: { id: string } }) {
         <EmailLetter></EmailLetter>
       </section>
       <section className="flex items-center justify-center">
-        <PayLater value={service.valueBrought as string[]} />
+        <PayLater type="service" value={service.valueBrought as string[]} />
       </section>
     </div>
   );
