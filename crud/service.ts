@@ -1,7 +1,7 @@
 import { Service, PrismaClient, Prisma, Image, Tag, SubService, ServiceDescription, FAQ, CaseStudy } from "@prisma/client";
 import { create as createTag, connectOrCreateObject as connectTags } from "./tags";
 import { CreateImageDTO, CreateTagDTO } from "./DTOs";
-import {  create as createImage, connectOrCreateObject as connectImage } from "./images";
+import { create as createImage, connectOrCreateObject as connectImage } from "./images";
 import { CreateSubServiceDTO, create as createSubService, update as updateSubService } from "./subService";
 import { prisma } from "@/prisma/prismaClient";
 
@@ -193,6 +193,7 @@ async function read(serviceId: string, prismaClient: PrismaClient) {
             SubServices: {
                 include: {
                     image: true,
+                    CaseStudies: true
                 }
             },
             ServiceDescription: {
@@ -229,7 +230,7 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
         include: {
             image: true,
             tags: true,
-            SubServices:true
+            SubServices: true
         }
     })
 
@@ -260,7 +261,7 @@ export async function getBySearchTerm(search: string, page: number, prisma: Pris
 
 
     const records = await services.findMany({
-        skip: page === 0 ? 0 : (page - 1) * 5, 
+        skip: page === 0 ? 0 : (page - 1) * 5,
         take: page === 0 ? 9999 : 5,
         where: {
             OR: [

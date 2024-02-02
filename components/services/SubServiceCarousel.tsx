@@ -6,12 +6,13 @@ import { Check, ChevronLeft, ChevronRight, Delete, MoveRight, ShoppingCart, Tras
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Modal from "../shared/modal";
-import { SubService } from "@prisma/client";
+import { Image as CaseImage, SubService } from "@prisma/client";
 import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
-import { CreateServiceCartItemDTO, DisplayServiceCartDTO, DisplayServiceCartItemDTO, UpdateServiceCartItemDTO } from "@/crud/DTOs";
+import { CreateServiceCartItemDTO, DisplayServiceCartDTO, DisplayServiceCartItemDTO, DisplaySubServiceDTO, UpdateServiceCartItemDTO } from "@/crud/DTOs";
 import { Session } from "next-auth";
 import Loading from "../Loading";
 import Link from "next/link";
+import CaseStudyCard from "./CaseStudyCard";
 
 export type SubServiceProps = {
     title: string;
@@ -20,19 +21,19 @@ export type SubServiceProps = {
 }
 
 const imageArray = ['/images/subservice-1.svg', '/images/subservice-2.svg', '/images/subservice-3.svg']
-function SubServiceCarousel({ subservices, session }: { subservices: SubService[], session?: Session | null }) {
+function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubServiceDTO[], session?: Session | null }) {
     const params = useParams();
     const router = useRouter();
     const search = useSearchParams()
     const seoTitle = params.id as string
     const serviceId = extractUUID(seoTitle)
-    const [currentDisplay, setCurrentDisplay] = useState<SubService | null>(null);
+    const [currentDisplay, setCurrentDisplay] = useState<DisplaySubServiceDTO | null>(null);
     const [showModal, setShowModal] = useState(false);
-    const [currentItems, setCurrentItems] = useState<SubService[]>([]);
+    const [currentItems, setCurrentItems] = useState<DisplaySubServiceDTO[]>([]);
     const [existing, setExisting] = useState(false);
     const [cartItemId, setCartItemId] = useState("");
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const nextSlide = () => {
 
     };
@@ -45,7 +46,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
     const swipehandlers = useSwipe({ onSwipedLeft: prevSlide, onSwipedRight: nextSlide })
 
 
-    async function addToCart(subService: SubService) {
+    async function addToCart(subService: DisplaySubServiceDTO) {
 
         if (session && session.user) {
             let current = []
@@ -103,11 +104,11 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
         } as CreateServiceCartItemDTO
         const res = await fetch(`/api/cart/services/${(session?.user as { id: string })?.id}`, { method: 'POST', body: JSON.stringify(body) })
         if (res.status === 200) {
-            const {data} = await res.json();
-            const cartItem =  data as DisplayServiceCartItemDTO   
+            const { data } = await res.json();
+            const cartItem = data as DisplayServiceCartItemDTO
             setCartItemId(cartItem.id)
             setExisting(true);
-        
+
         }
         setLoading(false);
 
@@ -132,7 +133,10 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
             setLoading(false);
         }
 
-        if(session) fetchData()
+        if (session) {
+            setLoading(true);
+            fetchData()
+        }
     }, [serviceId, session, session?.user]);
 
 
@@ -202,12 +206,21 @@ function SubServiceCarousel({ subservices, session }: { subservices: SubService[
 
             {
                 <Modal setShowModal={setShowModal} showModal={showModal} >
-                    <div className="rounded-xl w-fit     p-10 relative container mx-auto text bg-gray-50 shadow-lg dark:bg-gray-800 text-black dark:text-gray-50 flex flex-col items-center justify-center">
+                    <div className="rounded-xl lg:w-[30vw]     p-10 relative container mx-auto text bg-gray-50 shadow-lg dark:bg-gray-800 text-black dark:text-gray-50 flex flex-col items-center justify-center">
                         <button className="absolute right-2 top-1 text-red-500" onClick={() => setShowModal(false)}><X /></button>
                         <div>Usage Score: {currentDisplay?.serviceUsageScore}/100</div>
                         <div>Esitmated time for completion: {currentDisplay?.estimated_hours_times_one_hundred_percent} hrs</div>
-                        <div>Overhead Cost: {currentDisplay?.overheadCost} $</div>
-                        <div></div>
+                        <div>Task Complexity: {currentDisplay?.complexity}/10</div>
+                        <div>Case studies: </div>
+                        <div className="flex flex-wrap gap-2">
+                            {currentDisplay?.CaseStudies.map((caseStudy) => (
+                                <CaseStudyCard
+                                    key={caseStudy.id}
+                                    id={caseStudy.id}
+                                    title={caseStudy.title}
+                                    images={caseStudy.images as CaseImage[]} />
+                            ))}
+                        </div>
                     </div>
                 </Modal>
             }

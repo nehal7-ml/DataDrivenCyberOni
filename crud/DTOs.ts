@@ -1,4 +1,4 @@
-import { Blog, BlogComment, BlogLike, EventStatus, Image, PricingModel, Role, Service, ServiceCart, ServiceCartItem, ServiceDescription, SubService, Tag, User } from "@prisma/client";
+import { Blog, BlogComment, BlogLike, CaseStudy, EventStatus, Image, PricingModel, Role, Service, ServiceCart, ServiceCartItem, ServiceDescription, SubService, Tag, User } from "@prisma/client";
 import { UserPersona } from "./casestudy";
 
 export type CreateBlogDTO = {
@@ -63,9 +63,13 @@ export type CreateFaqDTO = {
 export type DisplayServiceDTO = Service & {
     image?: Image | null;
     tags?: Tag[];
-    SubServices?: SubService[];
+    SubServices?: DisplaySubServiceDTO[];
     ServiceDescription?: (ServiceDescription & { image: Image; })[];
 
+};
+export type DisplaySubServiceDTO = SubService & {
+    image?: Image | null;
+    CaseStudies: CaseStudy[]
 };
 export type CreateSubServiceDTO = {
     id?: string;
@@ -199,12 +203,12 @@ export type RemoveServiceCartItem = {
 export type DisplayServiceCartItemDTO = ServiceCartItem & {
     service?: Service & {
     } | null,
-    addons: SubService[]
+    addons: DisplaySubServiceDTO[]
 }
 export type CreateCaseStudy = {
     id?: string;
     title: string;
-    serviceId?: string|null;
+    serviceId?: string | null;
     subServices: { id: string; }[];
     preview: string;
     problemStatement: string;

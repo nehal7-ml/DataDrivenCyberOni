@@ -419,7 +419,7 @@ model SubService {
   imageId                                   String?
   serviceId                                 String
   ServiceCartItem                           ServiceCartItem[]
-  CaseStudy                                 CaseStudy[]
+  CaseStudies                               CaseStudy[]
 
   @@index([imageId])
   @@index([serviceId])
