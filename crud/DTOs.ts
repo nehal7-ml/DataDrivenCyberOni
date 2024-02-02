@@ -1,4 +1,5 @@
 import { Blog, BlogComment, BlogLike, EventStatus, Image, PricingModel, Role, Service, ServiceCart, ServiceCartItem, ServiceDescription, SubService, Tag, User } from "@prisma/client";
+import { UserPersona } from "./casestudy";
 
 export type CreateBlogDTO = {
     title: string;
@@ -200,3 +201,24 @@ export type DisplayServiceCartItemDTO = ServiceCartItem & {
     } | null,
     addons: SubService[]
 }
+export type CreateCaseStudy = {
+    id?: string;
+    title: string;
+    serviceId?: string|null;
+    subServices: { id: string; }[];
+    preview: string;
+    problemStatement: string;
+    userProblems: string[]; //comma seaprated
+    possibleSolutions: string[]; //comma seaprated
+    goals: string[]; //comma seaprated
+    images: CreateImageDTO[];
+    uniqueFeatures: string;
+    userResearch: string;
+    keyLearning: string;
+    userPersonas: UserPersona[];
+    competetiveAnalysis: CreateImageDTO[];
+    wireFrames?: CreateImageDTO[];
+    hifiDesign?: CreateImageDTO[];
+    userFlow?: CreateImageDTO[];
+    architecture?: CreateImageDTO[];
+};
