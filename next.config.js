@@ -52,6 +52,11 @@ const nextConfig = {
         destination: "https://maps.app.goo.gl/44BHLXSPYw6mNotMA",
         permanent: true,
       },
+      {
+        source: "/docs",
+        destination: "https://github.com/TechWithTy/CyberOniTemplate",
+        permanent: true,
+      },
     ];
   },
   experimental: {
