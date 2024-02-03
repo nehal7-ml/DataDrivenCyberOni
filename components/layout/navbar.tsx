@@ -102,7 +102,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 
                 />
                 <div className="hover:text-blue-500 hover:cursor-pointer ">
-                  Enterprise
+                  Resources
                   <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </div>
                 <div className="xl:absolute xl:left-auto xl:translate-x-48 z-50 transition-all duration-700 w-screen xl:top-20 xl:w-[600px] hidden peer-default/enterprise:hidden peer-checked/enterprise:block xl:peer-checked/enterprise xl:peer-focus/enterprise:block xl:peer-hover/enterprise:block hover:block">
@@ -305,29 +305,68 @@ const aboutMenu: MegamenuProps =
 
 const enterpriseMenu: MegamenuProps = [
   {
-    type: 'Links',
+    type: "Links",
     title: "Resources",
     links: [
-      { href: '/docs', name: 'Developer Docs', subTitle: 'Learn how to integrate', icon: <TerminalSquare className=" text-blue-700" /> },
-      { href: '/docs', name: 'Help Center ', subTitle: 'All about how to use ', icon: <LifeBuoy className="fill-blue-700 text-gray-50" /> },
-      { href: '/docs', name: 'Product Updates', subTitle: 'Newest feature releases', icon: <Megaphone className="fill-blue-700 text-gray-50" /> },
-
-
-    ]
+      {
+        href: "/blogs",
+        name: "Our Blogs",
+        subTitle: "Learn how to integrate",
+        icon: <Book className=" text-blue-700" />,
+      },
+      
+      {
+        href: "/docs",
+        name: "Developer Docs",
+        subTitle: "Learn how to integrate",
+        icon: <TerminalSquare className=" text-blue-700" />,
+      },
+      {
+        href: "/docs",
+        name: "Help Center ",
+        subTitle: "All about how to use ",
+        icon: <LifeBuoy className="fill-blue-700 text-gray-50" />,
+      },
+      {
+        href: "/docs",
+        name: "Product Updates",
+        subTitle: "Newest feature releases",
+        icon: <Megaphone className="fill-blue-700 text-gray-50" />,
+      },
+    ],
   },
   {
-    type: 'Links',
+    type: "Links",
     title: "Best Practices",
     links: [
-      { href: '/docs', name: 'FAQs', subTitle: 'Learn how to integrate', icon: <HelpCircle className="fill-blue-700 text-gray-50" /> },
-      { href: '/casestudy', name: 'Case Studies', subTitle: 'All about how to use ', icon: <BookCheck className="fill-blue-700 text-gray-50" /> },
-      { href: '/blogs', name: 'Engineering Blog ', subTitle: 'All about how to use ', icon: <Cog className="fill-blue-700 text-gray-50" /> },
+      {
+        href: "/docs",
+        name: "FAQs",
+        subTitle: "Learn how to integrate",
+        icon: <HelpCircle className="fill-blue-700 text-gray-50" />,
+      },
+      {
+        href: "/casestudy",
+        name: "Case Studies",
+        subTitle: "All about how to use ",
+        icon: <BookCheck className="fill-blue-700 text-gray-50" />,
+      },
+      {
+        href: "/blogs",
+        name: "Engineering Blog ",
+        subTitle: "All about how to use ",
+        icon: <Cog className="fill-blue-700 text-gray-50" />,
+      },
 
-      { href: '/books', name: 'Books & Webinars', subTitle: 'All about how to use ', icon: <Book className="fill-blue-700 text-gray-50" /> },
-
-    ]
-  }
-]
+      {
+        href: "/books",
+        name: "Books & Webinars",
+        subTitle: "All about how to use ",
+        icon: <Book className="fill-blue-700 text-gray-50" />,
+      },
+    ],
+  },
+];
 
 const solutionMenu: MegamenuProps = [
   {
@@ -360,15 +399,15 @@ const solutionMenu: MegamenuProps = [
       },
     ],
   },
-  {
-    type: "Links",
-    title: "Industry Solutions",
-    links: [
-      { href: "/docs", name: "eCommerce", subTitle: "", icon: <></> },
-      { href: "/casestudy", name: "SaaS", subTitle: "", icon: <></> },
-      { href: "/blogs", name: "Financial Services", subTitle: "", icon: <></> },
-    ],
-  },
+  // {
+  //   type: "Links",
+  //   title: "Industry Solutions",
+  //   links: [
+  //     { href: "/docs", name: "eCommerce", subTitle: "", icon: <></> },
+  //     { href: "/casestudy", name: "SaaS", subTitle: "", icon: <></> },
+  //     { href: "/blogs", name: "Financial Services", subTitle: "", icon: <></> },
+  //   ],
+  // },
 
   {
     type: "Node",
