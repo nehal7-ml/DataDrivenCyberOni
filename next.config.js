@@ -57,6 +57,12 @@ const nextConfig = {
         destination: "https://github.com/TechWithTy/CyberOniTemplate",
         permanent: true,
       },
+      {
+        source: "/api-docs",
+        destination:
+          "https://red-shadow-684768.postman.co/workspace/CyberOni~bb41df77-b3e1-42d2-b12a-3ccefc9ed4a4/collection/21592192-43d2981d-e1fc-4d81-acf8-9ed65724bbed?action=share&creator=26434854",
+        permanent: true,
+      },
     ];
   },
   experimental: {
