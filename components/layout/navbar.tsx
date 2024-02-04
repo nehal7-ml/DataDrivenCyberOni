@@ -56,7 +56,23 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 
 
           <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex absolute right-0 top-full h-screen w-screen max-h-screen overflow-y-auto pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black py-10'}   gap-10   h-screen w-full flex-col items-center justify-start xl:pt-0 xl:static xl:flex xl:flex-row xl:gap-5 xl:justify-center xl:h-full xl:bg-inherit xl:w-fit group`}>
-
+<div className="relative xl:flex justify-center items-center xl:h-full">
+              <label htmlFor="solution" className="h-full flex flex-col justify-center items-center">
+                <input
+                  id="solution"
+                  type="checkbox"
+                  className=" peer/solution hidden absolute h-full"
+                  disabled={!mobileMenuOpen}
+                />
+                <div className=" hover:text-blue-500 hover:cursor-pointer">
+                  Solutions
+                  <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
+                </div>
+                <div className="xl:absolute xl:left-auto xl:translate-x-48 z-50 transition-all duration-700 w-screen xl:top-20 xl:w-[600px] hidden peer-default/solution:hidden peer-checked/solution:block xl:peer-checked/solution xl:peer-focus/solution:block xl:peer-hover/solution:block hover:block">
+                  <MegaMenu groups={solutionMenu} />
+                </div>
+              </label>
+            </div>
             <div className="relative xl:flex  justify-center items-center xl:h-full">
               <label htmlFor="product" className=" h-full flex flex-col justify-center items-center">
                 <input
@@ -75,23 +91,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                 </div>
               </label>
             </div>
-            <div className="relative xl:flex justify-center items-center xl:h-full">
-              <label htmlFor="solution" className="h-full flex flex-col justify-center items-center">
-                <input
-                  id="solution"
-                  type="checkbox"
-                  className=" peer/solution hidden absolute h-full"
-                  disabled={!mobileMenuOpen}
-                />
-                <div className=" hover:text-blue-500 hover:cursor-pointer">
-                  Solutions
-                  <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
-                </div>
-                <div className="xl:absolute xl:left-auto xl:translate-x-48 z-50 transition-all duration-700 w-screen xl:top-20 xl:w-[600px] hidden peer-default/solution:hidden peer-checked/solution:block xl:peer-checked/solution xl:peer-focus/solution:block xl:peer-hover/solution:block hover:block">
-                  <MegaMenu groups={solutionMenu} />
-                </div>
-              </label>
-            </div>
+            
             <div className="relative xl:flex justify-center items-center xl:h-full">
               <label htmlFor="enterprise" className="h-full flex flex-col justify-center items-center">
                 <input
@@ -512,7 +512,7 @@ const productMenu: MegamenuProps = [
       <>
         <div>
           <div>
-            <div className="dark:gray-200 text-gray-500">Always Improving</div>
+            <div className="dark:gray-200 text-gray-500">Trending Case Studies</div>
             <Image
               src={"/images/dash.png"}
               alt="dash"
@@ -529,7 +529,7 @@ const productMenu: MegamenuProps = [
                 Why it’s never too early to add product ana...
               </div>
             </div>
-            <Link className="flex  gap-4" href={"#"}>
+            <Link className="flex  gap-4" href={"/casestudies"}>
               See all <MoveRight />
             </Link>
           </div>
