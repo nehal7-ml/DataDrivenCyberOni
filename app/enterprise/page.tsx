@@ -309,76 +309,84 @@ async function Enterprise() {
             </div>
           </div>
 
-          <div className="container mt-20 flex flex-wrap justify-center gap-5">
-            <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
-              <Image
-                src={"/images/team.png"}
-                alt="team"
-                height={50}
-                width={50}
-              ></Image>
-              <div className="text-2xl font-bold">Experience</div>
-              <div className="text-base text-zinc-800">
-                With Cyberoni, you gain access to a wealth of professional web
-                development experience. We stay at the forefront of technology
-                and trends to ensure that your project not only meets but
-                exceeds industry standards. Our goal is to transform your vision
-                into a digital reality, delivering a project that is not just
-                complete but ahead of its time. Our team’s dedication to growth
-                ensures your website will always be on the cutting edge.
+          <div className="container mt-20 flex flex-wrap justify-center  ">
+            <div className="p-3 lg:w-1/4">
+              <div className="flex flex-col items-center justify-center  gap-2 rounded-lg  bg-gray-200 dark:bg-gray-800  p-5 text-black shadow-md h-full">
+                <Image
+                  src={"/images/team.png"}
+                  alt="team"
+                  height={50}
+                  width={50}
+                ></Image>
+                <div className="text-2xl font-bold">Experience</div>
+                <div className="text-base text-zinc-800">
+                  With Cyberoni, you gain access to a wealth of professional web
+                  development experience. We stay at the forefront of technology
+                  and trends to ensure that your project not only meets but
+                  exceeds industry standards. Our goal is to transform your vision
+                  into a digital reality, delivering a project that is not just
+                  complete but ahead of its time. Our team’s dedication to growth
+                  ensures your website will always be on the cutting edge.
+                </div>
+            </div>
+            </div>
+            <div className="p-3 lg:w-1/4">
+              <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-5 text-black shadow-md  h-full">
+                <Image
+                  src={"/images/brain.png"}
+                  alt="brain"
+                  height={50}
+                  width={50}
+                ></Image>
+                <div className="text-2xl font-bold">Committed Team</div>
+                <div className="text-base text-zinc-800">
+                  Our team is the heart of Cyberoni. We are a group of driven,
+                  tech-savvy professionals, dedicated to delivering only the best.
+                  We understand that our success is measured by the success of
+                  your website. That’s why we immerse ourselves in every project,
+                  applying meticulous attention to detail to create websites that
+                  are not just functional but also thrive in today’s digital
+                  landscape.
+                </div>
               </div>
             </div>
-            <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
-              <Image
-                src={"/images/brain.png"}
-                alt="brain"
-                height={50}
-                width={50}
-              ></Image>
-              <div className="text-2xl font-bold">Committed Team</div>
-              <div className="text-base text-zinc-800">
-                Our team is the heart of Cyberoni. We are a group of driven,
-                tech-savvy professionals, dedicated to delivering only the best.
-                We understand that our success is measured by the success of
-                your website. That’s why we immerse ourselves in every project,
-                applying meticulous attention to detail to create websites that
-                are not just functional but also thrive in today’s digital
-                landscape.
+            <div className="p-3 lg:w-1/4">
+              <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-5 text-black shadow-md h-full">
+                <Image
+                  src={"/images/stopwatch.png"}
+                  alt="watch"
+                  height={50}
+                  width={50}
+                ></Image>
+                <div className="text-2xl font-bold">Efficient Delivery</div>
+                <div className="text-base text-zinc-800">
+                  At Cyberoni, we value your time. That&apos;s why we are
+                  committed to delivering high-quality, fully-tested websites
+                  promptly. We understand the pace of business and strive to
+                  provide you with fast turnaround times without compromising on
+                  quality. From initial concept to final launch, we streamline our
+                  development process to get your project live, allowing you to
+                  start meeting your business objectives faster.
+                </div>
               </div>
             </div>
-            <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
-              <Image
-                src={"/images/stopwatch.png"}
-                alt="watch"
-                height={50}
-                width={50}
-              ></Image>
-              <div className="text-2xl font-bold">Efficient Delivery</div>
-              <div className="text-base text-zinc-800">
-                At Cyberoni, we value your time. That&apos;s why we are
-                committed to delivering high-quality, fully-tested websites
-                promptly. We understand the pace of business and strive to
-                provide you with fast turnaround times without compromising on
-                quality. From initial concept to final launch, we streamline our
-                development process to get your project live, allowing you to
-                start meeting your business objectives faster.
-              </div>
-            </div>
-            <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-3 text-black shadow-md lg:w-1/4">
-              <Image
-                src={"/images/price-tag.png"}
-                alt="price"
-                height={50}
-                width={50}
-              ></Image>
-              <div className="text-2xl font-bold">Fair Pricing</div>
-              <div className="text-base text-zinc-800">
-                We believe in offering outstanding value without hidden costs.
-                Cyberoni provides competitive pricing structures that cater to
-                businesses of all sizes. While maintaining high-quality
-                standards, we ensure that your investment in your website is
-                transparent and yields tangible results. Partner with us for
-                cost-effective solutions that don&apos;t sacrifice quality.
+            <div className="p-3 lg:w-1/4">
+              <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-5 text-black shadow-md  h-full">
+                <Image
+                  src={"/images/price-tag.png"}
+                  alt="price"
+                  height={50}
+                  width={50}
+                ></Image>
+                <div className="text-2xl font-bold">Fair Pricing</div>
+                <div className="text-base text-zinc-800">
+                  We believe in offering outstanding value without hidden costs.
+                  Cyberoni provides competitive pricing structures that cater to
+                  businesses of all sizes. While maintaining high-quality
+                  standards, we ensure that your investment in your website is
+                  transparent and yields tangible results. Partner with us for
+                  cost-effective solutions that don&apos;t sacrifice quality.
+                </div>
               </div>
             </div>
           </div>
