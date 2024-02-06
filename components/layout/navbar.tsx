@@ -277,7 +277,7 @@ const aboutMenu: MegamenuProps =
         { href: '/careers', icon: <Briefcase className="text-gray-100 fill-blue-500" />, name: 'Careers', subTitle: "We’re always hiring!" },
         { href: '/media', icon: <Newspaper className="text-gray-100 fill-blue-500" />, name: 'Press and media', subTitle: "News and updates" },
 
-        { href: '/contact', icon: <Phone className="text-gray-100 fill-blue-500" />, name: 'Contact Us', subTitle: "Get in touch with our sales" },
+        { href: '/enterprise', icon: <Phone className="text-gray-100 fill-blue-500" />, name: 'Contact Us', subTitle: "Get in touch with sales" },
 
 
 
@@ -414,7 +414,7 @@ const solutionMenu: MegamenuProps = [
     node: (
       <>
         <div>
-          <div className="dark:gray-200 text-gray-500">Insight</div>
+          <div className="dark:gray-200 text-gray-500">Recent Case Studies</div>
           <div className="flex flex-col gap-5 py-2">
             <div className="flex gap-3">
               <Lightbulb className="text-blue-700" />
@@ -512,7 +512,7 @@ const productMenu: MegamenuProps = [
       <>
         <div>
           <div>
-            <div className="dark:gray-200 text-gray-500">Trending Case Studies</div>
+            <div className="dark:gray-200 text-gray-500">Trending Services</div>
             <Image
               src={"/images/dash.png"}
               alt="dash"
