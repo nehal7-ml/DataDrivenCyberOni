@@ -56,7 +56,23 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 
 
           <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex absolute right-0 top-full h-screen w-screen max-h-screen overflow-y-auto pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black py-10'}   gap-10   h-screen w-full flex-col items-center justify-start xl:pt-0 xl:static xl:flex xl:flex-row xl:gap-5 xl:justify-center xl:h-full xl:bg-inherit xl:w-fit group`}>
-
+<div className="relative xl:flex justify-center items-center xl:h-full">
+              <label htmlFor="solution" className="h-full flex flex-col justify-center items-center">
+                <input
+                  id="solution"
+                  type="checkbox"
+                  className=" peer/solution hidden absolute h-full"
+                  disabled={!mobileMenuOpen}
+                />
+                <div className=" hover:text-blue-500 hover:cursor-pointer">
+                  Solutions
+                  <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
+                </div>
+                <div className="xl:absolute xl:left-auto xl:translate-x-48 z-50 transition-all duration-700 w-screen xl:top-20 xl:w-[600px] hidden peer-default/solution:hidden peer-checked/solution:block xl:peer-checked/solution xl:peer-focus/solution:block xl:peer-hover/solution:block hover:block">
+                  <MegaMenu groups={solutionMenu} />
+                </div>
+              </label>
+            </div>
             <div className="relative xl:flex  justify-center items-center xl:h-full">
               <label htmlFor="product" className=" h-full flex flex-col justify-center items-center">
                 <input
@@ -75,23 +91,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
                 </div>
               </label>
             </div>
-            <div className="relative xl:flex justify-center items-center xl:h-full">
-              <label htmlFor="solution" className="h-full flex flex-col justify-center items-center">
-                <input
-                  id="solution"
-                  type="checkbox"
-                  className=" peer/solution hidden absolute h-full"
-                  disabled={!mobileMenuOpen}
-                />
-                <div className=" hover:text-blue-500 hover:cursor-pointer">
-                  Solutions
-                  <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
-                </div>
-                <div className="xl:absolute xl:left-auto xl:translate-x-48 z-50 transition-all duration-700 w-screen xl:top-20 xl:w-[600px] hidden peer-default/solution:hidden peer-checked/solution:block xl:peer-checked/solution xl:peer-focus/solution:block xl:peer-hover/solution:block hover:block">
-                  <MegaMenu groups={solutionMenu} />
-                </div>
-              </label>
-            </div>
+            
             <div className="relative xl:flex justify-center items-center xl:h-full">
               <label htmlFor="enterprise" className="h-full flex flex-col justify-center items-center">
                 <input
@@ -102,7 +102,7 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 
                 />
                 <div className="hover:text-blue-500 hover:cursor-pointer ">
-                  Enterprise
+                  Resources
                   <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </div>
                 <div className="xl:absolute xl:left-auto xl:translate-x-48 z-50 transition-all duration-700 w-screen xl:top-20 xl:w-[600px] hidden peer-default/enterprise:hidden peer-checked/enterprise:block xl:peer-checked/enterprise xl:peer-focus/enterprise:block xl:peer-hover/enterprise:block hover:block">
@@ -277,7 +277,7 @@ const aboutMenu: MegamenuProps =
         { href: '/careers', icon: <Briefcase className="text-gray-100 fill-blue-500" />, name: 'Careers', subTitle: "We’re always hiring!" },
         { href: '/media', icon: <Newspaper className="text-gray-100 fill-blue-500" />, name: 'Press and media', subTitle: "News and updates" },
 
-        { href: '/contact', icon: <Phone className="text-gray-100 fill-blue-500" />, name: 'Contact Us', subTitle: "Get in touch with our sales" },
+        { href: '/enterprise', icon: <Phone className="text-gray-100 fill-blue-500" />, name: 'Contact Us', subTitle: "Get in touch with sales" },
 
 
 
@@ -305,29 +305,68 @@ const aboutMenu: MegamenuProps =
 
 const enterpriseMenu: MegamenuProps = [
   {
-    type: 'Links',
+    type: "Links",
     title: "Resources",
     links: [
-      { href: '/docs', name: 'Developer Docs', subTitle: 'Learn how to integrate', icon: <TerminalSquare className=" text-blue-700" /> },
-      { href: '/docs', name: 'Help Center ', subTitle: 'All about how to use ', icon: <LifeBuoy className="fill-blue-700 text-gray-50" /> },
-      { href: '/docs', name: 'Product Updates', subTitle: 'Newest feature releases', icon: <Megaphone className="fill-blue-700 text-gray-50" /> },
-
-
-    ]
+      {
+        href: "/blogs",
+        name: "Our Blogs",
+        subTitle: "Learn how to integrate",
+        icon: <Book className=" text-blue-700" />,
+      },
+      
+      {
+        href: "/docs",
+        name: "Developer Docs",
+        subTitle: "Learn how to integrate",
+        icon: <TerminalSquare className=" text-blue-700" />,
+      },
+      {
+        href: "/docs",
+        name: "Help Center ",
+        subTitle: "All about how to use ",
+        icon: <LifeBuoy className="fill-blue-700 text-gray-50" />,
+      },
+      {
+        href: "/docs",
+        name: "Product Updates",
+        subTitle: "Newest feature releases",
+        icon: <Megaphone className="fill-blue-700 text-gray-50" />,
+      },
+    ],
   },
   {
-    type: 'Links',
+    type: "Links",
     title: "Best Practices",
     links: [
-      { href: '/docs', name: 'FAQs', subTitle: 'Learn how to integrate', icon: <HelpCircle className="fill-blue-700 text-gray-50" /> },
-      { href: '/casestudies', name: 'Case Studies', subTitle: 'All about how to use ', icon: <BookCheck className="fill-blue-700 text-gray-50" /> },
-      { href: '/blogs', name: 'Engineering Blog ', subTitle: 'All about how to use ', icon: <Cog className="fill-blue-700 text-gray-50" /> },
+      {
+        href: "/docs",
+        name: "FAQs",
+        subTitle: "Learn how to integrate",
+        icon: <HelpCircle className="fill-blue-700 text-gray-50" />,
+      },
+      {
+        href: "/casestudy",
+        name: "Case Studies",
+        subTitle: "All about how to use ",
+        icon: <BookCheck className="fill-blue-700 text-gray-50" />,
+      },
+      {
+        href: "/blogs",
+        name: "Engineering Blog ",
+        subTitle: "All about how to use ",
+        icon: <Cog className="fill-blue-700 text-gray-50" />,
+      },
 
-      { href: '/books', name: 'Books & Webinars', subTitle: 'All about how to use ', icon: <Book className="fill-blue-700 text-gray-50" /> },
-
-    ]
-  }
-]
+      {
+        href: "/books",
+        name: "Books & Webinars",
+        subTitle: "All about how to use ",
+        icon: <Book className="fill-blue-700 text-gray-50" />,
+      },
+    ],
+  },
+];
 
 const solutionMenu: MegamenuProps = [
   {
@@ -360,22 +399,22 @@ const solutionMenu: MegamenuProps = [
       },
     ],
   },
-  {
-    type: "Links",
-    title: "Industry Solutions",
-    links: [
-      { href: "/docs", name: "eCommerce", subTitle: "", icon: <></> },
-      { href: "/casestudies", name: "SaaS", subTitle: "", icon: <></> },
-      { href: "/blogs", name: "Financial Services", subTitle: "", icon: <></> },
-    ],
-  },
+  // {
+  //   type: "Links",
+  //   title: "Industry Solutions",
+  //   links: [
+  //     { href: "/docs", name: "eCommerce", subTitle: "", icon: <></> },
+  //     { href: "/casestudy", name: "SaaS", subTitle: "", icon: <></> },
+  //     { href: "/blogs", name: "Financial Services", subTitle: "", icon: <></> },
+  //   ],
+  // },
 
   {
     type: "Node",
     node: (
       <>
         <div>
-          <div className="dark:gray-200 text-gray-500">Insight</div>
+          <div className="dark:gray-200 text-gray-500">Recent Case Studies</div>
           <div className="flex flex-col gap-5 py-2">
             <div className="flex gap-3">
               <Lightbulb className="text-blue-700" />
@@ -473,7 +512,7 @@ const productMenu: MegamenuProps = [
       <>
         <div>
           <div>
-            <div className="dark:gray-200 text-gray-500">Always Improving</div>
+            <div className="dark:gray-200 text-gray-500">Trending Services</div>
             <Image
               src={"/images/dash.png"}
               alt="dash"
@@ -490,7 +529,7 @@ const productMenu: MegamenuProps = [
                 Why it’s never too early to add product ana...
               </div>
             </div>
-            <Link className="flex  gap-4" href={"#"}>
+            <Link className="flex  gap-4" href={"/casestudies"}>
               See all <MoveRight />
             </Link>
           </div>
