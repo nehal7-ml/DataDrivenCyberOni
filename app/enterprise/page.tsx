@@ -294,7 +294,7 @@ async function Enterprise() {
         </div>
       </section>
 
-      <section className="bg-enterprise-bg-2 bg-cover bg-no-repeat py-10  backdrop-blur-lg lg:min-h-screen dark:bg-[#061122]">
+      <section className="bg-enterprise-bg-2 bg-cover bg-no-repeat py-10  backdrop-blur-lg dark:bg-[#061122]">
         <div className="container mx-auto px-4 ">
           <div className="text-center">
             <div className="font-bold text-[#5380EA]">Why choose us</div>
