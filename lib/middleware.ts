@@ -15,6 +15,9 @@ export async function verifyAccess(user: DisplayUserDTO, path: string, method: H
         if (path.match(/^\/api\/casestudies\/recent$/)) {
             return true
         }
+        if (path.match(/^\/api\/blogs\/home$/)) {
+            return true
+        }
     }
     if (user.role === Role.SUPERUSER) return true;
     if (user.role === Role.ADMIN) return true;

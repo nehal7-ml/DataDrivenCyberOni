@@ -4,13 +4,14 @@ import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import { ActivitySquare, AppWindow, BarChart, Book, BookCheck, Briefcase, CheckCircle, Cog, Cpu, FileStack, Fullscreen, Group, HeartHandshake, HelpCircle, Layers3, LifeBuoy, Lightbulb, Lock, MapPin, Megaphone, MoveRight, Newspaper, Phone, PieChart, PlusCircle, Repeat2, TerminalSquare, ThumbsUp, Users } from "lucide-react";
 import { MegaMenuProps } from "../MegaMenu";
-import { CaseStudy, Service } from "@prisma/client";
+import { Blog, CaseStudy, Service } from "@prisma/client";
 import { seoUrl } from "@/lib/utils";
+import { LoadingDots } from "../shared/icons";
 
 
 
-const UseMegaMenuData = ({services, casestudies}: {services?:Service[], casestudies?: CaseStudy[]}): Record<string, MegaMenuProps> => {
-    const [trendingServices, setTrendingServices] = useState<Service[]>([]);
+const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestudies?: CaseStudy[] }): Record<string, MegaMenuProps> => {
+    const [recentBlogs, setRecentBlogs] = useState<Blog[]>([]);
     const [recentCaseStudies, setRecentCaseStudies] = useState<CaseStudy[]>([]);
     useEffect(() => {
         async function fetchCaseStudies() {
@@ -20,16 +21,16 @@ const UseMegaMenuData = ({services, casestudies}: {services?:Service[], casestud
 
         }
 
-        async function fetchServices() {
-            const res = await fetch('/api/services/recent')
+        async function fetchBlogs() {
+            const res = await fetch('/api/blogs/home')
             const { data } = await res.json()
-            return data as Service[]
+            return (data.recent as Blog[]).slice(0, 3)
 
         }
 
 
         async function fetchData() {
-            setTrendingServices(await fetchServices());
+            setRecentBlogs(await fetchBlogs());
             setRecentCaseStudies(await fetchCaseStudies());
 
         }
@@ -170,7 +171,12 @@ const UseMegaMenuData = ({services, casestudies}: {services?:Service[], casestud
                     <div>
                         <div className="dark:gray-200 text-gray-500">Recent Case Studies</div>
                         <div className="flex flex-col gap-5 py-2">
-                            {recentCaseStudies.map((caseStudy) => (
+                            {recentCaseStudies.length < 1 &&
+                                <div className="w-full flex justify-center items-center  mt-5">
+                                    <LoadingDots />
+                                </div>}
+ 
+                           {recentCaseStudies.map((caseStudy) => (
                                 <AdditionalLink key={caseStudy.id} text={caseStudy.title} url={`/casestudies/${seoUrl(caseStudy.title, caseStudy.id)} `} />))}
                         </div>
                         <Link className="flex  gap-4" href={"/casestudies"}>
@@ -255,17 +261,21 @@ const UseMegaMenuData = ({services, casestudies}: {services?:Service[], casestud
                 <>
                     <div>
                         <div>
-                            <div className="dark:gray-200 text-gray-500">Trending Services</div>
+                            <div className="dark:gray-200 text-gray-500">Trending Blogs</div>
                             <Image
                                 src={"/images/dash.png"}
                                 alt="dash"
                                 width={200}
                                 height={200} />
                             <div className="flex flex-col gap-5 py-2">
-                                {trendingServices.map((service) => (
-                                    <AdditionalLink key={service.id} text={service.title} url={`/services/${seoUrl(service.title, service.id)} `} />))}
+                                {recentBlogs.length < 1 &&
+                                    <div className="w-full flex justify-center items-center mt-5">
+                                        <LoadingDots />
+                                    </div>}
+                                {recentBlogs.map((service) => (
+                                    <AdditionalLink key={service.id} text={service.title} url={`/blogs/post/${seoUrl(service.title, service.id)} `} />))}
                             </div>
-                            <Link className="flex  gap-4" href={"/services"}>
+                            <Link className="flex  gap-4" href={"/blogs/bew"}>
                                 See all <MoveRight />
                             </Link>
                         </div>
