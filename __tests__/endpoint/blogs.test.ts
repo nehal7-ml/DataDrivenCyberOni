@@ -21,6 +21,7 @@ describe('Testing blogs Api', () => {
         date: new Date(),
         featured: false,
         subTitle: 'preview',
+        
         author: {
             email: 'nehal.sk.99@gmail.com'
         },

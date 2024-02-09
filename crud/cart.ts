@@ -29,12 +29,13 @@ export const getServiceCart = async (userId: string, prisma: PrismaClient) => {
 
         if (serviceCart) return serviceCart as DisplayServiceCartDTO;
 
-        else return prisma.serviceCart.create({
+        else return( await prisma.serviceCart.create({
             data: {
                 userId,
                 status: 'EMPTY', // Initial status for a new cart
             },
             include: {
+                
                 items: {
                     include: {
                         service: true,
@@ -43,7 +44,7 @@ export const getServiceCart = async (userId: string, prisma: PrismaClient) => {
                     },
                 }
             }
-        });
+        })  ) as DisplayServiceCartDTO
     } catch (error) {
         console.error('Error retrieving service cart:', error);
         throw error;
