@@ -318,6 +318,8 @@ model Service {
   skillsUsed         Json
   htmlEmbed          String?
   featured           Boolean              @default(false)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt @default(now())
   reviews            Review[]
   tags               Tag[]
   imageId            String?
@@ -456,6 +458,8 @@ model CaseStudy {
   userFlow            Json?
   architecture        Json?
   serviceId           String?
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt @default(now())
 
   @@index([serviceId])
 }
@@ -512,7 +516,7 @@ model Referral {
   expires     DateTime?
   description String           @db.Text
   priority    ReferralPriority @default(LOW)
-  redirect    String
+  redirect    String           @db.Text
   link        String
   fallback    String
   click       Int

@@ -6,12 +6,13 @@ import { DisplayServiceCartItemDTO, UpdateServiceCartItemDTO } from "@/crud/DTOs
 import { calculateServiceCartTotal } from "@/lib/utils";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
-import CalendlyModal from "../Calendly/CalendlyModal";
 import CalendlyPopup from "../Calendly";
 import Link from "next/link";
 import { useNotify } from "../Notification";
+import CheckoutForm from "../CheckoutForm";
+import PaymentModal from "../PaymentModal";
 
-const Cart = ({ cartItems, session }: { cartItems: DisplayServiceCartItemDTO[], session: Session }) => {
+const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: DisplayServiceCartItemDTO[], session: Session, cartId: string, clientSecret?: string }) => {
 
     const router = useRouter();
     const notify = useNotify();
@@ -52,7 +53,7 @@ const Cart = ({ cartItems, session }: { cartItems: DisplayServiceCartItemDTO[], 
             {cartItems.length === 0 ? (
                 <p>Your cart is empty.</p>
             ) : (
-                <div>
+                <div className="flex container mx-auto gap-5">
                     {cartItems.map((item, index) => (
                         <div key={index}>
                             <CartItem removeFromCart={removeFromCartItems} item={item} />
@@ -67,8 +68,8 @@ const Cart = ({ cartItems, session }: { cartItems: DisplayServiceCartItemDTO[], 
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center" onClick={onClickPay}>
-                        <Link href={{ pathname: scheduled ? '/payments/services' : '#' }} className="inline-block px-4 py-2 bg-blue-500 text-white rounded cursor-pointer">Complete Payment</Link>
+                    <div>
+                       { clientSecret && <PaymentModal cartId={cartId} clientSecret={clientSecret} />}
                     </div>
 
                 </div>

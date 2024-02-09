@@ -8,7 +8,6 @@ function PaymentModal({clientSecret, cartId}: {clientSecret: string, cartId: str
     
     return (
         <div className="flex items-center justify-center  text-black ">
-
             <Elements stripe={stripePromise} options={{
                 clientSecret: clientSecret,
                 
