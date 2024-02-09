@@ -23,7 +23,9 @@ describe('Testing blogs Api', () => {
         subTitle: 'preview',
         author: {
             email: 'nehal.sk.99@gmail.com'
+
         },
+        publishDate: new Date(),
         tags: [
             { name: 'Tech' },
             { name: 'Mobile' },

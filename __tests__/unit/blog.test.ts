@@ -16,6 +16,7 @@ describe('Testing Service crud unit functions', () => {
         date: new Date(),
         featured:false,
         subTitle: 'preview',
+        publishDate: new Date(),
         author: {
             email: 'nehal.sk.99@gmail.com'
         },
@@ -48,8 +49,8 @@ describe('Testing Service crud unit functions', () => {
     it('should successfully retrive searched Blog add a view and retrieve if user liked it', async () => {
         const resp = await addView({ id: createdblog.id, userEmail: 'nehal.sk.99@gmail.com'}, prisma);
         //console.log(resp);
-        expect(resp.Views).toBeGreaterThan(0);
-        expect(resp.Likes.length).toBeGreaterThan(0)
+        expect(resp?.Views).toBeGreaterThan(0);
+        expect(resp?.Likes.length).toBeGreaterThan(0)
     }, 10000);
 
    
