@@ -8,6 +8,14 @@ export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export async function verifyAccess(user: DisplayUserDTO, path: string, method: HttpMethod): Promise<boolean> {
 
+    if (!user) {
+        if (path.match(/^\/api\/services\/recent$/)) {
+            return true
+        }
+        if (path.match(/^\/api\/casestudies\/recent$/)) {
+            return true
+        }
+    }
     if (user.role === Role.SUPERUSER) return true;
     if (user.role === Role.ADMIN) return true;
 
@@ -79,6 +87,8 @@ export async function verifyAccess(user: DisplayUserDTO, path: string, method: H
 
         return false;
     }
+
+
 
     return false
 }

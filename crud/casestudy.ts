@@ -1,7 +1,6 @@
 import { Image, PrismaClient } from "@prisma/client";
 import { CreateImageDTO } from "./DTOs";
 import { CreateCaseStudy } from "./DTOs";
-export type CaseStudyType = 'ECOMMERCE' | 'LANDING' | 'SOFTWARE' | 'GRAPHICS';
 export type UserPersona = {
     bio: string;
     name: string;
@@ -88,7 +87,6 @@ export async function getAll(page: number, pageSize: number, prismaClient: Prism
         skip: page === 0 ? 0 : (page - 1) * pageSize, take: page === 0 ? 9999 : pageSize,
         where: {
         },
-
     })
 
     const totalCount = await caseStudys.count();
@@ -96,6 +94,20 @@ export async function getAll(page: number, pageSize: number, prismaClient: Prism
 
     return { records: allrecords, currentPage: page, totalPages, pageSize }
 
+}
+
+export async function getRecent(prisma: PrismaClient) {
+    const caseStudies= prisma.caseStudy;
+    let allRecords = await caseStudies.findMany({
+        take: 10,
+        where: {
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+    })
+    return allRecords
+    
 }
 
 

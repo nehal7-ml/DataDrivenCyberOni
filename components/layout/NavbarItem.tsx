@@ -1,11 +1,11 @@
 import { ChevronDown } from "lucide-react";
-import MegaMenu, { MegamenuProps } from "../MegaMenu";
+import MegaMenu, { MegaMenuProps } from "../MegaMenu";
 import { getRandomIntWithSeed } from "@/lib/utils";
 import { Dispatch, SetStateAction } from "react";
 type NavbarItemProps = {
 
     menuOpen: boolean;
-    menuOptions?: MegamenuProps
+    menuOptions?: MegaMenuProps
     itemName: string;
     setMenuOpen: Dispatch<SetStateAction<boolean>>
 }

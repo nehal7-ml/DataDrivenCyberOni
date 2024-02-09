@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
-export type MegamenuProps = Array<{
+export type MegaMenuProps = Array<{
     type: "Links"
     title: string,
     links: {
@@ -18,7 +18,7 @@ export type MegamenuProps = Array<{
 
 
 
-function MegaMenu({ groups, setMenuOpen: closeMenu }: { groups: MegamenuProps, setMenuOpen: Dispatch<SetStateAction<boolean>> }) {
+function MegaMenu({ groups, setMenuOpen: closeMenu }: { groups: MegaMenuProps, setMenuOpen: Dispatch<SetStateAction<boolean>> }) {
     return (
         <div className="shadow-lg dark:shadow-2xl rounded-lg bg-gray-50 dark:bg-slate-900 z-50 lg:px-5 lg:py-5 max-h-[65vh] xl:max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400  scrollbar-track-gray-50 scrollbar-thumb-rounded-md dark:scrollbar-track-slate-600 " >
             <div className="p-5 my-1">  

@@ -231,6 +231,9 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
             image: true,
             tags: true,
             SubServices: true
+        },
+        orderBy: {
+
         }
     })
 
@@ -255,6 +258,20 @@ export async function getFeatured(prisma: PrismaClient) {
 
 }
 
+export async function getRecent(prisma: PrismaClient) {
+    const caseStudies = prisma.service;
+    let allRecords = await caseStudies.findMany({
+        take: 10,
+        where: {
+            featured: { equals: true }
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+    })
+    return allRecords
+
+}
 
 export async function getBySearchTerm(search: string, page: number, prisma: PrismaClient) {
     const services = prisma.service;

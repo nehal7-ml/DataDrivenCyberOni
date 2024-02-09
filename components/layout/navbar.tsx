@@ -9,19 +9,20 @@ import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import { ChevronDown, Info, LineChart, MailQuestion, Menu, Moon, Search, Sun, Terminal } from "lucide-react";
 import { setCookie } from 'cookies-next';
-import MegaMenu from "../MegaMenu";
+import MegaMenu, { MegaMenuProps } from "../MegaMenu";
 import NavbarItem from "./NavbarItem";
 import SearchBar from "./SearchBar";
 import ThemeToggle from "./ThemeToggle";
-import { solutionMenu, productMenu, enterpriseMenu, aboutMenu } from "@/data/NavbarMenuData";
+import UseMegaMenuData from "@/components/layout/NavbarMenuData";
 
 export default function NavBar({ session, darkMode }: { session: Session | null, darkMode: boolean }) {
   const scrolled = useScroll(50);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+ const menuData = UseMegaMenuData({})
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+
 
   return (
     <>
@@ -49,13 +50,13 @@ export default function NavBar({ session, darkMode }: { session: Session | null,
 
 
           <div className={` ${!mobileMenuOpen ? 'hidden' : 'flex absolute right-0 top-full h-screen w-screen max-h-screen overflow-y-auto pt-10 animate-slide-left-fade text-center z-[100] bg-white dark:bg-black py-10'}   gap-10   h-screen w-full flex-col items-center justify-start xl:pt-0 xl:static xl:flex xl:flex-row xl:gap-5 xl:justify-center xl:h-full xl:bg-inherit xl:w-fit group`}>
-            <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Solutions" menuOptions={solutionMenu} />
-            <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Products" menuOptions={productMenu} />
-            <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Resources" menuOptions={enterpriseMenu} />
+            <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Solutions" menuOptions={menuData.solutionMenu} />
+            <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Products" menuOptions={menuData.productMenu} />
+            <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Resources" menuOptions={menuData.enterpriseMenu} />
             <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Explore" />
             <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Marketplace" />
             <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="Pricing" />
-            <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="About" menuOptions={aboutMenu} />
+            <NavbarItem setMenuOpen={setMobileMenuOpen} menuOpen={!mobileMenuOpen} itemName="About" menuOptions={menuData.aboutMenu} />
 
             <Link href={'/api/auth/signin'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex  xl:hidden">Sign In</Link>
             <Link href={'/auth/signup'} className="ring-[#9E9C9C] ring-2 dark:text-white px-4 py-2 rounded-lg hover:shadow-md flex xl:hidden">Sign Up</Link>
