@@ -15,6 +15,10 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { getFeatured } from "../../crud/service";
+import ServiceCard from "@/components/enterprise/ServiceCard";
+import FeatureCard from "@/components/enterprise/FeatureCard";
+import { HowItWorksSteps, featureCards } from "@/data/enterpriseData";
+import HowItWorks from "@/components/enterprise/HowItWorks";
 async function Enterprise() {
   const services = await getFeatured(prisma);
 
@@ -223,72 +227,10 @@ async function Enterprise() {
           </div>
           <div className="container overflow-x-auto lg:w-1/2 ">
             <div className="grid  w-fit gap-5  lg:grid-cols-2 lg:grid-rows-2">
-              <div className="relative h-fit overflow-hidden rounded-xl bg-gray-100  p-5 text-black hover:bg-[#0F172A] hover:text-white lg:h-52">
-                <div className="absolute right-0 top-0 h-3 w-full bg-blue-400"></div>
-                <div className="flex w-full justify-start">
-                  <Monitor />
-                </div>
-                <div className="text-2xl font-bold">
-                  Web Design & Web Development
-                </div>
-                <div className="flex w-full justify-end">
-                  <Link
-                    className=" rounded-sm bg-blue-400 p-3 shadow-md"
-                    href={"/services/web-development"}
-                  >
-                    <Redo />
-                  </Link>
-                </div>
-              </div>
-              <div className="relative h-fit overflow-hidden rounded-xl bg-gray-100  p-5 text-black hover:bg-[#0F172A] hover:text-white lg:h-52">
-                <div className="absolute right-0 top-0 h-3 w-full bg-blue-400"></div>
-                <div className="flex w-full justify-start">
-                  <ShoppingCart />
-                </div>
-                <div className="text-2xl font-bold">E-commerce Solutions</div>
-                <div className="flex w-full justify-end">
-                  <Link
-                    className=" rounded-sm bg-blue-400 p-3 shadow-md"
-                    href={"/services/web-development"}
-                  >
-                    <Redo />
-                  </Link>
-                </div>
-              </div>
-              <div className="relative h-fit overflow-hidden rounded-xl bg-gray-100  p-5 text-black hover:bg-[#0F172A] hover:text-white lg:h-52">
-                <div className="absolute right-0 top-0 h-3 w-full bg-blue-400"></div>
-                <div className="flex w-full justify-start">
-                  <LayoutGrid />
-                </div>
-                <div className="text-2xl font-bold">
-                  Customized application development
-                </div>
-                <div className="flex w-full justify-end">
-                  <Link
-                    className=" rounded-sm bg-blue-400 p-3 shadow-md"
-                    href={"/services/web-development"}
-                  >
-                    <Redo />
-                  </Link>
-                </div>
-              </div>
-              <div className="relative h-fit overflow-hidden rounded-xl bg-gray-100  p-5 text-black hover:bg-[#0F172A] hover:text-white lg:h-52">
-                <div className="absolute right-0 top-0 h-3 w-full bg-blue-400"></div>
-                <div className=" relative flex w-full justify-start">
-                  <Activity className="" />
-                </div>
-                <div className="text-2xl font-bold">
-                  Search Engine Optimization & Digital Marketing
-                </div>
-                <div className="flex w-full justify-end">
-                  <Link
-                    className=" rounded-sm bg-blue-400 p-3 shadow-md"
-                    href={"/services/web-development"}
-                  >
-                    <Redo />
-                  </Link>
-                </div>
-              </div>
+              <ServiceCard title={'Web Design & Web Development'} icon={<Monitor />} link={"/services"} />
+              <ServiceCard title={'Customized application development'} icon={<LayoutGrid />} link={"/services"} />
+              <ServiceCard title={'E-commerce Solutions'} icon={<ShoppingCart />} link={"/services"} />
+              <ServiceCard title={'Search Engine Optimization & Digital Marketing'} icon={<Activity />} link={"/services"} />
             </div>
           </div>
         </div>
@@ -310,89 +252,22 @@ async function Enterprise() {
           </div>
 
           <div className="container mt-20 flex flex-wrap justify-center  ">
-            <div className="p-3 lg:w-1/4">
-              <div className="flex flex-col items-center justify-center  gap-2 rounded-lg  bg-gray-200 dark:bg-gray-800  p-5 text-black shadow-md h-full">
-                <Image
-                  src={"/images/team.png"}
-                  alt="team"
-                  height={50}
-                  width={50}
-                ></Image>
-                <div className="text-2xl font-bold">Experience</div>
-                <div className="text-base text-zinc-800">
-                  With Cyberoni, you gain access to a wealth of professional web
-                  development experience. We stay at the forefront of technology
-                  and trends to ensure that your project not only meets but
-                  exceeds industry standards. Our goal is to transform your vision
-                  into a digital reality, delivering a project that is not just
-                  complete but ahead of its time. Our team’s dedication to growth
-                  ensures your website will always be on the cutting edge.
-                </div>
-            </div>
-            </div>
-            <div className="p-3 lg:w-1/4">
-              <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-5 text-black shadow-md  h-full">
-                <Image
-                  src={"/images/brain.png"}
-                  alt="brain"
-                  height={50}
-                  width={50}
-                ></Image>
-                <div className="text-2xl font-bold">Committed Team</div>
-                <div className="text-base text-zinc-800">
-                  Our team is the heart of Cyberoni. We are a group of driven,
-                  tech-savvy professionals, dedicated to delivering only the best.
-                  We understand that our success is measured by the success of
-                  your website. That’s why we immerse ourselves in every project,
-                  applying meticulous attention to detail to create websites that
-                  are not just functional but also thrive in today’s digital
-                  landscape.
-                </div>
-              </div>
-            </div>
-            <div className="p-3 lg:w-1/4">
-              <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-5 text-black shadow-md h-full">
-                <Image
-                  src={"/images/stopwatch.png"}
-                  alt="watch"
-                  height={50}
-                  width={50}
-                ></Image>
-                <div className="text-2xl font-bold">Efficient Delivery</div>
-                <div className="text-base text-zinc-800">
-                  At Cyberoni, we value your time. That&apos;s why we are
-                  committed to delivering high-quality, fully-tested websites
-                  promptly. We understand the pace of business and strive to
-                  provide you with fast turnaround times without compromising on
-                  quality. From initial concept to final launch, we streamline our
-                  development process to get your project live, allowing you to
-                  start meeting your business objectives faster.
-                </div>
-              </div>
-            </div>
-            <div className="p-3 lg:w-1/4">
-              <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-5 text-black shadow-md  h-full">
-                <Image
-                  src={"/images/price-tag.png"}
-                  alt="price"
-                  height={50}
-                  width={50}
-                ></Image>
-                <div className="text-2xl font-bold">Fair Pricing</div>
-                <div className="text-base text-zinc-800">
-                  We believe in offering outstanding value without hidden costs.
-                  Cyberoni provides competitive pricing structures that cater to
-                  businesses of all sizes. While maintaining high-quality
-                  standards, we ensure that your investment in your website is
-                  transparent and yields tangible results. Partner with us for
-                  cost-effective solutions that don&apos;t sacrifice quality.
-                </div>
-              </div>
-            </div>
+            {featureCards.map((featureCard, index) => (
+              <div key={index} className="p-3 lg:w-1/4">
+                <FeatureCard
+                  description={featureCard.description}
+                  image={featureCard.image}
+                  title={featureCard.title}
+                />
+              </div>))}
           </div>
         </div>
       </section>
 
+      <section className="">
+
+        <HowItWorks steps={HowItWorksSteps} />
+      </section>
       <section className="py-10">
         <div className="mx-auto flex w-fit flex-1 flex-col items-center justify-center text-center">
           <div className="font-nunito text-4xl font-bold">Our Portfolio</div>
