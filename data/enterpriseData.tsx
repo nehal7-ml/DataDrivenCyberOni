@@ -31,15 +31,15 @@ export const featureCards: FeatureCardProps[] = [
 export const HowItWorksSteps: StepCardProps[] = [
 
     {
-        icon: <MessageSquareText />,
+        icon: <MessageSquareText className="h-20 w-20" />,
         content: "Give one sentence describing the transformation your service offers from start to finish."
     },
     {
-        icon: <Lightbulb />,
+        icon: <Lightbulb className="h-20 w-20" />,
         content: "Give one sentence describing the transformation your service offers from start to finish."
     },
     {
-        icon: <Mail />,
+        icon: <Mail className="h-20 w-20" />,
         content: "Give one sentence describing the transformation your service offers from start to finish."
     }
 ]

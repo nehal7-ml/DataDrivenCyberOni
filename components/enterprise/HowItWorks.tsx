@@ -8,7 +8,8 @@ export type StepCardProps = {
 function HowItWorks({ steps }: { steps:StepCardProps[] }) {
     return (
         <div className="container mx-auto px-5 flex flex-col items-center justify-center space-y-4">
-            <h2 className="text-2xl font-bold">How it works</h2>
+            <h2 className="text-4xl font-bold">How it works</h2>
+            <div>Explain how it works brief</div>
             <div className="flex flex-col lg:flex-row space-x-4">
                 {steps.map((step,index)=>(<StepCard key={index} icon={step.icon} content={step.content} />))}
             </div>
