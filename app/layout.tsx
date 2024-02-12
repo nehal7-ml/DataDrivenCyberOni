@@ -125,7 +125,7 @@ export default async function RootLayout({
         }
         <ContactButton />
         <Footer />
-        <Analytics  />
+        <Analytics />
         <SpeedInsights />
         {/* <WebVitals /> */}
       </body>
