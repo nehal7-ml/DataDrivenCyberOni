@@ -20,6 +20,8 @@ import { Service, WithContext } from "schema-dts";
 import { serviceReviews } from "@/data/testimonials";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/nextAuthAdapter";
+import CaseStudyCard from "@/components/services/CaseStudyCard";
+import { DisplaySubServiceDTO } from "@/crud/DTOs";
 type Props = {
   params: { id: string }
   searchParams: { [key: string]: string | string[] | undefined }
@@ -43,14 +45,14 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
       type: 'article',
       title: service?.title,
       description: service?.previewContent,
-      images:  [service.image?.src as string, '/images/monster_5.jpg']
+      images: [service.image?.src as string, '/images/monster_5.jpg']
 
     }
     metadata.twitter = {
       title: service?.title,
       images: [service.image?.src as string, '/images/monster_5.jpg'],
       description: service?.previewContent,
-  
+
     }
     metadata.category = service?.tags.join(" ")
     metadata.keywords = service?.tags?.map(tag => tag.name)
@@ -64,7 +66,7 @@ async function Services({ params }: { params: { id: string } }) {
   const services = await getAll(1, 10, prisma);
 
   if (!service) redirect('/404');
-  
+
   const jsonLd: WithContext<Service> = {
     "@context": 'https://schema.org',
     "@type": 'Service',
@@ -124,7 +126,7 @@ async function Services({ params }: { params: { id: string } }) {
       {service.SubServices && service.SubServices.length > 0 && (
         <section className="my-5 font-nunito">
           <SubServiceCarousel
-            subservices={service.SubServices as SubService[]}
+            subservices={service.SubServices as DisplaySubServiceDTO[]}
             session={session}
           />
         </section>
@@ -133,32 +135,14 @@ async function Services({ params }: { params: { id: string } }) {
         <section className="my-5 font-nunito">
           <div className="text-center text-4xl font-bold">Portfolio</div>
 
-          {service.CaseStudies?.map((caseStudy, index) => (
-            <div
-              key={index}
-              className="container mx-auto my-5 flex flex-wrap gap-2 lg:gap-5"
-            >
-              <Link
-                href={`/casestudy/${caseStudy.id}`}
-                className="relative w-1/2 flex-col items-center justify-center overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl lg:w-[170px]"
-              >
-                <Image
-                  className="aspect-square object-fill"
-                  height={170}
-                  width={170}
-                  alt="case image"
-                  src={
-                    caseStudy.images
-                      ? (caseStudy.images as CaseImage[])[0].src
-                      : "https://picsum.photos/200"
-                  }
-                />
-                <div className="absolute bottom-0 line-clamp-1 w-full bg-gradient-to-t from-black to-black/0 py-5  text-center text-white">
-                  {caseStudy.title}
-                </div>
-              </Link>
-            </div>
+          <div className="container mx-auto my-5 flex flex-wrap gap-2 lg:gap-5 px-5"
+          >            {service.CaseStudies?.map((caseStudy, index) => (
+            <CaseStudyCard key={index}
+              images={caseStudy.images as CaseImage[]}
+              id={caseStudy.id}
+              title={caseStudy.title} />
           ))}
+          </div>
         </section>
       ) : (
         <></>

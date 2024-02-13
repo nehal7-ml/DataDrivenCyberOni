@@ -220,3 +220,7 @@ export function calculateServiceCartTotal(cartItems: DisplayServiceCartItemDTO[]
     return total + (item.service?.hourlyRate ?? 0) * item.addons.reduce((total, addon) => { return total + addon.estimated_hours_times_one_hundred_percent * (addon.pricingModel === 'DEFAULT' ? 1 : 1.5) }, 0)
   }, 0);
 }
+
+export function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
