@@ -48,28 +48,31 @@ const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: Display
     }
 
     return (
-        <div className="max-w-md mx-auto p-4">
+        <div className="mx-auto p-4">
             <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
             {cartItems.length === 0 ? (
                 <p>Your cart is empty.</p>
             ) : (
                 <div className="flex container mx-auto gap-5">
-                    {cartItems.map((item, index) => (
-                        <div key={index}>
-                            <CartItem removeFromCart={removeFromCartItems} item={item} />
-                        </div>
-                    ))}
-                    <div className="mt-4 flex justify-between items-center">
-                        <div className="">
-                            <p className="text-lg font-semibold">Total: ${calculateServiceCartTotal(cartItems)}</p>
-                        </div>
-                        <div id="__next" onClick={() => setScheduled(true)}>
-                            <CalendlyPopup CTAText="Click to schedule" className="hover:underline text-blue-600" />
+                        <div>
+                            {cartItems.map((item, index) => (
+                                <div key={index}>
+                                    <CartItem removeFromCart={removeFromCartItems} item={item} />
+                                </div>
+                            ))}
+                            <div className="mt-4 flex justify-between items-center">
+                                <div className="">
+                                    <p className="text-lg font-semibold">Total: ${calculateServiceCartTotal(cartItems)}</p>
+                                </div>
+                            </div>
+                            <div className="w-full text-center flex justify-center" onClick={() => setScheduled(true)}>
+                                <CalendlyPopup CTAText="Click to schedule" className="rounded-lg text-gray-900 dark:text-inherit bg-gray-300 dark:bg-gray-700 p-2 hover:shadow-lg hover:underline " />
                         </div>
                     </div>
 
+
                     <div>
-                       { clientSecret && <PaymentModal cartId={cartId} clientSecret={clientSecret} />}
+                            {clientSecret && <PaymentModal cartId={cartId} clientSecret={clientSecret} />}
                     </div>
 
                 </div>

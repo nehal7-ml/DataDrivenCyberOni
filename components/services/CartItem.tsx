@@ -8,7 +8,7 @@ import React from 'react';
 const CartItem = ({ item, removeFromCart }: { item: DisplayServiceCartItemDTO, removeFromCart: (itemId: string, subserviceId: string) =>void }) => {
 
     return (
-        <div className="flex items-center justify-between border-b p-4">
+        <div className="flex items-center justify-between border-b p-4 rounded-md shadow-lg dark:shado">
             <div>
                 <h3 className="text-lg font-semibold">{item.service?.title}</h3>
                 <div className="flex flex- flex-wrap gap-5">

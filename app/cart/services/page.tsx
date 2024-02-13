@@ -26,7 +26,9 @@ const CartPage: React.FC<CartProps> = async ({ searchParams }) => {
     let items = [] as DisplayServiceCartItemDTO[];
     const session = await getServerSession(authOptions)
     const user = session?.user as { id: string, email: string }
-    if (!session) redirect('/auth/signin')
+    const callbackParams = new URLSearchParams()
+    if (typeof window !== 'undefined') callbackParams.set('callbackUrl', process.env.HOST + '/')
+    if (!session) redirect(`/auth/signin?${callbackParams.toString()}`)
     const apiUrl = process.env.HOST
     const cart = await getServiceCart(user.id, prisma)
 
@@ -39,10 +41,10 @@ const CartPage: React.FC<CartProps> = async ({ searchParams }) => {
           type: 'service',
           user: user.email
         }
-        const intent = await createPaymentIntent({ price: total * 100, description: `Payment for ${cart.items.map(item => `${item.service?.title}`)} `, metadata })
+        const intent = await createPaymentIntent({ price: (total/2) * 100, description: `Payment for ${cart.items.map(item => `${item.service?.title}`)} `, metadata })
         return (
             <div className="container mx-auto flex flex-col justify-center items-center">
-                <Cart clientSecret={intent.id} cartId={cart.id} session={session} cartItems={items} />
+                <Cart clientSecret={intent.client_secret as string} cartId={cart.id} session={session} cartItems={items} />
             </div>
         );
       
