@@ -34,7 +34,6 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
     const [cartItemId, setCartItemId] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const [loading, setLoading] = useState(false);
     const nextSlide = () => {
 
     };
