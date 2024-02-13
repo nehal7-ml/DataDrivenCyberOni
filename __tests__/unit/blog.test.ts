@@ -14,7 +14,7 @@ describe('Testing Service crud unit functions', () => {
         content: 'testcontent',
         description: 'test  description',
         date: new Date(),
-        featured:false,
+        featured: false,
         subTitle: 'preview',
         publishDate: new Date(),
         author: {
@@ -28,6 +28,7 @@ describe('Testing Service crud unit functions', () => {
             { name: 'Image 1', src: 'image1.jpg' } as CreateImageDTO,
             { name: 'Image 2', src: 'image2.jpg' } as CreateImageDTO,
         ],
+        publishDate: new Date()
     };
 
     let createdblog: Blog;
@@ -50,7 +51,7 @@ describe('Testing Service crud unit functions', () => {
         const resp = await addView({ id: createdblog.id, userEmail: 'nehal.sk.99@gmail.com'}, prisma);
         //console.log(resp);
         expect(resp?.Views).toBeGreaterThan(0);
-        expect(resp?.Likes.length).toBeGreaterThan(0)
+        expect(resp?._count.Likes).toBeGreaterThan(0)
     }, 10000);
 
    
