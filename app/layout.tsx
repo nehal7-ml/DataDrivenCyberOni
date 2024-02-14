@@ -16,6 +16,7 @@ import "./globals.css";
 import { authOptions } from "@/lib/nextAuthAdapter";
 import { WebVitals } from "@/components/WebVitals";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import Loading from "@/components/Loading";
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,

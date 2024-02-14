@@ -1,4 +1,4 @@
-import { LoadingDots } from "./icons";
+import LoadingAnimation from "./icons/loading-animation";
 
 function Redirecting({ message }: { message: string }) {
     return (
@@ -6,7 +6,7 @@ function Redirecting({ message }: { message: string }) {
             <div className="text-center">
                 {/* Lucide's XCircle icon */}
                 <div className="mx-auto h-5 w-full  sm:h-64">
-                    <LoadingDots />
+                    <LoadingAnimation />
                 </div>
 
                 <h3 className="w- mt-6 text-xl font-bold tracking-tight sm:text-2xl">
