@@ -90,8 +90,8 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                 </div>
                 <div className="flex justify-center items-center my-5 rounded-lg overflow-hidden">
                     {caseStudy.images[0] ?
-                        <ImageWithTextOverlay image={caseStudy.images[0].src} text={caseStudy.userProblems[0] ?? ""} height={500} width={500} /> :
-                        <ImageWithTextOverlay image={"/images/casestudy-1.png"} text={caseStudy.userProblems[0] ?? ""} height={500} width={500} />
+                        <Image src={caseStudy.images[0].src} alt={caseStudy.title[0] ?? ""}  height={500} width={500} /> :
+                        <Image src={"/images/casestudy-1.png"} alt={'casestudy-main'} height={500} width={500} />
                     } 
                 </div>
 
