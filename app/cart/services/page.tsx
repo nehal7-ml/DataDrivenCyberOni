@@ -37,22 +37,28 @@ const CartPage: React.FC<CartProps> = async ({ searchParams }) => {
         items = cart.items
         const total = calculateServiceCartTotal(cart?.items)
         const metadata = {
-          cartId: cart.id,
-          type: 'service',
-          user: user.email
+            cartId: cart.id,
+            type: 'service',
+            user: user.email
         }
-        const intent = await createPaymentIntent({ price: (total/2) * 100, description: `Payment for ${cart.items.map(item => `${item.service?.title}`)} `, metadata })
+        const intent = cart.items.length > 0 ?
+            await createPaymentIntent({
+                price: (total / 2) * 100,
+                description: `Payment for ${cart.items.map(item => `${item.service?.title}`)} `,
+                metadata
+            }) :
+            { client_secret: "No-items-exist" }
         return (
             <div className="container mx-auto flex flex-col justify-center items-center">
                 <Cart clientSecret={intent.client_secret as string} cartId={cart.id} session={session} cartItems={items} />
             </div>
         );
-      
+
     }
     else {
-        
+
     }
-    
+
 };
 
 export default CartPage;

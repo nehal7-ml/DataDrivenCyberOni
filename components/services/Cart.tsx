@@ -17,15 +17,6 @@ const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: Display
     const router = useRouter();
     const notify = useNotify();
 
-    function removeFromCartItems(itemId: string, subServiceId: string) {
-
-        let current = cartItems.find(item => item.id === itemId)?.addons as SubService[]
-
-        current = current.filter(addon => addon.id !== subServiceId)
-        // console.log(current, subServiceId);
-        updateCart(itemId, current)
-
-    }
 
     const [scheduled, setScheduled] = useState(false);
 
@@ -53,11 +44,11 @@ const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: Display
             {cartItems.length === 0 ? (
                 <p>Your cart is empty.</p>
             ) : (
-                <div className="flex container mx-auto gap-5">
-                        <div>
+                    <div className="flex flex-col lg:flex-row container mx-auto gap-5">
+                        <div className="lg:w-1/2">
                             {cartItems.map((item, index) => (
-                                <div key={index}>
-                                    <CartItem removeFromCart={removeFromCartItems} item={item} />
+                                <div key={index} className="">
+                                    <CartItem updateCart={updateCart} item={item} />
                                 </div>
                             ))}
                             <div className="mt-4 flex justify-between items-center">
@@ -71,7 +62,7 @@ const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: Display
                     </div>
 
 
-                    <div>
+                        <div className="lg:w-1/2">
                             {clientSecret && <PaymentModal cartId={cartId} clientSecret={clientSecret} />}
                     </div>
 
