@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { MarketingCrmRecord,  addRecord,  deleteRecord, upsertRecord } from "@/lib/externalRequests/notion";
+import { MarketingCrmRecord, addRecord, deleteRecord, upsertRecord } from "@/lib/externalRequests/notion";
 import { describe, expect, it, afterAll } from "@jest/globals";
 import { PageObjectResponse, RichTextItemResponse, UpdatePageResponse } from "@notionhq/client/build/src/api-endpoints";
 
@@ -16,13 +16,13 @@ describe("test notion functions", () => {
         "Number of Employees": { type: 'number', content: 1000 },
         "Message": { type: 'text', content: 'message' },
         "Company": { type: 'text', content: "company" },
-        "Name": { type: 'text', content: "name" },
+        "Name": { type: 'title', content: "name" },
         "Phone": { type: 'phone', content: "230-12309213" },
         "Referral": { type: 'text', content: "facebook" },
         "Requirements": { type: 'select', content: ["App Development"] },
         "Time Line": { type: 'text', content: '3 mohtnos' },
         "ReferralToken": { type: 'text', content: "jhsdalkshdlkajsdklasjd" },
-        "How_we_help": { type: 'text', content: 'PRovide guidance to deploy online store' } 
+        "How_we_help": { type: 'text', content: 'PRovide guidance to deploy online store' }
 
     }
     const marketing_crm_contacts_database_id = process.env.NOTION_DATABASE_ID!;
@@ -41,7 +41,7 @@ describe("test notion functions", () => {
 
         const resp = await upsertRecord({
             ...record,
-            name: "New Name"
+            "Name": { type: 'title', content: 'New Name' }
         }, marketing_crm_contacts_database_id) as PageObjectResponse
 
         expect((resp.properties.Name as { type: 'title', title: Array<RichTextItemResponse> }).title[0].plain_text).toBe('New Name')
@@ -50,10 +50,10 @@ describe("test notion functions", () => {
     it('should add contact to marketing Using Small contact form data', async () => {
 
         const resp = await upsertRecord({
-            "Email":  { content: "email@example.com", type: "email" },
-            "Name": { content: "email@example.com", type: "email" },
-            "Message":  { content: "email@example.com", type: "email" },
-            "Referral": { content: "FaceBook", type: "email" }
+            "Email Address": { content: "email@example.com", type: "email" },
+            "Name": { type: 'title', content: "name" },
+            "Message": { content: "email@example.com", type: "text" },
+            "Referral": { content: "FaceBook", type: "text" }
         }, marketing_crm_contacts_database_id) as PageObjectResponse
 
         expect((resp.properties.Name as { type: 'title', title: Array<RichTextItemResponse> }).title[0].plain_text).toBe(record["Name"].content)

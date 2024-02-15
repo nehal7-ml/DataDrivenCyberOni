@@ -12,21 +12,22 @@ export type NewRecordType = Record<string,
 >
 export type CreatePageParams = Record<string,
     { type: 'email', content: string } |
-    { type: 'name', content: string } |
+    { type: 'title', content: string } |
     { type: 'phone', content: string } |
     { type: 'select', content: string[] } |
     { type: 'text', content: string } |
     { type: 'number', content: number }
     | undefined
->
+> & {
+    "Email Address": { type: 'email', content: string },
+}
 interface NotionProperty {
     [key: string]: any; // Additional properties can vary, so we use an index signature
 }
 
 
 export interface MarketingCrmRecord extends CreatePageParams {
-    "Email Address": { type: 'email', content: string },
-    "Name": { type: 'text', content: string },
+    "Name": { type: 'title', content: string },
     "Company"?: { type: 'text', content: string },
     "Number of Employees"?: { type: 'number', content: number },
     "Requirements"?: { type: 'select', content: string[] },
@@ -90,8 +91,8 @@ export async function addRecord(record: CreatePageParams, databaseId: string): P
     return response;
 }
 
-export async function upsertRecord(record: NotionProperty, databaseId: string): Promise<CreatePageResponse | UpdatePageResponse> {
-    const existingRecord = await getRecord(record.email.content as string, databaseId);
+export async function upsertRecord(record: CreatePageParams, databaseId: string): Promise<CreatePageResponse | UpdatePageResponse> {
+    const existingRecord = await getRecord(record['Email Address'].content as string, databaseId);
 
     if (existingRecord) {
         // If the record exists, update it
@@ -143,7 +144,7 @@ function convertToNotionProperties(record: CreatePageParams): NotionProperty {
             } else if (record[key]?.type === 'phone') {
                 notionRecord = { phone_number: record[key]?.content }
 
-            } else if (record[key]?.type === 'name') {
+            } else if (record[key]?.type === 'title') {
                 notionRecord = { title: [{ text: { content: record[key]?.content } }] }
             }
             else if (record[key]?.type === 'number') {
