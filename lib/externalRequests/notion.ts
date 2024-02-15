@@ -1,20 +1,29 @@
+"server only"
 import { Client } from '@notionhq/client';
 import { CreatePageParameters, CreatePageResponse, UpdatePageParameters, UpdatePageResponse } from "@notionhq/client/build/src/api-endpoints";
 
 const notionApiKey = process.env.NOTION_KEY;
 const notion = new Client({ auth: notionApiKey });
 
-
+const marketing_crm_contacts_database_id = process.env.NOTION_MARKETING_DATABASE_ID!;
+const accountDBId = process.env.NOTION_ACCOUNT_DATABASE_ID!;
+const supportDBId = process.env.NOTION_SUPPORT_DATABASE_ID!;
 
 export type NewRecordType = Record<string,
     { type: 'rich_text', rich_text: { text: { content: string }, type: 'text' }[] } |
     { type: 'email', email: string }
 >
+
+export type UniqueColumn = {
+    key: string,
+    type: 'email' | 'text'
+}
 export type CreatePageParams = Record<string,
     { type: 'email', content: string } |
     { type: 'title', content: string } |
     { type: 'phone', content: string } |
-    { type: 'select', content: string[] } |
+    { type: 'multiSelect', content: string[] } |
+    { type: 'select', content: string } |
     { type: 'text', content: string } |
     { type: 'number', content: number }
     | undefined
@@ -30,7 +39,7 @@ export interface MarketingCrmRecord extends CreatePageParams {
     "Name": { type: 'title', content: string },
     "Company"?: { type: 'text', content: string },
     "Number of Employees"?: { type: 'number', content: number },
-    "Requirements"?: { type: 'select', content: string[] },
+    "Requirements"?: { type: 'multiSelect', content: string[] },
     "Time Line"?: { type: 'text', content: string },
     "Budget"?: { type: 'text', content: string },
     "Phone"?: { type: 'phone', content: string },
@@ -43,24 +52,34 @@ export interface MarketingCrmRecord extends CreatePageParams {
 
 }
 
-export interface AccountRecord {
+export interface AccountRecord extends CreatePageParams {
 
 }
 
-export interface ReviewRecord {
-
-
+export interface SupportRecord extends CreatePageParams {
+    "Customer Name": { type: 'text', content: string },
+    "Contact Information": { type: 'text', content: string },
+    "Feedback Category"?: { type: 'select', content: 'Product' | 'Service' | 'Support' },
+    "Feedback Channel"?: { type: 'text', content: string },
+    "Description": { type: 'text', content: string },
+    "Priority": { type: 'select', content: 'HIGH' | 'MEDIUM' | 'LOW' },
+    "Status": { type: 'select', content: 'PENDING' | 'RESOLVED' | 'IN PROGRESS' }
+    "Customer Follow-Up"?: { type: 'text', content: string }
 }
 
 
-export async function getRecord(email: string, databaseId: string) {
+
+export async function getRecord(unique: UniqueColumn, identifier: string, databaseId: string) {
     const response = await notion.databases.query({
         database_id: databaseId as string,
-        filter: {
-            property: 'Email Address',
+        filter: unique.type === 'email' ? {
+            property: unique.key,
             email: {
-                equals: email,
-            },
+                equals: identifier
+            }
+        } : {
+            property: unique.key,
+            rich_text: { equals: identifier }
         },
     });
     return response.results.length > 0 ? response.results[0] : null;
@@ -91,8 +110,8 @@ export async function addRecord(record: CreatePageParams, databaseId: string): P
     return response;
 }
 
-export async function upsertRecord(record: CreatePageParams, databaseId: string): Promise<CreatePageResponse | UpdatePageResponse> {
-    const existingRecord = await getRecord(record['Email Address'].content as string, databaseId);
+export async function upsertRecord(unique: UniqueColumn, record: CreatePageParams, databaseId: string): Promise<CreatePageResponse | UpdatePageResponse> {
+    const existingRecord = await getRecord(unique, record[unique.key as string]?.content as string, databaseId);
 
     if (existingRecord) {
         // If the record exists, update it
@@ -103,8 +122,8 @@ export async function upsertRecord(record: CreatePageParams, databaseId: string)
     }
 
 }
-export async function deleteRecord(email: string, databaseId: string) {
-    const existingRecord = await getRecord(email, databaseId);
+export async function deleteRecord(unique: UniqueColumn, email: string, databaseId: string) {
+    const existingRecord = await getRecord(unique, email, databaseId);
 
     if (!existingRecord) {
         throw new Error(`Record with email ${email} not found.`);
@@ -157,8 +176,11 @@ function convertToNotionProperties(record: CreatePageParams): NotionProperty {
 
                 }
             }
-            else if (record[key]?.type === 'select') {
+            else if (record[key]?.type === 'multiSelect') {
                 notionRecord = { multi_select: (record[key]?.content as string[]).map(select => ({ name: select })) }
+            }
+            else if (record[key]?.type === 'select') {
+                notionRecord = { select: { id: record[key]?.content } }
             }
 
 
@@ -170,4 +192,22 @@ function convertToNotionProperties(record: CreatePageParams): NotionProperty {
 
 
     return property;
+}
+
+
+export async function addToMarketing(record: MarketingCrmRecord) {
+    const newRecord = await upsertRecord({ key: 'Email Address', type: 'email' }, record, marketing_crm_contacts_database_id);
+    return newRecord
+}
+
+
+export async function updateAccount(record: AccountRecord) {
+    const newRecord = await upsertRecord({ key: 'Email Address', type: 'email' }, record, marketing_crm_contacts_database_id);
+    return newRecord
+}
+
+
+export async function addSupport(record: SupportRecord) {
+    const newRecord = await upsertRecord({ key: 'Contact Information', type: 'text' }, record, supportDBId);
+    return newRecord
 }
