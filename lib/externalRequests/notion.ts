@@ -16,7 +16,7 @@ export type NewRecordType = Record<string,
 
 export type UniqueColumn = {
     key: string,
-    type: 'email' | 'text'
+    type: 'email' | 'text' | 'url'
 }
 export type CreatePageParams = Record<string,
     { type: 'email', content: string } |
@@ -24,12 +24,12 @@ export type CreatePageParams = Record<string,
     { type: 'phone', content: string } |
     { type: 'multiSelect', content: string[] } |
     { type: 'select', content: string } |
+    { type: 'url', content: string } |
     { type: 'text', content: string } |
-    { type: 'number', content: number }
+    { type: 'number', content: number } |
+    { type: 'checkbox', content: boolean }
     | undefined
-> & {
-    "Email Address": { type: 'email', content: string },
-}
+>
 interface NotionProperty {
     [key: string]: any; // Additional properties can vary, so we use an index signature
 }
@@ -53,7 +53,10 @@ export interface MarketingCrmRecord extends CreatePageParams {
 }
 
 export interface AccountRecord extends CreatePageParams {
-
+    "Company Name": { type: 'title', content: string },
+    "Website": { type: 'url', content: string },
+    'Phone'?: { type: 'phone', content: string },
+    "Payment_active": { type: 'checkbox', content: boolean }
 }
 
 export interface SupportRecord extends CreatePageParams {
@@ -77,6 +80,12 @@ export async function getRecord(unique: UniqueColumn, identifier: string, databa
             email: {
                 equals: identifier
             }
+        } : unique.type === 'url' ? {
+            property: unique.key,
+            url: {
+                equals: identifier
+            }
+
         } : {
             property: unique.key,
             rich_text: { equals: identifier }
@@ -176,6 +185,12 @@ function convertToNotionProperties(record: CreatePageParams): NotionProperty {
 
                 }
             }
+            else if (record[key]?.type === 'url') {
+                notionRecord = { url: record[key]?.content }
+            }
+            else if (record[key]?.type === 'checkbox') {
+                notionRecord = { checkbox: record[key]?.content as boolean }
+            }
             else if (record[key]?.type === 'multiSelect') {
                 notionRecord = { multi_select: (record[key]?.content as string[]).map(select => ({ name: select })) }
             }
@@ -201,8 +216,8 @@ export async function addToMarketing(record: MarketingCrmRecord) {
 }
 
 
-export async function updateAccount(record: AccountRecord) {
-    const newRecord = await upsertRecord({ key: 'Email Address', type: 'email' }, record, marketing_crm_contacts_database_id);
+export async function addAccount(record: AccountRecord) {
+    const newRecord = await upsertRecord({ key: 'Website', type: 'url' }, record, accountDBId);
     return newRecord
 }
 

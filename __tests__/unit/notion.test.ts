@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { MarketingCrmRecord, SupportRecord, UniqueColumn, addRecord, addSupport, deleteRecord, upsertRecord } from "@/lib/externalRequests/notion";
+import { AccountRecord, MarketingCrmRecord, SupportRecord, UniqueColumn, addAccount, addRecord, addSupport, deleteRecord, upsertRecord } from "@/lib/externalRequests/notion";
 import { describe, expect, it, afterAll } from "@jest/globals";
 import { PageObjectResponse, RichTextItemResponse, UpdatePageResponse } from "@notionhq/client/build/src/api-endpoints";
 
@@ -61,13 +61,26 @@ describe("test notion functions", () => {
 
     it('should delete as  contact to marketing Using email', async () => {
 
-        const resp = await deleteRecord(marketingUnique, record["Email Address"].content, marketing_crm_contacts_database_id)
+        const resp = await deleteRecord(marketingUnique, record["Email Address"]?.content as string, marketing_crm_contacts_database_id)
 
         //console.log(resp);
         expect(resp.object).toBe('page')
     })
 
+    it('should Create a Account  Record ', async () => {
+        const record: AccountRecord = {
+            "Company Name": {
+                type: "title", content: "Company Name"},
+                "Website":  {type:'url', content: 'example.com'},
+                "Payment_active": {type:'checkbox', content:false}
+            }
+        const resp = await addAccount(record)
 
+        //console.log(resp);
+        expect(resp.object).toBe('page')
+
+
+})
     it('should Create a Review Record ', async () => {
 
         const record: SupportRecord = {
@@ -91,10 +104,6 @@ describe("test notion functions", () => {
                 type: "select",
                 content: "PENDING"
             },
-            "Email Address": {
-                type: "email",
-                content: "nehal.sk.99@gmail.com"
-            }
         }
         const resp = await addSupport(record)
 
