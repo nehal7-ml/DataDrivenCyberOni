@@ -3,7 +3,7 @@ import { create as createTag, connectOrCreateObject as connectTags } from "./tag
 import { CreateImageDTO, CreateTagDTO } from "./DTOs";
 import { create as createImage, connectOrCreateObject as connectImage } from "./images";
 import { CreateSubServiceDTO, create as createSubService, update as updateSubService } from "./subService";
-import { prisma } from "@/prisma/prismaClient";
+import prisma from "@/lib/prisma";
 
 
 export type CreateServiceDTO = {
