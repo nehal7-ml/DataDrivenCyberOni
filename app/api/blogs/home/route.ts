@@ -1,5 +1,5 @@
 import {  getEssential, getFeatured, getPopular, getRecent } from "@/crud/blog";
-import { prisma } from "@/prisma/prismaClient";
+import prisma from "@/lib/prisma";
 import { NextResponse } from 'next/server'
 import apiHandler from "@/errorHandler";
 
