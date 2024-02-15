@@ -2,7 +2,7 @@ import apiHandler from "@/errorHandler";
 import { addClick, update } from "@/crud/referral";
 import { ReferralType } from "@prisma/client";
 import { redirect } from "next/navigation";
-import { prisma } from "@/prisma/prismaClient";
+import prisma from "@/lib/prisma";
 import { sleep } from "@/lib/utils";
 
 
