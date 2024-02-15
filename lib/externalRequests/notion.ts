@@ -68,7 +68,7 @@ export async function updateRecord(id: string, record: CreatePageParams) {
     if (!id) {
         throw new Error(`Record with email ${record.email} not found.`);
     }
-    const properties = await convertToNotionProperties(record)
+    const properties = convertToNotionProperties(record)
     const response = await notion.pages.update({
         page_id: id,
         properties
