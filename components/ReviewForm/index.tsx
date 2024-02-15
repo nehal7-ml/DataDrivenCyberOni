@@ -1,7 +1,14 @@
 'use client'
 import { useState } from "react";
 import { Star } from "lucide-react";
+export type ReviewFormState = {
+  rating: number,
+  contact: string,
+  name: string,
+  message: string,
+  success: boolean,
 
+}
 const ReviewForm: React.FC = () => {
   const [feedback, setFeedback] = useState({ rating: 0, comment: "" });
   const [form_filled, setFilled] = useState(false);
