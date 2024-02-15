@@ -16,6 +16,7 @@ describe('Testing Service crud unit functions', () => {
         date: new Date(),
         featured: false,
         subTitle: 'preview',
+        publishDate: new Date(),
         author: {
             email: 'nehal.sk.99@gmail.com'
         },
