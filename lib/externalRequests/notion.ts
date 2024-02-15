@@ -10,8 +10,21 @@ export type NewRecordType = Record<string,
     { type: 'rich_text', rich_text: { text: { content: string }, type: 'text' }[] } |
     { type: 'email', email: string }
 >
+export type CreatePageParams = Record<string,
+    { type: 'email', content: string } |
+    { type: 'name', content: string } |
+    { type: 'phone', content: string } |
+    { type: 'select', content: string[] } |
+    { type: 'text', content: string } |
+    { type: 'number', content: number }
+    | undefined
+>
+interface NotionProperty {
+    [key: string]: any; // Additional properties can vary, so we use an index signature
+}
 
-export interface MarketingCrmRecord {
+
+export interface MarketingCrmRecord extends CreatePageParams {
     "Email Address": { type: 'email', content: string },
     "Name": { type: 'text', content: string },
     "Company"?: { type: 'text', content: string },
@@ -19,7 +32,7 @@ export interface MarketingCrmRecord {
     "Requirements"?: { type: 'select', content: string[] },
     "Time Line"?: { type: 'text', content: string },
     "Budget"?: { type: 'text', content: string },
-    "Phone"?: { type: 'phone' , content: string },
+    "Phone"?: { type: 'phone', content: string },
     "Referral"?: { type: 'text', content: string },
     "Current Challenges"?: { type: 'text', content: string },
     "Message"?: { type: 'text', content: string },
@@ -36,18 +49,6 @@ export interface AccountRecord {
 export interface ReviewRecord {
 
 
-}
-
-export type CreatePageParams = Record<string, {
-    type: 'email', content: string
-} |
-{ type: 'phone', content: string } |
-{ type: 'select', content: string[] } |
-{ type: 'text', content: string } |
-{ type: 'number', content: number }
->
-interface NotionProperty {
-    [key: string]: any; // Additional properties can vary, so we use an index signature
 }
 
 
@@ -132,28 +133,31 @@ export async function getDatabase({
 function convertToNotionProperties(record: CreatePageParams): NotionProperty {
     const property: NotionProperty = {}
     for (const key in record) {
-        if (record.hasOwnProperty(key)) {
+        if (record[key] && record.hasOwnProperty(key)) {
             // Determine the type of property based on the value
-            let notionRecord: any = record[key].content;
+            let notionRecord: any = record[key]?.content;
+
             // Create the Notion property object
-            if (record[key].type === 'email') {
-                notionRecord = { email: record[key].content }
-            } else if (record[key].type === 'phone') {
-                notionRecord = { phone_number: record[key].content }
+            if (record[key]?.type === 'email') {
+                notionRecord = { email: record[key]?.content }
+            } else if (record[key]?.type === 'phone') {
+                notionRecord = { phone_number: record[key]?.content }
+
+            } else if (record[key]?.type === 'name') {
+                notionRecord = { title: [{ text: { content: record[key]?.content } }] }
+            }
+            else if (record[key]?.type === 'number') {
+                notionRecord = { number: Number(record[key]?.content) }
 
             }
-            else if (record[key].type === 'number') {
-                notionRecord = { number: Number(record[key].content) }
-
-            }
-            else if (record[key].type === 'text') {
+            else if (record[key]?.type === 'text') {
                 notionRecord = {
-                    rich_text: [{ text: { content: record[key].content } }]
+                    rich_text: [{ text: { content: record[key]?.content } }]
 
                 }
             }
-            else if (record[key].type === 'select') {
-                notionRecord = { multi_select: (record[key].content as string[]).map(select => ({ name: select })) }
+            else if (record[key]?.type === 'select') {
+                notionRecord = { multi_select: (record[key]?.content as string[]).map(select => ({ name: select })) }
             }
 
 
