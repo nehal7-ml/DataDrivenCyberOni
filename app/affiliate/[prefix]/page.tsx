@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma/prismaClient";
+import prisma from "@/lib/prisma";
 import { addClick, update } from "@/crud/referral";
 import { ReferralType } from "@prisma/client";
 import { redirect } from "next/navigation";
