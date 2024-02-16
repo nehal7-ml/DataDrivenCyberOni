@@ -32,6 +32,8 @@ const CheckoutForm = ({ clientSecret, cartId, active, activationError , message 
     if(!active) {
 
       notify(activationError, 'fail', { autoClose: true })
+      setLoading(false);
+
       return 
     }
 
@@ -152,6 +154,9 @@ const CheckoutForm = ({ clientSecret, cartId, active, activationError , message 
                   <ArrowRight />
                 </div>
               </button>
+              <div>
+                
+              </div>
             </form>
           </div>
         </>
