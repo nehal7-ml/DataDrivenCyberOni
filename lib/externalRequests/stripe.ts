@@ -30,7 +30,7 @@ export async function verifyWebhook(signature: string, body: string | Buffer) {
 
 export async function processStripeEvent(event: stripe.Event) {
 
-    if (event.type === 'payment_intent.succeeded' && event.data.object['metadata']) {
+    if (event.type === 'payment_intent.succeeded' && event.data.object['metadata'] && event.data.object.metadata['cartId']) {
         const cartId = event.data.object.metadata['cartId']
         const cart = await updateServiceCartStatus(cartId, 'PAID', prisma)
         const payment = await createServicePayment({
