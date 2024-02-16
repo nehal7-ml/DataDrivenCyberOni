@@ -80,7 +80,7 @@ describe("test notion functions", () => {
         expect(resp.object).toBe('page')
 
 
-})
+}, 10000)
     it('should Create a Review Record ', async () => {
 
         const record: SupportRecord = {
