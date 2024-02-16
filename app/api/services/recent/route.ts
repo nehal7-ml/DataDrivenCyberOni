@@ -1,5 +1,5 @@
 
-import { prisma } from "@/prisma/prismaClient";
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from 'next/server'
 import apiHandler from "@/errorHandler";
 import { getRecent } from "@/crud/service";
