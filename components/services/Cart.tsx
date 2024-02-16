@@ -10,7 +10,7 @@ import CalendlyPopup from "../Calendly";
 import Link from "next/link";
 import { useNotify } from "../Notification";
 import CheckoutForm from "../CheckoutForm";
-import PaymentModal from "../PaymentModal";
+import PaymentModal from "../PaymentWrapper";
 
 const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: DisplayServiceCartItemDTO[], session: Session, cartId: string, clientSecret?: string }) => {
 
@@ -63,7 +63,7 @@ const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: Display
 
 
                         <div className="lg:w-1/2">
-                            {clientSecret && <PaymentModal cartId={cartId} clientSecret={clientSecret} />}
+                            {clientSecret && <PaymentModal active={scheduled} activationError="schedule meeting before payment" cartId={cartId} clientSecret={clientSecret} />}
                     </div>
 
                 </div>

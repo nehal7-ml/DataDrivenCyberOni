@@ -7,11 +7,14 @@ import { useEffect, useState } from "react";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import Loading from "../Loading";
 import { PaymentIntent, PaymentIntentResult, StripeElements } from "@stripe/stripe-js";
+import { useNotify } from "../Notification";
 
 
-const CheckoutForm = ({ clientSecret, cartId }: { clientSecret: string, cartId: string }) => {
+const CheckoutForm = ({ clientSecret, cartId, active, activationError , message }: { clientSecret: string, cartId: string, active: boolean, activationError: string , message?:string}) => {
   const stripe = useStripe();
   const elements = useElements();
+  const notify = useNotify();
+
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,6 +28,12 @@ const CheckoutForm = ({ clientSecret, cartId }: { clientSecret: string, cartId: 
   const searchParams = useSearchParams();
 
   async function handlePayment() {
+
+    if(!active) {
+
+      notify(activationError, 'fail', { autoClose: true })
+      return 
+    }
 
     const { error } = await stripe?.confirmPayment({
       elements: elements as StripeElements,
@@ -103,7 +112,7 @@ const CheckoutForm = ({ clientSecret, cartId }: { clientSecret: string, cartId: 
                           googlePay: "auto",
                         },
                         layout: "tabs",
-                        
+
                         fields: {
                           billingDetails: {
                             address: {
@@ -132,7 +141,7 @@ const CheckoutForm = ({ clientSecret, cartId }: { clientSecret: string, cartId: 
               </div>
               <button
                 type="submit"
-                className="container flex justify-between items-center mx-auto my-5 rounded-xl bg-guru-blue p-3 text-white bg-emerald-400"
+                className={`container flex justify-between items-center mx-auto my-5 rounded-xl bg-guru-blue p-3 text-white ${active ? 'bg-emerald-400' : 'bg-gray-600'} 0`}
               >
                 <div>{(product.price / 100).toLocaleString("en-US", {
                   style: "currency",
@@ -149,7 +158,7 @@ const CheckoutForm = ({ clientSecret, cartId }: { clientSecret: string, cartId: 
       ) : (
         <>
           <div className="my-24 flex h-full w-full flex-col items-center justify-center gap-5">
-              <CheckCircle className="h-40 w-40 text-green-400" />
+            <CheckCircle className="h-40 w-40 text-green-400" />
           </div>
         </>
       )}
