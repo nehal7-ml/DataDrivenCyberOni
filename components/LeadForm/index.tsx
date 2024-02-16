@@ -20,6 +20,8 @@ function LeadForm() {
 
     useEffect(() => {
         setIsClient(true)
+        window.localStorage.setItem('leadFormShown', 'false')
+
     }, [])
 
     const handleSubmit = async (e: FormEvent) => {
@@ -30,6 +32,8 @@ function LeadForm() {
             setShowForm(false)
             if (res.status === 200) {
                 setShowThanks(true)
+                window.localStorage.setItem('leadFormFilled', 'true')
+
             }
             else {
                 setShowError(true)
@@ -46,8 +50,12 @@ function LeadForm() {
     }
 
     useEffect(() => {
-        if (handleVisible?.isIntersecting) {
+        const shown = window.localStorage.getItem('leadFormShown') === 'true' ? true : false
+        const filled = window.localStorage.getItem('leadFormFilled') === 'true' ? true : false
+
+        if (handleVisible?.isIntersecting && !shown && !filled) {
             setDisplay(true)
+            window.localStorage.setItem('leadFormShown', 'true')
 
         }
 
