@@ -5,6 +5,7 @@ import { createServicePayment } from "@/crud/payments";
 import { updateServiceCartStatus } from "@/crud/cart";
 import { updatePaymentStatus } from "./sendgrid";
 import { createPaymentRecord } from "@/crud/payment";
+import { upsertAccount } from "./notion";
 const client = new stripe(process.env.STRIPE_API_KEY as string)
 const endpointSecret = process.env.STRIPE_WEB_SECRET as string
 const startDate = new Date("2023-11-01"); // Start date of the trial
@@ -36,9 +37,10 @@ export async function processStripeEvent(event: stripe.Event) {
             paymentId: event.data.object.id,
             cartId: cartId
         }, prisma)
-    } if (event.type == "invoice.paid" &&
-        event.data.object.status === 'paid' &&
-        event.data.object.customer === process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_ID) {
+    }
+
+
+    if (event.type == "invoice.paid" && event.data.object.status === 'paid') {
 
         await createPaymentRecord({
             email: event.data.object.customer_email as string,
@@ -48,13 +50,22 @@ export async function processStripeEvent(event: stripe.Event) {
         }, prisma)
 
         await updatePaymentStatus(event.data.object.customer_email as string, true, "CyberOni Project Completed") //  verify list name as in SendGrid
+        await upsertAccount(
+            {
+                'Email': { type: 'email', content: event.data.object.customer_email as string },
+                'Payment_active': { type: "checkbox", content: true },
 
+            })
     }
 
-    if (event.type == "invoice.payment_failed" &&
-        event.data.object.customer === process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_ID) {
+    if (event.type == "invoice.payment_failed") {
         await updatePaymentStatus(event.data.object.customer_email as string, false, "CyberOni Project Completed") // verify list name as in SendGrid
+        await upsertAccount(
+            {
+                'Email': { type: 'email', content: event.data.object.customer_email as string },
+                'Payment_active': { type: "checkbox", content: false },
 
+            })
     }
 
 }
