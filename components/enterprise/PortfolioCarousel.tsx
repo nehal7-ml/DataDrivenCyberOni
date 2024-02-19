@@ -11,8 +11,6 @@ import Modal from "../shared/modal"
 function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
     const [currentGrid, setCurrentGrid] = useState(services[0].CaseStudies || []);
 
-    const [openModal, setOpenModal] = useState(false);
-    const [current, setCurrent] = useState<CaseStudy | null>(null);
     return (
         <div className="container mx-auto flex flex-col px-5 lg:flex-row lg:justify-start  justify-center lg:my-20 my-10">
 
@@ -35,10 +33,10 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
 
             {
 
-                <div className="flex-wrap flex lg:w-2/3">
+                <div className={`flex w-screen lg:w-auto max-w-full overflow-x-auto lg:grid lg:grid-cols-4 ${Math.ceil(currentGrid.length / 4)} lg:grid-rows-[25rem_1fr_1fr_1fr] justify-start items-center gap-2 lg:w-2/3 space-y-2`}>
                     {currentGrid?.map((caseStudy, index) => {
                         return (
-                            <div key={index} className={`aspect-square rounded-lg overflow-hidden  w-1/2 p-3 lg:w-1/4`}>
+                            <div key={index} className={`aspect-square lg:aspect-auto lg:h-full lg:w-full rounded-lg overflow-hidden w-auto f`}>
                                 <div className="relative w-full h-full  rounded-lg overflow-hidden " >
                                     <ImageWithTextOverlay modal={<ReadMoreModal link={`/casestudies/${seoUrl(caseStudy.title, caseStudy.id)}`} heading={caseStudy.title} points={caseStudy.userProblems as string[]} />}
                                         title={caseStudy.userProblems && (caseStudy.userProblems as string[])[0] ? (caseStudy.userProblems as string[])[0] : caseStudy.title}
