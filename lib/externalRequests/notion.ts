@@ -7,7 +7,7 @@ const notion = new Client({ auth: notionApiKey });
 
 const marketing_crm_contacts_database_id = process.env.NOTION_MARKETING_DATABASE_ID!;
 const accountDBId = process.env.NOTION_ACCOUNT_DATABASE_ID!;
-const supportDBId = "534a8e4fe1914d518a84b6499ae96877";
+const supportDBId =  process.env.NOTION_SUPPORT_DATABASE_ID!;
 
 export type NewRecordType = Record<string,
     { type: 'rich_text', rich_text: { text: { content: string }, type: 'text' }[] } |
