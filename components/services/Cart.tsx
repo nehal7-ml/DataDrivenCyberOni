@@ -65,7 +65,7 @@ const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: Display
 
 
                         <div className="lg:w-1/2">
-                            {clientSecret &&
+                            {clientSecret && window &&
                                 <PaymentModal
                                     redirect={`${window.origin}/onboarding?cartId=${cartId}`}
                                     checkoutMessage="Save 10% By Choosing to pre purchase services, you will be charged 50% of the total cost  of the project. And receive priority booking privileges."
