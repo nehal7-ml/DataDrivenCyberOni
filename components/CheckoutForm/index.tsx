@@ -10,7 +10,7 @@ import { PaymentIntent, PaymentIntentResult, StripeElements } from "@stripe/stri
 import { useNotify } from "../Notification";
 
 
-const CheckoutForm = ({ clientSecret, cartId, active, activationError , message }: { clientSecret: string, cartId: string, active: boolean, activationError: string , message?:string}) => {
+const CheckoutForm = ({ clientSecret, cartId, active, activationError, message, redirect }: { clientSecret: string, cartId: string, active: boolean, activationError: string, redirect: string, message?: string }) => {
   const stripe = useStripe();
   const elements = useElements();
   const notify = useNotify();
@@ -29,23 +29,27 @@ const CheckoutForm = ({ clientSecret, cartId, active, activationError , message 
 
   async function handlePayment() {
 
-    if(!active) {
+    if (!active) {
 
       notify(activationError, 'fail', { autoClose: true })
       setLoading(false);
 
-      return 
+      return
     }
 
     const { error } = await stripe?.confirmPayment({
       elements: elements as StripeElements,
 
       confirmParams: {
-        return_url: `${window.origin}/orders?id=${cartId}`,
+        return_url: `${redirect}`,
       },
     }) as PaymentIntentResult;
 
     setLoading(false);
+
+    if (error) {
+      setError(error.message as string)
+    }
   }
 
 
@@ -88,6 +92,7 @@ const CheckoutForm = ({ clientSecret, cartId, active, activationError , message 
             <div className="container mx-auto flex flex-col items-center justify-center py-10">
               <XCircle className="text-rose-600" />
               <div>{error}</div>
+              <button className="bg-blue-600 my-5 text-white rounded-md p-2 text-" onClick={() => window.location.reload()}>retry</button>
             </div>
           </div>
         </>
@@ -100,8 +105,8 @@ const CheckoutForm = ({ clientSecret, cartId, active, activationError , message 
                 setLoading(true);
                 handlePayment();
               }}
-              className="w-fit rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-white p-3 px-6 shadow-lg ">
-              <div className="max-h-[400px] min-h-[380px] w-fit overflow-y-auto p-2">
+              className="w-fit max-w-full rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-white p-3 px-6 shadow-lg ">
+              <div className="overflow-y-auto p-2">
                 <div>Checkout</div>
                 {stripe ? (
                   <>
@@ -154,8 +159,8 @@ const CheckoutForm = ({ clientSecret, cartId, active, activationError , message 
                   <ArrowRight />
                 </div>
               </button>
-              <div>
-                
+              <div className="w-full">
+                <span>{message}</span>
               </div>
             </form>
           </div>
