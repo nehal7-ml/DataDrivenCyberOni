@@ -3,16 +3,18 @@ import { useState } from "react";
 import { Star } from "lucide-react";
 import ClientInput from "../layout/ClientInput";
 import { submitReview } from "./submit";
+import ErrorModal from "../shared/ErrorModal";
 export type ReviewFormState = {
   rating: number,
   contact: string,
   name: string,
   message: string,
   success: boolean,
+  error: string
 
 }
 const ReviewForm: React.FC = () => {
-  const [feedback, setFeedback] = useState<ReviewFormState>({ rating: 0, message: "", name: "", contact: "", success: false });
+  const [feedback, setFeedback] = useState<ReviewFormState>({ rating: 0, message: "", name: "", contact: "", success: false, error: "" });
   const [form_filled, setFilled] = useState(false);
 
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -62,75 +64,85 @@ const ReviewForm: React.FC = () => {
   };
 
   return (
-    <form action={handleSubmit} className="flex flex-col items-center space-y-4 rounded bg-white dark:bg-slate-900 p-4 shadow-lg">
-      <h2 className="text-xl font-semibold">
-        {form_filled && feedback.rating < 4
-          ? "Oh No!"
-          : feedback.rating >= 4 || !form_filled
-            ? "How was your experience?"
-            : "Thank you for your feedback"}
-      </h2>
-      <p className="text-gray-600">
-        {form_filled && feedback.rating < 4
-          ? "We’re sorry you didn’t have a good experience, please let us know how we can improve."
-          : feedback.rating >= 4 || !form_filled
-            ? "Thank you for putting the word out for us!"
-            : "How was your experience?"}{" "}
-      </p>
-      <div className="flex space-x-1">{renderStars()}</div>
-      {feedback.rating < 4 && feedback.rating > 0 && (
-        <>
-          <div className="flex gap-4">
-            <div className="relative my-4">
-              <ClientInput
-                className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
-                name="username"
-                id="username"
-                type="email"
-                placeholder=""
-                value={feedback.contact}
-                onChange={(e) => setFeedback(prev => ({ ...prev, contact: e.target.value }))}
-                required
-              />
-              <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/10  peer-focus:backdrop-blur-lg peer-placeholder-shown:dark:bg-slate-900 dark:bg-slate-900 dark:backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-700 transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
-                Email or Phone
-              </label>
+    <div>
+      {!feedback.success ? <form action={handleSubmit} className="flex flex-col items-center space-y-4 rounded bg-white dark:bg-slate-900 p-4 shadow-lg">
+        <h2 className="text-xl font-semibold">
+          {form_filled && feedback.rating < 4
+            ? "Oh No!"
+            : feedback.rating >= 4 || !form_filled
+              ? "How was your experience?"
+              : "Thank you for your feedback"}
+        </h2>
+        <p className="text-gray-600">
+          {form_filled && feedback.rating < 4
+            ? "We’re sorry you didn’t have a good experience, please let us know how we can improve."
+            : feedback.rating >= 4 || !form_filled
+              ? "Thank you for putting the word out for us!"
+              : "How was your experience?"}{" "}
+        </p>
+        <div className="flex space-x-1">{renderStars()}</div>
+        {feedback.rating < 4 && feedback.rating > 0 && (
+          <>
+            <div className="flex gap-4">
+              <div className="relative my-4">
+                <ClientInput
+                  className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
+                  name="username"
+                  id="username"
+                  type="email"
+                  placeholder=""
+                  value={feedback.contact}
+                  onChange={(e) => setFeedback(prev => ({ ...prev, contact: e.target.value }))}
+                  required
+                />
+                <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/10  peer-focus:backdrop-blur-lg peer-placeholder-shown:dark:bg-slate-900 dark:bg-slate-900 dark:backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-700 transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
+                  Email or Phone
+                </label>
+              </div>
+              <div className="relative my-4">
+                <ClientInput
+                  className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
+                  name="name"
+                  id="name"
+                  placeholder=""
+                  value={feedback.name}
+                  onChange={(e) => setFeedback(prev => ({ ...prev, name: e.target.value }))}
+                  required
+                />
+                <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/10  peer-focus:backdrop-blur-lg peer-placeholder-shown:dark:bg-slate-900 dark:bg-slate-900 dark:backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-700 transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
+                  Name
+                </label>
+              </div>
             </div>
-            <div className="relative my-4">
-              <ClientInput
-                className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
-                name="name"
-                id="name"
-                placeholder=""
-                value={feedback.name}
-                onChange={(e) => setFeedback(prev => ({ ...prev, name: e.target.value }))}
-                required
-              />
-              <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/10  peer-focus:backdrop-blur-lg peer-placeholder-shown:dark:bg-slate-900 dark:bg-slate-900 dark:backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-700 transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
-                Name
-              </label>
-            </div>
+            <textarea
+              className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Please let us know how we can improve."
+              title="Please let us know how we can improve"
+              required
+              onChange={(e) =>
+                setFeedback({ ...feedback, message: e.target.value })
+              }
+            /></>
+        )}
+        <button
+          type="submit"
+          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          onClick={handleSubmit}
+        >
+          Submit
+        </button>
+        {feedback.error && <ErrorModal show={feedback.error.length > 0} message={feedback.error} />}
 
+      </form> :
 
-          </div>
+        <div className="flex flex-col justify-center items-center py-10 my-10">
+          <h2>Thank You for your feedback !!</h2>
 
-          <textarea
-            className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Please let us know how we can improve."
-            title="Please let us know how we can improve"
-            required
-            onChange={(e) =>
-              setFeedback({ ...feedback, message: e.target.value })
-            }
-          /></>
-      )}
-      <button
-        type="submit"
-        className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-     >
-        Submit
-      </button>
-    </form>
+        </div>
+
+      }
+    </div>
+
   );
 };
 
