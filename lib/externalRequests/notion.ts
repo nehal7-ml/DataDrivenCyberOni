@@ -53,8 +53,9 @@ export interface MarketingCrmRecord extends CreatePageParams {
 }
 
 export interface AccountRecord extends CreatePageParams {
-    "Company Name": { type: 'title', content: string },
-    "Website": { type: 'url', content: string },
+    "Email": { type: 'email', content: string },
+    "Company Name"?: { type: 'title', content: string },
+    "Website"?: { type: 'url', content: string },
     'Phone'?: { type: 'phone', content: string },
     "Payment_active": { type: 'checkbox', content: boolean }
 }
@@ -195,7 +196,7 @@ function convertToNotionProperties(record: CreatePageParams): NotionProperty {
                 notionRecord = { multi_select: (record[key]?.content as string[]).map(select => ({ name: select })) }
             }
             else if (record[key]?.type === 'select') {
-                notionRecord = { select: { id: record[key]?.content } }
+                notionRecord = { select: { name: record[key]?.content } }
             }
 
 
@@ -216,13 +217,13 @@ export async function addToMarketing(record: MarketingCrmRecord) {
 }
 
 
-export async function addAccount(record: AccountRecord) {
-    const newRecord = await upsertRecord({ key: 'Website', type: 'url' }, record, accountDBId);
+export async function upsertAccount(record: AccountRecord) {
+    const newRecord = await upsertRecord({ key: 'Email', type: 'email' }, record, accountDBId);
     return newRecord
 }
 
 
-export async function addSupport(record: SupportRecord) {
+export async function upsertSupport(record: SupportRecord) {
     const newRecord = await upsertRecord({ key: 'Contact Information', type: 'text' }, record, supportDBId);
     return newRecord
 }

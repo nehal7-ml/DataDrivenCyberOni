@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { AccountRecord, MarketingCrmRecord, SupportRecord, UniqueColumn, addAccount, addRecord, addSupport, deleteRecord, upsertRecord } from "@/lib/externalRequests/notion";
+import { AccountRecord, MarketingCrmRecord, SupportRecord, UniqueColumn, addRecord, deleteRecord, upsertAccount, upsertRecord, upsertSupport } from "@/lib/externalRequests/notion";
 import { describe, expect, it, afterAll } from "@jest/globals";
 import { PageObjectResponse, RichTextItemResponse, UpdatePageResponse } from "@notionhq/client/build/src/api-endpoints";
 
@@ -69,18 +69,18 @@ describe("test notion functions", () => {
 
     it('should Create a Account  Record ', async () => {
         const record: AccountRecord = {
-            "Company Name": {
-                type: "title", content: "Company Name"},
-                "Website":  {type:'url', content: 'example.com'},
-                "Payment_active": {type:'checkbox', content:false}
-            }
-        const resp = await addAccount(record)
+            "Email": {type:'email', content: 'test@example.com'},
+            "Company Name": { type: "title", content: "Company Name" },
+            "Website": { type: 'url', content: 'example.com' },
+            "Payment_active": { type: 'checkbox', content: false }
+        }
+        const resp = await upsertAccount(record) as PageObjectResponse
 
         //console.log(resp);
         expect(resp.object).toBe('page')
+        expect((resp.properties['Email'] as { type: 'email', email: string }).email).toBe(record.Email.content)
 
-
-})
+    }, 10000)
     it('should Create a Review Record ', async () => {
 
         const record: SupportRecord = {
@@ -105,7 +105,7 @@ describe("test notion functions", () => {
                 content: "PENDING"
             },
         }
-        const resp = await addSupport(record)
+        const resp = await upsertSupport(record)
 
         //console.log(resp);
         expect(resp.object).toBe('page')
