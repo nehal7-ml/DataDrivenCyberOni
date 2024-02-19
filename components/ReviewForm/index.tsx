@@ -10,11 +10,12 @@ export type ReviewFormState = {
   name: string,
   message: string,
   success: boolean,
+  category: 'Product' | 'Service' | 'Support'
   error: string
 
 }
-const ReviewForm: React.FC = () => {
-  const [feedback, setFeedback] = useState<ReviewFormState>({ rating: 0, message: "", name: "", contact: "", success: false, error: "" });
+const ReviewForm = ({ category, name, contact }: { category: 'Product' | 'Service' | 'Support', name: string, contact: string }) => {
+  const [feedback, setFeedback] = useState<ReviewFormState>({ rating: 0, message: "", name: name, contact: contact, category: category, success: false, error: "" });
   const [form_filled, setFilled] = useState(false);
 
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -86,16 +87,29 @@ const ReviewForm: React.FC = () => {
             <div className="flex gap-4">
               <div className="relative my-4">
                 <ClientInput
-                  className="peer shadow-lg appearance-none border dark:border-gray-200 rounded-xl w-full py-4 px-4 bg-transparent text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
+                  className="peer shadow-lg appearance-none border
+                   dark:border-gray-200 rounded-xl w-full py-4 px-4
+                    bg-transparent text-gray-700 dark:text-gray-100  
+                    invalid:text-red-400 invalid:border-red-400 invalid:outline-red-400
+                    dark:invalid:text-red-400 dark:invalid:border-red-400 dark:invalid:outline-red-400
+
+                    leading-tight focus:outline-none focus:shadow-outline"
                   name="username"
                   id="username"
-                  type="email"
+                  type="text"
+                  title="valid email address or US phone number"
                   placeholder=""
+                  pattern="^(?:[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}|(?:\+(?:[0-9] ?){6,14}[0-9])|(?:\+?(1)?[\-. ]?\(?[2-9][0-9]{2}\)?[\-. ]?[2-9][0-9]{2}[\-. ]?[0-9]{4}))$"
                   value={feedback.contact}
                   onChange={(e) => setFeedback(prev => ({ ...prev, contact: e.target.value }))}
                   required
                 />
-                <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/10  peer-focus:backdrop-blur-lg peer-placeholder-shown:dark:bg-slate-900 dark:bg-slate-900 dark:backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-700 transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
+                <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 ]
+                            peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/10 
+                           peer-focus:backdrop-blur-lg peer-placeholder-shown:dark:bg-slate-900 dark:bg-slate-900 
+                           dark:backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-700 
+                           peer-invalid:text-red-400 dark:peer-invalid:text-red-400
+                           transition-all   text-sm font-bold mb-2 rounded-full" htmlFor="email">
                   Email or Phone
                 </label>
               </div>
@@ -127,7 +141,6 @@ const ReviewForm: React.FC = () => {
         <button
           type="submit"
           className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          onClick={handleSubmit}
         >
           Submit
         </button>

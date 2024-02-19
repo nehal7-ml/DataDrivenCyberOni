@@ -12,7 +12,7 @@ async function ReviewPage() {
     return (
 
         <div className="container mx-auto ">
-            <ReviewForm />
+            <ReviewForm category={'Support'} contact={session.user.email as string} name={session.user.name as string} />
         </div>
     );
 }

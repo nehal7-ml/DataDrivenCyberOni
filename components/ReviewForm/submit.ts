@@ -11,7 +11,8 @@ export async function submitReview(params: ReviewFormState) {
             "Customer Name": { content: params.name, type: "text" },
             Description: { content: params.message, type: "text" },
             Priority: { content: "HIGH", type: 'select' },
-            Status: { content: "PENDING", type: 'select' }
+            Status: { content: "PENDING", type: 'select' },
+            "Feedback Category": { content: state.category, type:'select'}
         })
         if (success.object === 'page') return { ...state, success: true }
 
