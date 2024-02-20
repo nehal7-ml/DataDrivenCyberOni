@@ -43,7 +43,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
 
     };
 
-    const swipehandlers = useSwipe({ onSwipedLeft: prevSlide, onSwipedRight: nextSlide })
+    const swipeHandlers = useSwipe({ onSwipedLeft: prevSlide, onSwipedRight: nextSlide })
 
 
     async function addToCart(subService: DisplaySubServiceDTO) {
@@ -147,7 +147,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
     }
 
     return (<>
-        <div className='relative lg:p-5  w-full' {...swipehandlers}>
+        <div className='relative lg:p-5  w-full' {...swipeHandlers}>
             <div className="font-bold text-4xl text-center my-10 w-full">Service Add-ons</div>
             <div className="bg-purple-200 dark:bg-purple-900 pb-10 w-full max-w-full mx-auto overflow-x-auto scroll-smooth snap-x scrollbar-thin scrollbar-thumb-gray-400  scrollbar-track-gray-50 scrollbar-thumb-rounded-md dark:scrollbar-track-slate-600 ">
                 <div className="relative flex flex-row gap-10 p-5 lg:px-10 justify-start w-fit">
@@ -211,16 +211,21 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
                         <div>Usage Score: {currentDisplay?.serviceUsageScore}/100</div>
                         <div>Esitmated time for completion: {currentDisplay?.estimated_hours_times_one_hundred_percent} hrs</div>
                         <div>Task Complexity: {currentDisplay?.complexity}/10</div>
-                        <div>Case studies: </div>
-                        <div className="flex flex-wrap gap-2">
-                            {currentDisplay?.CaseStudies.map((caseStudy) => (
-                                <CaseStudyCard
-                                    key={caseStudy.id}
-                                    id={caseStudy.id}
-                                    title={caseStudy.title}
-                                    images={caseStudy.images as CaseImage[]} />
-                            ))}
-                        </div>
+                        {currentDisplay && currentDisplay.CaseStudies?.length > 0 &&
+
+                            <><div>Case studies: </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {currentDisplay?.CaseStudies.map((caseStudy) => (
+                                        <CaseStudyCard
+                                            key={caseStudy.id}
+                                            id={caseStudy.id}
+                                            title={caseStudy.title}
+                                            images={caseStudy.images as CaseImage[]} />
+                                    ))}
+                                </div>
+                            </>
+
+                        }
                     </div>
                 </Modal>
             }
