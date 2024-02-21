@@ -2,7 +2,7 @@
 import useSwipe from "@/lib/hooks/use-swipe-gesture";
 import useWindowSize from "@/lib/hooks/use-window-size";
 import { extractUUID, getRandomIntWithSeed, wrappedSlice } from "@/lib/utils";
-import { Check, ChevronLeft, ChevronRight, Delete, MoveRight, ShoppingCart, Trash, X } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Delete, MoveRight, Plus, ShoppingCart, Trash, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Modal from "../shared/modal";
@@ -178,7 +178,9 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
                                 </div> :
 
 
-                                <></>}
+                                <button onClick={() => addToCart(subService)} className="absolute top-2 right-2 flex justify-center items-center rounded-full w-10 h-10 text-emerald-500 hover:shadow-md hover:text-emerald-600">
+                                    <Plus />
+                                </button>}
                             <Image
                                 src={imageArray[getRandomIntWithSeed(index.toString(), 0, 2)]} // Replace with the actual profile image URL
                                 alt={`${subService.title}-image`}
@@ -193,7 +195,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
                                     setShowModal(true)
                                 }} type="button" className="flex gap-x-3 mb-5 text-blue-500">Learn more  <MoveRight /></button>
 
-                                <button onClick={() => addToCart(subService)} className="hover:bg-red-400 hover:shadow hover:text-white p-3 rounded-md" aria-label="add-to-cart">
+                                <button onClick={() => addToCart(subService)} className={`${checkSubserviceAdded(subService)? 'hover:bg-red-400': 'hover:bg-green-400'} hover:shadow hover:text-white p-3 rounded-md`} aria-label="add-to-cart">
                                     {checkSubserviceAdded(subService) ? <Trash /> : <ShoppingCart />}
 
                                 </button>
