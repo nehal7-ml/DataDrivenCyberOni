@@ -52,20 +52,36 @@ function SubServiceCarousel({ subServices, session }: { subServices: DisplaySubS
         // Check if the ref has been assigned to an element
         if (highlightedElementRef.current) {
             // Scroll the window to the highlighted element
-            highlightedElementRef.current.scrollIntoView({ behavior: 'smooth' });
+            console.log("scrolling");
+            highlightedElementRef.current.scrollIntoView({ behavior: 'smooth', block: isMobile ? "center" : "nearest" });
         }
-    }, [highlightedElementId]); // Run the effect whenever the ID changes
+    }, [highlightedElementId, isMobile]); // Run the effect whenever the ID changes
 
     useEffect(() => {
-
-        if (typeof window !== 'undefined') {
-
+        const handleLocationChange = () => {
+            console.log('window.location.href changed:', window.location.href);
             let id = window.location.href.split('#')[1];
             setHighlightedElementId(decodeURIComponent(id).toLowerCase())
+            // Add your logic here to handle the URL change
+        };
 
-            console.log(decodeURIComponent(id).toLowerCase() === subServices[0].title.toLowerCase(),);
+        // Add event listener for 'hashchange' event
+
+        if (typeof window !== 'undefined') {
+            let id = window.location.href.split('#')[1];
+            setHighlightedElementId(decodeURIComponent(id).toLowerCase())
+            window.addEventListener('hashchange', handleLocationChange);
+
+            // Clean up by removing the event listener when the component unmounts
+            return () => {
+                window.removeEventListener('hashchange', handleLocationChange);
+            };
+
+
         }
-    }, []);
+    }, [subServices]);
+
+
     async function addToCart(subService: DisplaySubServiceDTO) {
 
         if (session && session.user) {
@@ -169,10 +185,10 @@ function SubServiceCarousel({ subServices, session }: { subServices: DisplaySubS
     return (<>
         <div className='relative lg:p-5  w-full' {...swipeHandlers}>
             <div className="font-bold text-4xl text-center my-10 w-full">Service Add-ons</div>
-            <div className="bg-purple-200 dark:bg-purple-900 pb-10 w-full max-w-full mx-auto overflow-x-auto scroll-smooth snap-x scrollbar-thin scrollbar-thumb-gray-400  scrollbar-track-gray-50 scrollbar-thumb-rounded-md dark:scrollbar-track-slate-600 ">
+            <div className="bg-purple-200 dark:bg-purple-600 pb-10 w-full max-w-full mx-auto overflow-x-auto scroll-smooth snap-x scrollbar-thin scrollbar-thumb-gray-400  scrollbar-track-gray-50 scrollbar-thumb-rounded-md dark:scrollbar-track-slate-600 ">
                 <div className="relative flex flex-row gap-10 p-5 lg:px-10 justify-start w-fit">
                     {subServices.map((subService, index) =>
-                        <div data-id={subService.id} ref={subService.title === highlightedElementId ? highlightedElementRef : undefined} id={subService.title.toLowerCase()} key={index} className={`relative flex flex-col w-[80vw] lg:w-[30vw] ${subService.title.toLowerCase() === highlightedElementId ? 'bg-green-200' : ''} snap-start scoll-ml-3 p-2 lg:p-8 gap-3 rounded-xl ${checkSubserviceAdded(subService) ? 'bg-green-300' : 'bg-gray-100 dark:bg-gray-800'}  border-4 border-[#AAC3F5]  text-center justify-center mt-10 lg:px-10 pb-10 `}>
+                        <div data-id={subService.id} ref={subService.title.toLowerCase() === highlightedElementId ? highlightedElementRef : undefined} id={subService.title.toLowerCase()} key={index} className={`relative flex flex-col w-[80vw] lg:w-[30vw] ${subService.title.toLowerCase() === highlightedElementId ? 'bg-purple-500 dark:bg-purple-800' : ''} snap-start scoll-ml-3 p-2 lg:p-8 gap-3 rounded-xl ${checkSubserviceAdded(subService) ? 'bg-green-300' : 'bg-gray-100 dark:bg-gray-800'}  border-4 border-[#AAC3F5]  text-center justify-center mt-10 lg:px-10 pb-10 focus:bg-purple-500`}>
                             <div className=" w-full text-center  lg:text-left h-fit">
                                 <h3 className="text-lg font-semibold">{subService.title}</h3>
                             </div>
@@ -201,9 +217,9 @@ function SubServiceCarousel({ subServices, session }: { subServices: DisplaySubS
                                     console.log(subService);
                                     setCurrentDisplay(subService)
                                     setShowModal(true)
-                                }} type="button" className="flex gap-x-3 mb-5 text-blue-500">Learn more  <MoveRight /></button>
+                                }} type="button" className={`flex gap-x-3 mb-5 ${subService.title.toLowerCase() === highlightedElementId ? 'text-blue-800' : 'text-blue-500 '} `}>Learn more  <MoveRight /></button>
 
-                                <button onClick={() => addToCart(subService)} className={`${checkSubserviceAdded(subService)? 'hover:bg-red-400': 'hover:bg-green-400'} hover:shadow hover:text-white p-3 rounded-md`} aria-label="add-to-cart">
+                                <button onClick={() => addToCart(subService)} className={`${checkSubserviceAdded(subService) ? 'hover:bg-red-400' : 'hover:bg-green-400'} hover:shadow hover:text-white p-3 rounded-md`} aria-label="add-to-cart">
                                     {checkSubserviceAdded(subService) ? <Trash /> : <ShoppingCart />}
 
                                 </button>
