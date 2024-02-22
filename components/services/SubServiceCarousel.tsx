@@ -21,7 +21,7 @@ export type SubServiceProps = {
 }
 
 const imageArray = ['/images/subservice-1.svg', '/images/subservice-2.svg', '/images/subservice-3.svg']
-function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubServiceDTO[], session?: Session | null }) {
+function SubServiceCarousel({ subServices, session }: { subServices: DisplaySubServiceDTO[], session?: Session | null }) {
     const params = useParams();
     const router = useRouter();
     const seoTitle = params.id as string
@@ -61,8 +61,9 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
         if (typeof window !== 'undefined') {
 
             let id = window.location.href.split('#')[1];
-            setHighlightedElementId(decodeURIComponent(id))
+            setHighlightedElementId(decodeURIComponent(id).toLowerCase())
 
+            console.log(decodeURIComponent(id).toLowerCase() === subServices[0].title.toLowerCase(),);
         }
     }, []);
     async function addToCart(subService: DisplaySubServiceDTO) {
@@ -170,8 +171,8 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
             <div className="font-bold text-4xl text-center my-10 w-full">Service Add-ons</div>
             <div className="bg-purple-200 dark:bg-purple-900 pb-10 w-full max-w-full mx-auto overflow-x-auto scroll-smooth snap-x scrollbar-thin scrollbar-thumb-gray-400  scrollbar-track-gray-50 scrollbar-thumb-rounded-md dark:scrollbar-track-slate-600 ">
                 <div className="relative flex flex-row gap-10 p-5 lg:px-10 justify-start w-fit">
-                    {subservices.map((subService, index) =>
-                        <div data-id={subService.id} ref={subService.title === highlightedElementId ? highlightedElementRef : undefined} id={subService.title} key={index} className={`relative flex flex-col w-[80vw] lg:w-[30vw] ${subService.title === highlightedElementId ? 'bg-green-200' : ''} snap-start scoll-ml-3 p-2 lg:p-8 gap-3 rounded-xl ${checkSubserviceAdded(subService) ? 'bg-green-300' : 'bg-gray-100 dark:bg-gray-800'}  border-4 border-[#AAC3F5]  text-center justify-center mt-10 lg:px-10 pb-10 `}>
+                    {subServices.map((subService, index) =>
+                        <div data-id={subService.id} ref={subService.title === highlightedElementId ? highlightedElementRef : undefined} id={subService.title.toLowerCase()} key={index} className={`relative flex flex-col w-[80vw] lg:w-[30vw] ${subService.title.toLowerCase() === highlightedElementId ? 'bg-green-200' : ''} snap-start scoll-ml-3 p-2 lg:p-8 gap-3 rounded-xl ${checkSubserviceAdded(subService) ? 'bg-green-300' : 'bg-gray-100 dark:bg-gray-800'}  border-4 border-[#AAC3F5]  text-center justify-center mt-10 lg:px-10 pb-10 `}>
                             <div className=" w-full text-center  lg:text-left h-fit">
                                 <h3 className="text-lg font-semibold">{subService.title}</h3>
                             </div>
