@@ -13,6 +13,7 @@ import { Session } from "next-auth";
 import Loading from "../Loading";
 import Link from "next/link";
 import CaseStudyCard from "./CaseStudyCard";
+import { LoadingDots } from "../shared/icons";
 
 export type SubServiceProps = {
     title: string;
@@ -227,7 +228,7 @@ function SubServiceCarousel({ subservices, session }: { subservices: DisplaySubS
 
             {loading &&
                 <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur-md bg-gray-100/20 dark:bg-slate-600/20">
-                    <Loading />
+                    <LoadingDots />
                 </div>
             }
         </div>
