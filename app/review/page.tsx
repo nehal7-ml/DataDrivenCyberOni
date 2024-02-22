@@ -9,7 +9,10 @@ async function ReviewPage() {
     const session = await getServerSession(authOptions);
 
     if (!session?.user) {
-        redirect(`/auth/signin?${notifyQuery({ type: 'fail', message: 'Please login To add review', option: { autoClose: true } }).toString()}`)
+        const searchParams = new URLSearchParams();
+        searchParams.set('callbackUrl', '/review')
+
+        redirect(`/auth/signin?${searchParams.toString()}&${notifyQuery({ type: 'fail', message: 'Please login To add review', option: { autoClose: true } }).toString()}`)
     }
 
     return (

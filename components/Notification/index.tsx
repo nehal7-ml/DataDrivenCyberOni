@@ -60,15 +60,17 @@ const Notification = () => {
 
   useEffect(() => {
     if (notify && autoClose) {
-
       if (autoClose) {
         setTimeout(() => {
-          router.replace('?')
+         const newSearch = new URLSearchParams(searchParams)
+         newSearch.delete('notify');
+         newSearch.delete('message');
+         newSearch.delete('autoClose');
+         newSearch.delete('notifyType');
+          router.replace('?'+ newSearch.toString())
           setNotify(false)
         }, 3000)
       }
-
-
     }
   }, [notify, router, autoClose]);
 

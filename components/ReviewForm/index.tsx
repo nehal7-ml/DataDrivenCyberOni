@@ -94,8 +94,7 @@ const ReviewForm = ({ category, name, contact }: { category: 'Product' | 'Servic
                     dark:invalid:text-red-400 dark:invalid:border-red-400 dark:invalid:outline-red-400
 
                     leading-tight focus:outline-none focus:shadow-outline"
-                  name="username"
-                  id="username"
+                  name="contact"
                   type="text"
                   title="valid email address or US phone number"
                   placeholder=""
@@ -105,7 +104,7 @@ const ReviewForm = ({ category, name, contact }: { category: 'Product' | 'Servic
                   required
                 />
                 <label className="block absolute top-0 left-3 -translate-y-3 peer-focus:-translate-y-3 ]
-                            peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white/10 
+                            peer-placeholder-shown:translate-y-3 peer-focus:text-blue-500 peer-placeholder-shown:bg-white bg-slate-50
                            peer-focus:backdrop-blur-lg peer-placeholder-shown:dark:bg-slate-900 dark:bg-slate-900 
                            dark:backdrop-blur-sm  px-1 dark:text-gray-100 text-gray-700 
                            peer-invalid:text-red-400 dark:peer-invalid:text-red-400
