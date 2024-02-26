@@ -88,6 +88,16 @@ export async function verifyAccess(user: DisplayUserDTO, path: string, method: H
             return true;
         }
 
+        if (path.match(/^\/api\/services\/recent$/)) {
+            return true
+        }
+        if (path.match(/^\/api\/casestudies\/recent$/)) {
+            return true
+        }
+        if (path.match(/^\/api\/blogs\/home$/)) {
+            return true
+        }
+
         return false;
     }
 

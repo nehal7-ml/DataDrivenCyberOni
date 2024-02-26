@@ -61,6 +61,29 @@ export async function createPaymentIntent({ price, description, metadata }: { pr
 
 }
 
+export async function updatePaymentIntent({ price, description, metadata, clientSecret }: { clientSecret: string, price: number, description: string, metadata?: Record<string, string> }) {
+
+    const paymentIntent = await client.paymentIntents.retrieve(clientSecret)
+    const newPaymentIntent = await client.paymentIntents.update(paymentIntent.id, {
+
+        amount: price!,
+        currency: "usd",
+        description: description,
+        metadata: metadata,
+        payment_method_types: [
+            'card',
+            'cashapp',
+            'afterpay_clearpay',
+            'klarna'
+
+        ]
+
+    });
+    return newPaymentIntent
+
+}
+
+
 export async function createSubscription(priceId: string, customerId: string, paymentMehtod: string) {
     // console.log(paymentMehtod);
 
