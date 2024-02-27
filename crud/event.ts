@@ -9,7 +9,7 @@ async function create(event: CreateEventDTO, prismaClient: PrismaClient) {
 
 
 }
-
+ 
 async function update(eventId: string, event: CreateEventDTO, prismaClient: PrismaClient) {
     const events = prismaClient.event;
     const updatedEvent = await events.update({
