@@ -4,7 +4,7 @@ import { CreateEventDTO } from "./DTOs";
 
 async function create(event: CreateEventDTO, prismaClient: PrismaClient) {
     const events = prismaClient.event;
-    let createdevent = await events.create({ data: { ...event, image: { create: event.image } } });
+    let createdevent =  await events.create({ data: { ...event, image: { create: event.image } } });
     return createdevent
 
 
