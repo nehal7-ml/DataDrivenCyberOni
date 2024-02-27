@@ -1,6 +1,5 @@
 import stripe from "stripe";
 import prisma from "../prisma";
-import { HttpError } from "../utils";
 import { createServicePayment } from "@/crud/payments";
 import { updateServiceCartStatus } from "@/crud/cart";
 const client = new stripe(process.env.STRIPE_API_KEY as string)
@@ -61,15 +60,13 @@ export async function createPaymentIntent({ price, description, metadata }: { pr
 
 }
 
-export async function updatePaymentIntent({ price, description, metadata, clientSecret }: { clientSecret: string, price: number, description: string, metadata?: Record<string, string> }) {
+export async function updatePaymentIntent({ price, description, metadata, clientSecret }: { clientSecret: string, price: number, description?: string, metadata?: Record<string, string> }) {
 
-    const paymentIntent = await client.paymentIntents.retrieve(clientSecret)
+    const paymentIntent = await client.paymentIntents.retrieve("", {client_secret: clientSecret})
     const newPaymentIntent = await client.paymentIntents.update(paymentIntent.id, {
 
         amount: price!,
         currency: "usd",
-        description: description,
-        metadata: metadata,
         payment_method_types: [
             'card',
             'cashapp',

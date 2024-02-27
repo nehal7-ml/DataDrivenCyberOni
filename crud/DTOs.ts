@@ -91,7 +91,7 @@ export type CreateSubServiceDTO = {
 
 export type Discount = {
     name: string;
-    value: string;
+    value: number;
 };
 export type CommentDTO = {
     comment: string;

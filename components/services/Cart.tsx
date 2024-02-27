@@ -1,5 +1,5 @@
 'use client'
-import React, { Dispatch, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import CartItem from './CartItem';
 import { ServiceCartItem, SubService } from "@prisma/client";
 import { Discount, DisplayServiceCartItemDTO, UpdateServiceCartItemDTO } from "@/crud/DTOs";
@@ -13,16 +13,20 @@ import CheckoutForm from "../CheckoutForm";
 import PaymentModal from "../PaymentWrapper";
 import { MoveRight, X } from "lucide-react";
 import LabelInput from "../shared/label-input";
+import { PaymentIntent } from "@stripe/stripe-js";
 
-const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: DisplayServiceCartItemDTO[], session: Session, cartId: string, clientSecret?: string }) => {
+const Cart = ({ cartItems, session, cartId, intent }: { cartItems: DisplayServiceCartItemDTO[], session: Session, cartId: string, intent: PaymentIntent }) => {
 
     const router = useRouter();
     const notify = useNotify();
 
 
     const [scheduled, setScheduled] = useState(false);
+    const [secret, setSecret] = useState(intent.client_secret);
 
     const [discounts, setDiscounts] = useState<Discount[]>([]);
+
+    const [total, setTotal] = useState(calculateServiceCartTotal(cartItems));
     async function updateCart(itemId: string, items: SubService[]) {
         const body: UpdateServiceCartItemDTO = {
             userId: (session?.user as { id: string })?.id,
@@ -34,6 +38,26 @@ const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: Display
         router.refresh()
 
     }
+
+    useEffect(() => {
+
+        async function updatePrice() {
+
+            const newPrice = calculateDiscountedPrice(total, discounts)
+            const res = await fetch(`/api/stripe/intent`,
+
+                {
+                    method: 'PUT', body: JSON.stringify({
+                        clientSecret: "",
+                        price: (newPrice / 2) * 100,
+                    })
+                })
+
+            let newIntent = await res.json()
+            setSecret(newIntent.client_secret)
+        }
+        updatePrice()
+    }, [discounts]);
 
     function onClickPay() {
         if (!scheduled) {
@@ -50,39 +74,39 @@ const Cart = ({ cartItems, session, cartId, clientSecret }: { cartItems: Display
                     <Link href={'/services'} className="flex justify-center items-center gap-4 hover:text-blue-400">Find services <MoveRight /></Link>
                 </div>
             ) : (
-                    <div className="flex flex-col lg:flex-row w-full px-5 gap-5">
-                        <div className="lg:w-1/2">
-                            {cartItems.map((item, index) => (
+                <div className="flex flex-col lg:flex-row w-full px-5 gap-5">
+                    <div className="lg:w-1/2">
+                        {cartItems.map((item, index) => (
                             <CartItem key={index} updateCart={updateCart} item={item} />
                         ))}
+                        <div>
+                            <AppliedDiscounts discounts={discounts} />
+                        </div>
+                        <div className="my-4 flex justify-between items-center">
                             <div>
-                                <AppliedDiscounts discounts={discounts} />
+                                <ApplyDiscount
+                                    discounts={discounts}
+                                    setDiscounts={setDiscounts}
+                                    availableDiscounts={extractAllDiscounts(cartItems)} />
                             </div>
-                            <div className="my-4 flex justify-between items-center">
-                                <div>
-                                    <ApplyDiscount
-                                        discounts={discounts}
-                                        setDiscounts={setDiscounts}
-                                        availableDiscounts={extractAllDiscounts(cartItems)} />
-                                </div>
-                                <div className="">
-                                    <p className="text-lg font-semibold">Total: ${calculateServiceCartTotal(cartItems)}</p>
-                                </div>
+                            <div className="">
+                                <p className="text-lg font-semibold">Total: ${total}</p>
                             </div>
-                            <div className="w-full text-center flex justify-center" onClick={() => setScheduled(true)}>
-                                <CalendlyPopup CTAText="Click to schedule" className="rounded-lg text-gray-900 dark:text-inherit bg-gray-300 dark:bg-gray-700 p-2 hover:shadow-lg hover:underline " />
+                        </div>
+                        <div className="w-full text-center flex justify-center" onClick={() => setScheduled(true)}>
+                            <CalendlyPopup CTAText="Click to schedule" className="rounded-lg text-gray-900 dark:text-inherit bg-gray-300 dark:bg-gray-700 p-2 hover:shadow-lg hover:underline " />
                         </div>
                     </div>
 
 
-                        <div className="lg:w-1/2">
-                            {clientSecret &&
-                                <PaymentModal
+                    <div className="lg:w-1/2">
+                        {
+                            <PaymentModal
                                 redirect={`${process.env.HOST}/onboarding?cartId=${cartId}`}
-                                    checkoutMessage="Save 10% By Choosing to pre purchase services, you will be charged 50% of the total cost  of the project. And receive priority booking privileges."
-                                    active={scheduled} activationError="schedule meeting before payment"
-                                    cartId={cartId}
-                                    clientSecret={clientSecret} />}
+                                checkoutMessage="Save 10% By Choosing to pre purchase services, you will be charged 50% of the total cost  of the project. And receive priority booking privileges."
+                                active={scheduled} activationError="schedule meeting before payment"
+                                cartId={cartId}
+                                clientSecret={secret as string} />}
                     </div>
 
                 </div>
@@ -161,5 +185,20 @@ function extractAllDiscounts(cartItems: DisplayServiceCartItemDTO[]): Discount[]
 
 function checkIfExist(discount: string, availableDiscounts: Discount[]) {
     return availableDiscounts.find((item) => item.name === discount)
+}
+
+
+function calculateDiscountedPrice(total: number, discounts: Discount[]): number {
+    let discountedPrice = total;
+
+    for (const discount of discounts) {
+        // Calculate the discount amount based on the percentage value
+        const discountAmount = (total * discount.value) / 100;
+        // Subtract the discount amount from the discounted price
+        discountedPrice -= discountAmount;
+    }
+
+    // Ensure the discounted price is not negative
+    return Math.max(discountedPrice, 0);
 }
 export default Cart;

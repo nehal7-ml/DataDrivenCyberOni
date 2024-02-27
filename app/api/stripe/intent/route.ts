@@ -1,4 +1,4 @@
-import { createPaymentIntent } from "@/lib/externalRequests/stripe";
+import { createPaymentIntent, updatePaymentIntent } from "@/lib/externalRequests/stripe";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -22,7 +22,7 @@ export async function PUT(req: NextRequest) {
     try {
         const cookieStore = cookies();
         const { price, description, metadata, clientSecret } = await req.json()
-        const { client_secret } = await createPaymentIntent({ price, description })
+        const { client_secret } = await updatePaymentIntent({clientSecret, price, metadata })
         cookieStore.set('clientSecret', client_secret as string)
 
         return NextResponse.json({ clientSecret: client_secret });
