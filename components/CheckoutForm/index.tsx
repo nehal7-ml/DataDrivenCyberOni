@@ -10,7 +10,7 @@ import { PaymentIntent, PaymentIntentResult, StripeElements } from "@stripe/stri
 import { useNotify } from "../Notification";
 
 
-const CheckoutForm = ({ clientSecret, cartId, active, activationError, message, redirect }: { clientSecret: string, cartId: string, active: boolean, activationError: string, redirect: string, message?: string }) => {
+const CheckoutForm = ({ clientSecret, cartId, active, activationError, message, redirect, amount }: { clientSecret: string, cartId: string, amount: number, active: boolean, activationError: string, redirect: string, message?: string }) => {
   const stripe = useStripe();
   const elements = useElements();
   const notify = useNotify();
@@ -20,10 +20,14 @@ const CheckoutForm = ({ clientSecret, cartId, active, activationError, message, 
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [product, setProduct] = useState({
-    price: 0,
+    price: amount,
     name: '',
     description: '',
   });
+
+  useEffect(() => {
+    setProduct(prev => ({ ...prev, price: amount }))
+  }, [amount]);
 
   const searchParams = useSearchParams();
 

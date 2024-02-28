@@ -14,12 +14,12 @@ describe('Testing Stripe unit functions', () => {
             description: 'Payment intent test'
         })
         expect(intent.amount).toBe(50000)
-        clientSecret = intent.client_secret as string
+        clientSecret = intent.id as string
         
     });
     it('should successfully retrieve an payment intent with client secret', async () => {
         const intent = await updatePaymentIntent({
-            clientSecret: clientSecret,
+            intentId: clientSecret,
             price: 60000,
         })
         expect(intent.amount).toBe(60000)

@@ -38,29 +38,29 @@ const CartPage: React.FC<CartProps> = async ({ searchParams }) => {
     // console.log(cart);
     if (cart) {
         items = cart.items
-        const total = calculateServiceCartTotal(cart?.items)
+        const total = calculateServiceCartTotal(cart?.items, cart?.discounts)
         const metadata = {
             cartId: cart.id,
             type: 'service',
             user: user.email
         }
 
-        const clientSecret = cookieStore.get('clientSecret');
+        const clientSecret = cookieStore.get('intentId');
         let intent
-       
+
 
         if (clientSecret && clientSecret?.value) {
 
             const res = await fetch(`${apiUrl}/api/stripe/intent`, {
                 method: 'PUT', body: JSON.stringify({
-                    clientSecret: clientSecret.value,
+                    intentId: clientSecret.value,
                     price: (total / 2) * 100,
                     description: `Payment for ${cart.items.map(item => `${item.service?.title}`)} `,
                     metadata
-    
+
                 })
             })
-            intent = await res.json() 
+            intent = await res.json()
 
 
         } else {
@@ -70,16 +70,16 @@ const CartPage: React.FC<CartProps> = async ({ searchParams }) => {
                     price: (total / 2) * 100,
                     description: `Payment for ${cart.items.map(item => `${item.service?.title}`)} `,
                     metadata
-    
+
                 })
             })
-            intent = await res.json() 
+            intent = await res.json()
 
         }
 
         return (
             <div className="container mx-auto flex flex-col justify-center items-center">
-                <Cart clientSecret={intent.clientSecret as string} cartId={cart.id} session={session} cartItems={items} />
+                <Cart appliedDiscounts={cart.discounts} intent={intent} cartId={cart.id} session={session} cartItems={items} />
             </div>
         );
 

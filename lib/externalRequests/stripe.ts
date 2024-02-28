@@ -91,9 +91,9 @@ export async function createPaymentIntent({ price, description, metadata }: { pr
 
 }
 
-export async function updatePaymentIntent({ price, description, metadata, clientSecret }: { clientSecret: string, price: number, description?: string, metadata?: Record<string, string> }) {
+export async function updatePaymentIntent({ price, description, metadata, intentId }: { intentId: string, price: number, description?: string, metadata?: Record<string, string> }) {
 
-    const paymentIntent = await client.paymentIntents.retrieve("", {client_secret: clientSecret})
+    const paymentIntent = await client.paymentIntents.retrieve(intentId)
     const newPaymentIntent = await client.paymentIntents.update(paymentIntent.id, {
 
         amount: price!,

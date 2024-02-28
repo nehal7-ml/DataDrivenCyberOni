@@ -7,10 +7,9 @@ export async function POST(req: NextRequest) {
         const cookieStore = cookies();
 
         const { price, description, metadata } = await req.json()
-        const { client_secret } = await createPaymentIntent({ price, description, metadata })
-        cookieStore.set('clientSecret', client_secret as string)
-        
-        return NextResponse.json({ clientSecret: client_secret });
+        const intent = await createPaymentIntent({ price, description, metadata })
+        cookieStore.set('intentId', intent.id as string);
+        return NextResponse.json(intent);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: error }, { status: 500 })
@@ -21,11 +20,10 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
     try {
         const cookieStore = cookies();
-        const { price, description, metadata, clientSecret } = await req.json()
-        const { client_secret } = await updatePaymentIntent({clientSecret, price, metadata })
-        cookieStore.set('clientSecret', client_secret as string)
-
-        return NextResponse.json({ clientSecret: client_secret });
+        const { price, description, metadata, intentId } = await req.json()
+        const intent = await updatePaymentIntent({ intentId, price, metadata })
+        cookieStore.set('intentId', intent.id as string);
+        return NextResponse.json(intent);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: error }, { status: 500 })
