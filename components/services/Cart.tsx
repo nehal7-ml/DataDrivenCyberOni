@@ -136,7 +136,7 @@ const Cart = ({ cartItems, appliedDiscounts, session, cartId, intent }: { cartIt
                     <div className="lg:w-1/2">
                         {secret &&
                             <PaymentModal
-                                amount={total * 100}
+                                amount={total * 100/2}
                                 redirect={`${process.env.HOST}/onboarding?cartId=${cartId}`}
                                 checkoutMessage="Save 10% By Choosing to pre purchase services, you will be charged 50% of the total cost  of the project. And receive priority booking privileges."
                                 active={scheduled} activationError="schedule meeting before payment"
@@ -224,7 +224,7 @@ async function updateIntent(cartItems: DisplayServiceCartItemDTO[], discounts: D
     const res = await fetch(`/api/stripe/intent`, {
         method: 'PUT',
         body: JSON.stringify({
-            price: calculateDiscountedPrice(calculateServiceCartTotal(cartItems), discounts),
+            price: calculateDiscountedPrice(calculateServiceCartTotal(cartItems), discounts)/2,
             intentId: intentId
         })
 
