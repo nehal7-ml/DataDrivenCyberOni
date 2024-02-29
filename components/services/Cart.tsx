@@ -9,13 +9,11 @@ import { useRouter } from "next/navigation";
 import CalendlyPopup from "../Calendly";
 import Link from "next/link";
 import { useNotify } from "../Notification";
-import CheckoutForm from "../CheckoutForm";
 import PaymentModal from "../PaymentWrapper";
 import { MoveRight, X } from "lucide-react";
 import LabelInput from "../shared/label-input";
 import { PaymentIntent } from "@stripe/stripe-js";
-import Loading from "../Loading";
-import loading from "@/app/loading";
+
 import FormLoading from "../shared/Form-loading";
 
 const Cart = ({ cartItems, appliedDiscounts, session, cartId, intent }: { cartItems: DisplayServiceCartItemDTO[], appliedDiscounts?: Discount[], session: Session, cartId: string, intent: PaymentIntent }) => {
