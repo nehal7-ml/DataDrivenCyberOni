@@ -28,7 +28,7 @@ export async function read(name: string, prisma: PrismaClient) {
 
         {
           expires: {
-            lte: new Date(),
+            gte: new Date(),
           },
         },
       ],

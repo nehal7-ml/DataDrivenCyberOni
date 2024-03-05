@@ -132,10 +132,10 @@ const Cart = ({ cartItems, appliedDiscounts, session, cartId, intent }: { cartIt
 
 
                     <div className="lg:w-1/2">
-                        {secret &&
+                        {currentIntent &&
                             <PaymentModal
                                 amount={total * 100/2}
-                                redirect={`${process.env.HOST}/onboarding?cartId=${cartId}`}
+                                redirect={`${process.env.HOST}/onboarding/start?cartId=${cartId}`}
                                 checkoutMessage="Save 10% By Choosing to pre purchase services, you will be charged 50% of the total cost  of the project. And receive priority booking privileges."
                                 active={scheduled} activationError="schedule meeting before payment"
                                 cartId={cartId}
