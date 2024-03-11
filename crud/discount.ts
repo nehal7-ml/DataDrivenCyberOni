@@ -19,6 +19,7 @@ export async function read(name: string, prisma: PrismaClient) {
   const newDiscount = await discounts.findUnique({
     where: {
       name,
+
       OR: [
         {
           expires: {
@@ -27,6 +28,7 @@ export async function read(name: string, prisma: PrismaClient) {
         },
 
         {
+
           expires: {
             gte: new Date(),
           },

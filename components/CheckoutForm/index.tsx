@@ -70,7 +70,7 @@ const CheckoutForm = ({ clientSecret, cartId, active, activationError, message, 
         })
       }
     }
-    if (stripe) {
+    if (stripe && clientSecret) {
       fetchData()
 
     }

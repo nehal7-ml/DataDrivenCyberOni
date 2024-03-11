@@ -222,7 +222,7 @@ async function updateIntent(cartItems: DisplayServiceCartItemDTO[], discounts: D
     const res = await fetch(`/api/stripe/intent`, {
         method: 'PUT',
         body: JSON.stringify({
-            price: calculateDiscountedPrice(calculateServiceCartTotal(cartItems), discounts)/2,
+            price: calculateDiscountedPrice(calculateServiceCartTotal(cartItems), discounts)*100/2,
             intentId: intentId
         })
 

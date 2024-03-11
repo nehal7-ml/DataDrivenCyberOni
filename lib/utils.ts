@@ -217,7 +217,7 @@ export function objectToSearchParams(obj: any): string {
 
 export function calculateServiceCartTotal(cartItems: DisplayServiceCartItemDTO[], discounts?: Discount[]) {
   let total: number = cartItems.reduce((total, item) => {
-    return total + (item.service?.hourlyRate ?? 0) * item.addons.reduce((total, addon) => { return total + addon.estimated_hours_times_one_hundred_percent * (addon.pricingModel === 'DEFAULT' ? 1 : 1.5) }, 0)
+    return total + parseFloat(((item.service?.hourlyRate ?? 0) * item.addons.reduce((total, addon) => { return total + addon.estimated_hours_times_one_hundred_percent * (addon.pricingModel === 'DEFAULT' ? 1 : 1.5) }, 0)).toFixed(2))
   }, 0);
 
   if (discounts) {
