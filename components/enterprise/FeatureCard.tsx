@@ -7,7 +7,8 @@ export type FeatureCardProps = {
 }
 
 function FeatureCard({image, title, description}: FeatureCardProps) {
-    return (<div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-5 text-black shadow-md  h-full">
+    return (
+    <div className=" flex flex-col items-center justify-center gap-2 rounded-lg bg-gray-200 p-5 text-black shadow-md  h-full">
         <Image
             src={image}
             alt={title}

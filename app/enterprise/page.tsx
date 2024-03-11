@@ -19,6 +19,7 @@ import ServiceCard from "@/components/enterprise/ServiceCard";
 import FeatureCard from "@/components/enterprise/FeatureCard";
 import { HowItWorksSteps, featureCards } from "@/data/enterpriseData";
 import HowItWorks from "@/components/enterprise/HowItWorks";
+import DevelopmentPathItem from "@/components/enterprise/DevelopmentPathItem";
 async function Enterprise() {
   const services = await getFeatured(prisma);
 
@@ -138,77 +139,26 @@ async function Enterprise() {
             </div>
           </div>
 
-          <div className="grid w-full grid-cols-1 grid-rows-4 gap-3 text-center lg:grid-cols-4 lg:grid-rows-1">
-            <div className="flex flex-1 flex-col items-center justify-center">
-              <Image
-                src={"/images/step-1.png"}
-                alt="step-1"
-                className="h-40 w-40 object-contain lg:w-full"
-                height={300}
-                width={300}
-              />
-              <div className="flex flex-col gap-3">
-                <div className="text-3xl text-[#E4A321]">
-                  Initial Consultation
-                </div>
-                <div className="mx-auto w-2/3">
-                  Understand client needs and challenges.
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-1 flex-col items-center justify-center">
-              <Image
-                src={"/images/step-2.png"}
-                alt="step-2"
-                className=" h-40 w-40 object-contain lg:w-full"
-                height={300}
-                width={300}
-              />
-              <div className="flex flex-col gap-3">
-                <div className="text-3xl text-[#E4A321]">Solution Design</div>
-                <div className="mx-auto w-2/3">
-                  {" "}
-                  Cyberoni experts design a custom solution blueprint, focusing
-                  on scalability and integration with current systems.
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-1 flex-col items-center justify-center">
-              <Image
-                src={"/images/step-3.png"}
-                alt="step-3"
-                className="h-40 w-40 object-contain lg:w-full"
-                height={300}
-                width={300}
-              />
-              <div className="flex flex-col gap-3">
-                <div className="text-3xl text-[#E4A321]">Proof of Concept</div>
-                <div className="mx-auto w-2/3">
-                  {" "}
-                  Implement a pilot project using a subset of the client&apos;s
-                  data to demonstrate the effectiveness of the solution.
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-1 flex-col items-center justify-center">
-              <Image
-                src={"/images/step-4.png"}
-                alt="step-4"
-                className="h-40 w-40 object-contain lg:w-full"
-                height={300}
-                width={300}
-              />
-              <div className="flex flex-col gap-3">
-                <div className="text-3xl text-[#E4A321]">
-                  System Integration
-                </div>
-                <div className="mx-auto w-2/3">
-                  Use APIs, middleware, or custom development to connect
-                  Cyberoni&apos;s software with existing databases, CRM, ERP, or
-                  other software systems.
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-col w-full gap-3 text-center lg:flex-row">
+            <DevelopmentPathItem
+              image="/images/step-1.png"
+              name="Initial Consultation"
+              content="Understand client needs and challenges." />
+            <DevelopmentPathItem
+              image="/images/step-2.png"
+              name="Solution Design"
+              content="Cyberoni experts design a custom solution blueprint, focusing on scalability and integration with current systems." />
+
+            <DevelopmentPathItem
+              image="/images/step-3.png"
+              name="Proof of Concept"
+              content="Implement a pilot project using a subset of the client's data to demonstrate the effectiveness of the solution." />
+
+            <DevelopmentPathItem
+              image="/images/step-4.png"
+              name="System Integration"
+              content="Use APIs, middleware, or custom development to connect Cyberoni's software with existing databases, CRM, ERP, or other software systems." />
+
           </div>
         </div>
       </section>
@@ -268,7 +218,7 @@ async function Enterprise() {
 
         <HowItWorks steps={HowItWorksSteps} />
       </section>
-      <section className="py-10">
+      <section className="py-10 max-w-full">
         <div className="mx-auto flex w-fit flex-1 flex-col items-center justify-center text-center">
           <div className="font-nunito text-4xl font-bold">Our Portfolio</div>
           <Image

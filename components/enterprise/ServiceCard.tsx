@@ -23,7 +23,7 @@ function ServiceCard({icon, title, link}: ServiceCardProps) {
                     className=" rounded-sm bg-blue-400 p-3 shadow-md"
                     href={link}
                 >
-                    <Redo />
+                <Redo />
                 </Link>
             </div>
         </div>);
