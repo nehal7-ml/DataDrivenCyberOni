@@ -2,17 +2,17 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  
+
   images: {
-    dangerouslyAllowSVG:true,
+    dangerouslyAllowSVG: true,
     domains: [
-      "lh3.googleusercontent.com", 
-    "vercel.com",
-    "placehold.co",
-    "images.unsplash.com", 
-    "res.cloudinary.com", 
-    "picsum.photos",
-    "api.dicebear.com",
+      "lh3.googleusercontent.com",
+      "vercel.com",
+      "placehold.co",
+      "images.unsplash.com",
+      "res.cloudinary.com",
+      "picsum.photos",
+      "api.dicebear.com",
       "avatars.githubusercontent.com",
       "images.pexels.com",
       "cdn.dribbble.com"
@@ -50,7 +50,7 @@ const nextConfig = {
         destination: "https://g.page/r/CfS7tYPMVQ8ZEAI/review",
         permanent: true,
       },
-       {
+      {
         source: "/leave_a_review",
         destination: "https://g.page/r/CfS7tYPMVQ8ZEAI/review",
         permanent: true,
