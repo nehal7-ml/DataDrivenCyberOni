@@ -16,6 +16,7 @@ import "./globals.css";
 import { authOptions } from "@/lib/nextAuthAdapter";
 import { WebVitals } from "@/components/WebVitals";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import LeadForm from "@/components/LeadForm";
 import FacebookPixel from "@/components/FbPixel";
 
 export const metadata: Metadata = {
@@ -111,6 +112,11 @@ export default async function RootLayout({
             ></iframe>
           </noscript>
         </main>
+        {
+          <Suspense>
+            <LeadForm />
+          </Suspense>
+        }
         {
           <Suspense>
             <Notification />
