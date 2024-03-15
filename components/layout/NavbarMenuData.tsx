@@ -202,7 +202,7 @@ const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestu
                     icon: <BarChart className=" text-blue-700" />,
                 },
                 {
-                    href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126?id=Interactive%20Reports",
+                    href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126?id=Team%20Dashboard",
                     name: "Team Dashboard & Alerts",
                     subTitle: "Monitor your metricse",
                     icon: <AppWindow className="text-blue-700" />,
@@ -221,7 +221,7 @@ const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestu
                 },
 
                 {
-                    href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126?id=Group%20Analyticss",
+                    href: "/services/Web-devlopment-06cafb96-2fb8-41fb-b34c-137a154f5126?id=Group%20Analytics",
                     name: "Group Analytics",
                     subTitle: "Measure B2B account health",
                     icon: <Group className="text-blue-700" />,
