@@ -3,8 +3,8 @@ import React from "react";
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="p-4">
-      <h1 className="mb-4 text-2xl font-bold">Privacy Policy</h1>
+    <div className="container mx-auto p-4">
+      <h1 className="mb-4 text-2xl font-bold text-center">Privacy Policy</h1>
 
       {/* Effective Date */}
       <section className="mb-6">

@@ -16,6 +16,7 @@ describe('Testing Service crud unit functions', () => {
         date: new Date(),
         featured: false,
         subTitle: 'preview',
+        publishDate: new Date(),
         author: {
             email: 'nehal.sk.99@gmail.com'
         },
@@ -27,7 +28,6 @@ describe('Testing Service crud unit functions', () => {
             { name: 'Image 1', src: 'image1.jpg' } as CreateImageDTO,
             { name: 'Image 2', src: 'image2.jpg' } as CreateImageDTO,
         ],
-        publishDate: new Date()
     };
 
     let createdblog: Blog;

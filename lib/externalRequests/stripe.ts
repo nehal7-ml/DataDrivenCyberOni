@@ -1,8 +1,10 @@
 import stripe from "stripe";
 import prisma from "../prisma";
-import { HttpError } from "../utils";
 import { createServicePayment } from "@/crud/payments";
 import { updateServiceCartStatus } from "@/crud/cart";
+import { updatePaymentStatus } from "./sendgrid";
+import { createPaymentRecord } from "@/crud/payment";
+import { upsertAccount } from "./notion";
 const client = new stripe(process.env.STRIPE_API_KEY as string)
 const endpointSecret = process.env.STRIPE_WEB_SECRET as string
 const startDate = new Date("2023-11-01"); // Start date of the trial
@@ -27,14 +29,42 @@ export async function verifyWebhook(signature: string, body: string | Buffer) {
 
 export async function processStripeEvent(event: stripe.Event) {
 
-    if (event.type === 'payment_intent.succeeded' && event.data.object['metadata']) {
-        console.log("stripe event: ", event.data.object['metadata']['type'] === 'service');
+    if (event.type === 'payment_intent.succeeded' && event.data.object['metadata'] && event.data.object.metadata['cartId']) {
         const cartId = event.data.object.metadata['cartId']
         const cart = await updateServiceCartStatus(cartId, 'PAID', prisma)
         const payment = await createServicePayment({
             paymentId: event.data.object.id,
             cartId: cartId
         }, prisma)
+    }
+
+
+    if (event.type == "invoice.paid" && event.data.object.status === 'paid') {
+
+        await createPaymentRecord({
+            email: event.data.object.customer_email as string,
+            price: event.data.object.total.toString(),
+            subscriptionId: event.data.object.subscription as string,
+            invoice: event.data.object.invoice_pdf as string
+        }, prisma)
+
+        await updatePaymentStatus(event.data.object.customer_email as string, true, "CyberOni Project Completed") //  verify list name as in SendGrid
+        await upsertAccount(
+            {
+                'Email': { type: 'email', content: event.data.object.customer_email as string },
+                'Payment_active': { type: "checkbox", content: true },
+
+            })
+    }
+
+    if (event.type == "invoice.payment_failed") {
+        await updatePaymentStatus(event.data.object.customer_email as string, false, "CyberOni Project Completed") // verify list name as in SendGrid
+        await upsertAccount(
+            {
+                'Email': { type: 'email', content: event.data.object.customer_email as string },
+                'Payment_active': { type: "checkbox", content: false },
+
+            })
     }
 
 }
@@ -60,6 +90,27 @@ export async function createPaymentIntent({ price, description, metadata }: { pr
     return paymentIntent
 
 }
+
+export async function updatePaymentIntent({ price, description, metadata, intentId }: { intentId: string, price: number, description?: string, metadata?: Record<string, string> }) {
+
+    const paymentIntent = await client.paymentIntents.retrieve(intentId)
+    const newPaymentIntent = await client.paymentIntents.update(paymentIntent.id, {
+
+        amount: price!,
+        currency: "usd",
+        payment_method_types: [
+            'card',
+            'cashapp',
+            'afterpay_clearpay',
+            'klarna'
+
+        ]
+
+    });
+    return newPaymentIntent
+
+}
+
 
 export async function createSubscription(priceId: string, customerId: string, paymentMehtod: string) {
     // console.log(paymentMehtod);
