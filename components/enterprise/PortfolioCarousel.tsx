@@ -40,20 +40,6 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
     const nextSlide = (containerRef: MutableRefObject<HTMLDivElement | null>) => {
         //scrollToElement(forwardTargetRef)
         if (containerRef.current) {
-            console.log(
-                containerRef.current.scrollLeft,
-                containerRef.current.scrollWidth,
-            );
-
-            if (
-                containerRef.current.scrollLeft === containerRef.current.scrollWidth
-            ) {
-                containerRef.current.scrollTo({
-                    left: 0,
-                    behavior: "smooth",
-                });
-                return;
-            }
 
             containerRef.current.scrollTo({
                 left:
@@ -68,14 +54,6 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
         //scrollToElement(backwardTargetRef)
 
         if (containerRef.current) {
-            if (containerRef.current.scrollLeft === 0) {
-                containerRef.current.scrollTo({
-                    left: containerRef.current.scrollWidth,
-                    behavior: "smooth",
-                });
-                return;
-            }
-
             containerRef.current.scrollTo({
                 left:
                     containerRef.current.scrollLeft -
@@ -155,7 +133,7 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
                                 return (
                                     <div
                                         key={index}
-                                        className={` w-1/3  flex-shrink-0 overflow-hidden rounded-lg lg:aspect-auto lg:h-full lg:w-full`}
+                                        className={` w-1/2 h-60  flex-shrink-0 overflow-hidden rounded-lg lg:aspect-auto lg:h-full lg:w-full`}
                                     >
                                         <div className="relative h-full w-full  overflow-hidden rounded-lg ">
                                             <ImageWithTextOverlay
