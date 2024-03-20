@@ -51,8 +51,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/leave_a_review",
-        destination: "https://g.page/r/CfS7tYPMVQ8ZEAI/review",
+        source: "/small-business-suppliment",
+        destination: "https://www.jotform.com/build/240795056336158",
         permanent: true,
       },
       {
