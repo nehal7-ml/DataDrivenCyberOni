@@ -13,7 +13,10 @@ const nextConfig = {
       "res.cloudinary.com",
       "picsum.photos",
       "api.dicebear.com",
-      "avatars.githubusercontent.com"],
+      "avatars.githubusercontent.com",
+      "images.pexels.com",
+      "cdn.dribbble.com"
+    ],
   },
   async redirects() {
     return [
