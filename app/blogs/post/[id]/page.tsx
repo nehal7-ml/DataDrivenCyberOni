@@ -44,13 +44,13 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
             type: 'article',
             title: blog.title,
             description: description,
-            images: [... blog.images.map(image =>image.src), '/images/monster_5.jpg']
+            images: [... blog.images.map(image =>image.src)]
 
         }
         metadata.twitter = {
             title: blog.title,
             description: description,
-            images: [... blog.images.map(image =>image.src), '/images/monster_5.jpg']
+            images: [... blog.images.map(image =>image.src)]
 
         }
         metadata.category = blog.tags.join(" ")
