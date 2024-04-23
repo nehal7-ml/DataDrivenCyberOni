@@ -11,7 +11,6 @@ export default async function Referral({ params }: { params: { prefix: string } 
     try {
         await sleep(2000)
         const res = await fetch(updated.link);
-        if (res.status >= 400) redirect(updated.fallback);
     } catch (error) {
         console.log("redirect error: ", error);
         redirect(updated.fallback);
