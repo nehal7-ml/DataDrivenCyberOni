@@ -17,8 +17,6 @@
   "dependencies": {
     "@motionone/utils": "^10.17.0",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@nlux/openai-react": "^0.10.5",
-    "@nlux/react": "^0.10.5",
     "@notionhq/client": "^2.2.13",
     "@prisma/client": "^5.13.0",
     "@radix-ui/react-dialog": "^1.0.5",
