@@ -7,16 +7,19 @@ import {
   EventStatus,
   Image,
   PricingModel,
+  ProductStatus,
   Role,
   Service,
   ServiceCart,
   ServiceCartItem,
   ServiceDescription,
   SubService,
+  Supplier,
   Tag,
   User,
 } from "@prisma/client";
 import { UserPersona } from "./casestudy";
+import { CreateSupplierDTO } from "./supplier";
 
 export type CreateBlogDTO = {
   title: string;
@@ -238,3 +241,53 @@ export type CreateDiscountDTO = {
   value: number;
   expires?: Date;
 };
+
+
+export type CreateProductDTO = {
+  sku: string;
+  name: string;
+  status: ProductStatus;
+  ratings?: number | null;
+  inventory: number;
+  productBreakdown?: string | null;
+  shippingReturnPolicy: string;
+  description: string;
+  price: number;
+  profitMargin: number;
+  displayPrice: number;
+  category?: ProductCategory;
+  subcategory?: string;
+  tags: CreateTagDTO[];
+  images: CreateImageDTO[];
+  suppliers?: CreateSupplierDTO[] | Supplier[];
+  amazonProductId?: string;
+  aliExpressId?: string;
+};
+
+export type DisplayProductDTO = {
+  id: string;
+  sku: string;
+  name: string;
+  status: string;
+  ratings: number | null;
+  inventory: number;
+  productBreakdown: string | null;
+  shippingReturnPolicy: string;
+  description: string;
+  price: number;
+  profitMargin: number;
+  displayPrice: number;
+  category?: ProductCategory;
+  subcategory: string | null;
+  amazonProductId?: string;
+  cjDropShippingId?: string;
+};
+
+export type ProductCategory = {
+  id: string;
+  name: string;
+  children?: ProductCategory[];
+  parent? : ProductCategory | null;
+  parentId?: string | null;
+
+}

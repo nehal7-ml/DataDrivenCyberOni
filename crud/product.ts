@@ -1,55 +1,21 @@
 import { Product, PrismaClient, Supplier, ProductStatus } from "@prisma/client";
 import { connectOrCreateObject as connectTag } from "./tags";
-import { CreateTagDTO } from "./DTOs";
+import { CreateProductDTO, CreateTagDTO } from "./DTOs";
 import { connectOrCreateObject as connectImage } from "./images";
 import { CreateImageDTO } from "./DTOs";
 import { CreateSupplierDTO } from "./supplier";
 
-export type CreateProductDTO = {
-    sku: string;
-    name: string;
-    status: ProductStatus;
-    ratings?: number | null;
-    inventory: number;
-    productBreakdown?: string | null;
-    shippingReturnPolicy: string;
-    description: string;
-    price: number;
-    profitMargin: number;
-    displayPrice: number;
-    category: string;
-    subcategory?: string;
-    tags: CreateTagDTO[];
-    images: CreateImageDTO[];
-    suppliers?: CreateSupplierDTO[] | Supplier[];
-    amazonProductId?: string;
-    cjDropShippingId?: string;
-}
 
-
-export type displayProductDTO = {
-    id: string;
-    sku: string;
-    name: string;
-    status: string;
-    ratings: number | null;
-    inventory: number;
-    productBreakdown: string | null;
-    shippingReturnPolicy: string;
-    description: string;
-    price: number;
-    profitMargin: number;
-    displayPrice: number;
-    category: string;
-    subcategory: string | null;
-    amazonProductId?: string;
-    cjDropShippingId?: string;
-}
 async function create(product: CreateProductDTO, prismaClient: PrismaClient) {
     const products = prismaClient.product;
     let createdproduct = await products.create({
         data: {
             ...product,
+            category: product.category ? {
+                connect: {
+                  id: product.category.id,
+                }
+              } : undefined,
             tags: { connectOrCreate: connectTag(product.tags) },
             images: await connectImage(product.images, []),
             suppliers: {
@@ -94,6 +60,9 @@ async function update(productId: string, product: CreateProductDTO, prismaClient
         where: { id: productId },
         data: {
             ...product,
+            category: product.category? {
+                connect: {id: product.category.id}
+              }:undefined,
             tags: { connectOrCreate: connectTag(product.tags) },
             images: await connectImage(product.images, oldProduct!.images),
             suppliers: suplierUpdate
