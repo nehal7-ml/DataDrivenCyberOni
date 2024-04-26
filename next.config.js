@@ -96,6 +96,11 @@ const nextConfig = {
         destination: "https://www.freelancer.com/u/CodingOni",
         permanent: false,
       },
+      {
+        source: "/leave_a_review",
+        destination: "https://maps.app.goo.gl/44BHLXSPYw6mNotMA",
+        permanent: false,
+      }
     ];
   },
   experimental: {
