@@ -125,7 +125,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
             if (iframe.current && event.data.type === "resize" && event.origin === window.origin) {
                 console.log("revievev resizer", event.data);
                 iframe.current.style.height = (event.data.size).toString() + "px";
-                if(event.data.src==='resize') setLoaded(true)
+                if(event.data.src==='initial') setLoaded(true)
             }
         });
 
@@ -148,7 +148,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
         });
     }, []);
     return (<>
-        {<iframe ref={iframe} className={`w-full h-max min-h-max overflow-y-auto z-50 scrollbar-none overflow-hidden  ${loaded ? 'opacity-100' : 'opacity-0'} lg:px-[2rem]`} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-top-navigation-by-user-activation" srcDoc={container}></iframe>}
+        {<iframe ref={iframe} className={`w-full h-max min-h-max z-50 scrollbar-none overflow-hidden  ${loaded ? 'opacity-100' : 'opacity-0'} lg:px-[2rem]`} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-top-navigation-by-user-activation" srcDoc={container}></iframe>}
         {!loaded && <div className="w-full h-full z-50  flex flex-wrap ">
             {generateRandomArray(['w-64', 'w-80', 'w-96', 'w-72', 'w-52', 'w-full'], 30, content.slice(0, 30)).map((value, index) => {
 
