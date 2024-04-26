@@ -98,7 +98,7 @@ const nextConfig = {
       },
       {
         source: "/leave_a_review",
-        destination: "https://maps.app.goo.gl/44BHLXSPYw6mNotMA",
+        destination: "https://g.page/r/CfS7tYPMVQ8ZEAI/review",
         permanent: false,
       }
     ];
