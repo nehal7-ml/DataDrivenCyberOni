@@ -73,7 +73,9 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             },
             tags: true,
             images: true,
-            Comments: true
+            Comments: true,
+            category: true,
+
         }
     })
     if (existingblog) return existingblog;
@@ -95,7 +97,9 @@ async function getAll(page: number, pageSize: number, prismaClient: PrismaClient
         include: {
             // reviews: true,
             tags: true,
-            author: true
+            author: true,
+            category: true,
+
         }
     })
 
@@ -125,7 +129,8 @@ export async function getFeatured(prisma: PrismaClient) {
                     image: true,
                 }
             },
-            images: true
+            images: true,
+            category: true
         }
     });
     return getRandomFromArray(featured);
@@ -146,6 +151,8 @@ export async function addView({ id, userEmail }: { id: string, userEmail?: strin
             },
             include: {
                 tags: true,
+                category: true,
+
                 author: {
                     include: {
                         image: true,
@@ -199,6 +206,8 @@ export function getRecent(prisma: PrismaClient) {
         },
         include: {
             tags: true,
+            category: true,
+
             author: {
 
                 include: {
@@ -224,6 +233,8 @@ export function getPopular(prisma: PrismaClient) {
         include: {
             // reviews: true,
             tags: true,
+            category: true,
+
             author: {
 
                 include: {
@@ -254,6 +265,8 @@ export function getEssential(prisma: PrismaClient) {
         include: {
             // reviews: true,
             tags: true,
+            category: true,
+
             author: {
                 include: {
                     image: true

@@ -13,6 +13,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
 
     const iframe = useRef<HTMLIFrameElement>(null)
     const resizeScript = `<script id="resizeScript" >
+    document.documentElement.style.overflow= "hidden"
     const body= document.querySelector('body')
     const html = document.getElementsByTagName('html')[0];
     let size = html.scrollHeight;
@@ -125,7 +126,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
             if (iframe.current && event.data.type === "resize" && event.origin === window.origin) {
                 console.log("revievev resizer", event.data);
                 iframe.current.style.height = (event.data.size).toString() + "px";
-                if(event.data.src==='initial') setLoaded(true)
+                if (event.data.src === 'initial') setLoaded(true)
             }
         });
 

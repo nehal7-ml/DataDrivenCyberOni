@@ -1,5 +1,6 @@
 import {
   Blog,
+  BlogCategory,
   BlogComment,
   BlogLike,
   CaseStudy,
@@ -41,6 +42,7 @@ export type DisplayBlogDTO = Blog & {
   images: Image[];
   Comments: DisplayCommentDTO[];
   Likes: BlogLike[];
+  category?: BlogCategory
   _count: {
     Likes: number;
   };
