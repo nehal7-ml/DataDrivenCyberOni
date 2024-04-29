@@ -18,7 +18,7 @@ import {
   Supplier,
   Tag,
   User,
-} from "@prismaPricingModel/client";
+} from "@prisma/client";
 import { UserPersona } from "./casestudy";
 import { CreateSupplierDTO } from "./supplier";
 
