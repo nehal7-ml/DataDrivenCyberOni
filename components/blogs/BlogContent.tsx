@@ -6,7 +6,6 @@ import { getCookie, } from 'cookies-next';
 import TextLoaders from "../loaders/TextLoaders";
 import { generateRandomArray, getRandomFromArray } from "@/lib/utils";
 
-import xss from "xss";
 
 function BlogContent({ content, theme, href }: { content: string, theme: 'dark' | 'light', href: string }) {
 
@@ -14,11 +13,25 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
 
     const iframe = useRef<HTMLIFrameElement>(null)
     const resizeScript = `<script id="resizeScript" >
+    document.documentElement.style.overflow= "hidden"
     const body= document.querySelector('body')
-    window.addEventListener('resize',()=> {
-        console.log("html resizeing");
-        window.parent.postMessage({ type:"resize",size: window.document.getElementsByTagName('html')[0].scrollHeight,src:'resize'});
-    })
+    const html = document.getElementsByTagName('html')[0];
+    let size = html.scrollHeight;
+    var observer = new  ResizeObserver(function(mutations) {
+        console.log('size changed!' , size , html.scrollHeight);
+
+        if(size!== html.scrollHeight) {
+            window.parent.postMessage({ type:"resize", size: html.scrollHeight, src:'resize'});
+        }
+    });
+    observer.observe(html);
+
+
+
+    // window.addEventListener('resize',()=> {
+    //     console.log("html resizeing: " , window);
+    //     window.parent.postMessage({ type:"resize",size: window.document.getElementsByTagName('html')[0].scrollHeight,src:'resize'});
+    // })
     window.parent.postMessage({ type:"resize", size: window.document.getElementsByTagName('html')[0].scrollHeight, src:'initial'});
 
     console.log("iframe-origin" ,window.orgin, "sent m,essage");
@@ -40,6 +53,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
         } 
 
       })
+      
 
       ${theme == 'dark' ? ' body.classList.add(\'dark\');' : ''}
 
@@ -56,8 +70,12 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
             font-family: "Inter", sans-serif;
         }
         a {
-            color: pink;
-        }\`
+            color: #3b82f6;
+        }
+        a:visited { 
+            color: #4a044e;
+        }
+        \`
         document.head.appendChild(styles);
     </script>
 `
@@ -68,6 +86,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
     <script id="themeScript" >
     const themeStyles = document.createElement('style');
     themeStyles.textContent=\`
+
     body {
         font-family: "Inter", sans-serif;
         color: black;
@@ -90,6 +109,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
         <base href="${typeof window !== 'undefined' ? window.location.href : href}">      
         ${themeScript}
         ${fontScript}
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=ResizeObserver"></script>
         </head>
         <body id="tinymce" class="mce-content-body ">
         ${content}
@@ -102,10 +122,11 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
     useEffect(() => {
 
         window.addEventListener("message", (event) => {
-            console.log("iframe-message-recieved", event.origin);
-            if (iframe.current && event.data.type === "resize" && event.origin ===window.origin) {
+            //console.log("iframe-message-recieved", window.origin, event.origin);
+            if (iframe.current && event.data.type === "resize" && event.origin === window.origin) {
+                console.log("revievev resizer", event.data);
                 iframe.current.style.height = (event.data.size).toString() + "px";
-                if(event.data.src === 'resize') setLoaded(true)
+                if (event.data.src === 'initial') setLoaded(true)
             }
         });
 
@@ -128,8 +149,8 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
         });
     }, []);
     return (<>
-        {<iframe ref={iframe} className={`w-full h-fit overflow-y-auto z-50  ${loaded ? 'opacity-100' : 'opacity-0'}`} sandbox="allow-scripts allow-same-origin" srcDoc={container}></iframe>}
-        {!loaded && <div className="w-fu h-full z-50  flex flex-wrap ">
+        {<iframe ref={iframe} className={`w-full h-max min-h-max z-50 scrollbar-none overflow-hidden  ${loaded ? 'opacity-100' : 'opacity-0'} lg:px-[2rem]`} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-top-navigation-by-user-activation" srcDoc={container}></iframe>}
+        {!loaded && <div className="w-full h-full z-50  flex flex-wrap ">
             {generateRandomArray(['w-64', 'w-80', 'w-96', 'w-72', 'w-52', 'w-full'], 30, content.slice(0, 30)).map((value, index) => {
 
                 return (

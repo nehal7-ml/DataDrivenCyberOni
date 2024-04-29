@@ -1,5 +1,6 @@
 import {
   Blog,
+  BlogCategory,
   BlogComment,
   BlogLike,
   CaseStudy,
@@ -7,16 +8,19 @@ import {
   EventStatus,
   Image,
   PricingModel,
+  ProductStatus,
   Role,
   Service,
   ServiceCart,
   ServiceCartItem,
   ServiceDescription,
   SubService,
+  Supplier,
   Tag,
   User,
 } from "@prismaPricingModel/client";
 import { UserPersona } from "./casestudy";
+import { CreateSupplierDTO } from "./supplier";
 
 export type CreateBlogDTO = {
   title: string;
@@ -38,6 +42,7 @@ export type DisplayBlogDTO = Blog & {
   images: Image[];
   Comments: DisplayCommentDTO[];
   Likes: BlogLike[];
+  category?: BlogCategory
   _count: {
     Likes: number;
   };
@@ -238,3 +243,53 @@ export type CreateDiscountDTO = {
   value: number;
   expires?: Date;
 };
+
+
+export type CreateProductDTO = {
+  sku: string;
+  name: string;
+  status: ProductStatus;
+  ratings?: number | null;
+  inventory: number;
+  productBreakdown?: string | null;
+  shippingReturnPolicy: string;
+  description: string;
+  price: number;
+  profitMargin: number;
+  displayPrice: number;
+  category?: ProductCategory;
+  subcategory?: string;
+  tags: CreateTagDTO[];
+  images: CreateImageDTO[];
+  suppliers?: CreateSupplierDTO[] | Supplier[];
+  amazonProductId?: string;
+  aliExpressId?: string;
+};
+
+export type DisplayProductDTO = {
+  id: string;
+  sku: string;
+  name: string;
+  status: string;
+  ratings: number | null;
+  inventory: number;
+  productBreakdown: string | null;
+  shippingReturnPolicy: string;
+  description: string;
+  price: number;
+  profitMargin: number;
+  displayPrice: number;
+  category?: ProductCategory;
+  subcategory: string | null;
+  amazonProductId?: string;
+  cjDropShippingId?: string;
+};
+
+export type ProductCategory = {
+  id: string;
+  name: string;
+  children?: ProductCategory[];
+  parent? : ProductCategory | null;
+  parentId?: string | null;
+
+}
