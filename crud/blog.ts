@@ -11,7 +11,7 @@ async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
         data: {
             ...blog,
             images: await connectImages(blog.images, []),
-            tags: { connectOrCreate: connectTags(blog.tags) },
+            tags:  connectTags(blog.tags, []) ,
             author: { connect: { email: blog.author.email } }
         }
     });
@@ -29,7 +29,7 @@ async function update(blogId: string, blog: CreateBlogDTO, prismaClient: PrismaC
         data: {
             ...blog,
             images: await connectImages(blog.images, oldBlog!.images),
-            tags: { connectOrCreate: connectTags(blog.tags) },
+            tags:  connectTags(blog.tags, oldBlog!.tags) ,
             author: { connect: { email: blog.author.email } }
         }
     })
