@@ -132,10 +132,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
 
     }, []);
 
-    useEffect(() => {
-        iframe.current?.contentWindow?.location.reload();
-    }, []);
-
+    
     useEffect(() => {
         window.addEventListener('theme', (event: CustomEventInit) => {
             if (event.detail.theme === 'dark') {
@@ -149,7 +146,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
         });
     }, []);
     return (<>
-        {<iframe ref={iframe} className={`w-full h-max min-h-max z-50 scrollbar-none overflow-hidden  ${loaded ? 'opacity-100' : 'opacity-0'} lg:px-[2rem]`} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-top-navigation-by-user-activation" srcDoc={container}></iframe>}
+        {<iframe ref={iframe} className={`relative w-full h-max min-h-max z-50 scrollbar-none overflow-hidden  ${loaded ? 'opacity-100' : 'opacity-0'} lg:px-[2rem]`} sandbox="allow-scripts allow-same-origin allow-top-navigation allow-top-navigation-by-user-activation" srcDoc={container}></iframe>}
         {!loaded && <div className="w-full h-full z-50  flex flex-wrap ">
             {generateRandomArray(['w-64', 'w-80', 'w-96', 'w-72', 'w-52', 'w-full'], 30, content.slice(0, 30)).map((value, index) => {
 
