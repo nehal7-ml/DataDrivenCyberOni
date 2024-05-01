@@ -126,7 +126,7 @@ function BlogContent({ content, theme, href }: { content: string, theme: 'dark' 
             if (iframe.current && event.data.type === "resize" && event.origin === window.origin) {
                 console.log("revievev resizer", event.data);
                 iframe.current.style.height = (event.data.size).toString() + "px";
-                if (event.data.src === 'initial') setLoaded(true)
+                setLoaded(true)
             }
         });
 
