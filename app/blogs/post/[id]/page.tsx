@@ -117,12 +117,12 @@ async function BlogPost({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <div className="container relative mx-auto my-10  flex min-h-screen flex-col  items-center px-1 py-5 xl:px-10 xl:py-10">
-          <div className="flex max-w-full items-center justify-center">
+        <div className="container relative mx-auto my-10  flex min-h-screen flex-col  items-center px-1 py-5  xl:px-10   xl:py-10">
+          <div className="flex w-full items-center justify-center px-[5rem]">
             {blog.images[0] ? (
               <Image
                 priority={true}
-                className="m-2 h-[40vh] w-full rounded-lg object-contain"
+                className="m-2  rounded-lg object-cover w-full h-auto max-h-[500px] xl:max-h-[600px] 2xl:max-h-[700px] 3xl:max-h-[800px]"
                 src={blog.images[0].src}
                 alt={stripFileExtension(blog.images[0].name || "blog_image")}
                 width={500}
