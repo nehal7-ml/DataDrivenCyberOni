@@ -41,35 +41,40 @@ function BlogContent({
     console.log("iframe-origin" ,window.origin, "sent message");
 
     const links = document.getElementsByTagName('a');
-      for (let link of links) {
-        link.target= "_top"
-      }
+    for (let link of links) {
+      link.target= "_top"
+    }
 
-      window.addEventListener('message', (event)=> {
+    const frames = document.getElementsByTagName('iframe');
+    for (let frame of frames) {
+      frame.style= ""
+    }
 
-        if(event.data.type === 'theme' && event.data.theme==='dark') {
-            body.classList.add('dark');
-        
-        } 
-        if(event.data.type === 'theme' && event.data.theme==='light') {
-            body.classList.remove('dark');
-        
-        } 
+    window.addEventListener('message', (event)=> {
 
-      })
+      if(event.data.type === 'theme' && event.data.theme==='dark') {
+          body.classList.add('dark');
+      
+      } 
+      if(event.data.type === 'theme' && event.data.theme==='light') {
+          body.classList.remove('dark');
+      
+      } 
 
-      window.addEventListener('message', (event)=> {
+    })
 
-        if(event.data.type === 'size-query' ) {
-          window.parent.postMessage({ type:"resize", size: html.scrollHeight, src:'initial'});
+    window.addEventListener('message', (event)=> {
 
-        
-        } 
-     
+      if(event.data.type === 'size-query' ) {
+        window.parent.postMessage({ type:"resize", size: html.scrollHeight, src:'initial'});
 
-      })      
+      
+      } 
+    
 
-      ${theme == "dark" ? " body.classList.add('dark');" : ""}
+    })      
+
+    ${theme == "dark" ? " body.classList.add('dark');" : ""}
 
     </script>`;
   const fontScript = ` 
@@ -119,7 +124,15 @@ function BlogContent({
         height: auto;
         border-width: 0px;
         border-radius: 5px;
+        aspect-ratio: 16 / 9;
     }
+
+    @media (max-width: 768pxpx) {
+      iframe {
+          width: 95%; /* Slightly smaller width for very small devices */
+          padding: 0 2.5%; /* Adds some padding */
+      }
+  }
     \`
     document.head.appendChild(themeStyles);
 
