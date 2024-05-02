@@ -109,6 +109,17 @@ function BlogContent({
         font-family: "Inter", sans-serif;
         color: white;
       }
+      img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    iframe {
+        max-width: 100%;
+        height: auto;
+        border-width: 0px;
+        border-radius: 5px;
+    }
     \`
     document.head.appendChild(themeStyles);
 
