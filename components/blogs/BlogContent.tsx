@@ -134,7 +134,7 @@ function BlogContent({
     }">      
         ${themeScript}
         ${fontScript}
-        <script src=" https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.min.js "></script>
+        <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.1/dist/ResizeObserver.min.js"></script>
         </head>
         <body id="tinymce" class="mce-content-body ">
         ${content}
