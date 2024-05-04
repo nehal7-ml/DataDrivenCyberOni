@@ -15,23 +15,24 @@ export const Owner = {
   seo: {
     metaTitle: "CyberOni: Innovative Software Solutions for Business Growth",
     metaDescription:
-      "Unlock business innovation with CyberOni's remote software solutions. Specializing in custom tech development, we empower global efficiency and growth through advanced technology.",
+      "Welcome to CyberOni, where we bring your business the power of cutting-edge AI and automated solutions. With CyberOni, you can boost your online presence with our top-notch SEO tools and simplify your daily operations through seamless integration across platforms. Get ready to transform your business with our 24/7 automated customer support and smart technologies designed to make your workflow smoother and more efficient. Join us at CyberOni and experience the difference our solutions make.",
     keywords: [
       "Custom Software Solutions",
-      "Cloud Computing Services",
+      "SEO Automation",
       "Mobile App Development Expert",
       "Web Development Innovations",
-      "Artificial Intelligence in Business",
-      "Machine Learning Applications",
+      "AI Business Solutions",
+      "Automated Customer Support",
       "Data Analytics Strategies",
       "Cybersecurity Solutions for Businesses",
       "Blockchain Technology Implementation",
       "Internet of Things (IoT) for Efficiency",
       "Digital Transformation Consulting",
       "IT Consulting Services",
-      "Technology Solutions for SMEs",
+      "Seamless Platform Integration",
       "Enterprise Software Customization",
       "Business Growth Through Tech",
+      "Smart Business Tools"
     ],
   },
 };
