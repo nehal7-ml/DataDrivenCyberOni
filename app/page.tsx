@@ -136,8 +136,8 @@ export default async function Home() {
           </div>
           <div className="lg:w-1/2 h-[35rem] flex justify-center items-center">
             <Image
-              className="flex-1 w-full h-full object-scale-down"
-              src={"/images/contact-form.png"}
+              className="flex-1 w-full h-full object-contain"
+              src={"/images/contact-forms/contact-image-1.png"}
               alt="contact"
               height={1280}
               width={1200}

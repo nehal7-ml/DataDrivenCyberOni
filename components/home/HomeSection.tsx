@@ -82,7 +82,7 @@ const Section = ({
         {/* Image */}
         <div
           className={`container mx-auto flex flex-col items-center justify-center ${orderClass} lg:row-span-2 lg:flex lg:w-1/2 lg:items-center lg:justify-center`}
-          ref={scope} // Apply the ref here
+          //ref={scope} // Apply the ref here
         >
           <Image src={image} alt={image} height={500} width={500} />
         </div>

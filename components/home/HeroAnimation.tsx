@@ -9,8 +9,8 @@ function HeroAnimation() {
             options={{
                 animationData: animationData
             }}
-            height={500}
-            width={500}
+            height={650}
+            width={650}
         >
 
         </Lottie>
