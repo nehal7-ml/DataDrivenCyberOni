@@ -9,6 +9,7 @@ import EmailLetter from "@/components/home/EmailLetter";
 import CalendlyPopup from "@/components/Calendly";
 import { companies, homeSections, sildes } from "@/data/homeData";
 import Link from "next/link";
+import HeroAnimation from "@/components/home/HeroAnimation";
 export default async function Home() {
   return (
     <>
@@ -34,14 +35,17 @@ export default async function Home() {
                 </div>
               </div>
             </div>
-            <Image
-              src={"/images/hero-1.png"}
+
+            <HeroAnimation />
+            
+            {/* <Image
+              src={"/gifs/hero-animation.gif"}
               alt={"hero-1"}
               height={500}
               width={500}
               priority={true}
               fetchPriority="high"
-            ></Image>
+            ></Image> */}
           </div>
 
           <div className="container my-4">
