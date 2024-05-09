@@ -3,8 +3,7 @@ import slugify from "slugify";
 import seedRandom from 'seedrandom'
 import { Discount, ServiceCartItem } from "@prisma/client";
 import { DisplayServiceCartItemDTO } from "@/crud/DTOs";
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+
 export interface HttpError extends Error {
   status: number;
   message: string;
@@ -250,7 +249,3 @@ export function calculateDiscountedPrice(total: number, discounts: Discount[]): 
 
 
 
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}

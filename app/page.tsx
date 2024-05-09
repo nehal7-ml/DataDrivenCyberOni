@@ -7,7 +7,7 @@ import Slide from "@/components/home/Slide";
 import ContactForm from "@/components/ContactForm";
 import EmailLetter from "@/components/home/EmailLetter";
 import CalendlyPopup from "@/components/Calendly";
-import { companies, homeSections, mainHero, sildes } from "@/data/homeData";
+import { companies, homeSections, mainHero, sildes, softwareCategories, softwareProducts } from "@/data/homeData";
 import Link from "next/link";
 import HeroAnimation from "@/components/home/HeroAnimation";
 import { Suspense } from "react";
@@ -116,7 +116,7 @@ export default async function Home() {
         </section>
 
         <section>
-          <SoftwareCarousel categories={[]} softwareProducts={[]} />
+          <SoftwareCarousel categories={softwareCategories} softwareProducts={softwareProducts} />
         </section>
         {homeSections.slice(2, 5).map((item, index) => {
           return (

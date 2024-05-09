@@ -213,3 +213,101 @@ export const sildes: SlideProps[] = [
   },
   // Add more slides as needed
 ];
+
+
+export const softwareProducts = [
+  {
+    image: "/images/Zoom.png",
+    title: "Zoom",
+    subTitle: "Video Calling",
+  }, {
+    image: "/images/Creative Cloud.png",
+    title: "Creative Cloud",
+    subTitle: "Video Editing",
+  },
+
+  {
+    image: "/images/Slack.png",
+    title: "Discord",
+    subTitle: "Discord",
+  },
+  {
+    image: "/images/Zoom.png",
+    title: "Zoom",
+    subTitle: "Video Calling",
+  }, {
+    image: "/images/Creative Cloud.png",
+    title: "Creative Cloud",
+    subTitle: "Video Editing",
+  },
+
+  {
+    image: "/images/Slack.png",
+    title: "Discord",
+    subTitle: "Discord",
+  },
+  {
+    image: "/images/Zoom.png",
+    title: "Zoom",
+    subTitle: "Video Calling",
+  }, {
+    image: "/images/Creative Cloud.png",
+    title: "Creative Cloud",
+    subTitle: "Video Editing",
+  },
+
+  {
+    image: "/images/Slack.png",
+    title: "Discord",
+    subTitle: "Discord",
+  },
+  {
+    image: "/images/Zoom.png",
+    title: "Zoom",
+    subTitle: "Video Calling",
+  }, {
+    image: "/images/Creative Cloud.png",
+    title: "Creative Cloud",
+    subTitle: "Video Editing",
+  },
+
+  {
+    image: "/images/Slack.png",
+    title: "Discord",
+    subTitle: "Discord",
+  },
+  {
+    image: "/images/Zoom.png",
+    title: "Zoom",
+    subTitle: "Video Calling",
+  }, {
+    image: "/images/Creative Cloud.png",
+    title: "Creative Cloud",
+    subTitle: "Video Editing",
+  },
+
+  {
+    image: "/images/Slack.png",
+    title: "Discord",
+    subTitle: "Discord",
+  },
+  {
+    image: "/images/Zoom.png",
+    title: "Zoom",
+    subTitle: "Video Calling",
+  }, {
+    image: "/images/Creative Cloud.png",
+    title: "Creative Cloud",
+    subTitle: "Video Editing",
+  },
+
+  {
+    image: "/images/Discord.png",
+    title: "Discord",
+    subTitle: "Discord",
+  },
+
+
+]
+
+export const softwareCategories = [{ name: 'Video Calling' }, { name: 'Social Media' }, { name: 'Video Editing' }, { name: 'Messaging' }]
