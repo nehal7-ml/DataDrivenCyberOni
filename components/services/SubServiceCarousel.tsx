@@ -75,11 +75,14 @@ function SubServiceCarousel({
   const nextSlide = (containerRef: MutableRefObject<HTMLDivElement | null>) => {
     //scrollToElement(forwardTargetRef)
     if (containerRef.current) {
+      console.log("scrolling right", containerRef.current?.scrollLeft , containerRef.current?.clientWidth / 3,);
+
       containerRef.current.scrollTo({
         left:
           containerRef.current.scrollLeft +
           containerRef.current.clientWidth / 3,
         behavior: "smooth",
+        
       });
     }
   };
@@ -106,7 +109,7 @@ function SubServiceCarousel({
       console.log("scrolling");
       highlightedElementRef.current.scrollIntoView({
         behavior: "smooth",
-        block: isMobile ? "center" : "nearest",
+        block:  isMobile ? "center" : "start",
       });
     }
   }, [highlightedElementId, isMobile]); // Run the effect whenever the ID changes
@@ -216,92 +219,104 @@ function SubServiceCarousel({
           Service Add-ons
         </div>
 
-        <div
-          ref={SubServicesContainer}
-          className="relative mx-auto flex w-full max-w-full snap-x overflow-x-auto scroll-smooth bg-purple-200 pb-10 scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-400  scrollbar-thumb-rounded-md dark:bg-purple-600 dark:scrollbar-track-slate-600 "
-        >
-          <div className="relative flex w-fit flex-row justify-start gap-10 p-5 lg:px-10">
-            {subServices.map((subService, index) => (
-              <div
-                data-id={subService.id}
-                ref={
-                  subService.title.trim().toLowerCase() === highlightedElementId
-                    ? highlightedElementRef
-                    : undefined
-                }
-                id={subService.title.trim().toLowerCase()}
-                key={index}
-                className={`relative flex w-[80vw] flex-col lg:w-[30vw] ${
-                  subService.title.trim().toLowerCase() === highlightedElementId
+        <div className="flex flex-row flex-wrap lg:flex-nowrap lg:gap-3 gap-5 items-center justify-center">
+
+          <div
+            ref={SubServicesContainer}
+            className="relative lg:order-2 mx-auto flex lg:flex-grow lg:w-auto w-full max-w-full snap-x overflow-x-auto scroll-smooth bg-purple-200 pb-10 scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-400  scrollbar-thumb-rounded-md dark:bg-purple-600 dark:scrollbar-track-slate-600 "
+          >
+            <div className="relative flex w-fit flex-row justify-start gap-10 p-5 lg:px-10">
+              {subServices.map((subService, index) => (
+                <div
+                  data-id={subService.id}
+                  ref={
+                    subService.title.trim().toLowerCase() === highlightedElementId
+                      ? highlightedElementRef
+                      : undefined
+                  }
+                  id={subService.title.trim().toLowerCase()}
+                  key={index}
+                  className={`relative flex w-[80vw] flex-col lg:w-[30vw] ${subService.title.trim().toLowerCase() === highlightedElementId
                     ? "bg-purple-500 dark:bg-purple-800"
                     : ""
-                } scoll-ml-3 snap-start gap-3 rounded-xl p-2 lg:p-8 ${
-                  checkSubserviceAdded(subService)
-                    ? "bg-green-300"
-                    : "bg-gray-100 dark:bg-gray-800"
-                }  mt-10 justify-center  border-4 border-[#AAC3F5] pb-10 text-center focus:bg-purple-500 lg:px-10`}
-              >
-                <div className=" h-fit w-full  text-center lg:text-left">
-                  <h3 className="text-lg font-semibold">{subService.title}</h3>
-                </div>
-                <div className=" line-clamp-5  text-center lg:text-left">
-                  {subService.description}
-                </div>
-                {checkSubserviceAdded(subService) ? (
-                  <div className="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full bg-green-700 text-white">
-                    <Check />
+                    } scoll-ml-3 snap-start gap-3 rounded-xl p-2 lg:p-8 ${checkSubserviceAdded(subService)
+                      ? "bg-green-300"
+                      : "bg-gray-100 dark:bg-gray-800"
+                    }  mt-10 justify-center  border-4 border-[#AAC3F5] pb-10 text-center focus:bg-purple-500 lg:px-10`}
+                >
+                  <div className=" h-fit w-full  text-center lg:text-left">
+                    <h3 className="text-lg font-semibold">{subService.title}</h3>
                   </div>
-                ) : (
-                  <button
-                    onClick={() => addToCart(subService)}
-                    className="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full text-emerald-500 hover:text-emerald-600 hover:shadow-md"
-                  >
-                    <Plus />
-                  </button>
-                )}
-                <Image
-                  src={imageArray[getRandomIntWithSeed(index.toString(), 0, 2)]} // Replace with the actual profile image URL
-                  alt={`${subService.title}-image`}
-                  className=" col-span-2 w-full object-cover lg:col-span-1"
-                  height={300}
-                  width={300}
-                />
-                <div className="flex items-center justify-around gap-4 text-center align-middle">
-                  <button
-                    onClick={() => {
-                      console.log(subService);
-                      setCurrentDisplay(subService);
-                      setShowModal(true);
-                    }}
-                    type="button"
-                    className={`mb-5 flex gap-x-3 ${
-                      subService.title.toLowerCase() === highlightedElementId
+                  <div className=" line-clamp-5  text-center lg:text-left">
+                    {subService.description}
+                  </div>
+                  {checkSubserviceAdded(subService) ? (
+                    <div className="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full bg-green-700 text-white">
+                      <Check />
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => addToCart(subService)}
+                      className="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full text-emerald-500 hover:text-emerald-600 hover:shadow-md"
+                    >
+                      <Plus />
+                    </button>
+                  )}
+                  <Image
+                    src={imageArray[getRandomIntWithSeed(index.toString(), 0, 2)]} // Replace with the actual profile image URL
+                    alt={`${subService.title}-image`}
+                    className=" col-span-2 w-full object-cover lg:col-span-1"
+                    height={300}
+                    width={300}
+                  />
+                  <div className="flex items-center justify-around gap-4 text-center align-middle">
+                    <button
+                      onClick={() => {
+                        console.log(subService);
+                        setCurrentDisplay(subService);
+                        setShowModal(true);
+                      }}
+                      type="button"
+                      className={`mb-5 flex gap-x-3 ${subService.title.toLowerCase() === highlightedElementId
                         ? "text-blue-800"
                         : "text-blue-500 "
-                    } `}
-                  >
-                    Learn more <MoveRight />
-                  </button>
-
-                  <button
-                    onClick={() => addToCart(subService)}
-                    className={`${
-                      checkSubserviceAdded(subService)
+                        } `}
+                    >
+                      Learn more <MoveRight />
+                    </button>
+                    <button
+                      onClick={() => addToCart(subService)}
+                      className={`${checkSubserviceAdded(subService)
                         ? "hover:bg-red-400"
                         : "hover:bg-green-400"
-                    } rounded-md p-3 hover:text-white hover:shadow`}
-                    aria-label="add-to-cart"
-                  >
-                    {checkSubserviceAdded(subService) ? (
-                      <Trash />
-                    ) : (
-                      <ShoppingCart />
-                    )}
-                  </button>
+                        } rounded-md p-3 hover:text-white hover:shadow`}
+                      aria-label="add-to-cart"
+                    >
+                      {checkSubserviceAdded(subService) ? (
+                        <Trash />
+                      ) : (
+                        <ShoppingCart />
+                      )}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          <button
+            type="button"
+            className="w-4 cursor-pointer text-gray-400  order-1 "
+            onClick={() => prevSlide(SubServicesContainer)}
+          >
+            <ChevronLeft className="text-guru-blue" />
+          </button>
+          <button
+            type="button"
+            className="w-4 cursor-pointer text-gray-400 order-3 "
+            onClick={() => nextSlide(SubServicesContainer)}
+          >
+            <ChevronRight className="text-guru-blue" />
+          </button>
         </div>
         <div className="my-5 flex items-center justify-center">
           {currentItems.length > 0 && (
@@ -313,26 +328,11 @@ function SubServiceCarousel({
             </Link>
           )}
         </div>
-        <div className="flex items-center justify-center">
-          <button
-            type="button"
-            className="w-4 cursor-pointer text-gray-400 "
-            onClick={() => prevSlide(SubServicesContainer)}
-          >
-            <ChevronLeft className="text-guru-blue" />
-          </button>
-          <button
-            type="button"
-            className="w-4 cursor-pointer text-gray-400 "
-            onClick={() => nextSlide(SubServicesContainer)}
-          >
-            <ChevronRight className="text-guru-blue" />
-          </button>
-        </div>
+
 
         {
           <Modal setShowModal={setShowModal} showModal={showModal}>
-            <div className="text container     relative mx-auto flex flex-col items-center justify-center rounded-xl bg-gray-50 p-10 text-black shadow-lg dark:bg-gray-800 dark:text-gray-50 lg:w-[30vw]">
+            <div className="container relative mx-auto flex flex-col items-center justify-center rounded-xl bg-gray-50 p-10 text-black shadow-lg dark:bg-gray-800 dark:text-gray-50 lg:w-[30vw]">
               <button
                 className="absolute right-2 top-1 text-red-500"
                 onClick={() => setShowModal(false)}

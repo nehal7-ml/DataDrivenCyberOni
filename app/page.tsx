@@ -36,7 +36,7 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="px-4 lg:w-max max-h-full">
+            <div className="px-4 ">
               <Suspense >
                 <HeroAnimation />
               </Suspense>

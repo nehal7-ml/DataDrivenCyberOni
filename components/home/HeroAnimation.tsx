@@ -9,6 +9,8 @@ function HeroAnimation() {
             options={{
                 animationData: animationData
             }}
+            height={650}
+            width={650}
 
         />
 
