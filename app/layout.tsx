@@ -11,7 +11,7 @@ import Head from "next/head";
 import { cookies } from "next/headers";
 import Script from "next/script";
 import { Suspense } from "react";
-import { abel, inter, nunito, sfPro } from "./fonts";
+import { abel, inter, kyiv, nunito, sfPro } from "./fonts";
 import "./globals.css";
 import { authOptions } from "@/lib/nextAuthAdapter";
 import { WebVitals } from "@/components/WebVitals";
@@ -91,6 +91,7 @@ export default async function RootLayout({
           inter.variable,
           abel.variable,
           nunito.variable,
+          kyiv.variable
         )} 
                         ${theme?.value} overflow-x-hidden antialiased`}
       >

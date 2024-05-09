@@ -1,11 +1,17 @@
 function ProductsCarousel() {
-    return ( <div>
-
+    return ( 
+    
+    
+    <div>
+        
 
 
 
         
-    </div> );
+    </div> 
+    
+
+);
 }
 
 export default ProductsCarousel;

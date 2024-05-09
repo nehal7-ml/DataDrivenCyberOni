@@ -10,9 +10,8 @@ function HeroAnimation() {
                 animationData: animationData
             }}
 
-        >
+        />
 
-        </Lottie>
     );
 }
 

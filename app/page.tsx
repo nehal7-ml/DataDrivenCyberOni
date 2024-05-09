@@ -11,6 +11,7 @@ import { companies, homeSections, mainHero, sildes } from "@/data/homeData";
 import Link from "next/link";
 import HeroAnimation from "@/components/home/HeroAnimation";
 import { Suspense } from "react";
+import SoftwareCarousel from "@/components/SoftwareProducts/SoftwareCarousel";
 export default async function Home() {
   return (
     <>
@@ -112,6 +113,10 @@ export default async function Home() {
               Write a Review
             </Link>
           </div>
+        </section>
+
+        <section>
+          <SoftwareCarousel categories={[]} softwareProducts={[]} />
         </section>
         {homeSections.slice(2, 5).map((item, index) => {
           return (
