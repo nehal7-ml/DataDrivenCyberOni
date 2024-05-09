@@ -135,6 +135,34 @@ const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestu
                 },
             ],
         },
+        {
+            type: "Node",
+            node: (
+                <>
+                    <div>
+                        <div>
+                            <div className="dark:gray-200 text-gray-500 my-2">Trending Blogs</div>
+                            <Image
+                                src={"/images/dash.png"}
+                                alt="dash"
+                                width={200}
+                                height={200} />
+                            <div className="flex flex-col gap-5 py-2">
+                                {recentBlogs.length < 1 &&
+                                    <div className="w-full flex justify-center items-center mt-5">
+                                        <LoadingDots />
+                                    </div>}
+                                {recentBlogs.map((service) => (
+                                    <AdditionalLink key={service.id} text={service.title} url={`/blogs/post/${seoUrl(service.title, service.id)} `} />))}
+                            </div>
+                            <Link className="flex  gap-4" href={"/blogs/bew"}>
+                                See all <MoveRight />
+                            </Link>
+                        </div>
+                    </div>
+                </>
+            ),
+        },
     ];
     const solutionMenu: MegaMenuProps = [
         {
@@ -258,34 +286,7 @@ const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestu
                 },
             ],
         },
-        {
-            type: "Node",
-            node: (
-                <>
-                    <div>
-                        <div>
-                            <div className="dark:gray-200 text-gray-500">Trending Blogs</div>
-                            <Image
-                                src={"/images/dash.png"}
-                                alt="dash"
-                                width={200}
-                                height={200} />
-                            <div className="flex flex-col gap-5 py-2">
-                                {recentBlogs.length < 1 &&
-                                    <div className="w-full flex justify-center items-center mt-5">
-                                        <LoadingDots />
-                                    </div>}
-                                {recentBlogs.map((service) => (
-                                    <AdditionalLink key={service.id} text={service.title} url={`/blogs/post/${seoUrl(service.title, service.id)} `} />))}
-                            </div>
-                            <Link className="flex  gap-4" href={"/blogs/bew"}>
-                                See all <MoveRight />
-                            </Link>
-                        </div>
-                    </div>
-                </>
-            ),
-        },
+        
     ];
 
 

@@ -7,8 +7,11 @@ import Slide from "@/components/home/Slide";
 import ContactForm from "@/components/ContactForm";
 import EmailLetter from "@/components/home/EmailLetter";
 import CalendlyPopup from "@/components/Calendly";
-import { companies, homeSections, sildes } from "@/data/homeData";
+import { companies, homeSections, mainHero, sildes, softwareCategories, softwareProducts } from "@/data/homeData";
 import Link from "next/link";
+import HeroAnimation from "@/components/home/HeroAnimation";
+import { Suspense } from "react";
+import SoftwareCarousel from "@/components/SoftwareProducts/SoftwareCarousel";
 export default async function Home() {
   return (
     <>
@@ -16,16 +19,14 @@ export default async function Home() {
         <section className="container mx-auto flex flex-col text-center lg:text-left">
           <div className="flex flex-col-reverse items-center justify-center lg:flex-row">
             <div className="flex flex-col items-center justify-center lg:items-start lg:justify-start ">
-              <div className="sm:text-3l m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF]  to-[#FF2DF7] bg-clip-text text-5xl font-bold text-transparent">
-                With Ai
+              <div className="sm:text-3l m-3 w-fit bg-gradient-to-r from-[#00F0FF] via-[#5200FF]  to-[#FF2DF7] bg-clip-text text-5xl lg:w-[36rem] font-bold text-transparent">
+                {mainHero.title}
               </div>
               <div className="m-3 text-4xl font-bold">
-                Revolutionize Your Business with Data-Driven Mastery: Transform,
-                Automate, Personalize{" "}
+                {mainHero.subTitle}
               </div>
-              <div className="m-3">
-                Embark on an Data-Infused Journey to Redefine Your Businesses
-                Success
+              <div className="m-3 lg:w-[40rem]">
+                {mainHero.content}
               </div>
               <div className="mx-3 h-[1px] bg-gradient-purple w-full" />
               <div className="flex justify-center lg:justify-start">
@@ -34,14 +35,21 @@ export default async function Home() {
                 </div>
               </div>
             </div>
-            <Image
-              src={"/images/hero-1.png"}
+
+            <div className="px-4 ">
+              <Suspense >
+                <HeroAnimation />
+              </Suspense>
+            </div>
+            
+            {/* <Image
+              src={"/gifs/hero-animation.gif"}
               alt={"hero-1"}
               height={500}
               width={500}
               priority={true}
               fetchPriority="high"
-            ></Image>
+            ></Image> */}
           </div>
 
           <div className="container my-4">
@@ -106,6 +114,10 @@ export default async function Home() {
             </Link>
           </div>
         </section>
+
+        <section>
+          <SoftwareCarousel categories={softwareCategories} softwareProducts={softwareProducts} />
+        </section>
         {homeSections.slice(2, 5).map((item, index) => {
           return (
             <div key={index}>
@@ -132,8 +144,8 @@ export default async function Home() {
           </div>
           <div className="lg:w-1/2 h-[35rem] flex justify-center items-center">
             <Image
-              className="flex-1 w-full h-full object-scale-down"
-              src={"/images/contact-form.png"}
+              className="flex-1 w-full h-full object-contain"
+              src={"/images/contact-forms/contact-image-1.png"}
               alt="contact"
               height={1280}
               width={1200}

@@ -11,7 +11,6 @@ type NavbarItemProps = {
 }
 
 function NavbarItem({ menuOpen, menuOptions, itemName, setMenuOpen: closeMenu }: NavbarItemProps) {
-    const peer = itemName
     return (
         <div className="xl:flex justify-center items-center xl:h-full">
             <label htmlFor={`${itemName}`} className=" h-full flex flex-col justify-center items-center cursor-pointer">
