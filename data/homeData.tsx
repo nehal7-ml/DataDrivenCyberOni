@@ -2,6 +2,22 @@ import { SectionProps } from "@/components/home/HomeSection";
 import { Company } from "@/components/home/CompanyCarousel";
 import { SlideProps } from "@/components/home/Slide";
 
+export const mainHero: SectionProps = {
+  title: "Business Data Science & Automation",
+  subTitle: "Building Blocks For Success",
+  content: (
+    <div>
+      Our cutting-edge tools are designed to automate your daily tasks, freeing
+      you up to focus on what really matters. From boosting your online
+      visibility and automating customer interactions to integrating seamlessly
+      across platforms, we&apos;re here to help you leverage your data and transform
+      your business operations.
+    </div>
+  ),
+  image: "",
+  linkTo: "",
+};
+
 export const homeSections: SectionProps[] = [
   {
     title: "Automated Organic Content and Seo Creation",
@@ -40,7 +56,7 @@ export const homeSections: SectionProps[] = [
         <span className="font-bold text-blue-500">proactive and efficient</span>
       </div>
     ),
-    image:"/images/HomeSections/Data-1.png",
+    image: "/images/HomeSections/Data-1.png",
     imageFirst: true,
     linkTo: "/blogs",
   },
@@ -72,16 +88,23 @@ export const homeSections: SectionProps[] = [
     subTitle: "Is juggling multiple software solutions slowing you down?",
     content: (
       <div>
-        Our platform integrates <span className="font-bold text-blue-500">seamlessly across your existing tools</span>, enhancing
-        your workflow without disrupting what works. By connecting your
-        services, we help you<span className="font-bold text-blue-500"> manage everything from one central point</span>,
-        simplifying your operations and saving you valuable time.
+        Our platform integrates{" "}
+        <span className="font-bold text-blue-500">
+          seamlessly across your existing tools
+        </span>
+        , enhancing your workflow without disrupting what works. By connecting
+        your services, we help you
+        <span className="font-bold text-blue-500">
+          {" "}
+          manage everything from one central point
+        </span>
+        , simplifying your operations and saving you valuable time.
       </div>
     ),
     image: "/images/HomeSections/Integrations-1.png",
     imageFirst: false,
     linkTo: "/blogs",
-  }
+  },
 ];
 
 export const companies: Company[] = [
