@@ -20,7 +20,7 @@ function NavbarItem({ menuOpen, menuOptions, itemName, setMenuOpen: closeMenu }:
                     className={`peer md:focus:outline-none hidden absolute h-full cursor-pointer`}
                     disabled={menuOpen}
                 />
-                <div className=" hover:text-blue-500 hover:cursor-pointer">
+                <div className=" hover:text-blue-500 hover:cursor-pointer text-sm">
                     {itemName}
                     <ChevronDown className="text-blue-400 inline-block"></ChevronDown>
                 </div>

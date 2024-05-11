@@ -17,20 +17,22 @@ export default function SoftwareCard({
 }) {
   return (
     <Card className="flex aspect-[3/4] h-auto w-[12em] max-w-sm flex-col items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg  hover:border-blue-600 hover:dark:border-emerald-500">
-      <div className="flex flex-grow justify-center w-full">
+      <div className="relative flex h-4/6 w-full flex-grow justify-center">
         <Image
           alt="Product Image"
           className="h-full w-full object-cover"
-          height={350}
+          height={300}
           src={image}
           width={300}
         />
       </div>
-      <div className="px-1 py-4">
-        <h3 className="mb-2 line-clamp-2 w-full text-wrap text-xl font-bold text-gray-900 dark:text-gray-50">
+      <div className="w-full px-2 py-1">
+        <p className="m-0 line-clamp-2 w-full text-wrap  font-bold text-gray-900 dark:text-gray-50">
           {title}
-        </h3>
-        <p className="text-base text-gray-700 dark:text-gray-300">{subTitle}</p>
+        </p>
+        <p className="m-0 line-clamp-2 text-sm text-gray-700 dark:text-gray-300">
+          {subTitle}
+        </p>
       </div>
     </Card>
   );

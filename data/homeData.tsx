@@ -10,8 +10,8 @@ export const mainHero: SectionProps = {
       Our cutting-edge tools are designed to automate your daily tasks, freeing
       you up to focus on what really matters. From boosting your online
       visibility and automating customer interactions to integrating seamlessly
-      across platforms, we&apos;re here to help you leverage your data and transform
-      your business operations.
+      across platforms, we&apos;re here to help you leverage your data and
+      transform your business operations.
     </div>
   ),
   image: "",
@@ -142,85 +142,75 @@ function getNextImage(): string {
 }
 export const sildes: SlideProps[] = [
   {
-    name: "Angel Charles",
-    designation: "Satisfied Customer",
-    image: getNextImage(), // Replace with actual image path
+    name: "Ankit Gupta",
+    image: "/images/reviews/review-1.png", // Placeholder image path, replace with the actual path if needed
     content:
-      "Awesome work they do honestly love how I can easily get unstuck help out and don’t use it for malicious intent",
+      "Using CyberOni's advanced AI tools has revolutionized how we handle data at our company. The automation of mundane tasks has allowed our team to focus on innovation and strategy. It's been a game-changer for our productivity!",
+    designation: "IT Solutions Architect", // You may want to update the designation based on the context.
+  },
+  {
+    name: "Josh Praus",
+    image: "/images/reviews/review-2.png", // Placeholder image path, replace with the actual path if needed
+    // Placeholder image path, replace with the actual path if needed
+    content:
+      "CyberOni's SEO and automated marketing tools have transformed our online presence. I no longer worry about daily content updates — it's all handled seamlessly in the background, boosting our visibility and engagement rates.",
+    designation: "Digital Marketing Specialist",
+    // No response provided for this review
+  },
+  {
+    name: "Nate Robert-Eze",
+    image: "/images/reviews/review-3.png", // Placeholder image path, replace with the actual path if needed
+    content:
+      "The automated customer contact system from CyberOni has made it incredibly easy to stay connected with our customers. It's like having a 24/7 support team without the overhead. Our customer satisfaction has never been higher!",
+    designation: "Creative Director",
+  },
+  {
+    name: "Ja'Lyn Lee",
+    image: "/images/reviews/review-4.png", // Placeholder image path, replace with the actual path if needed
+    // Placeholder image path, replace with the actual path if needed
+    content:
+      "The integration capabilities of CyberOni have streamlined our operations significantly. Connecting all our tools into one cohesive system has saved us countless hours and reduced errors. It's the smoothest workflow we've ever had!",
+    designation: "Operations Manager",
+    // No response provided for this review
+  },
+  {
+    name: "Jaynie Deocampo",
+    image: "/images/reviews/review-5.png", // Placeholder image path, replace with the actual path if needed
+    // Placeholder image path, replace with the actual path if needed
+    content:
+      "The automated support from CyberOni is phenomenal. It works tirelessly around the clock, ensuring our clients always have the help they need. This has greatly improved our client relations and reduced our support costs.",
+    designation: "Brand Strategist",
+    // No response provided for this review
   },
   {
     name: "Rotunda Coleman",
-    designation: "Happy Customer",
-    image: getNextImage(), // Replace with actual image path
+    image: "/images/reviews/review-6.png", // Placeholder image path, replace with the actual path if needed
+    // Placeholder image path, replace with the actual path if needed
     content:
-      "Restructured my whole website for me at a reasonable price and implemented what I asked for in a timely manner, definitely recommend. Response from the owner: Thank you Rotunda, a pleasure working with you!",
+      "As an Apartment Hunter, the AI-driven analytics and automated communication tools from CyberOni have been invaluable. They help me understand client needs better and respond faster than ever before",
+    designation: "Apartment Hunter",
+    // No response provided for this review
   },
   {
-    name: "Eduardo C",
-    designation: "Content User",
-    image: getNextImage(), // Replace with actual image path
+    name: "Gina Stauble",
+    image: "/images/reviews/review-7.png", // Placeholder image path, replace with the actual path if needed
+    // Placeholder image path, replace with the actual path if needed
     content:
-      "Cyberoni was amazing they took our static website and turned It into something beautiful",
+      "The real-time data analysis and automated marketing provided by CyberOni have enhanced how I connect with potential buyers. I can now target the right audience effortlessly, increasing my closing rates dramatically.",
+    designation: "Real estate agent",
+    // No response provided for this review
   },
-  {
-    name: "Dee Simon",
-    designation: "Regular Client",
-    image: getRandomImage(), // Replace with actual image path
-    content: "Easy to use site! Competitive prices too",
-  },
-  // New slides
 
-  {
-    name: "Rotunda Coleman",
-    designation: "Happy Customer",
-    image: getRandomImage(), // Default image path
-    content:
-      "Restructured my whole website for me at a reasonable price and implemented what I asked for in a timely manner, definitely recommend",
-  },
-  {
-    name: "Eduardo C",
-    designation: "Content User",
-    image: getRandomImage(), // Default image path
-    content:
-      "Cyberoni was amazing they took our static website and turned it into something beautiful",
-  },
-  {
-    name: "Dee Simon",
-    designation: "Regular Client",
-    image: getRandomImage(), // Default image path
-    content: "Easy to use site! Competitive prices too",
-  },
-  {
-    name: "Uncle Smiley The DJ",
-    designation: "Professional DJ",
-    image: getRandomImage(), // Default image path
-    content:
-      "The team at Cyberoni worked wonders on my DJ website. Their attention to detail and understanding of the music industry really helped bring my site to life. It's not just a website, it's a digital showcase of my DJ career!",
-  },
-  {
-    name: "Zachary George",
-    designation: "Corporate Partner",
-    image: getRandomImage(), // Default image path
-    content:
-      "Working with Cyberoni to create custom software for Comcast was a game-changer. Their expertise in software solutions and proactive approach to problem-solving made the entire process seamless and highly effective.",
-  },
-  {
-    name: "Jerome Jones",
-    designation: "Grateful Parent",
-    image: getRandomImage(), // Default image path
-    content:
-      "As a single dad, setting up surveillance at home was daunting. Cyberoni made it simple, affordable, and secure. Their team was empathetic and professional, ensuring my home was safe for my kids. Highly recommend their services!",
-  },
   // Add more slides as needed
 ];
-
 
 export const softwareProducts = [
   {
     image: "/images/Zoom.png",
     title: "Zoom",
     subTitle: "Video Calling",
-  }, {
+  },
+  {
     image: "/images/Creative Cloud.png",
     title: "Creative Cloud",
     subTitle: "Video Editing",
@@ -235,7 +225,8 @@ export const softwareProducts = [
     image: "/images/Zoom.png",
     title: "Zoom",
     subTitle: "Video Calling",
-  }, {
+  },
+  {
     image: "/images/Creative Cloud.png",
     title: "Creative Cloud",
     subTitle: "Video Editing",
@@ -250,7 +241,8 @@ export const softwareProducts = [
     image: "/images/Zoom.png",
     title: "Zoom",
     subTitle: "Video Calling",
-  }, {
+  },
+  {
     image: "/images/Creative Cloud.png",
     title: "Creative Cloud",
     subTitle: "Video Editing",
@@ -265,7 +257,8 @@ export const softwareProducts = [
     image: "/images/Zoom.png",
     title: "Zoom",
     subTitle: "Video Calling",
-  }, {
+  },
+  {
     image: "/images/Creative Cloud.png",
     title: "Creative Cloud",
     subTitle: "Video Editing",
@@ -280,7 +273,8 @@ export const softwareProducts = [
     image: "/images/Zoom.png",
     title: "Zoom",
     subTitle: "Video Calling",
-  }, {
+  },
+  {
     image: "/images/Creative Cloud.png",
     title: "Creative Cloud",
     subTitle: "Video Editing",
@@ -295,7 +289,8 @@ export const softwareProducts = [
     image: "/images/Zoom.png",
     title: "Zoom",
     subTitle: "Video Calling",
-  }, {
+  },
+  {
     image: "/images/Creative Cloud.png",
     title: "Creative Cloud",
     subTitle: "Video Editing",
@@ -306,8 +301,11 @@ export const softwareProducts = [
     title: "Discord",
     subTitle: "Discord",
   },
+];
 
-
-]
-
-export const softwareCategories = [{ name: 'Video Calling' }, { name: 'Social Media' }, { name: 'Video Editing' }, { name: 'Messaging' }]
+export const softwareCategories = [
+  { name: "Video Calling" },
+  { name: "Social Media" },
+  { name: "Video Editing" },
+  { name: "Messaging" },
+];

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 
 export default function useTheme() {
     const [theme, setTheme] = useState(getCookie('theme'));
+
+    console.log(theme);
     useEffect(() => {
         // Handler to call on window resize
         function themeChange(event: CustomEventInit) {
