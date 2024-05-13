@@ -426,13 +426,13 @@ export type DisplaySoftwareProductDTO = {
   id: string;
   title: string;
   subTitle: string;
-  description?: string| null;
+  description: string| null;
   images: CreateImageDTO[];
   tags: CreateTagDTO[];
   pricing: SoftwarePricing;
-  link?: string;
-  githubLink?: string;
+  link?: string | null;
+  githubLink?: string | null;
   status: SoftwareProductStatus;
-  category?: SoftwareProductCategory
+  category?: SoftwareProductCategory | null;
   blog?: { id: string }
 }

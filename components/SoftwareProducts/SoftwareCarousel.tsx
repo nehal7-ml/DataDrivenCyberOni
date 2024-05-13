@@ -19,8 +19,8 @@ function SoftwareCarousel({
     image: string;
     title: string;
     subTitle: string;
-    pageLink?: string;
-    codeLink?: string;
+    pageLink?: string | null;
+    codeLink?: string| null;
   }[];
 }) {
   return (
