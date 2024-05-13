@@ -4,14 +4,13 @@ import Lottie from "react-lottie";
 import animationData from "@/public/lotties/hero-animation.json";
 import { useMemo, useState } from "react";
 import useWindowSize from "@/lib/hooks/use-window-size";
-import Image from "next/image";
 
 function HeroAnimation() {
     const { isDesktop, isMobile } = useWindowSize();
 
     const size = useMemo(
         () =>{
-            console.log(isDesktop , 'hero animation');
+            // console.log(isDesktop , 'hero animation');
             return  isDesktop ? { width: 410, height: 410 }: isMobile ? { width: 300, height: 300 } : { width: 410, height: 410 } 
                                
         },

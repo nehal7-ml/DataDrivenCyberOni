@@ -1,6 +1,6 @@
 import React from 'react'
 import BlogListLoader from "./loading"
-import { getEssential, getFeatured, getPopular, getRecent } from "@/crud/blog";
+import { getEssential, getFeatured, getPopular, getRecent, getSimilar } from "@/crud/blog";
 import { get } from "http";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
@@ -8,9 +8,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { seoUrl } from "@/lib/utils";
 import { DisplayBlogDTO } from "@/crud/DTOs";
+import GridBlogCard from "@/components/blogs/GridBlogCard";
+import { IdealBankElement } from "@stripe/react-stripe-js";
 
-async function BlogList({ params }: { params: { list: string } }) {
-    const data = await getData(params.list);
+async function BlogList({ params , searchParams}: { params: { list: string }, searchParams: { [key: string]: string | string[] | undefined } }) {
+    let {id} = searchParams
+    const data = await getData(params.list, id as string);
 
     return (
         <div className="px-5 lg:px-16">
@@ -22,29 +25,13 @@ async function BlogList({ params }: { params: { list: string } }) {
                     {listData[params.list]}
                 </div>
             </div>
-            <div className="w-full bg-gray-50 dark:bg-zinc-900">
+            <div className="w-full ">
                 <div className="container mx-auto ">
                     <div className="conatiner mx-10 my-10 flex flex-wrap">
                         {data.list.map((blog, index) => {
                             return (
-                                <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-96 h-fit`}>
-                                    <Link href={`/blogs/post/${seoUrl(blog.title, blog.id)}`}>
-                                        <div className="overflow-hidden h-full shadow-lg   dark:bg-gray-700 rounded-lg">
-                                            <div className=" bg-gray-400 h-2/3">
-                                                <Image
-                                                    className="w-full h-full object-cover"
-                                                    src={blog.images[0] ? blog.images[0].src : 'https://placehold.co/600x400'}
-                                                    alt={blog.title}
-                                                    height={450}
-                                                    width={500} />
-                                            </div>
-                                            <div className="px-6 py-1">
-                                                <div className="mb-2">by {blog.author.firstName} </div>
-                                                <div className="mb-2 font-bold text-base">{blog.title}</div>
-                                                <div className="text-sm line-clamp-2 lg:line-clamp-4">{blog.subTitle}</div>
-                                            </div>
-                                        </div>
-                                    </Link>
+                                <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-[25em] h-fit`}>
+                                    <GridBlogCard blog={blog} />
                                 </div>
                             )
                         })}
@@ -56,7 +43,7 @@ async function BlogList({ params }: { params: { list: string } }) {
     )
 }
 
-async function getData(list: string) {
+async function getData(list: string, id?:string) {
     if (list == 'new') {
         const list = await getRecent(prisma)
         return { list: list as DisplayBlogDTO[] }
@@ -73,6 +60,11 @@ async function getData(list: string) {
         return { list: list as DisplayBlogDTO[] }
     }
 
+    if (list === 'similar') {
+        if(!id) redirect('/404')
+        const list = await getSimilar( id!, prisma)
+        return { list: list as DisplayBlogDTO[] }
+    }
 
     else redirect('/blogs')
 
@@ -82,8 +74,9 @@ async function getData(list: string) {
 
 const listData: { [key: string]: string } = {
     new: 'Our latest web design tips, tricks, insights, and resources, hot off the presses.',
-    essential: 'essential desription',
+    essential: 'essential description',
     popular: 'Popular description',
+    similar : 'Blogs you might like'
 }
 
 

@@ -75,7 +75,7 @@ function SubServiceCarousel({
   const nextSlide = (containerRef: MutableRefObject<HTMLDivElement | null>) => {
     //scrollToElement(forwardTargetRef)
     if (containerRef.current) {
-      console.log("scrolling right", containerRef.current?.scrollLeft , containerRef.current?.clientWidth / 3,);
+      // console.log("scrolling right", containerRef.current?.scrollLeft , containerRef.current?.clientWidth / 3,);
 
       containerRef.current.scrollTo({
         left:
@@ -116,7 +116,7 @@ function SubServiceCarousel({
 
   useEffect(() => {
     const id = search.get("id") as string;
-    console.log(id);
+    // console.log(id);
     if (id) setHighlightedElementId(decodeURIComponent(id).toLowerCase());
   }, [subServices, search]);
 
@@ -139,7 +139,7 @@ function SubServiceCarousel({
       const searchParams = new URLSearchParams();
       if (typeof window !== "undefined")
         searchParams.set("callbackUrl", window.location.href + "/");
-      console.log(searchParams.toString());
+      // console.log(searchParams.toString());
       router.push(`/api/auth/signin?${searchParams.toString()}`);
     }
   }
@@ -191,7 +191,7 @@ function SubServiceCarousel({
       if (items.length == 0) setExisting(false);
       for (let item of items) {
         if (item.serviceId === serviceId) {
-          console.log(item.addons);
+          // console.log(item.addons);
           setExisting(true);
           setCartItemId(item.id);
           setCurrentItems(item.addons);
@@ -272,7 +272,7 @@ function SubServiceCarousel({
                   <div className="flex items-center justify-around gap-4 text-center align-middle">
                     <button
                       onClick={() => {
-                        console.log(subService);
+                        // console.log(subService);
                         setCurrentDisplay(subService);
                         setShowModal(true);
                       }}

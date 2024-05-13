@@ -18,7 +18,12 @@ import Link from "next/link";
 import HeroAnimation from "@/components/home/HeroAnimation";
 import { Suspense } from "react";
 import SoftwareCarousel from "@/components/SoftwareProducts/SoftwareCarousel";
-export default async function Home() {
+import { getAll } from "@/crud/softwareProduct";
+import prisma from "@/lib/prisma";
+import SoftwareSection from "@/components/home/SoftwareSection";
+import LoadingCarousel from "@/components/SoftwareProducts/LoadingCarousel";
+import CategoryChip from "@/components/SoftwareProducts/CategroryChip";
+export default function Home() {
   return (
     <>
       <div className="z-30 w-full dark:text-white lg:px-10">
@@ -32,9 +37,7 @@ export default async function Home() {
               <div className="m-3 ">{mainHero.content}</div>
               <div className="mx-3 h-[1px] w-full bg-gradient-purple" />
               <div className="flex justify-center lg:justify-start">
-                <div
-                  id="__next"
-                  className="m-3 w-fit rounded-full bg-gradient-purple px-[0.1rem] py-[0.1rem]"
+                <div className="m-3 w-fit rounded-full bg-gradient-purple px-[0.1rem] py-[0.1rem]"
                 >
                   <CalendlyPopup
                     CTAText="Schedule a consultation"
@@ -45,21 +48,21 @@ export default async function Home() {
             </div>
 
             <HeroAnimation />
-
-            {/* <Image
-              src={"/gifs/hero-animation.gif"}
-              alt={"hero-1"}
-              height={500}
-              width={500}
-              priority={true}
-              fetchPriority="high"
-            ></Image> */}
           </div>
-          <section className="my-4">
-            <SoftwareCarousel
-              categories={softwareCategories}
-              softwareProducts={softwareProducts}
-            />
+          <section>
+            <div className="my-10 flex flex-col items-center justify-center gap-5 lg:flex-row">
+              <h2 className="font-kyiv text-3xl font-bold lg:w-[12em] lg:text-5xl">
+                Choose from over 10+ cutting—edge products
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {softwareCategories.map((category, index) => (
+                  <CategoryChip key={index} name={category.name}></CategoryChip>
+                ))}
+              </div>
+            </div>
+            <Suspense fallback={<LoadingCarousel />}>
+              <SoftwareSection />
+            </Suspense>
           </section>
           <div className="container my-4">
             <CompanyCarousel cards={companies}></CompanyCarousel>
@@ -145,11 +148,11 @@ export default async function Home() {
         </section>
 
         <section className="conatiner flex flex-col-reverse items-center justify-center xl:flex-row xl:px-10">
-          <div className="container w-full  xl:h-[31em] xl:w-1/2">
+          <div className="container w-full  xl:h-[35em] xl:w-1/2">
             <ContactForm></ContactForm>
           </div>
           <Image
-            className="container flex  h-[20em] w-full items-center justify-center rounded-t-lg  object-cover md:h-[25em] xl:h-[31em] xl:w-1/2 xl:rounded-r-lg"
+            className="container flex  h-[20em] w-full items-center justify-center rounded-t-lg  object-cover md:h-[25em] xl:h-[32em] xl:w-1/2 xl:rounded-r-lg"
             src={"/images/contact-forms/contact-image-1.png"}
             alt="contact"
             height={650}

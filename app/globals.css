@@ -4,9 +4,7 @@
 
 
 @layer base {
-  body {
-    font-size: calc(0.75em + 1vmin);
-  }
+
   h1 {
     @apply text-4xl my-2 font-bold;
   }

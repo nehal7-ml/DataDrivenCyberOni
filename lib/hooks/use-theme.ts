@@ -19,7 +19,7 @@ export default function useTheme() {
     // Handler to call on window resize
     function themeChange(event: CustomEventInit) {
       setTheme(event.detail.theme);
-      console.log("resize event: " + event.detail);
+      // console.log("resize event: " + event.detail);
     }
     window.addEventListener("theme", themeChange);
 
