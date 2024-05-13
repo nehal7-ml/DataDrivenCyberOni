@@ -22,7 +22,7 @@ export default function SoftwareCard({
 }) {
 
   return (
-    <Card className="flex aspect-[3/4] h-auto w-[14em] max-w-sm flex-col items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg  hover:border-blue-600 hover:dark:border-emerald-500">
+    <Card className="flex aspect-[3/4] h-auto w-[12em] md:w-[14em] max-w-sm flex-col items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg  hover:border-blue-600 hover:dark:border-emerald-500">
       <div className="relative flex h-4/6 w-full flex-grow justify-center">
         <Image
           alt="Product Image"

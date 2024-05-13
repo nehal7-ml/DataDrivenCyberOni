@@ -54,7 +54,7 @@ export default function Home() {
               <h2 className="font-kyiv text-3xl font-bold lg:w-[12em] lg:text-5xl">
                 Choose from over 10+ cutting—edge products
               </h2>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 px-2">
                 {softwareCategories.map((category, index) => (
                   <CategoryChip key={index} name={category.name}></CategoryChip>
                 ))}

@@ -26,7 +26,7 @@ function SoftwareCarousel({
   return (
       
 
-      <div className="flex w-full">
+      <div className="flex w-full px-10 ">
         <Carousel className="w-full ">
           {softwareProducts.length > 0?  <CarouselContent>
             {softwareProducts.map((product, index) => (
