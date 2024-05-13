@@ -21,14 +21,14 @@ const CalendlyPopup: React.FC<CalendlyPopupProps> = ({
     className || "rounded-full bg-white p-3 hover:shadow-md dark:bg-black";
 
   return (
-    <div ref={root} className="App">
-      <PopupButton
-        LoadingSpinner={() => <LoadingDots />}
-        url="https://calendly.com/cyberoni/quick-zoom-meeting"
-        rootElement={root.current as HTMLElement}
-        text={CTAText}
-        className={buttonClass}
-      />
+    <div ref={root} >
+    {root.current && <PopupButton
+      LoadingSpinner={() => <LoadingDots />}
+      url="https://calendly.com/cyberoni/quick-zoom-meeting"
+      rootElement={root.current as HTMLElement}
+      text={CTAText}
+      className={buttonClass}
+    />}
     </div>
   );
 };
