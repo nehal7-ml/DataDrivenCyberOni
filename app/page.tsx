@@ -44,11 +44,7 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="px-4 lg:max-w-md">
-              <Suspense>
-                <HeroAnimation />
-              </Suspense>
-            </div>
+            <HeroAnimation />
 
             {/* <Image
               src={"/gifs/hero-animation.gif"}
@@ -128,7 +124,6 @@ export default async function Home() {
           </div>
         </section>
 
-
         {homeSections.slice(2, 5).map((item, index) => {
           return (
             <div key={index}>
@@ -150,11 +145,11 @@ export default async function Home() {
         </section>
 
         <section className="conatiner flex flex-col-reverse items-center justify-center xl:flex-row xl:px-10">
-          <div className="w-full xl:h-[31em]  xl:w-1/2 container">
+          <div className="container w-full  xl:h-[31em] xl:w-1/2">
             <ContactForm></ContactForm>
           </div>
           <Image
-            className="flex w-full  h-[20em] md:h-[25em] rounded-t-lg xl:h-[31em] xl:rounded-r-lg  items-center justify-center xl:w-1/2 object-cover container"
+            className="container flex  h-[20em] w-full items-center justify-center rounded-t-lg  object-cover md:h-[25em] xl:h-[31em] xl:w-1/2 xl:rounded-r-lg"
             src={"/images/contact-forms/contact-image-1.png"}
             alt="contact"
             height={650}

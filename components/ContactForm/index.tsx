@@ -92,9 +92,6 @@ function ContactFormLOC(props: { onModal?: boolean, showModal?: boolean, setShow
               className=""
               value={name}
               onChange={(e) => setName(e.target.value)}
-              labelBackground={{ light: "white", dark: "#4f01ea" }}
-              labelTextColor={{ light: "black", dark: "white" }}
-              inputTextColor={{ light: "black", dark: "white" }}
               required
             />
           </div>
@@ -106,9 +103,6 @@ function ContactFormLOC(props: { onModal?: boolean, showModal?: boolean, setShow
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              labelBackground={{ light: "white", dark: "#5001EAAD" }}
-              labelTextColor={{ light: "black", dark: "white" }}
-              inputTextColor={{ light: "black", dark: "white" }}
               required
             />
           </div>
