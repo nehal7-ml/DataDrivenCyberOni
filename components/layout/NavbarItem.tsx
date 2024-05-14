@@ -49,7 +49,7 @@ function NavbarItem({
                         <div
                             className={`relative xl:w-[35em] block w-full`}
                         >
-                            <MegaMenu setMenuOpen={closeMenu} groups={menuOptions} />
+                            <MegaMenu closeMenu={()=> (closeMenu(false), setOpen(false))} groups={menuOptions} />
                         </div>
                     )}
                 </PopoverContent>
