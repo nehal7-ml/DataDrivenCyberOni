@@ -28,7 +28,7 @@ function SimilarBlogs({ blogs, viewAllLink }: { blogs: DisplayBlogDTO[], viewAll
             <Carousel className="py-5">
                 <CarouselContent className="gap-2 px-2 py-5">
                     {blogs.slice(0, 3).map((blog, index) => (
-                        <CarouselItem key={index} className="lg:basis-1/3 px-2 max-h-[25em] lg:max-h-[25em]">
+                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 px-2 max-h-[28em] lg:max-h-[25em]">
                             <GridBlogCard blog={blog} />
                         </CarouselItem>
                     ))}

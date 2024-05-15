@@ -16,7 +16,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/nextAuthAdapter";
 import { Blog, BlogPosting, WithContext } from "schema-dts";
 import Script from "next/script";
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 import SimilarBlogs from "@/components/blogs/SimilarBlogs";
 
 export const dynamic = "force-dynamic";

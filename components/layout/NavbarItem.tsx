@@ -29,7 +29,7 @@ function NavbarItem({
 
     return (
         <div className="relative items-center justify-center xl:relative xl:flex xl:h-full"
-            
+            onMouseLeave={handleMouseLeave}
         >
             <Popover open={open} onOpenChange={setOpen}  >
                 <PopoverTrigger onMouseEnter={handleMouseEnter}   >

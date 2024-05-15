@@ -1,3 +1,4 @@
+import "server-only"
 import { PrismaClient } from "@prisma/client";
 import { connectOrCreateObject as connectTags } from "./tags";
 import { connectOrCreateObject as connectImages } from "./images";
@@ -139,6 +140,44 @@ export async function getFeatured(prisma: PrismaClient) {
     });
     return getRandomFromArray(featured);
 }
+
+export async function getBlogsByCategory(id: string, prisma: PrismaClient) {
+
+    const list = await prisma.blog.findMany({
+        where: {
+            OR: [
+                {
+                    category: {
+                        parent: {
+                            id: id
+                        }
+                    }
+                }, {
+                    category: {
+                        id: id
+                    }
+                }
+
+            ],
+
+        },
+        include: {
+            tags: true,
+            author: {
+                include: {
+                    image: true,
+                },
+            },
+            images: true,
+            category: true,
+        },
+    });
+    return list
+
+}
+
+
+
 export async function addView(
     { id, userEmail }: { id: string; userEmail?: string },
     prisma: PrismaClient,

@@ -22,10 +22,10 @@ function GridBlogCard({blog}: {blog:DisplayBlogDTO}) {
             width={500}
           />
         </div>
-        <div className="px-6 py-1 h-1/3">
-          <div className="mb-2 text-sm">by {blog.author.firstName} {blog.author.lastName} </div>
-          <div className="mb-2 text-base font-bold line-clamp-2">{blog.title}</div>
-          <div className="line-clamp-2 text-ellipsis text-sm">
+        <div className="px-2 lg:px-6 py-3    flex-shrink">
+          <div className="mb-2 text-xs">by {blog.author.firstName} {blog.author.lastName} </div>
+          <div className="mb-2 text-sm font-bold line-clamp-2">{blog.title}</div>
+          <div className="line-clamp-1 lg:line-clamp-2 text-ellipsis text-xs">
             {blog.subTitle}
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import BlogListLoader from "./loading"
+import BlogListLoader from "../loading"
 import { getEssential, getFeatured, getPopular, getRecent, getSimilar } from "@/crud/blog";
 import { get } from "http";
 import { redirect } from "next/navigation";
