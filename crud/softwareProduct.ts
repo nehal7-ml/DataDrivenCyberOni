@@ -1,3 +1,4 @@
+import "server-only";
 import { PrismaClient, SoftwareProduct } from "@prisma/client";
 import { CreateSoftwareProductDTO, DisplaySoftwareProductDTO } from "./DTOs";
 import { connectOrCreateObject as connectTags } from "./tags";
@@ -23,14 +24,16 @@ async function create(
     data: {
       title,
       subTitle,
-      description,    
+      description,
       pricing,
       link,
       githubLink,
       status,
-      blog : product.blog? {connect: { id: product.blog.id }} : undefined,
+      blog: product.blog ? { connect: { id: product.blog.id } } : undefined,
       images: await connectImages(product.images, []),
-      tags: {connectOrCreate: connectTags(product.tags || [], []).connectOrCreate},
+      tags: {
+        connectOrCreate: connectTags(product.tags || [], []).connectOrCreate,
+      },
       category: category
         ? {
             connect: {
@@ -44,21 +47,18 @@ async function create(
   return createdProduct;
 }
 
-async function read(
-  productId: string,
-  prismaClient: PrismaClient,
-) {
+async function read(productId: string, prismaClient: PrismaClient) {
   const product = await prismaClient.softwareProduct.findUnique({
     where: { id: productId },
     include: {
       images: true,
       tags: true,
       category: true,
-      blog: true
+      blog: true,
     },
   });
 
-  return product ;
+  return product;
 }
 
 async function update(
@@ -92,12 +92,14 @@ async function update(
     data: {
       title,
       subTitle,
-      description,    
+      description,
       pricing,
       link,
       githubLink,
       status,
-      blog : productData.blog? {connect: { id: productData.blog.id }} : undefined,
+      blog: productData.blog
+        ? { connect: { id: productData.blog.id } }
+        : undefined,
       images: await connectImages(productData.images, oldProduct!.images),
       tags: connectTags(productData.tags, oldProduct!.tags),
       category: productData.category
@@ -141,9 +143,8 @@ async function getAll(
     take: pageSize,
     include: {
       category: true,
-      images:true, 
-      tags: true
-
+      images: true,
+      tags: true,
     },
     orderBy: options?.orderby
       ? {
@@ -160,4 +161,22 @@ async function getAll(
   return { records: allProducts, currentPage: page, totalPages, pageSize };
 }
 
-export { create, read, update, remove, getAll };
+async function getSoftwaresFByCategory(
+  categoryId: string,
+  prisma: PrismaClient,
+) {
+  return await prisma.softwareProduct.findMany({
+    where: {
+      category: {
+        id: categoryId,
+      },
+    },
+    include: {
+      category: true,
+      images: true,
+      tags: true,
+    }
+  });
+}
+
+export { create, read, update, remove, getAll, getSoftwaresFByCategory };

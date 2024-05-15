@@ -13,7 +13,8 @@ const imageLocations = [
   "picsum.photos",
   "m.media-amazon.com",
   "images.pexels.com",
-  "cdn.dribbble.com"
+  "cdn.dribbble.com",
+  "placehold.co",
 
 ];
 const nextConfig = {

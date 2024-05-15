@@ -1,23 +1,35 @@
 import SoftwareCarousel from "../SoftwareProducts/SoftwareCarousel";
-import { getAll } from "@/crud/softwareProduct";
-import { softwareCategories } from "@/data/homeData";
+import { getAll, getSoftwaresFByCategory } from "@/crud/softwareProduct";
 import prisma from "@/lib/prisma";
-import CategoryChip from "../SoftwareProducts/CategroryChip";
-import { sleep } from "@/lib/utils";
 
-async function SoftwareSection() {
-    const softwares = await getAll(1, 10, prisma)
+import { getCategories } from "@/crud/categories";
+import { DisplaySoftwareProductDTO } from "@/crud/DTOs";
+import SoftwareCategories from "../SoftwareProducts/SoftwareCategories";
+
+async function SoftwareSection({ categoryId }: { categoryId?: string | string[] }) {
+
+    console.log("categrory : ", categoryId);
+    let softwares = [] as DisplaySoftwareProductDTO[]
+    if (categoryId) {
+        softwares = ((await getSoftwaresFByCategory(categoryId as string, prisma)) as DisplaySoftwareProductDTO[]);
+
+    } else {
+        softwares = ((await getAll(1, 10, prisma)).records);
+
+    }
     return (
-        <SoftwareCarousel
-            categories={softwareCategories}
-            softwareProducts={softwares.records.map((item) => ({
-                image: item.images[0] ? item.images[0].src : "https://placehold.co/600x400",
-                subTitle: item.subTitle,
-                title: item.title,
-                pageLink: item.link,
-                codeLink: item.githubLink
-            }))}
-        />
+        <>
+            <SoftwareCategories />
+            <SoftwareCarousel
+                softwareProducts={softwares.map((item) => ({
+                    image: item.images[0] ? item.images[0].src : "https://placehold.co/600x400",
+                    subTitle: item.subTitle,
+                    title: item.title,
+                    pageLink: item.link,
+                    codeLink: item.githubLink
+                }))}
+            />
+        </>
     );
 }
 

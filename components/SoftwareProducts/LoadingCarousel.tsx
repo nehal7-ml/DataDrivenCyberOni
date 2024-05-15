@@ -15,28 +15,33 @@ const SkeletonSoftwareCard = () => {
 };
 
 function LoadingCarousel() {
-    return (  
-        <div className="flex w-full">
-        <Carousel className="w-full ">
-           <CarouselContent>
-            {new Array(10).fill(0).map((product, index) => (
-              <CarouselItem key={index} className="basis-auto">
-                <SkeletonSoftwareCard />
-              </CarouselItem>
-            ))} 
+  return (
+    <>
+    <div className="flex flex-wrap justify-center items-center self-center gap-2 px-5  lg:col-span-1 h-fit">
+      <div className="h-14 bg-gray-300 dark:bg-gray-500 w-full animate-pulse rounded-full"></div>
+    </div>
+    <div className="flex w-full col-span-2">
+      <Carousel className="w-full ">
+        <CarouselContent>
+          {new Array(10).fill(0).map((product, index) => (
+            <CarouselItem key={index} className="basis-auto">
+              <SkeletonSoftwareCard />
+            </CarouselItem>
+          ))}
 
 
-          </CarouselContent>
-           
-
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </div>
+        </CarouselContent>
 
 
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
+    </>
 
-    );
+
+
+  );
 }
 
 export default LoadingCarousel;

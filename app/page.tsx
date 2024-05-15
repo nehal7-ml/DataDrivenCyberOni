@@ -11,7 +11,6 @@ import {
   homeSections,
   mainHero,
   sildes,
-  softwareCategories,
   softwareProducts,
 } from "@/data/homeData";
 import Link from "next/link";
@@ -23,7 +22,11 @@ import prisma from "@/lib/prisma";
 import SoftwareSection from "@/components/home/SoftwareSection";
 import LoadingCarousel from "@/components/SoftwareProducts/LoadingCarousel";
 import CategoryChip from "@/components/SoftwareProducts/CategroryChip";
-export default function Home() {
+import { getCategories } from "@/crud/categories";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+export default function Home({ searchParams }: { searchParams?: { softwareCategoryId?: string | string[] } }) {
+
+  console.log(searchParams);
   return (
     <>
       <div className="z-30 w-full dark:text-white lg:px-10">
@@ -49,19 +52,16 @@ export default function Home() {
 
             <HeroAnimation />
           </div>
-          <section>
-            <div className="my-10 flex flex-col items-center justify-center gap-5 lg:flex-row">
-              <h2 className="font-kyiv text-3xl font-bold lg:w-[12em] lg:text-5xl">
+          <section className=" lg:grid grid-cols-2 grid-rows-2">
+            <div className="my-10 flex flex-col items-center justify-center gap-5 lg:flex-row lg:col-span-1">
+              <h2 className="font-kyiv text-3xl font-bold lg:w-[14em] lg:text-5xl">
                 Choose from over 10+ cutting—edge products
               </h2>
-              <div className="flex flex-wrap gap-2 px-2">
-                {softwareCategories.map((category, index) => (
-                  <CategoryChip key={index} name={category.name}></CategoryChip>
-                ))}
-              </div>
+
             </div>
+
             <Suspense fallback={<LoadingCarousel />}>
-              <SoftwareSection />
+              <SoftwareSection categoryId={ searchParams?.softwareCategoryId} />
             </Suspense>
           </section>
           <div className="container my-4">
