@@ -1,9 +1,8 @@
-interface Window {
-    fbq?: Function; // Define fbq as a function
+declare global {
+  interface Window {
+    fbq: (...args: any[]) => void;
+  }
 }
-
-
-
 export type TableType =
   | "blogs"
   | "services"
