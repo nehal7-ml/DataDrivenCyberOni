@@ -8,7 +8,6 @@ import SoftwareCategories from "../SoftwareProducts/SoftwareCategories";
 
 async function SoftwareSection({ categoryId }: { categoryId?: string | string[] }) {
 
-    console.log("categrory : ", categoryId);
     let softwares = [] as DisplaySoftwareProductDTO[]
     if (categoryId) {
         softwares = ((await getSoftwaresFByCategory(categoryId as string, prisma)) as DisplaySoftwareProductDTO[]);

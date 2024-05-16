@@ -7,7 +7,7 @@ async function SoftwareCategories() {
     const categories = await getCategories('software', prisma)
 
   return (
-    <div className="flex h-fit flex-wrap items-center justify-center gap-2 self-center  px-5 lg:col-span-1">
+    <div className="flex h-fit gap-2 self-center my-4  px-10 lg:col-span-1">
       <Carousel className="w-full">
         <CarouselContent>
           {categories.map((category, index) => (

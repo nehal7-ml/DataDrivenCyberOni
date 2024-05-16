@@ -2,20 +2,21 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 function CategoryChip({ name, id }: { name: string; id: string }) {
   const searchParams = useSearchParams();
-  const ref =  useRef<HTMLAnchorElement |null>(null)
-  const selected = useMemo(() => {
-    return searchParams.getAll("softwareCategoryId").includes(id);
+  const ref = useRef<HTMLAnchorElement | null>(null)
+  const [selected, setSelected] = useState(false);
+  useEffect(() => {
+    setSelected(searchParams.getAll("softwareCategoryId").includes(id));
   }, [id, searchParams]);
 
   return (
     <Link
       ref={ref!}
-      href={`?${new URLSearchParams({ softwareCategoryId: id }).toString()}`}
-      replace={true}      
+      href={selected ? {pathname: '/'} : `?${new URLSearchParams({ softwareCategoryId: id }).toString()}`}
+      replace={true}
       aria-checked={selected}
       onClick={() => {
         ref.current?.scrollIntoView({ behavior: "smooth" });

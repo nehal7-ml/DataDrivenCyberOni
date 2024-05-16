@@ -26,7 +26,6 @@ import { getCategories } from "@/crud/categories";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 export default function Home({ searchParams }: { searchParams?: { softwareCategoryId?: string | string[] } }) {
 
-  console.log(searchParams);
   return (
     <>
       <div className="z-30 w-full dark:text-white lg:px-10">
