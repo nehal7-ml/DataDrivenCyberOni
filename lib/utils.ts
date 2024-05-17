@@ -246,6 +246,3 @@ export function calculateDiscountedPrice(total: number, discounts: Discount[]): 
   // Ensure the discounted price is not negative
   return parseFloat(Math.max(discountedPrice, 0).toFixed(2));
 }
-
-
-

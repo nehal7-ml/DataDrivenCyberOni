@@ -1,59 +1,65 @@
 "use client";
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 import CategoryChip from "./CategroryChip";
 import SoftwareCard from "./SoftwareCard";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function SoftwareCarousel({
-    categories,
-    softwareProducts,
+  softwareProducts,
 }: {
-    categories: { name: string }[];
-    softwareProducts: { image: string; title: string; subTitle: string }[];
+  softwareProducts: {
+    image: string;
+    title: string;
+    subTitle: string;
+    pageLink?: string | null;
+    codeLink?: string | null;
+  }[];
 }) {
-    return (
-        <div className="flex flex-col items-center justify-center gap-2 my-5 px-5 lg:px-10">
-            <div className="flex my-10 flex-col lg:flex-row justify-center items-center gap-5">
-                <h2 className="font-kyiv text-3xl lg:text-5xl font-bold lg:w-[12em]">
-                    Choose from over 10+ cutting—edge products
-                </h2>
-                <div className="flex gap-2 flex-wrap">
-                    {categories.map((category, index) => (
-                        <CategoryChip
-                            key={index}
-                            name={category.name}
-                        ></CategoryChip>
-                    ))}
-                </div>
-            </div>
 
-            <div className="flex w-full">
-                <Carousel className="w-full ">
-                    <CarouselContent >
-                        {softwareProducts.map((product, index) => (
-                            <CarouselItem key={index} className="basis-auto"
-                            >
-                                <SoftwareCard
-                                    image={product.image}
-                                    title={product.title}
-                                    subTitle={product.subTitle}
-                                />
-                            </CarouselItem>
-
-                        ))}
+  // const router = useRouter()
+  // const searchParams = useSearchParams();
+  // const categoryItem = useRef<HTMLDivElement| null> (null)
 
 
-                    </CarouselContent>
+  return (
 
-                    <CarouselPrevious />
-                    <CarouselNext />
+    <>
 
-                </Carousel>
+      <div className="flex w-full items-center justify-center px-10  lg:col-span-2" id="SoftwareCarousel">
+        <Carousel className="w-full ">
+          {softwareProducts.length > 0 ? <CarouselContent>
+            {softwareProducts.map((product, index) => (
+              <CarouselItem key={index} className="basis-auto">
+                <SoftwareCard
+                  image={product.image}
+                  title={product.title}
+                  subTitle={product.subTitle}
+                  pageLink={product.pageLink}
+                  codeLink={product.codeLink}
+                />
+              </CarouselItem>
+            ))}
 
 
-            </div>
-        </div>
-    );
+          </CarouselContent>
+            : <div className="text-gray-400 w-full text-center">No products Available</div>
+
+          }
+
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
+    </>
+  );
 }
 
 export default SoftwareCarousel;

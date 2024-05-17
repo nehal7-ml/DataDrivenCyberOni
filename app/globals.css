@@ -1,4 +1,82 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+
+  h1 {
+    @apply text-4xl my-2 font-bold;
+  }
+
+  h2 {
+    @apply text-3xl my-3 font-bold;
+
+  }
+
+  h3 {
+    @apply text-2xl my-3 font-bold;
+
+  }
+
+  h4 {
+    @apply text-xl my-3 font-bold;
+
+  }
+
+  h5 {
+    @apply text-lg my-3 font-bold;
+
+  }
+
+  p {
+    @apply text-base my-4;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
+
+@keyframes float {
+  0% {
+    transform: translate(-10px, 10px);
+  }
+
+  100% {
+    transform: translate(10px, -10px);
+  }
+}
+
+@layer components {
+  .Blog-Post a {
+    @apply cursor-pointer text-blue-500 underline;
+  }
+}
+
+
+/* styles.css */
+/* styles.css */
+.DialogOverlay {
+  background: rgba(0 0 0 / 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+}
+
+.DialogContent {
+  min-width: 300px;
+  background: white;
+  padding: 30px;
+  border-radius: 4px;
+}
+
+.scrollable-content {
+  max-height: 70vh;
+  /* Adjust the height as needed */
+  overflow-y: auto;
+}

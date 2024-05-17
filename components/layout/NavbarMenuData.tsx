@@ -16,7 +16,8 @@ const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestu
     useEffect(() => {
         async function fetchCaseStudies() {
             const res = await fetch('/api/casestudies/recent')
-            console.log(res.status);
+            // console.log(res.status);
+            if(res.status !== 200) return [];
             const { data } = await res.json()
             return (data as CaseStudy[]).slice(0, 3)
 
@@ -24,8 +25,8 @@ const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestu
 
         async function fetchBlogs() {
             const res = await fetch('/api/blogs/home')
-            console.log(res.status);
-
+            // console.log(res.status);
+            if(res.status !== 200) return [];
             const { data } = await res.json()
             return (data.recent as Blog[]).slice(0, 3)
 
@@ -47,9 +48,9 @@ const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestu
 
             links: [
                 { href: '/casestudies', icon: <ThumbsUp className="text-gray-100 fill-blue-500" />, name: 'Customer Stories', subTitle: "Our customers have to say" },
-                { href: '/partner', icon: <HeartHandshake className="text-gray-100 fill-blue-500" />, name: 'Partners', subTitle: "Become a our partners" },
-                { href: '/careers', icon: <Briefcase className="text-gray-100 fill-blue-500" />, name: 'Careers', subTitle: "We’re always hiring!" },
-                { href: '/media', icon: <Newspaper className="text-gray-100 fill-blue-500" />, name: 'Press and media', subTitle: "News and updates" },
+                { href: '#', icon: <HeartHandshake className="text-gray-100 fill-blue-500" />, name: 'Partners', subTitle: "Become a our partners" },
+                { href: '#', icon: <Briefcase className="text-gray-100 fill-blue-500" />, name: 'Careers', subTitle: "We’re always hiring!" },
+                { href: '#', icon: <Newspaper className="text-gray-100 fill-blue-500" />, name: 'Press and media', subTitle: "News and updates" },
 
                 { href: '/enterprise', icon: <Phone className="text-gray-100 fill-blue-500" />, name: 'Contact Us', subTitle: "Get in touch with sales" },
             ]
@@ -128,7 +129,7 @@ const UseMegaMenuData = ({ services, casestudies }: { services?: Blog[], casestu
                 },
 
                 {
-                    href: "/books",
+                    href: "#",
                     name: "Books & Webinars",
                     subTitle: "All about how to use ",
                     icon: <Book className="fill-blue-700 text-gray-50" />,
