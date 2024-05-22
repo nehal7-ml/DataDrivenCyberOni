@@ -149,7 +149,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
         </div>
 
         <section>
-          <SimilarBlogs blogs={similar} viewAllLink={`/blogs/similar?id=${id}`} />
+          <SimilarBlogs blogs={similar as DisplayBlogDTO[]} viewAllLink={`/blogs/similar?id=${id}`} />
         </section>
 
         <div className="flex w-full flex-col items-center justify-center gap-5">
@@ -190,7 +190,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
 async function getData(id: string, userEmail?: string) {
   const blog = await addView({ id, userEmail }, prisma) as DisplayBlogDTO;
-  const similar = await getSimilar(id, prisma);
+  const {similar} = await getSimilar(id, 1, prisma);
   // console.log(blog.title);
   if (blog) return { blog, similar };
   else redirect("/404");

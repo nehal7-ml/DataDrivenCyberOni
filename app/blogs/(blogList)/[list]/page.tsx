@@ -10,10 +10,12 @@ import { seoUrl } from "@/lib/utils";
 import { DisplayBlogDTO } from "@/crud/DTOs";
 import GridBlogCard from "@/components/blogs/GridBlogCard";
 import { IdealBankElement } from "@stripe/react-stripe-js";
+import Pagination from "@/components/Pagination";
 
-async function BlogList({ params , searchParams}: { params: { list: string }, searchParams: { [key: string]: string | string[] | undefined } }) {
-    let {id} = searchParams
-    const data = await getData(params.list, id as string);
+async function BlogList({ params, searchParams }: { params: { list: string }, searchParams: { [key: string]: string | string[] | undefined } }) {
+    let { id } = searchParams
+    let page = searchParams.page && Number(searchParams.page) !== 0 ? Number(searchParams.page) : 1;
+    const data = await getData(params.list, page, id as string);
 
     return (
         <div className="px-5 lg:px-16">
@@ -37,33 +39,35 @@ async function BlogList({ params , searchParams}: { params: { list: string }, se
                         })}
                     </div>
 
+                    <Pagination currentPage={page} pathname={`/blogs/${params.list}`} totalPages={data.totalPages > 5 ? 5 : data.totalPages} query={searchParams} />
+
                 </div>
             </div>
         </div>
     )
 }
 
-async function getData(list: string, id?:string) {
+async function getData(list: string, page: number, id?: string) {
     if (list == 'new') {
-        const list = await getRecent(prisma)
-        return { list: list as DisplayBlogDTO[] }
+        const { recent, totalPages } = await getRecent(page, prisma)
+        return { list: recent as DisplayBlogDTO[], totalPages }
     }
 
     if (list === 'popular') {
-        const list = await getPopular(prisma)
-        return { list: list as DisplayBlogDTO[] }
+        const { popular, totalPages } = await getPopular(page, prisma)
+        return { list: popular as DisplayBlogDTO[], totalPages }
 
     }
 
     if (list === 'essential') {
-        const list = await getEssential(prisma)
-        return { list: list as DisplayBlogDTO[] }
+        const { essential, totalPages } = await getEssential(page, prisma)
+        return { list: essential as DisplayBlogDTO[], totalPages }
     }
 
     if (list === 'similar') {
-        if(!id) redirect('/404')
-        const list = await getSimilar( id!, prisma)
-        return { list: list as DisplayBlogDTO[] }
+        if (!id) redirect('/404')
+        const { similar, totalPages } = (await getSimilar(id!, page, prisma))!
+        return { list: similar as DisplayBlogDTO[], totalPages }
     }
 
     else redirect('/blogs')
@@ -76,7 +80,7 @@ const listData: { [key: string]: string } = {
     new: 'Our latest web design tips, tricks, insights, and resources, hot off the presses.',
     essential: 'essential description',
     popular: 'Popular description',
-    similar : 'Blogs you might like'
+    similar: 'Blogs you might like'
 }
 
 

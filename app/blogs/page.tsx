@@ -234,9 +234,9 @@ async function Blogs() {
 
 async function getData() {
   const featured = await getFeatured(prisma);
-  const recent = await getRecent(prisma);
-  const popular = await getPopular(prisma);
-  const essential = await getEssential(prisma);
+  const {recent} = await getRecent(1, prisma);
+  const {popular} = await getPopular(1, prisma);
+  const {essential} = await getEssential(1, prisma);
   const categories = await getCategories("blog", prisma);
   return { featured, recent, essential, popular, categories };
 }
