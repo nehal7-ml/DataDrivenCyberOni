@@ -214,7 +214,7 @@ async function CaseStudy({ params }: { params: { id: string } }) {
                         <div className="flex gap-2 flex-wrap max-w-full">
                             {caseStudy.hifiDesign.map((image, index) => <div key={index} className="flex flex-col justify-center items-center" >
                                 <Image src={image.src} alt={stripFileExtension(image.name || `hifi-design-${index}`) as string} height={500} width={500} />
-                                <div className="font-bold"># {stripFileExtension(image.name as string)}</div>
+                                <div className="font-bold"># {stripFileExtension(image.name as string ??    `hifi-design-${index}`)}</div>
                             </div>)}
                         </div>
                     </>}

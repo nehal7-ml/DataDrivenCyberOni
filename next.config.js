@@ -15,7 +15,8 @@ const imageLocations = [
   "images.pexels.com",
   "cdn.dribbble.com",
   "placehold.co",
-  "api.dicebear.com"
+  "api.dicebear.com",
+  "example.com"
 
 ];
 const nextConfig = {
