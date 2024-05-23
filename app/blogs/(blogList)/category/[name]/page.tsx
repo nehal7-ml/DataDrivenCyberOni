@@ -21,15 +21,15 @@ async function BlogsInCategoryPage({ params, searchParams }: { params: { name: s
             <div className="w-full ">
                 <div className="container mx-auto ">
                     <div className="conatiner mx-10 my-10 flex flex-wrap">
-                        {data.map((blog, index) => {
+                        {data.list.map((blog, index) => {
                             return (
                                 <div key={index} className={`w-full lg:w-1/2 p-5  lg:h-[25em] h-fit`}>
-                                    <GridBlogCard blog={blog} />
+                                    <GridBlogCard blog={blog as DisplayBlogDTO} />
                                 </div>
                             )
                         })}
                     </div>
-                    <Pagination currentPage={1} pathname={`/blogs/category/${params.name}`} totalPages={10} query={searchParams} />
+                    <Pagination currentPage={1} pathname={`/blogs/category/${params.name}`} totalPages={data.totalPages>5?5:data.totalPages} query={searchParams} />
                 </div>
             </div>
         </div>
@@ -38,9 +38,9 @@ async function BlogsInCategoryPage({ params, searchParams }: { params: { name: s
 
 async function getData(id: string, page:number) {
 
-    const list = await getBlogsByCategory(id, page, prisma);
+    const {list, totalPages} = await getBlogsByCategory(id, page, prisma);
 
-    return list as DisplayBlogDTO[]
+    return {list , totalPages}
 
 }
 

@@ -144,38 +144,43 @@ export async function getFeatured(prisma: PrismaClient) {
 
 export async function getBlogsByCategory(id: string, page: number, prisma: PrismaClient) {
 
-    const list = await prisma.blog.findMany({
-        skip: page === 0 ? 0 : (page - 1) * 5,
-        take: 5,
-        where: {
-            OR: [
-                {
-                    category: {
-                        parent: {
-                            id: id
-                        }
-                    }
-                }, {
-                    category: {
+    const query ={
+        OR: [
+            {
+                category: {
+                    parent: {
                         id: id
                     }
                 }
+            }, {
+                category: {
+                    id: id
+                }
+            }
 
-            ],
+        ],
 
-        },
-        include: {
-            tags: true,
-            author: {
-                include: {
-                    image: true,
+    }
+    const data = await prisma.$transaction([
+        prisma.blog.count({where: query}),
+        prisma.blog.findMany({
+            skip: page === 0 ? 0 : (page - 1) * 5,
+            take: 5,
+            where: query,
+            include: {
+                tags: true,
+                author: {
+                    include: {
+                        image: true,
+                    },
                 },
+                images: true,
+                category: true,
             },
-            images: true,
-            category: true,
-        },
-    });
-    return list
+        })
+    ])
+    ;
+    return {list: data[1] , totalPages: data[0]}
 
 }
 
@@ -316,31 +321,32 @@ export async function getEssential(page: number, prisma: PrismaClient) {
 
     const data = await prisma.$transaction([
         prisma.blog.count({ where: { publishDate: { lte: new Date() } } }),
-
-        
-    ])
-    const essential = await prisma.blog.findMany({
-        skip: page === 0 ? 0 : (page - 1) * 10,
-        take: 10,
-        where: {
-            publishDate: {
-                lte: new Date(),
-            },
-        },
-        include: {
-            // reviews: true,
-            tags: true,
-            category: true,
-
-            author: {
-                include: {
-                    image: true,
+        prisma.blog.findMany({
+            skip: page === 0 ? 0 : (page - 1) * 10,
+            take: 10,
+            where: {
+                publishDate: {
+                    lte: new Date(),
                 },
             },
-            images: true,
-        },
-    });
-    return { essential };
+            include: {
+                // reviews: true,
+                tags: true,
+                category: true,
+
+                author: {
+                    include: {
+                        image: true,
+                    },
+                },
+                images: true,
+            },
+        })
+
+
+
+    ])
+    return { essential: data[1], totalPages: data[0] };
 }
 
 async function getAuthor(id: string, page: number, prisma: PrismaClient) {
@@ -399,6 +405,9 @@ async function getComments(id: string, page: number, prisma: PrismaClient) {
 }
 
 export async function getSimilar(id: string, page: number, prisma: PrismaClient) {
+
+
+
     const blog = await prisma.blog.findUnique({
 
         where: {
@@ -416,58 +425,65 @@ export async function getSimilar(id: string, page: number, prisma: PrismaClient)
 
     if (!blog) return { similar: [], totalPages: 0 };
     else {
-        const similar = await prisma.blog.findMany({
-            skip: page === 0 ? 0 : (page - 1) * 10,
-            take: 10,
-            where: {
-                AND: [
-                    {
-                        id: { not: blog.id },
-                    }
-                ],
-                OR: [
-                    {
-                        category: {
-                            id: {
-                                equals: blog.category?.id ?? "",
-                            },
+        const query = {
+            AND: [
+                {
+                    id: { not: blog.id },
+                }
+            ],
+            OR: [
+                {
+                    category: {
+                        id: {
+                            equals: blog.category?.id ?? "",
                         },
-                    },
-
-                    {
-                        category: {
-                            parentId: {
-                                equals: blog.category?.parent?.id ?? "",
-                            },
-                        },
-                    },
-
-                    {
-                        tags: {
-                            every: {
-                                name: {
-                                    in: blog.tags.map((t) => t.name),
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            include: {
-                tags: true,
-                category: true,
-
-                author: {
-                    include: {
-                        image: true,
                     },
                 },
-                images: true,
-            },
-        });
+
+                {
+                    category: {
+                        parentId: {
+                            equals: blog.category?.parent?.id ?? "",
+                        },
+                    },
+                },
+
+                {
+                    tags: {
+                        every: {
+                            name: {
+                                in: blog.tags.map((t) => t.name),
+                            },
+                        },
+                    },
+                },
+            ],
+        }
+
+        const data = await prisma.$transaction([
+            prisma.blog.count({ where: query }),
+            prisma.blog.findMany({
+                skip: page === 0 ? 0 : (page - 1) * 10,
+                take: 10,
+                where: query,
+                include: {
+                    tags: true,
+                    category: true,
+
+                    author: {
+                        include: {
+                            image: true,
+                        },
+                    },
+                    images: true,
+                },
+            })
+
+        ])
 
 
-        return { similar };
+
+        return { similar: data[1], totalPages: data[0] };
     }
 }
 export async function getBySearchTerm(
