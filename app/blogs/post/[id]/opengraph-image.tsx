@@ -4,6 +4,10 @@ import prisma from "@/lib/prisma";
 import { extractUUID } from "@/lib/utils";
 import { ImageResponse } from "next/og";
 
+
+export const dynamic ='force-static';
+
+
 async function getData(id: string) {
     const blog = await read(id, prisma)
 
