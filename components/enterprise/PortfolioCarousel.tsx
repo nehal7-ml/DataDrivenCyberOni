@@ -33,7 +33,8 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
     //const testArray = new Array(5).fill(servicesWithCaseStudies[0])
 
     const [currentGrid, setCurrentGrid] = useState(
-        servicesWithCaseStudies[0].CaseStudies || [],
+        servicesWithCaseStudies[0] ?
+            (servicesWithCaseStudies[0].CaseStudies ?? []) : []
     );
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -154,7 +155,7 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
                                                         : caseStudy.title
                                                 }
                                                 image={`${caseStudy.images &&
-                                                    (caseStudy.images as unknown  as CaseImage[])[0]
+                                                    (caseStudy.images as unknown as CaseImage[])[0]
                                                     ? (caseStudy.images as unknown as CaseImage[])[0].src
                                                     : `https://picsum.photos/200?random=1`
                                                     }`}
@@ -166,7 +167,7 @@ function PortfolioCarousel({ services }: { services: DisplayServiceDTO[] }) {
                                 );
                             })
                         ) : (
-                            <div>No Case Studies Added</div>
+                            <div className="text-center w-full">No Case Studies Added</div>
                         )}
                     </div>
 

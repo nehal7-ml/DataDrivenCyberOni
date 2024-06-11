@@ -43,7 +43,7 @@ export async function processStripeEvent(event: stripe.Event) {
 
         await createPaymentRecord({
             email: event.data.object.customer_email as string,
-            price: event.data.object.total.toString(),
+            amount: event.data.object.total/100,
             subscriptionId: event.data.object.subscription as string,
             invoice: event.data.object.invoice_pdf as string
         }, prisma)
@@ -211,7 +211,7 @@ export async function getCustomer(id: string) {
 
 }
 
-export async function isSubscritpionActive(id: string) {
+export async function isSubscriptionActive(id: string) {
     const subscription = await client.subscriptions.retrieve(id);
     return subscription.status === 'active' || subscription.status === 'trialing'
 }
