@@ -7,7 +7,7 @@ const get = async () => {
     const featured = await getFeatured(prisma);
     const recent = await getRecent(prisma);
     const popular = await getPopular(prisma);
-    const essential = await getEssential(prisma);
+    const e = await getEssential(prisma);
     return NextResponse.json({ message: "found", data: { featured, recent, popular, essential } })
 
 }
