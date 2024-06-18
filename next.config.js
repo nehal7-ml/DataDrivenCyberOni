@@ -53,11 +53,7 @@ const nextConfig = {
         destination: "https://form.jotform.com/233471176876163",
         permanent: true,
       },
-      {
-        source: "/reviews",
-        destination: "https://g.page/r/CfS7tYPMVQ8ZEAI/review",
-        permanent: true,
-      },
+    
       {
         source: "/small-business-suppliment",
         destination: "https://www.jotform.com/build/240795056336158",
