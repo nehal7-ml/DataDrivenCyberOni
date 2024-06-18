@@ -3,7 +3,7 @@ import { CreateSoftwareProductDTO } from "@/crud/DTOs";
 import { create } from "@/crud/softwareProduct";
 import apiHandler from "@/errorHandler";
 
-import { prisma } from "@/lib/prisma";
+import prisma  from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 async function post(req: Request) {

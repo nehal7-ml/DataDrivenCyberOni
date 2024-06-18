@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "@/lib/prisma";
+import prisma  from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import apiHandler from "@/errorHandler";
 import { getAll } from "@/crud/softwareProduct";
