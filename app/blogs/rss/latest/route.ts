@@ -4,6 +4,7 @@ import { getRecent } from "@/crud/blog"
 const { JSDOM } = jsdom
 export const dynamic = 'auto'
 export const revalidate = 1800
+
 import prisma from "@/lib/prisma"
 import { seoUrl } from "@/lib/utils"
 let window = new JSDOM().window
@@ -22,7 +23,7 @@ export async function GET() {
     let xmlDoc = parser.parseFromString(xmlContent, "text/xml");
     let channel = xmlDoc.getElementsByTagName("channel")[0];
     blogs.recent.forEach(blog => {
-        const item  = xmlDoc.createElement("item");
+        const item = xmlDoc.createElement("item");
         const title = xmlDoc.createElement("title");
         const link = xmlDoc.createElement("link");
         const description = xmlDoc.createElement("description");
@@ -33,7 +34,7 @@ export async function GET() {
         item.appendChild(link)
         item.appendChild(description)
         channel.appendChild(item)
-        
+
     });
     return new NextResponse(new window.XMLSerializer().serializeToString(xmlDoc.documentElement), { headers: { "Content-Type": "text/xml" } });
 }

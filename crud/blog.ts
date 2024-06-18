@@ -144,7 +144,7 @@ export async function getFeatured(prisma: PrismaClient) {
 
 export async function getBlogsByCategory(id: string, page: number, prisma: PrismaClient) {
 
-    const query ={
+    const query = {
         OR: [
             {
                 category: {
@@ -159,10 +159,17 @@ export async function getBlogsByCategory(id: string, page: number, prisma: Prism
             }
 
         ],
+        AND: [
+            {
+                publishDate: {
+                    lte: new Date(),
+                },
+            }
+        ]
 
     }
     const data = await prisma.$transaction([
-        prisma.blog.count({where: query}),
+        prisma.blog.count({ where: query }),
         prisma.blog.findMany({
             skip: page === 0 ? 0 : (page - 1) * 5,
             take: 5,
@@ -177,10 +184,13 @@ export async function getBlogsByCategory(id: string, page: number, prisma: Prism
                 images: true,
                 category: true,
             },
+            orderBy: {
+                publishDate: 'desc'
+            }
         })
     ])
-    ;
-    return {list: data[1] , totalPages: data[0]}
+        ;
+    return { list: data[1], totalPages: data[0] }
 
 }
 
