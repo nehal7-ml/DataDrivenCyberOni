@@ -5,6 +5,7 @@ import { connectOrCreateObject as connectImages } from "./images";
 import { cleanHtmlString, getRandomFromArray } from "@/lib/utils";
 import { CommentDTO, CreateBlogDTO, DisplayBlogDTO } from "./DTOs";
 import { getUserByEmail } from "./user";
+import { View } from "lucide-react";
 
 async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
@@ -141,38 +142,45 @@ export async function getFeatured(prisma: PrismaClient) {
     return getRandomFromArray(featured);
 }
 
-export async function getBlogsByCategory(id: string, prisma: PrismaClient) {
+export async function getBlogsByCategory(id: string, page: number, prisma: PrismaClient) {
 
-    const list = await prisma.blog.findMany({
-        where: {
-            OR: [
-                {
-                    category: {
-                        parent: {
-                            id: id
-                        }
-                    }
-                }, {
-                    category: {
+    const query ={
+        OR: [
+            {
+                category: {
+                    parent: {
                         id: id
                     }
                 }
+            }, {
+                category: {
+                    id: id
+                }
+            }
 
-            ],
+        ],
 
-        },
-        include: {
-            tags: true,
-            author: {
-                include: {
-                    image: true,
+    }
+    const data = await prisma.$transaction([
+        prisma.blog.count({where: query}),
+        prisma.blog.findMany({
+            skip: page === 0 ? 0 : (page - 1) * 5,
+            take: 5,
+            where: query,
+            include: {
+                tags: true,
+                author: {
+                    include: {
+                        image: true,
+                    },
                 },
+                images: true,
+                category: true,
             },
-            images: true,
-            category: true,
-        },
-    });
-    return list
+        })
+    ])
+    ;
+    return {list: data[1] , totalPages: data[0]}
 
 }
 
@@ -232,44 +240,56 @@ export async function addView(
         return;
     }
 }
-export function getRecent(prisma: PrismaClient) {
+export async function getRecent(page: number, prisma: PrismaClient) {
     const recentDate = new Date(Date.now() - 90 * (24 * 60 * 60 * 1000)); // 90 days
-    const recent = prisma.blog.findMany({
-        where: {
-            AND: [
-                {
-                    publishDate: {
-                        lte: new Date(),
-                    },
-                },
-                {
-                    publishDate: {
-                        gte: recentDate,
-                    },
-                },
-            ],
-        },
-        include: {
-            tags: true,
-            category: true,
 
-            author: {
-                include: {
-                    image: true,
+    const recentQuery = {
+        AND: [
+            {
+                publishDate: {
+                    lte: new Date(),
                 },
             },
-            images: true,
-        },
-        orderBy: {
-            date: "desc",
-        },
-    });
-    return recent;
+            {
+                publishDate: {
+                    gte: recentDate,
+                },
+            },
+        ],
+    }
+
+    const data = await prisma.$transaction([
+        prisma.blog.count({ where: recentQuery }),
+        prisma.blog.findMany({
+            skip: page === 0 ? 0 : (page - 1) * 10,
+            take: 10,
+            where: recentQuery,
+            include: {
+                tags: true,
+                category: true,
+
+                author: {
+                    include: {
+                        image: true,
+                    },
+                },
+                images: true,
+            },
+            orderBy: {
+                publishDate: "desc",
+            },
+        })
+    ])
+
+
+    return { recent: data[1], totalPages: data[0] };
 }
 
-export function getPopular(prisma: PrismaClient) {
-    const popular = prisma.blog.findMany({
-        skip: 0,
+export async function getPopular(page: number, prisma: PrismaClient) {
+
+
+    const popular = await prisma.blog.findMany({
+        skip: page === 0 ? 0 : (page - 1) * 10,
         take: 10,
         where: {
             publishDate: {
@@ -288,38 +308,45 @@ export function getPopular(prisma: PrismaClient) {
             },
             images: true,
         },
-        orderBy: {
-            Likes: {
-                _count: "asc",
-            },
-        },
+        orderBy: [
+            { Likes: { _count: "desc" } },
+            { Views: "desc" },
+            { publishDate: "desc" },
+        ],
     });
-    return popular;
+    return { popular, totalPages: 5 };
 }
 
-export function getEssential(prisma: PrismaClient) {
-    const essential = prisma.blog.findMany({
-        skip: 0,
-        take: 10,
-        where: {
-            publishDate: {
-                lte: new Date(),
-            },
-        },
-        include: {
-            // reviews: true,
-            tags: true,
-            category: true,
+export async function getEssential(page: number, prisma: PrismaClient) {
 
-            author: {
-                include: {
-                    image: true,
+    const data = await prisma.$transaction([
+        prisma.blog.count({ where: { publishDate: { lte: new Date() } } }),
+        prisma.blog.findMany({
+            skip: page === 0 ? 0 : (page - 1) * 10,
+            take: 10,
+            where: {
+                publishDate: {
+                    lte: new Date(),
                 },
             },
-            images: true,
-        },
-    });
-    return essential;
+            include: {
+                // reviews: true,
+                tags: true,
+                category: true,
+
+                author: {
+                    include: {
+                        image: true,
+                    },
+                },
+                images: true,
+            },
+        })
+
+
+
+    ])
+    return { essential: data[1], totalPages: data[0] };
 }
 
 async function getAuthor(id: string, page: number, prisma: PrismaClient) {
@@ -377,8 +404,12 @@ async function getComments(id: string, page: number, prisma: PrismaClient) {
     return readComments;
 }
 
-export async function getSimilar(id: string, prisma: PrismaClient) {
+export async function getSimilar(id: string, page: number, prisma: PrismaClient) {
+
+
+
     const blog = await prisma.blog.findUnique({
+
         where: {
             id,
         },
@@ -392,55 +423,67 @@ export async function getSimilar(id: string, prisma: PrismaClient) {
         },
     });
 
-    if (!blog) return [];
+    if (!blog) return { similar: [], totalPages: 0 };
     else {
-        const similar = await prisma.blog.findMany({
-            skip: 0,
-            take: 10,
-            where: {
-                OR: [
-                    {
-                        category: {
-                            id: {
-                                equals: blog.category?.id ?? "",
-                            },
+        const query = {
+            AND: [
+                {
+                    id: { not: blog.id },
+                }
+            ],
+            OR: [
+                {
+                    category: {
+                        id: {
+                            equals: blog.category?.id ?? "",
                         },
-                    },
-
-                    {
-                        category: {
-                            parentId: {
-                                equals: blog.category?.parent?.id ?? "",
-                            },
-                        },
-                    },
-
-                    {
-                        tags: {
-                            every: {
-                                name: {
-                                    in: blog.tags.map((t) => t.name),
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            include: {
-                tags: true,
-                category: true,
-
-                author: {
-                    include: {
-                        image: true,
                     },
                 },
-                images: true,
-            },
-        });
+
+                {
+                    category: {
+                        parentId: {
+                            equals: blog.category?.parent?.id ?? "",
+                        },
+                    },
+                },
+
+                {
+                    tags: {
+                        every: {
+                            name: {
+                                in: blog.tags.map((t) => t.name),
+                            },
+                        },
+                    },
+                },
+            ],
+        }
+
+        const data = await prisma.$transaction([
+            prisma.blog.count({ where: query }),
+            prisma.blog.findMany({
+                skip: page === 0 ? 0 : (page - 1) * 10,
+                take: 10,
+                where: query,
+                include: {
+                    tags: true,
+                    category: true,
+
+                    author: {
+                        include: {
+                            image: true,
+                        },
+                    },
+                    images: true,
+                },
+            })
+
+        ])
 
 
-        return similar as DisplayBlogDTO[];
+
+        return { similar: data[1], totalPages: data[0] };
     }
 }
 export async function getBySearchTerm(

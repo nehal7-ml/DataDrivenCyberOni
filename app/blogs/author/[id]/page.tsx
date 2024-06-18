@@ -72,8 +72,8 @@ async function BlogAuthor({
 }) {
   const { page } = searchParams;
   const author = await getAuthor(id, page, prisma);
-  const recent = await getRecent(prisma);
-  const popular = await getPopular(prisma);
+  const recent = await getRecent(1,prisma);
+  const popular = await getPopular(1, prisma);
 
   if (!author?.id) redirect("/404");
   return (
@@ -132,7 +132,7 @@ async function BlogAuthor({
       <div className="row-span-6 flex flex-col gap-10 p-5">
         <div className="rounded-md shadow-md dark:bg-zinc-900">
           <div className="p-2 text-center">Recent</div>
-          {recent.slice(0, 4).map((blog, index) => {
+          {recent.recent.slice(0, 4).map((blog, index) => {
             return (
               <div key={index} className="p-4">
                 <Link
@@ -151,7 +151,7 @@ async function BlogAuthor({
         <div className="rounded-md shadow-md dark:bg-zinc-900">
           <div className="p-2 text-center">Popular</div>
 
-          {popular.slice(0, 4).map((blog, index) => {
+          {popular.popular.slice(0, 4).map((blog, index) => {
             return (
               <div
                 key={index}

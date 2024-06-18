@@ -60,7 +60,7 @@ export default function Home({ searchParams }: { searchParams?: { softwareCatego
             </div>
 
             <Suspense fallback={<LoadingCarousel />}>
-              <SoftwareSection categoryId={ searchParams?.softwareCategoryId} />
+              <SoftwareSection categoryId={searchParams?.softwareCategoryId} />
             </Suspense>
           </section>
           <div className="container my-4">
@@ -105,7 +105,7 @@ export default function Home({ searchParams }: { searchParams?: { softwareCatego
           ></SlideShow>
           <div className="mt-8 flex justify-center">
             <Link
-              href="/reviews"
+              href="/leaveAReview"
               target="_blank"
               rel="noopener noreferrer"
               className="text-lg font-semibold text-blue-600 hover:text-blue-800"
@@ -115,7 +115,7 @@ export default function Home({ searchParams }: { searchParams?: { softwareCatego
             </Link>
             &nbsp;|&nbsp;
             <Link
-              href="/google-business"
+              href="/leaveAReview"
               target="_blank"
               rel="noopener noreferrer"
               className="text-lg font-semibold text-blue-600 hover:text-blue-800"

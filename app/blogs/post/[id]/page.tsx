@@ -46,12 +46,10 @@ export async function generateMetadata(
       type: "article",
       title: blog.title,
       description: description,
-      images: [...blog.images.map((image) => image.src)],
     };
     metadata.twitter = {
       title: blog.title,
       description: description,
-      images: [...blog.images.map((image) => image.src)],
     };
     metadata.category = blog.tags.join(" ");
     metadata.keywords = blog.tags?.map((tag) => tag.name);
@@ -119,15 +117,15 @@ async function BlogPost({ params }: { params: { id: string } }) {
           </div>
         </div>
         <div className="container relative mx-auto my-10  flex min-h-screen flex-col  items-center px-1 py-5  xl:px-10   xl:py-10">
-          <div className="flex w-full items-center justify-center px-[5rem]">
+          <div className="flex w-full items-center justify-center lg:px-[5rem]">
             {blog.images[0] ? (
               <Image
                 priority={true}
-                className="m-2  rounded-lg object-cover w-full h-auto max-h-[500px] xl:max-h-[600px] 2xl:max-h-[700px] 3xl:max-h-[800px]"
+                className="m-2  rounded-lg object-cover w-full h-auto max-h-[500px] xl:max-h-[480px] 2xl:max-h-[450px]"
                 src={blog.images[0].src}
                 alt={stripFileExtension(blog.images[0].name || "blog_image")}
-                width={500}
-                height={300}
+                width={1250}
+                height={600}
               ></Image>
             ) : (
               <></>
@@ -149,7 +147,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
         </div>
 
         <section>
-          <SimilarBlogs blogs={similar} viewAllLink={`/blogs/similar?id=${id}`} />
+          <SimilarBlogs blogs={similar as DisplayBlogDTO[]} viewAllLink={`/blogs/similar?id=${id}`} />
         </section>
 
         <div className="flex w-full flex-col items-center justify-center gap-5">
@@ -190,7 +188,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
 async function getData(id: string, userEmail?: string) {
   const blog = await addView({ id, userEmail }, prisma) as DisplayBlogDTO;
-  const similar = await getSimilar(id, prisma);
+  const {similar} = await getSimilar(id, 1, prisma);
   // console.log(blog.title);
   if (blog) return { blog, similar };
   else redirect("/404");

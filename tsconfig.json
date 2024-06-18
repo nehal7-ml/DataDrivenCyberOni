@@ -1,35 +1,19 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/ui/*" : ["components/ui/*"],
-      "@/pages/*": [
-        "pages/*"
-      ],
-      "@/app/*": [
-        "app/*"
-      ],
-      "@/lib/*": [
-        "lib/*"
-      ],
-      "@/styles/*": [
-        "styles/*"
-      ],
-      "@/crud/*": [
-        "crud/*"
-      ],
+      "@/components/*": ["components/*"],
+      "@/ui/*": ["components/ui/*"],
+      "@/pages/*": ["pages/*"],
+      "@/app/*": ["app/*"],
+      "@/lib/*": ["lib/*"],
+      "@/styles/*": ["styles/*"],
+      "@/crud/*": ["crud/*"]
     },
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -45,16 +29,16 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": [
     "next-env.d.ts",
     "global.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts", "next.config.js",
+    ".next/types/**/*.ts",
+    "next.config.js"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules", "__tests__"]
 }
