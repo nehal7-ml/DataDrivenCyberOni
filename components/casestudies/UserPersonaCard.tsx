@@ -15,7 +15,7 @@ function UserPersonaCard({ name, age, bio, gender, goals, image, painPoints }: U
     return (<>
         <div className="flex flex-col lg:flex-row rounded-2xl shadow-lg p-4">
             <div className="relative lg:w-1/2 text-white">
-                <Image className="w-full h-full rounded-lg object-cover" src={image.src} alt={name} height={500} width={500} />
+                <Image className="w-full h-full rounded-lg object-cover" src={image ? image.src : ''} alt={name} height={500} width={500} />
                 <div className="absolute bottom-0 w-full flex flex-col justify-end items-center">
                     <p className="text-xl font-bold">Name: {name}</p>
                     <p className="text-xl font-bold"><strong>Age:</strong>Age: {age}</p>

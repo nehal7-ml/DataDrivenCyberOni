@@ -15,7 +15,8 @@ const imageLocations = [
   "images.pexels.com",
   "cdn.dribbble.com",
   "placehold.co",
-  "api.dicebear.com"
+  "api.dicebear.com",
+  "example.com"
 
 ];
 const nextConfig = {
@@ -53,11 +54,7 @@ const nextConfig = {
         destination: "https://form.jotform.com/233471176876163",
         permanent: true,
       },
-      {
-        source: "/reviews",
-        destination: "https://g.page/r/CfS7tYPMVQ8ZEAI/review",
-        permanent: true,
-      },
+    
       {
         source: "/small-business-suppliment",
         destination: "https://www.jotform.com/build/240795056336158",
@@ -104,11 +101,7 @@ const nextConfig = {
         destination: "https://www.freelancer.com/u/CodingOni",
         permanent: false,
       },
-      {
-        source: "/leave_a_review",
-        destination: "https://g.page/r/CfS7tYPMVQ8ZEAI/review",
-        permanent: false,
-      }
+     
     ];
   },
   experimental: {

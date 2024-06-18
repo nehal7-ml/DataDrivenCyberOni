@@ -30,6 +30,9 @@ async function getCategories(type: CategoryType, prisma: PrismaClient) {
           parent: {
             is: null,
           },
+          Blog: {
+            some: {},
+          }
         },
         include: { children: true },
       });

@@ -1,10 +1,10 @@
-import {  isSubscritpionActive } from "@/lib/externalRequests/stripe";
+import {  isSubscriptionActive } from "@/lib/externalRequests/stripe";
 import { PrismaClient } from "@prisma/client";
 
 
 export type CreatePaymentDTO = {
     email: string
-    price: string,
+    amount: number,
     subscriptionId: string,
     invoice: string
 
@@ -14,12 +14,15 @@ export async function createPaymentRecord(payment: CreatePaymentDTO, prisma: Pri
     // console.log(payment);
     const newPayment = await payments.create({
         data: {
-            price: payment.price,
-            customer: { connect: { email: payment.email } },
-            subscriptionId: payment.subscriptionId,
-            invoice: payment.invoice
+            amount: payment.amount,
 
-            
+            customer: { connect: { email: payment.email } },
+            subscription:{
+                connect:    {id: payment.subscriptionId}
+            },
+            invoice: payment.invoice,
+            purpose: 'SUBSCRIPTION',           
+                      
 
         }
     })
@@ -52,7 +55,7 @@ export async function getPayments(email: string, prisma: PrismaClient) {
         active = false;
     }
     else {
-        active = await isSubscritpionActive(records[0].subscriptionId)
+        active = await isSubscriptionActive(records[0].subscriptionId!)
 
     }
 
