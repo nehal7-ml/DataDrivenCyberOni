@@ -8,9 +8,6 @@ export async function POST(req: NextRequest) {
 
     try {
         const { token } = await req.json();
-
-        if (process.env.NODE_ENV === 'development') return NextResponse.json({ message: 'success' });
-
         const { success } = await verifyCaptcha(token);
 
         if (success) {

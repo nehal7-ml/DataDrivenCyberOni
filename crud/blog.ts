@@ -360,7 +360,7 @@ export async function getEssential(page: number, prisma: PrismaClient) {
 
     const totalPages = Math.ceil(data[0] / 10);
 
-    return { essential: data[1], totalPages};
+    return { essential: data[1], totalPages };
 }
 
 async function getAuthor(id: string, page: number, prisma: PrismaClient) {

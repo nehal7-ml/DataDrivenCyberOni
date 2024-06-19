@@ -18,6 +18,8 @@ import { WebVitals } from "@/components/WebVitals";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import LeadForm from "@/components/LeadForm";
 import FacebookPixel from "@/components/FbPixel";
+import { SessionProvider } from "next-auth/react";
+import { UserProvider } from "@/components/UserContextProvider";
 
 export const metadata: Metadata = {
   title: Owner.seo.metaTitle,
@@ -98,38 +100,38 @@ export default async function RootLayout({
                         ${theme?.value} overflow-x-hidden antialiased`}
       >
         <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white " />
-        <Suspense fallback="...">
-          <NavBar
-            session={session}
-            darkMode={theme?.value === "dark" ? true : false}
-          />
-        </Suspense>
-        <main className="relative min-h-screen w-full  overflow-x-hidden pt-16 xl:pt-24 dark:bg-gray-900 dark:text-white">
-          {children}
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}`}
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-            ></iframe>
-          </noscript>
-        </main>
-        {
-          <Suspense>
-            <LeadForm />
+          <Suspense fallback="...">
+            <NavBar
+              session={session}
+              darkMode={theme?.value === "dark" ? true : false}
+            />
           </Suspense>
-        }
-        {
-          <Suspense>
-            <Notification />
-          </Suspense>
-        }
-        <ContactButton />
-        <Footer />
-        <Analytics />
-        <SpeedInsights />
-        {/* <WebVitals /> */}
+          <main className="relative min-h-screen w-full  overflow-x-hidden pt-16 xl:pt-24 dark:bg-gray-900 dark:text-white">
+            {children}
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}`}
+                height="0"
+                width="0"
+                style={{ display: "none", visibility: "hidden" }}
+              ></iframe>
+            </noscript>
+          </main>
+          {
+            <Suspense>
+              <LeadForm />
+            </Suspense>
+          }
+          {
+            <Suspense>
+              <Notification />
+            </Suspense>
+          }
+          <ContactButton />
+          <Footer />
+          <Analytics />
+          <SpeedInsights />
+          {/* <WebVitals /> */}
       </body>
     </html>
   );
