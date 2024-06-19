@@ -15,7 +15,6 @@ export async function createPaymentRecord(payment: CreatePaymentDTO, prisma: Pri
     const newPayment = await payments.create({
         data: {
             amount: payment.amount,
-
             customer: { connect: { email: payment.email } },
             subscription:{
                 connect:    {id: payment.subscriptionId}

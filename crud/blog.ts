@@ -164,7 +164,7 @@ export async function getBlogsByCategory(id: string, page: number, prisma: Prism
                 publishDate: {
                     lte: new Date(),
                 },
-            }
+            },
         ]
 
     }
@@ -190,7 +190,9 @@ export async function getBlogsByCategory(id: string, page: number, prisma: Prism
         })
     ])
         ;
-    return { list: data[1], totalPages: data[0] }
+    const totalPages = Math.ceil(data[0] / 10);
+
+    return { list: data[1], totalPages: totalPages }
 
 }
 
@@ -291,8 +293,9 @@ export async function getRecent(page: number, prisma: PrismaClient) {
         })
     ])
 
+    const totalPages = Math.ceil(data[0] / 10);
 
-    return { recent: data[1], totalPages: data[0] };
+    return { recent: data[1], totalPages };
 }
 
 export async function getPopular(page: number, prisma: PrismaClient) {
@@ -324,6 +327,7 @@ export async function getPopular(page: number, prisma: PrismaClient) {
             { publishDate: "desc" },
         ],
     });
+
     return { popular, totalPages: 5 };
 }
 
@@ -356,7 +360,10 @@ export async function getEssential(page: number, prisma: PrismaClient) {
 
 
     ])
-    return { essential: data[1], totalPages: data[0] };
+
+    const totalPages = Math.ceil(data[0] / 10);
+
+    return { essential: data[1], totalPages};
 }
 
 async function getAuthor(id: string, page: number, prisma: PrismaClient) {
@@ -439,7 +446,12 @@ export async function getSimilar(id: string, page: number, prisma: PrismaClient)
             AND: [
                 {
                     id: { not: blog.id },
-                }
+                },
+                {
+                    publishDate: {
+                        lte: new Date(),
+                    },
+                },
             ],
             OR: [
                 {
@@ -491,9 +503,10 @@ export async function getSimilar(id: string, page: number, prisma: PrismaClient)
 
         ])
 
+        const totalPages = Math.ceil(data[0] / 10);
 
 
-        return { similar: data[1], totalPages: data[0] };
+        return { similar: data[1], totalPages };
     }
 }
 export async function getBySearchTerm(
