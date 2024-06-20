@@ -18,6 +18,7 @@ import { Blog, BlogPosting, WithContext } from "schema-dts";
 import Script from "next/script";
 import { ImageResponse } from "next/og";
 import SimilarBlogs from "@/components/blogs/SimilarBlogs";
+import BlogCTA from "@/components/blogs/BlogCTA";
 
 export const dynamic = "force-dynamic";
 
@@ -146,9 +147,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
           />
         </div>
 
-        <section>
-          <SimilarBlogs blogs={similar as DisplayBlogDTO[]} viewAllLink={`/blogs/similar?id=${id}`} />
-        </section>
+
 
         <div className="flex w-full flex-col items-center justify-center gap-5">
           <Link
@@ -175,6 +174,12 @@ async function BlogPost({ params }: { params: { id: string } }) {
             {blog.author.firstName || blog.author.email}
           </div>
         </div>
+        <section>
+          <SimilarBlogs blogs={similar as DisplayBlogDTO[]} viewAllLink={`/blogs/similar?id=${id}`} />
+        </section>
+        <section>
+          <BlogCTA />
+        </section>
         <CommentForm
           email={session?.user?.email as string}
           href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`}

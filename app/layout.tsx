@@ -100,38 +100,42 @@ export default async function RootLayout({
                         ${theme?.value} overflow-x-hidden antialiased`}
       >
         <div className="fixed h-full w-screen dark:bg-gray-900 dark:text-white " />
-          <Suspense fallback="...">
-            <NavBar
-              session={session}
-              darkMode={theme?.value === "dark" ? true : false}
-            />
-          </Suspense>
-          <main className="relative min-h-screen w-full  overflow-x-hidden pt-16 xl:pt-24 dark:bg-gray-900 dark:text-white">
-            {children}
-            <noscript>
-              <iframe
-                src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}`}
-                height="0"
-                width="0"
-                style={{ display: "none", visibility: "hidden" }}
-              ></iframe>
-            </noscript>
-          </main>
-          {
-            <Suspense>
-              <LeadForm />
+        <Suspense>
+          <UserProvider>
+            <Suspense fallback="...">
+              <NavBar
+                session={session}
+                darkMode={theme?.value === "dark" ? true : false}
+              />
             </Suspense>
-          }
-          {
-            <Suspense>
-              <Notification />
-            </Suspense>
-          }
-          <ContactButton />
-          <Footer />
-          <Analytics />
-          <SpeedInsights />
-          {/* <WebVitals /> */}
+            <main className="relative min-h-screen w-full  overflow-x-hidden pt-16 xl:pt-24 dark:bg-gray-900 dark:text-white">
+              {children}
+              <noscript>
+                <iframe
+                  src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}`}
+                  height="0"
+                  width="0"
+                  style={{ display: "none", visibility: "hidden" }}
+                ></iframe>
+              </noscript>
+            </main>
+            {
+              <Suspense>
+                <LeadForm />
+              </Suspense>
+            }
+            {
+              <Suspense>
+                <Notification />
+              </Suspense>
+            }
+            <ContactButton />
+            <Footer />
+          </UserProvider>
+        </Suspense>
+        <Analytics />
+        <SpeedInsights />
+        {/* <WebVitals /> */}
       </body>
     </html>
   );
