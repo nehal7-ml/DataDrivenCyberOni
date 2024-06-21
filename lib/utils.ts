@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import ms from "ms";
 import slugify from "slugify";
 import seedRandom from 'seedrandom'
@@ -18,6 +19,21 @@ export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
   if (!timestamp) return "never";
   return `${ms(Date.now() - new Date(timestamp).getTime())}${timeOnly ? "" : " ago"
     }`;
+=======
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import ms from "ms";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
+  if (!timestamp) return "never";
+  return `${ms(Date.now() - new Date(timestamp).getTime())}${
+    timeOnly ? "" : " ago"
+  }`;
+>>>>>>> upstream/main
 };
 
 export async function fetcher<JSON = any>(
@@ -74,6 +90,7 @@ export const truncate = (str: string, length: number) => {
   if (!str || str.length <= length) return str;
   return `${str.slice(0, length)}...`;
 };
+<<<<<<< HEAD
 
 export function getRandomFromArray(arr: Array<any>): any {
   const randomIndex = Math.floor(Math.random() * arr.length);
@@ -246,3 +263,5 @@ export function calculateDiscountedPrice(total: number, discounts: Discount[]): 
   // Ensure the discounted price is not negative
   return parseFloat(Math.max(discountedPrice, 0).toFixed(2));
 }
+=======
+>>>>>>> upstream/main

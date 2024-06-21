@@ -77,7 +77,7 @@ function ContactUs({ searchParams }: { searchParams: { name: string, email: stri
   const { executeRecaptcha, loaded } = useReCaptcha();
 
   const handleValueChange = (newValue: DateValueType) => {
-   
+
     let date = newValue?.startDate
       ? new Date(newValue?.startDate as string).toLocaleDateString()
       : "";

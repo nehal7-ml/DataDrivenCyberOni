@@ -1,10 +1,15 @@
 import localFont from "next/font/local";
+<<<<<<< HEAD
 import { Abel, Inter, Nunito } from "next/font/google";
+=======
+import { Inter } from "next/font/google";
+>>>>>>> upstream/main
 
 export const sfPro = localFont({
   src: "./SF-Pro-Display-Medium.otf",
   variable: "--font-sf",
 });
+<<<<<<< HEAD
 export const inter = localFont({
   src: [
     {
@@ -41,3 +46,10 @@ export const kyiv = localFont({
 
 
 
+=======
+
+export const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+>>>>>>> upstream/main

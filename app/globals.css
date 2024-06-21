@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+<<<<<<< HEAD
 
 
 @layer base {
@@ -80,3 +81,5 @@
   /* Adjust the height as needed */
   overflow-y: auto;
 }
+=======
+>>>>>>> upstream/main

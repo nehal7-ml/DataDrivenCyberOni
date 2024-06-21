@@ -1,7 +1,12 @@
 "use client";
 
+<<<<<<< HEAD
 import CountingNumbers from "@/components/shared/counting-numbers";
 import { motion } from "framer-motion";
+=======
+import { motion } from "framer-motion";
+import CountingNumbers from "@/components/shared/counting-numbers";
+>>>>>>> upstream/main
 
 export default function WebVitals() {
   return (
@@ -32,7 +37,11 @@ export default function WebVitals() {
       <CountingNumbers
         value={100}
         duration={2500}
+<<<<<<< HEAD
         className="sm:text-3l absolute inset-0 mx-auto flex items-center justify-center font-display text-5xl text-green-500"
+=======
+        className="absolute inset-0 mx-auto flex items-center justify-center font-display text-5xl text-green-500"
+>>>>>>> upstream/main
       />
     </div>
   );

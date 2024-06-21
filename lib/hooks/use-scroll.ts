@@ -4,8 +4,12 @@ export default function useScroll(threshold: number) {
   const [scrolled, setScrolled] = useState(false);
 
   const onScroll = useCallback(() => {
+<<<<<<< HEAD
     //console.log(window.scrollY);
     setScrolled(window.scrollY > threshold);
+=======
+    setScrolled(window.pageYOffset > threshold);
+>>>>>>> upstream/main
   }, [threshold]);
 
   useEffect(() => {
