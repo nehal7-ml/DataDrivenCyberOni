@@ -3,25 +3,33 @@
 import Link from "next/link";
 
 interface BlogCTAProps {
-    title?: string;
-    button?: string;
-    link?: string;
+  title?: string;
+  subTitle?: string;
+  button?: string;
+  link?: string;
 }
-function BlogCTA({ title, link, button }: BlogCTAProps) {
-    return (
-        <div className="mx-auto flex items-center lg:mx-10 justify-center gap-2 rounded-lg bg-violet-500 p-5 text-white py-8">
-            <div>
-                <h1>{title ? title : "Subscribe to our newsletter"}</h1>
-            </div>
+function BlogCTA({ title, subTitle, link, button }: BlogCTAProps) {
+  return (
+    <div className="mx-auto flex items-center justify-center gap-2 rounded-lg bg-violet-500 p-5 py-8 text-white lg:mx-10">
+      <div className="container text-ellipsis">
+        <h1 className="line-clamp-1">
+          {title ? title : "Join Us grow Your Business"}
+        </h1>
+        <p className="line-clamp-2">
+          {subTitle
+            ? subTitle
+            : "Let's Explore Opportunities, Tailor Strategies, and Chart a Course to Success Together"}
+        </p>
+      </div>
 
-            <Link
-                href={link ? link : ""}
-                className="text-lg font-semibold text-white-600 hover:bg-gray-900 bg-black p-3   rounded-2xl"
-            >
-                {button ? button : "Subscribe"}
-            </Link>
-        </div>
-    );
+      <Link
+        href={link ? link : "/contact"}
+        className="text-black rounded-full bg-white p-3 text-lg font-semibold hover:bg-gray-300"
+      >
+        {button ? button : "Get Started"}
+      </Link>
+    </div>
+  );
 }
 
 export default BlogCTA;

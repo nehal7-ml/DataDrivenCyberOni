@@ -69,6 +69,7 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             title: true,
             subTitle: true,
             publishDate: true,
+            ctaProps:true,
             author: {
                 select: {
                     id: true,
@@ -586,12 +587,10 @@ export async function removeLike(
     const BlogLike = prisma.blogLike;
     const user = await getUserByEmail(userEmail, prisma);
     if (!user) return false;
-    const Like = await BlogLike.delete({
+    const Like = await BlogLike.deleteMany({
         where: {
-            userId_blogId: {
-                blogId,
-                userId: user.id,
-            },
+            blogId: blogId,
+            userId: user.id,
         },
     });
 

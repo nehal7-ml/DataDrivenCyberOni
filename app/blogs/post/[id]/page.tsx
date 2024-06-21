@@ -11,7 +11,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import BlogContent from "@/components/blogs/BlogContent";
 import { cookies } from "next/headers";
 import { extractUUID, seoUrl, stripFileExtension } from "@/lib/utils";
-import { DisplayBlogDTO } from "@/crud/DTOs";
+import { CTAProps, DisplayBlogDTO } from "@/crud/DTOs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/nextAuthAdapter";
 import { Blog, BlogPosting, WithContext } from "schema-dts";
@@ -91,6 +91,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
       url: blog.images.length > 0 ? blog.images[0].src : "",
     },
   };
+  let ctaProps: CTAProps | undefined = blog.ctaProps as CTAProps;
   return (
     <div className="realtive h-full w-full pb-10 dark:text-white">
       <Script
@@ -178,7 +179,12 @@ async function BlogPost({ params }: { params: { id: string } }) {
           <SimilarBlogs blogs={similar as DisplayBlogDTO[]} viewAllLink={`/blogs/similar?id=${id}`} />
         </section>
         <section>
-          <BlogCTA />
+          <BlogCTA  
+            button= {ctaProps? (ctaProps.button ) : ""}
+            title= {ctaProps? ctaProps.title : ""}
+            subTitle= {ctaProps? ctaProps.subTitle : ""}
+            link={ctaProps? ctaProps.link : ""}
+          />
         </section>
         <CommentForm
           email={session?.user?.email as string}
