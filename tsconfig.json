@@ -6,7 +6,6 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-<<<<<<< HEAD
       "@/*": ["./*"],
       "@/components/*": ["components/*"],
       "@/ui/*": ["components/ui/*"],
@@ -15,13 +14,6 @@
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"],
       "@/crud/*": ["crud/*"]
-=======
-      "@/components/*": ["components/*"],
-      "@/pages/*": ["pages/*"],
-      "@/app/*": ["app/*"],
-      "@/lib/*": ["lib/*"],
-      "@/styles/*": ["styles/*"]
->>>>>>> upstream/main
     },
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -37,7 +29,6 @@
       {
         "name": "next"
       }
-<<<<<<< HEAD
     ],
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
@@ -50,10 +41,4 @@
     "next.config.js"
   ],
   "exclude": ["node_modules", "__tests__"]
-=======
-    ]
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
->>>>>>> upstream/main
 }
