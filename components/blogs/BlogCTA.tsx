@@ -24,7 +24,7 @@ function BlogCTA({ title, subTitle, link, button }: BlogCTAProps) {
 
       <Link
         href={link ? link : "/contact"}
-        className="text-black rounded-full bg-white p-3 text-lg font-semibold hover:bg-gray-300"
+        className="line-clamp-1 min-w-16 max-w-56 text-ellipsis rounded-full bg-white p-3 text-center  text-lg font-semibold text-black hover:bg-gray-300"
       >
         {button ? button : "Get Started"}
       </Link>
