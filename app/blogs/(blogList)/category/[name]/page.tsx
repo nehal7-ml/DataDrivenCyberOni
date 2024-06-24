@@ -3,6 +3,8 @@ import Pagination from "@/components/Pagination";
 import { getBlogsByCategory } from "@/crud/blog";
 import { DisplayBlogDTO } from "@/crud/DTOs";
 import prisma from "@/lib/prisma";
+import { Rss } from "lucide-react";
+import Link from "next/link";
 async function BlogsInCategoryPage({ params, searchParams }: { params: { name: string }, searchParams: { [key: string]: string | string[] | undefined } }) {
 
     const name = params.name.split("-").slice(0, -1).join(" ");
@@ -14,8 +16,11 @@ async function BlogsInCategoryPage({ params, searchParams }: { params: { name: s
     return (
         <div className="px-5 lg:px-16">
             <div className="container mx-auto ">
-                <div className="mx-10 text-3xl my-5 capitalize">
+                <div className="mx-10 text-3xl my-5 capitalize flex gap-5 items-center">
                     {name}
+                    <Link href={`/blogs/rss/category/${params.name}`}>
+                        <Rss />
+                    </Link>
                 </div>
             </div>
             <div className="w-full ">
@@ -29,18 +34,18 @@ async function BlogsInCategoryPage({ params, searchParams }: { params: { name: s
                             )
                         })}
                     </div>
-                    <Pagination currentPage={1} pathname={`/blogs/category/${params.name}`} totalPages={data.totalPages>5?5:data.totalPages} query={searchParams} />
+                    <Pagination currentPage={1} pathname={`/blogs/category/${params.name}`} totalPages={data.totalPages > 5 ? 5 : data.totalPages} query={searchParams} />
                 </div>
             </div>
         </div>
     )
 }
 
-async function getData(id: string, page:number) {
+async function getData(id: string, page: number) {
 
-    const {list, totalPages} = await getBlogsByCategory(id, page, prisma);
+    const { list, totalPages } = await getBlogsByCategory(id, page, prisma);
 
-    return {list , totalPages}
+    return { list, totalPages }
 
 }
 

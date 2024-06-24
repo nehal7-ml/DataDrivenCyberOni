@@ -185,6 +185,9 @@ export async function getBlogsByCategory(id: string, page: number, prisma: Prism
                 images: true,
                 category: true,
             },
+            orderBy: {
+                publishDate: 'desc'
+            }
         })
     ])
         ;
