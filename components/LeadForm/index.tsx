@@ -4,13 +4,16 @@ import { AlertCircle, Mail, X } from "lucide-react";
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import { LoadingCircle } from "../shared/icons";
 import Balancer from "react-wrap-balancer";
-import { useRouter, } from "next/navigation";
+import { usePathname, useRouter, } from "next/navigation";
+import useScroll from "@/lib/hooks/use-scroll";
 
 function LeadForm() {
 
     const [display, setDisplay] = useState(false);
     const modal = useRef<HTMLDivElement>(null);
     const router = useRouter();
+    const path = usePathname();
+    const scrolled = useScroll(25)
     const [loading, setLoading] = useState(false);
     const [showThanks, setShowThanks] = useState(false);
     const [showError, setShowError] = useState(false);
@@ -64,17 +67,23 @@ function LeadForm() {
 
     useEffect(() => {
         const shown = window.localStorage.getItem('leadFormShown') === 'true' ? true : false
-        const date = new Date(window.localStorage.getItem('leadFormDate') ?? "")
         const filled = window.localStorage.getItem('leadFormFilled') === 'true' ? true : false
+        const validPath = !path.startsWith('/auth/signin') &&
+            !path.startsWith('/auth/signup') &&
+            !path.startsWith('/auth/forgot') &&
+            !path.startsWith('/auth/reset') &&
+            !path.startsWith('/tos') &&
+            !path.startsWith('/privacy') &&
+            !path.startsWith('/404')
 
-        if (handleVisible?.isIntersecting && !shown && !filled) {
+        if (handleVisible?.isIntersecting && !shown && !filled && validPath && scrolled) {
             setDisplay(true)
             window.localStorage.setItem('leadFormShown', 'true')
             window.localStorage.setItem('leadFormDate', new Date().toString())
 
         }
 
-    }, [handleVisible?.isIntersecting]);
+    }, [handleVisible?.isIntersecting, path, scrolled]);
     return (
         <div ref={modal} className="relative w-full overflow-hidden z-[99999]">
             <div className={`${display ? 'visible' : 'hidden'} fixed w-screen inset-0 flex items-center justify-center`}>

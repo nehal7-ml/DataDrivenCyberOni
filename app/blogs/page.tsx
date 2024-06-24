@@ -76,7 +76,7 @@ async function Blogs() {
               <span className="text-lg font-bold">New blogs</span>
               <Link
                 href={"/blogs/new"}
-                className="text-gray-600 hover:text-[#FF5480] hover:underline dark:text-gray-300"
+                className="text-[#FF5480] hover:text-[#FF5480] hover:underline dark:text-gray-300"
               >
                 {" "}
                 view all new

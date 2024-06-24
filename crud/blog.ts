@@ -69,6 +69,7 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             title: true,
             subTitle: true,
             publishDate: true,
+            ctaProps:true,
             author: {
                 select: {
                     id: true,
@@ -360,7 +361,7 @@ export async function getEssential(page: number, prisma: PrismaClient) {
 
     const totalPages = Math.ceil(data[0] / 10);
 
-    return { essential: data[1], totalPages};
+    return { essential: data[1], totalPages };
 }
 
 async function getAuthor(id: string, page: number, prisma: PrismaClient) {
@@ -586,12 +587,10 @@ export async function removeLike(
     const BlogLike = prisma.blogLike;
     const user = await getUserByEmail(userEmail, prisma);
     if (!user) return false;
-    const Like = await BlogLike.delete({
+    const Like = await BlogLike.deleteMany({
         where: {
-            userId_blogId: {
-                blogId,
-                userId: user.id,
-            },
+            blogId: blogId,
+            userId: user.id,
         },
     });
 

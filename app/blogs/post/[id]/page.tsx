@@ -11,13 +11,14 @@ import { Metadata, ResolvingMetadata } from "next";
 import BlogContent from "@/components/blogs/BlogContent";
 import { cookies } from "next/headers";
 import { extractUUID, seoUrl, stripFileExtension } from "@/lib/utils";
-import { DisplayBlogDTO } from "@/crud/DTOs";
+import { CTAProps, DisplayBlogDTO } from "@/crud/DTOs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/nextAuthAdapter";
 import { Blog, BlogPosting, WithContext } from "schema-dts";
 import Script from "next/script";
 import { ImageResponse } from "next/og";
 import SimilarBlogs from "@/components/blogs/SimilarBlogs";
+import BlogCTA from "@/components/blogs/BlogCTA";
 
 export const dynamic = "force-dynamic";
 
@@ -63,7 +64,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
 
   const seoTitle = params.id;
   const id = extractUUID(seoTitle);
-  const {blog, similar} = await getData(id, session?.user?.email ?? "");
+  const { blog, similar } = await getData(id, session?.user?.email ?? "");
 
   // console.log("Currect url", seoTitle, encodeURIComponent(seoUrl(blog.title, blog.id)));
   if (!blog) redirect("/404");
@@ -90,6 +91,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
       url: blog.images.length > 0 ? blog.images[0].src : "",
     },
   };
+  let ctaProps: CTAProps | undefined = blog.ctaProps as CTAProps;
   return (
     <div className="realtive h-full w-full pb-10 dark:text-white">
       <Script
@@ -121,7 +123,7 @@ async function BlogPost({ params }: { params: { id: string } }) {
             {blog.images[0] ? (
               <Image
                 priority={true}
-                className="m-2  rounded-lg object-cover w-full h-auto max-h-[500px] xl:max-h-[480px] 2xl:max-h-[450px]"
+                className="m-2  h-auto max-h-[500px] w-full rounded-lg object-cover xl:max-h-[480px] 2xl:max-h-[450px]"
                 src={blog.images[0].src}
                 alt={stripFileExtension(blog.images[0].name || "blog_image")}
                 width={1250}
@@ -145,10 +147,6 @@ async function BlogPost({ params }: { params: { id: string } }) {
             session={session}
           />
         </div>
-
-        <section>
-          <SimilarBlogs blogs={similar as DisplayBlogDTO[]} viewAllLink={`/blogs/similar?id=${id}`} />
-        </section>
 
         <div className="flex w-full flex-col items-center justify-center gap-5">
           <Link
@@ -175,6 +173,20 @@ async function BlogPost({ params }: { params: { id: string } }) {
             {blog.author.firstName || blog.author.email}
           </div>
         </div>
+        <section>
+          <SimilarBlogs
+            blogs={similar as DisplayBlogDTO[]}
+            viewAllLink={`/blogs/similar?id=${id}`}
+          />
+        </section>
+        <section>
+          <BlogCTA
+            button={ctaProps ? ctaProps.button : ""}
+            title={ctaProps ? ctaProps.title : ""}
+            subTitle={ctaProps ? ctaProps.subTitle : ""}
+            link={ctaProps ? ctaProps.link : ""}
+          />
+        </section>
         <CommentForm
           email={session?.user?.email as string}
           href={`${process.env.NEXTAUTH_URL}/blogs/post/${seoTitle}`}
@@ -187,8 +199,8 @@ async function BlogPost({ params }: { params: { id: string } }) {
 }
 
 async function getData(id: string, userEmail?: string) {
-  const blog = await addView({ id, userEmail }, prisma) as DisplayBlogDTO;
-  const {similar} = await getSimilar(id, 1, prisma);
+  const blog = (await addView({ id, userEmail }, prisma)) as DisplayBlogDTO;
+  const { similar } = await getSimilar(id, 1, prisma);
   // console.log(blog.title);
   if (blog) return { blog, similar };
   else redirect("/404");
