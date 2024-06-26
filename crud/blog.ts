@@ -6,6 +6,7 @@ import { cleanHtmlString, getRandomFromArray } from "@/lib/utils";
 import { CommentDTO, CreateBlogDTO, DisplayBlogDTO } from "./DTOs";
 import { getUserByEmail } from "./user";
 import { View } from "lucide-react";
+import { DefaultArgs } from "@prisma/client/runtime/library";
 
 async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
@@ -402,7 +403,7 @@ async function getAuthor(id: string, page: number, prisma: PrismaClient) {
         },
     });
 
-    return {author, totalPages: Math.ceil(totalBlogs / 10)};
+    return { author, totalPages: Math.ceil(totalBlogs / 10) };
 }
 
 async function addComment(comment: CommentDTO, prisma: PrismaClient) {
@@ -534,7 +535,7 @@ export async function getBySearchTerm(
     prisma: PrismaClient,
 ) {
     const blogs = prisma.blog;
-    const records = await blogs.findMany({
+    const searchQuery = {
         where: {
             OR: [
                 {
@@ -569,8 +570,13 @@ export async function getBySearchTerm(
         orderBy: {
             publishDate: "desc",
         },
-    });
-    return records;
+    }
+    const data = await prisma.$transaction([blogs.count({ where: searchQuery.where }), blogs.findMany({
+        where: searchQuery.where, orderBy: {
+            publishDate: "desc",
+        }, skip: (page - 1) * 10, take: 10
+    })]);
+    return { records: data[1], totalPages: Math.ceil(data[0] / 10) };
 }
 
 export async function addLike(

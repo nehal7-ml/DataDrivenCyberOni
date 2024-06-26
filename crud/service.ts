@@ -157,16 +157,16 @@ async function update(
       image:
         image && image.id
           ? {
-              update: {
-                where: {
-                  id: image.id,
-                },
-                data: image,
+            update: {
+              where: {
+                id: image.id,
               },
-            }
+              data: image,
+            },
+          }
           : image && image?.id == null
-          ? { create: image }
-          : {},
+            ? { create: image }
+            : {},
       tags: connectTags(service.tags || [], oldService.tags),
       SubServices: await updateSubServiceObject(
         service.SubServices as CreateSubServiceDTO[],
@@ -226,9 +226,9 @@ async function read(serviceId: string, prismaClient: PrismaClient) {
 async function getServicesByName(
   serviceName: string,
   prismaClient: PrismaClient,
-) {}
+) { }
 
-async function getServicesByTag(tag: string, prismaClient: PrismaClient) {}
+async function getServicesByTag(tag: string, prismaClient: PrismaClient) { }
 
 async function getAll(
   page: number,
@@ -294,74 +294,77 @@ export async function getBySearchTerm(
   prisma: PrismaClient,
 ) {
   const services = prisma.service;
-
-  const records = await services.findMany({
-    skip: page === 0 ? 0 : (page - 1) * 5,
-    take: page === 0 ? 9999 : 5,
-    where: {
-      OR: [
-        {
-          title: {
-            contains: search,
-          },
+  const searchQuery = {
+    OR: [
+      {
+        title: {
+          contains: search,
         },
+      },
 
-        {
-          ServiceDescription: {
-            some: {
-              content: {
-                contains: search,
-              },
+      {
+        ServiceDescription: {
+          some: {
+            content: {
+              contains: search,
             },
           },
         },
+      },
 
-        {
-          SubServices: {
-            some: {
-              OR: [
-                {
-                  description: {
-                    contains: search,
-                  },
+      {
+        SubServices: {
+          some: {
+            OR: [
+              {
+                description: {
+                  contains: search,
                 },
-                {
-                  title: {
-                    contains: search,
-                  },
+              },
+              {
+                title: {
+                  contains: search,
                 },
-                {
-                  serviceDeliverables: {
-                    array_contains: search,
-                  },
+              },
+              {
+                serviceDeliverables: {
+                  array_contains: search,
                 },
-                {
-                  tags: {
-                    some: {
-                      name: {
-                        contains: search,
-                      },
+              },
+              {
+                tags: {
+                  some: {
+                    name: {
+                      contains: search,
                     },
                   },
                 },
-              ],
-            },
-          },
-        },
-        {
-          tags: {
-            some: {
-              name: {
-                contains: search,
               },
+            ],
+          },
+        },
+      },
+      {
+        tags: {
+          some: {
+            name: {
+              contains: search,
             },
           },
         },
-      ],
-    },
-  });
+      },
+    ],
+  }
+  const data = await prisma.$transaction([prisma.service.count({ where: searchQuery }), prisma.service.findMany({
+    skip: (page - 1) * 10,
+    take: 10,
+    where: searchQuery,
+    orderBy: {
+      createdAt: 'desc',
+    }
+  })]);
 
-  return records;
+  return {records: data[1], totalPages: Math.ceil(data[0] / 10)};
 }
 
 async function updateServiceDescriptionObject(
@@ -396,16 +399,16 @@ async function updateServiceDescriptionObject(
           image:
             image && image.id
               ? {
-                  update: {
-                    where: {
-                      id: image.id,
-                    },
-                    data: image,
+                update: {
+                  where: {
+                    id: image.id,
                   },
-                }
+                  data: image,
+                },
+              }
               : image && image?.id == null
-              ? { create: image }
-              : {},
+                ? { create: image }
+                : {},
         },
       });
     } else {
