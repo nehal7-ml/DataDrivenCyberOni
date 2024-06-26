@@ -8,6 +8,9 @@ import prisma from "@/lib/prisma"
 import { seoUrl } from "@/lib/utils"
 let window = new JSDOM().window
 export async function GET(req: NextRequest, { params }: { params: { name: string } }) {
+    const encodeUrl = (url: string) =>{
+        return (url).replace(/'/g, "%27");
+      }
     const name = params.name.split("-").slice(0, -1).join(" ");
     const id = params.name.split("-").slice(-1)[0];
     const xmlContent = `<?xml version="1.0" encoding="UTF-8" ?>
@@ -29,7 +32,8 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
         const link = xmlDoc.createElement("link");
         const description = xmlDoc.createElement("description");
         title.innerHTML = blog.title
-        link.innerHTML = `${process.env.NEXTAUTH_URL}/blogs/post/${seoUrl(blog.title, blog.id)}`
+        let blogUrl = `${process.env.NEXTAUTH_URL}/blogs/post/${seoUrl(blog.title, blog.id)}`
+        link.innerHTML = 
         description.innerHTML = blog.description
         item.appendChild(title)
         item.appendChild(link)

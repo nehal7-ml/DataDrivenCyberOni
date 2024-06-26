@@ -34,7 +34,7 @@ async function BlogsInCategoryPage({ params, searchParams }: { params: { name: s
                             )
                         })}
                     </div>
-                    <Pagination currentPage={1} pathname={`/blogs/category/${params.name}`} totalPages={data.totalPages > 5 ? 5 : data.totalPages} query={searchParams} />
+                    <Pagination currentPage={page} pathname={`/blogs/category/${params.name}`} totalPages={data.totalPages > 5 ? 5 : data.totalPages} query={searchParams} />
                 </div>
             </div>
         </div>

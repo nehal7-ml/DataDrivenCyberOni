@@ -16,16 +16,17 @@ export async function GET() {
     throw new Error("NEXTAUTH_URL is not defined in environment variables");
   }
 
-  const encodeUrl = (url: string) =>
-    encodeURIComponent(url).replace(/'/g, "%27");
+  const encodeUrl = (url: string) =>{
+    return (url).replace(/'/g, "%27");
+  }
 
-  const encodedBaseUrl = encodeUrl(baseUrl);
+
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8" ?>
   <rss version="2.0">        
         <channel>
             <title>Latest Cyberoni Blogs</title>
-            <link>${encodedBaseUrl}/blogs/recent</link>
+            <link>${baseUrl}/blogs/recent</link>
             <description>Latest Cyberoni Blogs related to web development and AI</description>
         </channel>   
   </rss>`;
