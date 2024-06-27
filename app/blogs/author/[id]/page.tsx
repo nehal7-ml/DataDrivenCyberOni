@@ -23,7 +23,7 @@ export async function generateMetadata(
   const { page } = searchParams;
 
   // fetch data
-  const author = await getAuthor(id, Number(page), prisma);
+  const { author, totalPages } = await getAuthor(id, Number(page), prisma);
 
   // optionally access and extend (rather than replace) parent metadata
   let metadata: Metadata = {};
@@ -71,8 +71,8 @@ async function BlogAuthor({
   searchParams: { page: number };
 }) {
   const { page } = searchParams;
-  const author = await getAuthor(id, page, prisma);
-  const recent = await getRecent(1,prisma);
+  const { author, totalPages } = await getAuthor(id, page, prisma);
+  const recent = await getRecent(1, prisma);
   const popular = await getPopular(1, prisma);
 
   if (!author?.id) redirect("/404");
@@ -123,8 +123,8 @@ async function BlogAuthor({
           );
         })}
         <Pagination
-          currentPage={1}
-          totalPages={10}
+          currentPage={Number(page) ?? 1}
+          totalPages={totalPages}
           pathname={`/blogs/author/${id}`}
         />
       </div>

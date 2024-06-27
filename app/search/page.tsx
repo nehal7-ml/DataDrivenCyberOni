@@ -10,9 +10,9 @@ import Pagination from "@/components/Pagination";
 
 async function SearchResults({ searchParams }: { searchParams: { q: string, page: number, type: 'blogs' | 'services' | undefined } }) {
     if (searchParams.q) {
-        let blogs = searchParams.type === 'services' ? [] : await searchBlogs(searchParams.q, searchParams.page || 1, prisma)
-        let services = searchParams.type === 'blogs' ? [] : await searchServices(searchParams.q, searchParams.page || 1, prisma)
-        let products = searchParams.type === 'blogs' ? [] : await searchProducts(searchParams.q, searchParams.page || 1, prisma)
+        let { records: blogs, totalPages: blogPages } = searchParams.type === 'blogs' ? { records: [], totalPages: 0 } : await searchBlogs(searchParams.q, searchParams.page || 1, prisma)
+        let { records: services, totalPages: servicePages } = searchParams.type === 'services' ? { records: [], totalPages: 0 } : await searchServices(searchParams.q, searchParams.page || 1, prisma)
+        //let products = searchParams.type === 'blogs' ? [] : await searchProducts(searchParams.q, searchParams.page || 1, prisma)
 
         // console.log(allRecords);
         return (
@@ -64,7 +64,9 @@ async function SearchResults({ searchParams }: { searchParams: { q: string, page
                             </div>}
                         </div>
                         <div>
-                            <Pagination currentPage={searchParams.page} pathname={`/search`} query={{ q: searchParams.q }} totalPages={10} />
+                            <Pagination currentPage={Number(searchParams.page) ?? 1} pathname={`/search`} query={{ q: searchParams.q }} totalPages={
+                                searchParams.type === 'blogs' ? blogPages : searchParams.type === 'services' ? servicePages : blogPages + servicePages
+                            } />
                         </div>
                     </div>
                 </div>
