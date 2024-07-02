@@ -16,7 +16,7 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
     const name = params.name.split("-").slice(0, -1).join(" ");
     const id = params.name.split("-").slice(-1)[0];
     const xmlContent = `<?xml version="1.0" encoding="UTF-8" ?>
-  <rss version="2.0">        
+  <rss version="2.0"  xmlns:atom="http://www.w3.org/2005/Atom">        
         <channel>
             <title>Latest ${name} Blogs</title>
             <link>${baseUrl}/blogs/category/${params.name}</link>
@@ -29,6 +29,8 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
     let parser = new window.DOMParser();
     let xmlDoc = parser.parseFromString(xmlContent, "text/xml");
     let channel = xmlDoc.getElementsByTagName("channel")[0];
+    console.log(channel);
+
     blogs.list.forEach(blog => {
         const item  = xmlDoc.createElement("item");
         const title = xmlDoc.createElement("title");

@@ -20,10 +20,8 @@ export async function GET() {
     return (url).replace(/'/g, "%27");
   }
 
-
-
   const xmlContent = `<?xml version="1.0" encoding="UTF-8" ?>
-  <rss version="2.0">        
+  <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">        
         <channel>
             <title>Latest Cyberoni Blogs</title>
             <link>${baseUrl}/blogs/recent</link>
@@ -43,6 +41,8 @@ export async function GET() {
     const link = xmlDoc.createElement("link");
     const description = xmlDoc.createElement("description");
     const guid = xmlDoc.createElement("guid");
+    console.log(item);
+
 
     const blogUrl = `${baseUrl}/blogs/post/${seoUrl(blog.title, blog.id)}`;
 
