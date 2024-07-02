@@ -29,7 +29,6 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
     let parser = new window.DOMParser();
     let xmlDoc = parser.parseFromString(xmlContent, "text/xml");
     let channel = xmlDoc.getElementsByTagName("channel")[0];
-    console.log(channel);
 
     blogs.list.forEach(blog => {
         const item  = xmlDoc.createElement("item");

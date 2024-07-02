@@ -41,9 +41,6 @@ export async function GET() {
     const link = xmlDoc.createElement("link");
     const description = xmlDoc.createElement("description");
     const guid = xmlDoc.createElement("guid");
-    console.log(item);
-
-
     const blogUrl = `${baseUrl}/blogs/post/${seoUrl(blog.title, blog.id)}`;
 
     title.innerHTML = blog.title;
