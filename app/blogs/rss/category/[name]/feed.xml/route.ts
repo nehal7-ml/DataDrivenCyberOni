@@ -8,6 +8,8 @@ import prisma from "@/lib/prisma"
 import { seoUrl } from "@/lib/utils"
 let window = new JSDOM().window
 export async function GET(req: NextRequest, { params }: { params: { name: string } }) {
+  const baseUrl = process.env.NEXTAUTH_URL;
+
     const encodeUrl = (url: string) =>{
         return (url).replace(/'/g, "%27");
       }
@@ -17,7 +19,8 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
   <rss version="2.0">        
         <channel>
             <title>Latest ${name} Blogs</title>
-            <link>${process.env.NEXTAUTH_URL}/blogs/recent</link>
+            <link href="${baseUrl}/blogs/category/${params.name}">feed</link>
+            <link href="${baseUrl}/blogs/rss/category/${params.name}/feed.xml" rel="self"/>
             <description>Latest ${name} By Cyberoni </description>
         </channel>   
   </rss>`;
@@ -31,13 +34,17 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
         const title = xmlDoc.createElement("title");
         const link = xmlDoc.createElement("link");
         const description = xmlDoc.createElement("description");
+        const guid = xmlDoc.createElement("guid");
         title.innerHTML = blog.title
-        let blogUrl = `${process.env.NEXTAUTH_URL}/blogs/post/${seoUrl(blog.title, blog.id)}`
-        link.innerHTML = 
+        let blogUrl = `${baseUrl}/blogs/post/${seoUrl(blog.title, blog.id)}`
+        link.rel= "self"
+        link.href = encodeUrl(blogUrl)
         description.innerHTML = blog.description
+        guid.innerHTML = blogUrl
         item.appendChild(title)
         item.appendChild(link)
         item.appendChild(description)
+        item.appendChild(guid)
         channel.appendChild(item)
         
     });

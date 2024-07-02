@@ -16,7 +16,7 @@ export async function GET() {
     throw new Error("NEXTAUTH_URL is not defined in environment variables");
   }
 
-  const encodeUrl = (url: string) =>{
+  const encodeUrl = (url: string) => {
     return (url).replace(/'/g, "%27");
   }
 
@@ -26,7 +26,8 @@ export async function GET() {
   <rss version="2.0">        
         <channel>
             <title>Latest Cyberoni Blogs</title>
-            <link>${baseUrl}/blogs/recent</link>
+            <link href="${baseUrl}/blogs/recent">Latest Blogs</link>
+            <link href="${baseUrl}/blogs/rss/latest/feed.xml" rel="self"/>
             <description>Latest Cyberoni Blogs related to web development and AI</description>
         </channel>   
   </rss>`;
@@ -41,15 +42,21 @@ export async function GET() {
     const title = xmlDoc.createElement("title");
     const link = xmlDoc.createElement("link");
     const description = xmlDoc.createElement("description");
+    const guid = xmlDoc.createElement("guid");
+
     const blogUrl = `${baseUrl}/blogs/post/${seoUrl(blog.title, blog.id)}`;
 
     title.innerHTML = blog.title;
-    link.innerHTML = encodeUrl(blogUrl);
+    link.rel = "self"
+    link.href = encodeUrl(blogUrl)
     description.innerHTML = blog.description;
+    guid.innerHTML = blogUrl
 
     item.appendChild(title);
     item.appendChild(link);
     item.appendChild(description);
+    item.appendChild(guid)
+
     channel.appendChild(item);
   });
 
