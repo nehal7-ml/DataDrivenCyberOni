@@ -27,7 +27,7 @@ export async function GET() {
         <channel>
             <title>Latest Cyberoni Blogs</title>
             <link>${baseUrl}/blogs/recent</link>
-            <link rel="self">${baseUrl}/blogs/rss/latest/feed.xml</link>
+            <atom:link href="${baseUrl}/blogs/rss/latest/feed.xml" rel="self" type="application/rss+xml" />
             <description>Latest Cyberoni Blogs related to web development and AI</description>
         </channel>   
   </rss>`;
@@ -47,7 +47,6 @@ export async function GET() {
     const blogUrl = `${baseUrl}/blogs/post/${seoUrl(blog.title, blog.id)}`;
 
     title.innerHTML = blog.title;
-    link.rel = "self"
     link.innerHTML = encodeUrl(blogUrl)
     description.innerHTML = blog.description;
     guid.innerHTML = blogUrl

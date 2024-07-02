@@ -20,7 +20,7 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
         <channel>
             <title>Latest ${name} Blogs</title>
             <link>${baseUrl}/blogs/category/${params.name}</link>
-            <link rel="self">${baseUrl}/blogs/rss/category/${params.name}/feed.xml<l/ink>
+            <atom:link href="${baseUrl}/blogs/rss/category/${params.name}/feed.xml" rel="self" type="application/rss+xml" />
             <description>Latest ${name} By Cyberoni </description>
         </channel>   
   </rss>`;
@@ -37,7 +37,6 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
         const guid = xmlDoc.createElement("guid");
         title.innerHTML = blog.title
         let blogUrl = `${baseUrl}/blogs/post/${seoUrl(blog.title, blog.id)}`
-        link.rel= "self"
         link.innerHTML = encodeUrl(blogUrl)
         description.innerHTML = blog.description
         guid.innerHTML = blogUrl
