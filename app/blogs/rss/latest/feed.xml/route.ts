@@ -26,8 +26,8 @@ export async function GET() {
   <rss version="2.0">        
         <channel>
             <title>Latest Cyberoni Blogs</title>
-            <link href="${baseUrl}/blogs/recent">Latest Blogs</link>
-            <link href="${baseUrl}/blogs/rss/latest/feed.xml" rel="self"/>
+            <link>${baseUrl}/blogs/recent</link>
+            <link rel="self">${baseUrl}/blogs/rss/latest/feed.xml</link>
             <description>Latest Cyberoni Blogs related to web development and AI</description>
         </channel>   
   </rss>`;
@@ -48,7 +48,7 @@ export async function GET() {
 
     title.innerHTML = blog.title;
     link.rel = "self"
-    link.href = encodeUrl(blogUrl)
+    link.innerHTML = encodeUrl(blogUrl)
     description.innerHTML = blog.description;
     guid.innerHTML = blogUrl
 

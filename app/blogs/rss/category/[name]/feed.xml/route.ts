@@ -19,8 +19,8 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
   <rss version="2.0">        
         <channel>
             <title>Latest ${name} Blogs</title>
-            <link href="${baseUrl}/blogs/category/${params.name}">feed</link>
-            <link href="${baseUrl}/blogs/rss/category/${params.name}/feed.xml" rel="self"/>
+            <link>${baseUrl}/blogs/category/${params.name}</link>
+            <link rel="self">${baseUrl}/blogs/rss/category/${params.name}/feed.xml<l/ink>
             <description>Latest ${name} By Cyberoni </description>
         </channel>   
   </rss>`;
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest, { params }: { params: { name: string
         title.innerHTML = blog.title
         let blogUrl = `${baseUrl}/blogs/post/${seoUrl(blog.title, blog.id)}`
         link.rel= "self"
-        link.href = encodeUrl(blogUrl)
+        link.innerHTML = encodeUrl(blogUrl)
         description.innerHTML = blog.description
         guid.innerHTML = blogUrl
         item.appendChild(title)
