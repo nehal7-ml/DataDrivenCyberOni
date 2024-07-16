@@ -11,19 +11,14 @@ import {
   homeSections,
   mainHero,
   sildes,
-  softwareProducts,
 } from "@/data/homeData";
 import Link from "next/link";
 import HeroAnimation from "@/components/home/HeroAnimation";
 import { Suspense } from "react";
-import SoftwareCarousel from "@/components/SoftwareProducts/SoftwareCarousel";
-import { getAll } from "@/crud/softwareProduct";
-import prisma from "@/lib/prisma";
+
 import SoftwareSection from "@/components/home/SoftwareSection";
 import LoadingCarousel from "@/components/SoftwareProducts/LoadingCarousel";
-import CategoryChip from "@/components/SoftwareProducts/CategroryChip";
-import { getCategories } from "@/crud/categories";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+
 export default function Home({ searchParams }: { searchParams?: { softwareCategoryId?: string | string[] } }) {
 
   return (

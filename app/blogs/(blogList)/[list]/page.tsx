@@ -13,18 +13,61 @@ import { IdealBankElement } from "@stripe/react-stripe-js";
 import Pagination from "@/components/Pagination";
 import CopyButton from "@/components/CopyButton";
 import { Rss } from "lucide-react";
+import { Metadata } from "next";
+import Script from "next/script";
+import { ItemList, WithContext } from "schema-dts";
 
+
+export async function generateMetadata({ params, searchParams }: { params: { list: string }, searchParams: { [key: string]: string | string[] | undefined } }) {
+    let metadata: Metadata = {};
+
+
+    metadata.category = params.list
+    metadata.alternates = {
+        canonical: `/blogs/${params.list}`
+    }
+    return metadata
+
+}
 async function BlogList({ params, searchParams }: { params: { list: string }, searchParams: { [key: string]: string | string[] | undefined } }) {
     let { id } = searchParams
     let page = searchParams.page && Number(searchParams.page) !== 0 ? Number(searchParams.page) : 1;
     const data = await getData(params.list, page, id as string);
 
+    const jsonLd: WithContext<ItemList> = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        itemListElement: data.list.map((blog) => {
+            return {
+                "@type": "BlogPosting",
+                url: `${process.env.NEXTAUTH_URL}/blogs/${params.list}/${blog.id}`,
+                name: blog.title,
+                description: blog.description,
+                author: {
+                    "@type": "Person",
+                    "@id": "",
+                    name: blog.author.firstName ?? "",
+                },
+                image: {
+                    "@type": "ImageObject",
+                    url: blog.images.length > 0 ? blog.images[0].src : "",
+                },
+            }
+        })
+
+    };
+
     return (
         <div className="px-5 lg:px-16">
+            <Script
+                type="application/ld+json"
+                id="json-ld"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="container mx-auto ">
-                <div className="mx-10 text-3xl my-5 capitalize">
+                <div className="mx-10 text-3xl my-5 capitalize flex gap-4">
                     {params.list}
-                    {params.list=='new' && <CopyButton icon={<Rss />} text={`${process.env.NEXTAUTH_URL}/blogs/rss/latest/feed.xml`} />}
+                    {params.list == 'new' && <CopyButton icon={<Rss />} text={`${process.env.NEXTAUTH_URL}/blogs/rss/latest/feed.xml`} />}
                 </div>
                 <div className="mx-10 w-1/2">
                     {listData[params.list]}
