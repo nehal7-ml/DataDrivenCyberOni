@@ -29,6 +29,9 @@ export async function generateMetadata(
   let metadata: Metadata = {};
   metadata.title = `Author: ${author?.firstName}`;
   metadata.description = `Deatils of blog Author, ${author?.firstName}`;
+  metadata.alternates = {
+    canonical : `/blogs/author/${id}`
+  }
   metadata.openGraph = {
     type: "article",
     title: metadata.title,
