@@ -8,8 +8,6 @@ Disallow: /admin/
 Disallow: /accounts/
 Disallow: /api/
 Disallow: /auth/
-Disallow: /*.xml$
-Disallow: /*.XML$
 Disallow: /blogs/similar
 Disallow: /*twitter-image$
 Disallow: /*opengraph-image$
