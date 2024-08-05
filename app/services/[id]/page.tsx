@@ -56,6 +56,9 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
     }
     metadata.category = service?.tags.join(" ")
     metadata.keywords = service?.tags?.map(tag => tag.name)
+    metadata.alternates= {
+      canonical : `/services/${seoTitle}`
+    }
   }
   return metadata
 }

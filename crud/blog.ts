@@ -6,6 +6,7 @@ import { cleanHtmlString, getRandomFromArray } from "@/lib/utils";
 import { CommentDTO, CreateBlogDTO, DisplayBlogDTO } from "./DTOs";
 import { getUserByEmail } from "./user";
 import { View } from "lucide-react";
+import { DefaultArgs } from "@prisma/client/runtime/library";
 
 async function create(blog: CreateBlogDTO, prismaClient: PrismaClient) {
     const blogs = prismaClient.blog;
@@ -69,7 +70,7 @@ async function read(blogId: string, prismaClient: PrismaClient) {
             title: true,
             subTitle: true,
             publishDate: true,
-            ctaProps:true,
+            ctaProps: true,
             author: {
                 select: {
                     id: true,
@@ -370,21 +371,39 @@ export async function getEssential(page: number, prisma: PrismaClient) {
 async function getAuthor(id: string, page: number, prisma: PrismaClient) {
     const users = prisma.user;
 
+    const totalBlogs = await prisma.blog.count({
+        where: {
+            author: {
+                id
+            },
+            publishDate: {
+                lte: new Date()
+            }
+        }
+    })
     const author = await users.findUnique({
         where: { id },
         include: {
             image: true,
             blogs: {
+                where: {
+                    publishDate: {
+                        lte: new Date()
+                    }
+                },
                 take: 10,
                 skip: (page - 1) * 10,
                 include: {
                     images: true,
                 },
+                orderBy: {
+                    date: "desc",
+                }
             },
         },
     });
 
-    return author;
+    return { author, totalPages: Math.ceil(totalBlogs / 10) };
 }
 
 async function addComment(comment: CommentDTO, prisma: PrismaClient) {
@@ -516,7 +535,7 @@ export async function getBySearchTerm(
     prisma: PrismaClient,
 ) {
     const blogs = prisma.blog;
-    const records = await blogs.findMany({
+    const searchQuery = {
         where: {
             OR: [
                 {
@@ -551,8 +570,13 @@ export async function getBySearchTerm(
         orderBy: {
             publishDate: "desc",
         },
-    });
-    return records;
+    }
+    const data = await prisma.$transaction([blogs.count({ where: searchQuery.where }), blogs.findMany({
+        where: searchQuery.where, orderBy: {
+            publishDate: "desc",
+        }, skip: (page - 1) * 10, take: 10
+    })]);
+    return { records: data[1], totalPages: Math.ceil(data[0] / 10) };
 }
 
 export async function addLike(

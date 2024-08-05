@@ -7,6 +7,10 @@ User-agent: *
 Disallow: /admin/
 Disallow: /accounts/
 Disallow: /api/
+Disallow: /auth/
+Disallow: /blogs/similar
+Disallow: /*twitter-image$
+Disallow: /*opengraph-image$
 
 # Allow everything else
 User-agent: *
